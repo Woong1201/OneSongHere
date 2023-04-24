@@ -17,7 +17,7 @@
         "tsx": "never"
       }
     ],
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "react/react-in-jsx-scope": "off",
     "no-use-before-define": "off",
