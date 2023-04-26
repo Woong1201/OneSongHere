@@ -2,8 +2,13 @@ package com.ownsong.api.user.entity;
 
 import com.ownsong.api.album.entity.Album;
 import com.ownsong.api.album.entity.Likes;
+import com.ownsong.api.board.entity.Board;
+import com.ownsong.api.board.entity.Comment;
+import com.ownsong.api.relayStudio.entity.RelayStudio;
+import com.ownsong.api.relayStudio.entity.RelayTeam;
 import com.ownsong.api.sheet.entity.Sheet;
 import com.ownsong.api.studio.entity.Studio;
+import com.ownsong.api.studio.entity.StudioTeam;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,6 +49,21 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Likes> likesList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<RelayStudio> relayStudios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<RelayTeam> relayTeams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<StudioTeam> studioTeams = new ArrayList<>();
 
     @Builder
     public User(long userID, String UID, String nickname, String profileUrl) {
