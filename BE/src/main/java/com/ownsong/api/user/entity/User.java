@@ -1,6 +1,7 @@
 package com.ownsong.api.user.entity;
 
 import com.ownsong.api.album.entity.Album;
+import com.ownsong.api.album.entity.Likes;
 import com.ownsong.api.sheet.entity.Sheet;
 import com.ownsong.api.studio.entity.Studio;
 import lombok.AccessLevel;
