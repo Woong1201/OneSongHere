@@ -34,9 +34,11 @@ public class Comment {
     private Board board;
 
     @Builder
-    public Comment(long commentId, String commentContent, LocalDateTime commentDate) {
+    public Comment(long commentId, String commentContent, LocalDateTime commentDate, User user, Board board) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
+        this.user = user;
+        this.board = board;
     }
 }

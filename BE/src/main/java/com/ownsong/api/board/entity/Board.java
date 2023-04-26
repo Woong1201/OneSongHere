@@ -42,11 +42,12 @@ public class Board {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Board(long boardId, String boardTitle, String header, String boardContent, LocalDateTime boardDate) {
+    public Board(long boardId, String boardTitle, String header, String boardContent, LocalDateTime boardDate, User user) {
         this.boardId = boardId;
         this.boardTitle = boardTitle;
         this.header = header;
         this.boardContent = boardContent;
         this.boardDate = boardDate;
+        this.user = user;
     }
 }

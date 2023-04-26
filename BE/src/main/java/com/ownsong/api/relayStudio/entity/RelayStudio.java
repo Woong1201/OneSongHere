@@ -53,7 +53,7 @@ public class RelayStudio {
     private List<RelayTeam> relayTeams = new ArrayList<>();
 
     @Builder
-    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, long numberOfVotes, long numberOfUsers, long agree) {
+    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, long numberOfVotes, long numberOfUsers, long agree, User user) {
         this.relayStudioID = relayStudioID;
         this.relayStudioTitle = relayStudioTitle;
         this.endDate = endDate;
@@ -61,5 +61,6 @@ public class RelayStudio {
         this.numberOfVotes = numberOfVotes;
         this.numberOfUsers = numberOfUsers;
         this.agree = agree;
+        this.user = user;
     }
 }
