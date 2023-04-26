@@ -43,12 +43,13 @@ public class Album {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public Album(Long albumId, String albumUrl, String albumTitle, String albumContent, long likes, boolean privates) {
+    public Album(Long albumId, String albumUrl, String albumTitle, String albumContent, long likes, boolean privates, User user) {
         this.albumId = albumId;
         this.albumUrl = albumUrl;
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.likes = likes;
         this.privates = privates;
+        this.user = user;
     }
 }
