@@ -29,9 +29,10 @@ public class Sheet {
     private User user;
 
 
-    public Sheet(Long sheetID, String sheetMatrix, String sheetTitle) {
+    public Sheet(Long sheetID, String sheetMatrix, String sheetTitle, User user) {
         this.sheetID = sheetID;
         this.sheetMatrix = sheetMatrix;
         this.sheetTitle = sheetTitle;
+        this.user = user;
     }
 }
