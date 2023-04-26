@@ -1,7 +1,8 @@
 package com.ownsong.api.relayStudio.entity;
 
 
-import com.ownsong.api.album.entity.Album;
+import com.ownsong.api.notification.entity.Notification;
+import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +43,15 @@ public class RelayStudio {
     private long agree;
 
     @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
-    private List<Album> notifications = new ArrayList<>();
+    private List<Notification> notifications = new ArrayList<>();
+
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
+    private List<RelayTeam> relayTeams = new ArrayList<>();
 
     @Builder
     public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, long numberOfVotes, long numberOfUsers, long agree) {
