@@ -31,8 +31,9 @@ public class Notification {
     @JoinColumn(name = "RELAY_STUDIO_ID")
     private RelayStudio relayStudio;
 
-    public Notification(long notiId, String type) {
+    public Notification(long notiId, String type, User user) {
         this.notiId = notiId;
         this.type = type;
+        this.user = user;
     }
 }
