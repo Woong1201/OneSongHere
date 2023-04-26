@@ -45,7 +45,6 @@ public class RelayStudio {
     @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
     private List<Notification> notifications = new ArrayList<>();
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
