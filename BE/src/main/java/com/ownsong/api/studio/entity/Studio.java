@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "studio")
@@ -34,6 +36,8 @@ public class Studio {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
+    private List<StudioTeam> studioTeams = new ArrayList<>();
 
     @Builder
     public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet) {
