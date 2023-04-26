@@ -18,3 +18,4 @@ public class LikesId implements Serializable {
     @EqualsAndHashCode.Include
     private Album album;
 }
+
