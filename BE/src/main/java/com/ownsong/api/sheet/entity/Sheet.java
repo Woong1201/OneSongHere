@@ -1,5 +1,6 @@
 package com.ownsong.api.sheet.entity;
 
+import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,11 @@ public class Sheet {
 
     @Column(name = "SHEET_TITLE", length = 30)
     private String sheetTitle;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
 
     public Sheet(Long sheetID, String sheetMatrix, String sheetTitle) {
         this.sheetID = sheetID;
