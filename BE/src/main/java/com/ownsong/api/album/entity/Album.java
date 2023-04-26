@@ -1,11 +1,14 @@
 package com.ownsong.api.album.entity;
 
 
+import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ALBUM")
@@ -32,6 +35,13 @@ public class Album {
 
     @Column(name = "PRIVATES")
     private boolean privates;
+
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<Likes> likesList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     public Album(Long albumId, String albumUrl, String albumTitle, String albumContent, long likes, boolean privates) {
         this.albumId = albumId;
