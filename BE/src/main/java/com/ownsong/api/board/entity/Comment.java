@@ -25,12 +25,10 @@ public class Comment {
     @Column(name = "COMMENT_DATE")
     private LocalDateTime commentDate;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOARD_ID")
     private Board board;
