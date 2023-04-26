@@ -40,10 +40,13 @@ public class Studio {
     private List<StudioTeam> studioTeams = new ArrayList<>();
 
     @Builder
-    public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet) {
+    public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet, User user) {
         this.studioID = studioID;
         this.studioTitle = studioTitle;
         this.endDate = endDate;
         this.studioSheet = studioSheet;
+        this.user = user;
     }
+
+
 }
