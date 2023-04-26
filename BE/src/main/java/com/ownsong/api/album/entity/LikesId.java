@@ -1,8 +1,10 @@
 package com.ownsong.api.album.entity;
 
+import com.ownsong.api.user.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -11,8 +13,8 @@ public class LikesId implements Serializable {
     private static final long serialVersionUID = 1201L;
 
     @EqualsAndHashCode.Include
-    public long userId;
+    private User user;
 
     @EqualsAndHashCode.Include
-    public long albumId;
+    private Album album;
 }
