@@ -1,0 +1,31 @@
+@import "../../../styles/_variables.scss";
+@import "../../../styles/_fonts.scss";
+.button {
+  font-family: 'Pretendard';
+  font-weight: 200;
+  padding: 0.5rem;
+}
+.button--flat {
+  border-radius: 5px;
+}
+.button--tag {
+  border-radius: 30px;  
+}
+.button--primary {
+  border: 0;
+  background-color: $main-theme-color;
+  color: #ffffff;
+}
+.button--other {
+  background-color: transparent;
+  color: $header-color;
+  border: 1px solid $header-color;
+}
+.button--main {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.button--shadow {
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 1px 1px inset;
+}
