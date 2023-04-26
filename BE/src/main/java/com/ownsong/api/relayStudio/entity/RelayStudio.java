@@ -1,6 +1,7 @@
 package com.ownsong.api.relayStudio.entity;
 
 
+import com.ownsong.api.album.entity.Album;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "studio")
@@ -37,6 +40,9 @@ public class RelayStudio {
 
     @Column(name = "AGREE", columnDefinition = "INT UNSIGNED")
     private long agree;
+
+    @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
+    private List<Album> notifications = new ArrayList<>();
 
     @Builder
     public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, long numberOfVotes, long numberOfUsers, long agree) {
