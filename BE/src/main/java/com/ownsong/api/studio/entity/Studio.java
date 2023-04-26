@@ -1,6 +1,7 @@
 package com.ownsong.api.studio.entity;
 
 
+import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,11 @@ public class Studio {
 
     @Column(name = "STUDIO_SHEET", columnDefinition = "TEXT")
     private String studioSheet;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
 
     @Builder
     public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet) {
