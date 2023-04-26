@@ -1,5 +1,6 @@
 package com.ownsong.api.board.entity;
 
+import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "BOARD")
@@ -30,6 +33,14 @@ public class Board {
 
     @Column(name = "BOARD_DATE")
     private LocalDateTime boardDate;
+
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public Board(long boardId, String boardTitle, String header, String boardContent, LocalDateTime boardDate) {
