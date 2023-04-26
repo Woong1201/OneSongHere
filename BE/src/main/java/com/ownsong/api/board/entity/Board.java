@@ -34,7 +34,6 @@ public class Board {
     @Column(name = "BOARD_DATE")
     private LocalDateTime boardDate;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
