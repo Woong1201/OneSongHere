@@ -1,5 +1,6 @@
 package com.ownsong.api.studio.entity;
 
+import com.ownsong.api.user.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +12,8 @@ public class StudioTeamId implements Serializable{
     private static final long serialVersionUID = 1201L;
 
     @EqualsAndHashCode.Include
-    public int userId;
+    private User user;
 
     @EqualsAndHashCode.Include
-    public int studioId;
+    private Studio studio;
 }
