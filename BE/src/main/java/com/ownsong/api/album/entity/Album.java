@@ -36,6 +36,9 @@ public class Album {
     @Column(name = "PRIVATES")
     private boolean privates;
 
+    @Column(name = "GENRE", length = 10)
+    private String genre;
+
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Likes> likesList = new ArrayList<>();
 
