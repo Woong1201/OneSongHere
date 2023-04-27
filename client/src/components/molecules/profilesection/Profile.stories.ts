@@ -4,7 +4,7 @@ import Profile from './Profile';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: 'molecule/Profile',
+  title: 'molecule/ProfileSection/Profile',
   component: Profile,
   tags: ['autodocs'],
   argTypes: {
