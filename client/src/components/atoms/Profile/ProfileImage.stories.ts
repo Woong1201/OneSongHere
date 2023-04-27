@@ -4,7 +4,7 @@ import ProfileImage from './ProfileImage';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: 'ProfileImage',
+  title: 'atom/ProfileImage',
   component: ProfileImage,
   tags: ['autodocs'],
   argTypes: {
