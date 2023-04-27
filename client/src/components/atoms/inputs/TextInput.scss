@@ -1,0 +1,11 @@
+@import "../../../styles/_variables.scss";
+@import "../../../styles/_fonts.scss";
+
+.text-input {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    padding: 0.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
