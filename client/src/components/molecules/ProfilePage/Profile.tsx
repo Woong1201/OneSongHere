@@ -16,20 +16,48 @@ interface ProfileProps {
    * 사이즈
    */
   size?: 'small' | 'medium' | 'large';
+  /**
+   * 배치 방향
+   */
+  arrangement?: 'vertical' | 'horizontal';
 }
 
-const Profile = ({ imageUrl, nickName, size }: ProfileProps) => {
+const Profile = ({
+  imageUrl,
+  nickName,
+  size = 'medium',
+  arrangement = 'vertical',
+}: ProfileProps) => {
   return (
     <div
-      className={['profile__container', `profile__container--${size}`].join(
-        ' '
-      )}
+      className={[
+        'profile__container',
+        `profile__container--${arrangement}-${size}`,
+      ].join(' ')}
     >
-      <div className={['profile__image', `profile__image--${size}`].join(' ')}>
-        <ProfileImage imageUrl={imageUrl} size={size} />
+      <div
+        className={[
+          'profile__image',
+          `profile__image--${arrangement}-${size}`,
+        ].join(' ')}
+      >
+        <ProfileImage
+          imageUrl={imageUrl}
+          size={size}
+          arrangement={arrangement}
+        />
       </div>
-      <div className="profile__text">
-        <ProfileText nickName={nickName} size={size} />
+      <div
+        className={[
+          'profile__text',
+          `profile__text--${arrangement}-${size}`,
+        ].join(' ')}
+      >
+        <ProfileText
+          nickName={nickName}
+          size={size}
+          arrangement={arrangement}
+        />
       </div>
     </div>
   );

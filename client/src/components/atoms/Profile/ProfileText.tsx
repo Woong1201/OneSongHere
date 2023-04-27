@@ -10,17 +10,26 @@ interface ProfileTextProps {
    * 크기
    */
   size?: 'small' | 'medium' | 'large';
+  /**
+   * 배치 방향
+   */
+  arrangement?: 'vertical' | 'horizontal';
 }
 
-const ProfileText = ({ nickName, size = 'medium' }: ProfileTextProps) => {
+const ProfileText = ({
+  nickName,
+  size = 'medium',
+  arrangement = 'vertical',
+}: ProfileTextProps) => {
   return (
-    <p
-      className={['profile-label__text', `profile-label__text--${size}`].join(
-        ' '
-      )}
+    <span
+      className={[
+        'profile-label__text',
+        `profile-label__text--${arrangement}-${size}`,
+      ].join(' ')}
     >
       {nickName}
-    </p>
+    </span>
   );
 };
 

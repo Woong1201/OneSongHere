@@ -3,21 +3,41 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-  display: flex;
-  justify-content: center;
 
-  &--small {
-    font-size: 12px;
-    width: 60px;
+  &--vertical {
+    &-small {
+      text-align: center;
+      font-size: 12px;
+      width: 60px;
+    }
+
+    &-medium {
+      text-align: center;
+      font-size: 16px;
+      width: 100px;
+    }
+
+    &-large {
+      text-align: center;
+      font-size: 30px;
+      width: 200px;
+    }
   }
+  &--horizontal {
+    &-small {
+      font-size: 14px;
+      width: 100px;
+      height: 20;
+    }
 
-  &--medium {
-    font-size: 16px;
-    width: 100px;
-  }
+    &-medium {
+      font-size: 40px;
+      width: 340px;
+    }
 
-  &--large {
-    font-size: 30px;
-    width: 200px;
+    &-large {
+      font-size: 60px;
+      width: 450px;
+    }
   }
 }
