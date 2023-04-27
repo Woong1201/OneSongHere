@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "studio")
+@Table(name = "RELAY_STUDIO")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RelayStudio {
