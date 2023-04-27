@@ -1,0 +1,46 @@
+.profile {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--small {
+      width: 60px;
+      padding: 5px;
+      height: auto;
+    }
+
+    &--medium {
+      width: 120px;
+      padding: 10px;
+      height: auto;
+    }
+
+    &--large {
+      width: 200px;
+      padding: 20px;
+      height: auto;
+    }
+  }
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--small {
+      width: 50px;
+    }
+    &--medium {
+      width: 100px;
+    }
+    &--large {
+      width: 300px;
+    }
+  }
+
+  &__text {
+    display: flex;
+    justify-content: center;
+  }
+}
