@@ -1,7 +1,7 @@
 import React from 'react';
 import './Profile.scss';
-import ProfileImage from 'components/atoms/Profile/ProfileImage';
-import ProfileText from 'components/atoms/Profile/ProfileText';
+import ProfileImage from 'components/atoms/profile/ProfileImage';
+import ProfileText from 'components/atoms/profile/ProfileText';
 
 interface ProfileProps {
   /**
