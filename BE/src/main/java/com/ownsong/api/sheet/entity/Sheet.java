@@ -15,7 +15,7 @@ public class Sheet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "SHEET", columnDefinition = "INT UNSIGNED")
+    @Column(name = "SHEET_ID", columnDefinition = "INT UNSIGNED")
     private Long sheetID;
 
     @Column(name = "SHEET_MATRIX", columnDefinition = "TEXT")
