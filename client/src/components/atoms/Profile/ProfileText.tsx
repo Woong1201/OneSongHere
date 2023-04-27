@@ -13,7 +13,15 @@ interface ProfileTextProps {
 }
 
 const ProfileText = ({ nickName, size = 'medium' }: ProfileTextProps) => {
-  return <p className={`profile-label__text--${size}`}>{nickName}</p>;
+  return (
+    <p
+      className={['profile-label__text', `profile-label__text--${size}`].join(
+        ' '
+      )}
+    >
+      {nickName}
+    </p>
+  );
 };
 
 export default ProfileText;

@@ -11,6 +11,7 @@ interface ProfileImageProps {
    */
   size?: 'small' | 'medium' | 'large';
 }
+
 const ProfileImage = ({ imageUrl, size = 'medium' }: ProfileImageProps) => {
   return (
     <div

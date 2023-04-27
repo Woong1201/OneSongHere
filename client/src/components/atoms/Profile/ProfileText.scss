@@ -1,13 +1,23 @@
 .profile-label__text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+
   &--small {
     font-size: 12px;
+    width: 60px;
   }
 
   &--medium {
     font-size: 16px;
+    width: 100px;
   }
 
   &--large {
-    font-size: 20px;
+    font-size: 30px;
+    width: 200px;
   }
 }
