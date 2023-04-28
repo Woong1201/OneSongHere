@@ -13,10 +13,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "USER")
@@ -71,5 +73,11 @@ public class User {
         this.UID = UID;
         this.nickname = nickname;
         this.profileUrl = profileUrl;
+    }
+
+    public User(ResponseEntity<Map> googleResponse) {
+        this.UID = (String)googleResponse.getBody().get("id");
+        this.nickname = (String)googleResponse.getBody().get("name");
+        this.profileUrl = (String)googleResponse.getBody().get("picture");
     }
 }
