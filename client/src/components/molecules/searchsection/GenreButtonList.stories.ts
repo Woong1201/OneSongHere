@@ -4,7 +4,7 @@ import { GenreButtonList } from './GenreButtonList';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: 'molecule/GenreButtonList/GenreButtonList',
+  title: 'molecule/SearchSection/GenreButtonList',
   component: GenreButtonList,
   tags: ['autodocs'],
   argTypes: {
