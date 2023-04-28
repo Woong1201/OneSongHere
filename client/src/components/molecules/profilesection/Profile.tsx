@@ -1,7 +1,7 @@
 import React from 'react';
 import './Profile.scss';
-import ProfileImage from 'components/atoms/profile/ProfileImage';
-import ProfileText from 'components/atoms/profile/ProfileText';
+// import ProfileImage from 'components/atoms/profile/ProfileImage';
+// import ProfileText from 'components/atoms/profile/ProfileText';
 
 interface ProfileProps {
   /**
@@ -41,11 +41,11 @@ const Profile = ({
           `profile__image--${arrangement}-${size}`,
         ].join(' ')}
       >
-        <ProfileImage
+        {/* <ProfileImage
           imageUrl={imageUrl}
           size={size}
           arrangement={arrangement}
-        />
+        /> */}
       </div>
       <div
         className={[
@@ -53,11 +53,11 @@ const Profile = ({
           `profile__text--${arrangement}-${size}`,
         ].join(' ')}
       >
-        <ProfileText
+        {/* <ProfileText
           nickName={nickName}
           size={size}
           arrangement={arrangement}
-        />
+        /> */}
       </div>
     </div>
   );
