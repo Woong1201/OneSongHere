@@ -1,11 +1,7 @@
 import React from 'react';
 import { ReactComponent as PurpleRecordSvg } from 'assets/images/record/record_purple.svg';
 import { ReactComponent as BlackRecordSvg } from 'assets/images/record/record_black.svg';
-
-enum Color {
-  Purple = 'purple',
-  Black = 'black',
-}
+import Color from 'types/Color';
 
 interface RecordImageProps {
   /**
