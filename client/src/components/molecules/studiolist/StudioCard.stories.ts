@@ -16,6 +16,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    studioTitle: '방 제목',
+    studioTitle: '샵빱뚜비두바',
+    startDate: new Date(2023, 4, 28),
+    endDate: new Date(2023, 5, 29),
+    tag: '재즈',
   },
 };
