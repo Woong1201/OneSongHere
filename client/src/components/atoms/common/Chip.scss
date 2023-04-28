@@ -1,0 +1,37 @@
+@import 'styles/_variables';
+
+.chip {
+  border: solid $header-color;
+  display: inline-block;
+  line-height: 1;
+  border-radius: 3em;
+  min-width: 25px;
+  max-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &--primary {
+    color: white;
+  }
+  &--secondary {
+    color: $header-color;
+  }
+
+  &--small {
+    border-width: 1.2px;
+    font-size: 16px;
+    padding: 5px 12px;
+  }
+  &--medium {
+    border-width: 1.6px;
+    font-size: 20px;
+    padding: 6px 14px;
+  }
+  &--large {
+    border-width: 2px;
+    font-size: 25px;
+    padding: 10px 18px;
+  }
+}
