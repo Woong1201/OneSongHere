@@ -1,7 +1,7 @@
 package com.ownsong.api.user.controller;
 
 import com.ownsong.api.user.entity.User;
-import com.ownsong.api.user.response.UserLoginResponse;
+import com.ownsong.api.user.dto.response.UserLoginResponse;
 import com.ownsong.api.user.service.OAuthService;
 import com.ownsong.api.user.social.Constant;
 import io.swagger.v3.oas.annotations.tags.Tag;

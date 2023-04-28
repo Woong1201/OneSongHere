@@ -1,4 +1,4 @@
-package com.ownsong.api.user.response;
+package com.ownsong.api.user.dto.response;
 
 import com.ownsong.api.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;

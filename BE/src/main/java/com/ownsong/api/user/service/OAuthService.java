@@ -1,6 +1,6 @@
 package com.ownsong.api.user.service;
 
-import com.ownsong.api.user.response.UserLoginResponse;
+import com.ownsong.api.user.dto.response.UserLoginResponse;
 import com.ownsong.api.user.social.Constant;
 import com.ownsong.api.user.social.GoogleOAuth;
 import lombok.RequiredArgsConstructor;
