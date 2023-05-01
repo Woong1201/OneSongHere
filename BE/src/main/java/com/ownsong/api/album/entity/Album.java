@@ -19,7 +19,7 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ALBUM_ID", columnDefinition = "INT UNSIGNED")
-    private Long albumId;
+    private long albumId;
 
     @Column(name = "ALBUM_URL")
     private String albumUrl;
@@ -30,8 +30,8 @@ public class Album {
     @Column(name = " ALBUM_CONTENT", length = 30)
     private String albumContent;
 
-    @Column(name = "LIKES", columnDefinition = "INT UNSIGNED")
-    private long likes;
+    @Column(name = "NUMBER_OF_LIKES", columnDefinition = "INT UNSIGNED")
+    private long numberOfLikes;
 
     @Column(name = "PRIVATES")
     private boolean privates;
@@ -46,13 +46,23 @@ public class Album {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public Album(Long albumId, String albumUrl, String albumTitle, String albumContent, long likes, boolean privates, User user) {
+    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user) {
         this.albumId = albumId;
         this.albumUrl = albumUrl;
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
-        this.likes = likes;
+        this.numberOfLikes = numberOfLikes;
         this.privates = privates;
         this.user = user;
     }
+
+    public void updateNumberOfLikes(boolean isLike){
+        if(isLike){
+            this.numberOfLikes -= 1;
+        }else{
+            this.numberOfLikes += 1;
+        }
+    }
+
+
 }
