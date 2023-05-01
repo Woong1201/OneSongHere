@@ -9,6 +9,7 @@ import Compose from 'pages/Compose';
 import Relay from 'pages/Relay';
 import Mypage from 'pages/Mypage';
 import Albums from 'pages/Albums';
+import Notfound from 'pages/Notfound';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/relay" element={<Relay />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/albums" element={<Albums />} />
+          <Route path="/*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
     </div>
