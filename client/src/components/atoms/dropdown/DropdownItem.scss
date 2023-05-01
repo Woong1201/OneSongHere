@@ -1,0 +1,19 @@
+@import 'styles/_variables';
+
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  padding: 7px 30px;
+  cursor: pointer;
+  width: 100%;
+  background: $main-theme-color;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: white;
+  font-family: 'Pretendard';
+
+  &:hover {
+    background-color: $light-main-theme-color;
+  }
+}
