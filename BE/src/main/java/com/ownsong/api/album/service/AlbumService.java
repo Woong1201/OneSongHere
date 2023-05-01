@@ -34,11 +34,10 @@ public class AlbumService {
         return albumArticle;
     }
 
-    public List<AlbumResponse> getAlbumArticles(){
+    public List<AlbumResponse> getAlbumArticles(long userId){
         List<AlbumResponse> albums = albumRepository.getAlbumArticles();
         for(AlbumResponse albumResponse : albums){
             long albumId = albumResponse.getAlbumId();
-            long userId = albumResponse.getUserId();
             Likes userLike = albumRepository.findUserLike(albumId, userId);
             albumResponse.setUserLike(userLike);
         }
