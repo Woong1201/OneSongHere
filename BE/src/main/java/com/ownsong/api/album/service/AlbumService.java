@@ -44,6 +44,16 @@ public class AlbumService {
         return albums;
     }
 
+    public List<AlbumResponse> findAlbumArticles(long userId, String search){
+        List<AlbumResponse> albums = albumRepository.findAlbumArticles(search);
+        for(AlbumResponse albumResponse : albums){
+            long albumId = albumResponse.getAlbumId();
+            Likes userLike = albumRepository.findUserLike(albumId, userId);
+            albumResponse.setUserLike(userLike);
+        }
+        return albums;
+    }
+
 
 
 //    @Transactional
