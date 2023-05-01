@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import TransparencyText from '../components/atoms/transparencytext/TransparencyText';
 
-export default function Main() {
+const Main = () => {
   return (
     <>
       <div>메인페이지</div>
@@ -16,4 +16,6 @@ export default function Main() {
       <Link to="/compose"> 작곡 페이지 </Link>
     </>
   );
-}
+};
+
+export default Main;

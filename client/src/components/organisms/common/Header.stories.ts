@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Header from './Header';
 
 const meta = {
-  title: 'molecule/Common/Header',
+  title: 'organism/Common/Header',
   component: Header,
   tags: ['autodocs'],
   argTypes: {
@@ -26,4 +26,7 @@ export const LoggedIn: Story = {
 };
 export const LoggedOut: Story = {
   args: {},
+};
+export const WhiteMode: Story = {
+  args: { whiteMode: true },
 };

@@ -9,17 +9,20 @@ import Compose from 'pages/Compose';
 import Relay from 'pages/Relay';
 import Mypage from 'pages/Mypage';
 import Albums from 'pages/Albums';
+import MainLayout from 'pages/MainLayout';
 import Notfound from 'pages/Notfound';
-
-import Footer from 'components/molecules/footer/Footer';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/albums" element={<Albums />} />
+          </Route>
           <Route path="/compose" element={<Compose />} />
           <Route path="/relay" element={<Relay />} />
           <Route path="/mypage" element={<Mypage />} />
@@ -27,7 +30,6 @@ function App() {
           <Route path="/*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }
