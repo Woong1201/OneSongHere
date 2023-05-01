@@ -10,26 +10,29 @@ import Dropdown from '../header/Dropdown';
 
 interface HeaderProps {
   user?: User;
+  whiteMode?: boolean;
   onLoginClick: () => void;
 }
 
-const Header = ({ user, onLoginClick }: HeaderProps) => {
+const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
+  const buttonColor = whiteMode ? 'other' : 'primary';
+
   return (
     <div className="header">
       <LogoIcon />
       <nav className="header__nav-list">
         <div className="header__nav-item">
-          <TextButton label="작곡" />
+          <TextButton label="작곡" white={whiteMode} />
           <Dropdown />
         </div>
-        <TextButton label="커뮤니티" />
-        <TextButton label="작품" />
+        <TextButton label="커뮤니티" white={whiteMode} />
+        <TextButton label="작품" white={whiteMode} />
       </nav>
       <div>
         {user ? (
           <ProfileImage imageUrl={user.picture} size="small" />
         ) : (
-          <Button label="로그인" color="primary" onClick={onLoginClick} />
+          <Button label="로그인" color={buttonColor} onClick={onLoginClick} />
         )}
       </div>
     </div>

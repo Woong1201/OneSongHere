@@ -27,3 +27,6 @@ export const LoggedIn: Story = {
 export const LoggedOut: Story = {
   args: {},
 };
+export const WhiteMode: Story = {
+  args: { whiteMode: true },
+};
