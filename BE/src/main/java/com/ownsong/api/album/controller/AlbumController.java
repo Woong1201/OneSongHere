@@ -57,24 +57,31 @@ public class AlbumController {
     @GetMapping
     public ResponseEntity<?> getAlbums(){
         User user = userService.getLoginUser();
-        List<AlbumResponse> albums = albumService.getAlbumArticles();
+        if(user == null){
+            userId = -1;
+        }else{
+            userId = user.getUserID();
+        }
+        List<AlbumResponse> albums = albumService.getAlbumArticles(userId);
         return ResponseEntity.ok().body(albums);
     }
 
 
 
 
-    @Operation(summary = "앨범 좋아요/취소", description = "앨범 좋아요/취소")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
-    })
-    @PostMapping(value = "likes/{albumId}")
-    public void updateUserLike(@NotNull @PathVariable Long albumId){
-        User user = userService.getLoginUser();
-        if(user != null){
-            userId = user.getUserID();
-            albumService.updateAlbumArticleLike(albumId, userId);
-        }
-    }
+
+
+//    @Operation(summary = "앨범 좋아요/취소", description = "앨범 좋아요/취소")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
+//    })
+//    @PostMapping(value = "likes/{albumId}")
+//    public void updateUserLike(@NotNull @PathVariable Long albumId){
+//        User user = userService.getLoginUser();
+//        if(user != null){
+//            userId = user.getUserID();
+//            albumService.updateAlbumArticleLike(albumId, userId);
+//        }
+//    }
 
 }
