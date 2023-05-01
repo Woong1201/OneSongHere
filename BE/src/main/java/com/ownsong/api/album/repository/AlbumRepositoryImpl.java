@@ -52,6 +52,23 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
     }
 
     @Override
+    public List<AlbumResponse> findAlbumArticles(String search) {
+        List<AlbumResponse> albumArticles =queryFactory
+                .select(Projections.constructor(AlbumResponse.class,
+                        album.albumTitle,
+                        album.albumContent,
+                        album.numberOfLikes,
+                        album.albumUrl,
+                        album.user.userID,
+                        album.user.nickname,
+                        album.albumId))
+                .from(album)
+                .where(album.albumTitle.contains(search))
+                .fetch();
+        return albumArticles;
+    }
+
+    @Override
     public Likes findUserLike(long albumId, long userId) {
         Likes userLike = queryFactory
                 .select(likes)
