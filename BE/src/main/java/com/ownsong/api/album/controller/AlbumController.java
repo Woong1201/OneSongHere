@@ -66,6 +66,22 @@ public class AlbumController {
         return ResponseEntity.ok().body(albums);
     }
 
+    @Operation(summary = "앨범 검색어 조회", description = "앨범 검색어 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
+    })
+    @GetMapping(value = "/search/{search}")
+    public ResponseEntity<?> findAlbums(@PathVariable String search){
+        User user = userService.getLoginUser();
+        if(user == null){
+            userId = -1;
+        }else{
+            userId = user.getUserID();
+        }
+        List<AlbumResponse> albums = albumService.findAlbumArticles(userId, search);
+        return ResponseEntity.ok().body(albums);
+    }
+
 
 
 
