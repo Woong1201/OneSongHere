@@ -1,6 +1,8 @@
 package com.ownsong.api.album.dto.response;
 
+import com.ownsong.api.album.entity.Likes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,12 +36,29 @@ public class AlbumResponse {
     @NotNull
     private String nickName;
 
-    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName) {
+    @Schema(description = "유저의 좋아요 여부", example = "true")
+    @NotNull
+    private boolean userLike = false;
+
+    private long albumId;
+
+    @Builder
+    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName, long albumId) {
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.likes = likes;
         this.albumUrl = albumUrl;
         this.userId = userId;
         this.nickName = nickName;
+        this.albumId = albumId;
     }
+
+
+    public void setUserLike(Likes userLike){
+        if(userLike != null){
+            this.userLike = true;
+        }
+    }
+
+
 }
