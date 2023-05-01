@@ -27,10 +27,13 @@ const TextButton = ({
   onClick,
   white = false,
 }: TextButtonProps) => {
+  // white가 true로 들어온다면 text-button--white 속성이 추가되도록 colorMode 설정
   const colorMode = white ? 'text-button--white' : null;
 
+  // to로 파라미터가 들어온다면 라우터 링크 텍스트 버튼으로 if문
   if (to) {
     return (
+      // 그런 경우 링크 태그를 이용
       <Link
         to={to}
         onClick={onClick}
@@ -40,6 +43,7 @@ const TextButton = ({
       </Link>
     );
   }
+  // to가 안들어오면 그냥 버튼
   return (
     <button
       type="button"
