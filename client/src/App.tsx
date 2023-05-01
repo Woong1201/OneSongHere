@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+// router 경로들 import
+import Main from 'pages/Main';
+import Login from 'pages/Login';
+import Compose from 'pages/Compose';
+import Relay from 'pages/Relay';
+import Mypage from 'pages/Mypage';
+import Albums from 'pages/Albums';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          레쓰고
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/compose" element={<Compose />} />
+          <Route path="/relay" element={<Relay />} />
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/albums" element={<Albums />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
