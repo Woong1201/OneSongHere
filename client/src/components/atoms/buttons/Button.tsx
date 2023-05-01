@@ -16,7 +16,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const mode = tag ? 'button--tag' : 'button--flat';
-  const border = shadow ? 'butotn--shadow' : null;
+  const border = shadow ? 'button--shadow' : null;
   return (
     <button
       type="button"
