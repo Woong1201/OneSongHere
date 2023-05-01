@@ -20,6 +20,10 @@ public class BoardResponse {
     @NotNull
     private long userId;
 
+    @Schema(description = "작성자 닉네임 입니다.", example = "Zi존두현")
+    @NotNull
+    private String nickName;
+
     @Schema(description = "제목", example = "제목입니다.")
     @NotNull
     private String boardTitle;
@@ -43,5 +47,6 @@ public class BoardResponse {
         this.boardContent = board.getBoardContent();
         this.boardDate = board.getBoardDate();
         this.userId = board.getUser().getUserID();
+        this.nickName = board.getUser().getNickname();
     }
 }
