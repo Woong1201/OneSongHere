@@ -1,0 +1,18 @@
+@import '/src/styles/_variables.scss';
+@import '/src/styles/fonts';
+.footer {
+  background-color: $header-color;
+  color: $disabled-color;
+  padding: 3%;
+
+  &--info {
+    margin-top: 2%;
+  }
+}
+hr {
+  color: $disabled-color;
+}
+p {
+    margin: 0;
+    padding: 0;
+}
