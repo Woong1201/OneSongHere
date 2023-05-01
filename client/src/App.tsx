@@ -11,6 +11,8 @@ import Mypage from 'pages/Mypage';
 import Albums from 'pages/Albums';
 import Notfound from 'pages/Notfound';
 
+import Footer from 'components/molecules/footer/Footer';
+
 function App() {
   return (
     <div className="App">
@@ -25,6 +27,7 @@ function App() {
           <Route path="/*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
