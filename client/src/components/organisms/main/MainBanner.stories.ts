@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import MainBanner from './MainBanner';
 
 const meta = {
-  title: 'molecule/mainbody/MainBanner',
+  title: 'organism/main/MainBanner',
   component: MainBanner,
   tags: ['autodocs'],
   argTypes: {
