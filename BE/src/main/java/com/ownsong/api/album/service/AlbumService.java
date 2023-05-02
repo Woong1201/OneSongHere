@@ -1,22 +1,21 @@
 package com.ownsong.api.album.service;
 
+import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.album.dto.response.AlbumResponse;
 import com.ownsong.api.album.entity.Album;
 import com.ownsong.api.album.entity.Likes;
-import com.ownsong.api.album.entity.LikesId;
 import com.ownsong.api.album.repository.AlbumRepository;
 import com.ownsong.api.album.repository.LikesRepository;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.repository.UserRepository;
-import com.ownsong.config.QueryDslConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -26,6 +25,7 @@ public class AlbumService {
     private final AlbumRepository albumRepository;
     private final LikesRepository likesRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
     private EntityManager entityManager;
     public AlbumResponse findAlbumArticle(long albumId, long userId){
         AlbumResponse albumArticle = albumRepository.findAlbumArticle(albumId);
@@ -53,6 +53,34 @@ public class AlbumService {
         }
         return albums;
     }
+
+    @Transactional
+    public AlbumResponse creatAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, MultipartFile file, User user){
+        String imagePath = s3Service.uploadFile(file);
+        Album album = Album.builder()
+                .albumTitle(albumArticleCreateRequest.getAlbumTitle())
+                .albumContent(albumArticleCreateRequest.getAlbumContent())
+                .numberOfLikes(0)
+                .albumUrl(imagePath)
+                .user(user)
+                .genre(albumArticleCreateRequest.getGenre())
+                .build();
+        album = albumRepository.save(album);
+
+        AlbumResponse albumResponse = AlbumResponse.builder()
+                .albumTitle(album.getAlbumTitle())
+                .albumContent(album.getAlbumContent())
+                .likes(0)
+                .albumUrl(imagePath)
+                .albumId(album.getAlbumId())
+                .nickName(user.getNickname())
+                .userId(user.getUserID())
+                .genre(album.getGenre())
+                .build();
+
+        return albumResponse;
+    }
+
 
 
 
