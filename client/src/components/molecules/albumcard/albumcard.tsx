@@ -1,8 +1,10 @@
 import React from 'react';
 import 'components/molecules/albumcard/albumcard.scss';
+// atom import
 import CardTitle from 'components/atoms/common/CardTitle';
 import Chip from 'components/atoms/common/Chip';
 import LikeHeart from 'components/atoms/likeheart/LikeHeart';
+import AlbumImage from 'components/atoms/albumimage/AlbumImage';
 
 interface AlbumCardProps {
   //   작품 앨범 커버
@@ -29,15 +31,13 @@ const AlbumCard = ({
 }: AlbumCardProps) => {
   return (
     <div className="album-card">
-      <div className="album-card-cover-box">
-        <div className="album-card__cover-frame">
-          <img
-            src={imgPath}
-            alt="작품 앨범 커버"
-            className="album-card__cover-image"
-          />
-        </div>
+      {/* 사진 영역 */}
+      <div className="album-card__cover-box">
+        {/* <div className="album-card__cover-frame"> */}
+        <AlbumImage imageUrl={imgPath} size="large" />
+        {/* </div> */}
       </div>
+      {/* 정보 영역 */}
       <div className="album-card__info-box">
         <div>
           <CardTitle title={albumTitle} maxWidth={400} />
@@ -49,7 +49,7 @@ const AlbumCard = ({
         <div>
           <Chip label={tag} size="small" />
         </div>
-        <div>{albumInfo}</div>
+        <div className="album-card__info-album-info">{albumInfo}</div>
       </div>
     </div>
   );

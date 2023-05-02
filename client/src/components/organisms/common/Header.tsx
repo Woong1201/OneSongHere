@@ -32,7 +32,12 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
         {user ? (
           <ProfileImage imageUrl={user.picture} size="small" />
         ) : (
-          <Button label="로그인" color={buttonColor} onClick={onLoginClick} />
+          <Button
+            label="로그인"
+            color={buttonColor}
+            onClick={onLoginClick}
+            type="submit"
+          />
         )}
       </div>
     </div>

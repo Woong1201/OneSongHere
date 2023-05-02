@@ -1,43 +1,49 @@
 .album-card {
     display: flex;
     position: relative;
-    width: 600px;
+    width: 500px;
     height: 200px;
     border-radius: 15px;
     box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
 
     &__cover-box{
         margin: 10px;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;   
     }
     &__cover-frame {
         margin: 10px;
-        width: 180px;
-        height: 180px;
+        width: 150px;
+        height: 150px;
         border-radius: 15px;
         overflow: hidden;
         position: relative;
     }
-    &__cover-image {
-        object-fit: fill;
-        width: 180px;
-        height: 180px;
-    }
     &__info-box{
-        margin: 10px;
+        margin: 20px;
         width: 100%;
         height: 180px;
         display: flex;
-           flex-direction: column;
+        flex-direction: column;
+        align-items:start;
         position: relative;
     }
 
     &__info-studio-like{
+        margin-top: 2px;
+        margin-bottom: 2px;
         display: flex;
+        width: 100%;
         justify-content: space-between;
         flex-direction: row;
         align-items: center;
     }
 
+    &__info-album-info{
+        margin-top: 4px;
+        width: 100%;
+        text-align: start;
+    }
 
 }
