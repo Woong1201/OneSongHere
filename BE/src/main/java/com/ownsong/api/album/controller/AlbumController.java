@@ -1,9 +1,10 @@
 package com.ownsong.api.album.controller;
 
 
+import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.album.dto.response.AlbumResponse;
-import com.ownsong.api.album.entity.Album;
 import com.ownsong.api.album.service.AlbumService;
+import com.ownsong.api.album.service.S3Service;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,14 +15,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -32,6 +31,7 @@ import java.util.List;
 public class AlbumController {
     private final AlbumService albumService;
     private final UserService userService;
+    private final S3Service s3Service;
     static long userId;
     @Operation(summary = "앨범 단건 조회", description = "앨범 id로 앨범 내용 단건 조회")
     @ApiResponses(value = {
@@ -47,6 +47,10 @@ public class AlbumController {
         }
 
         AlbumResponse album = albumService.findAlbumArticle(albumId, userId);
+        if(album == null){
+            return ResponseEntity.status(400).body("잘못된 접근");
+        }
+
         return ResponseEntity.ok().body(album);
     }
 
@@ -79,10 +83,26 @@ public class AlbumController {
             userId = user.getUserID();
         }
         List<AlbumResponse> albums = albumService.findAlbumArticles(userId, search);
+        if(albums == null){
+            return ResponseEntity.status(400).body("잘못된 접근");
+        }
         return ResponseEntity.ok().body(albums);
     }
 
+    @Operation(summary = "앨범 게시물 등록", description = "앨범 게시물 등록")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+    })
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
+        return ResponseEntity.ok().body(album);
 
+    }
 
 
 
