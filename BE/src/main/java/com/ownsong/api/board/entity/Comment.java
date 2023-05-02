@@ -1,5 +1,7 @@
 package com.ownsong.api.board.entity;
 
+import com.ownsong.api.board.dto.request.CommentCreateRequest;
+import com.ownsong.api.board.dto.request.CommentModifyRequest;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,5 +42,16 @@ public class Comment {
         this.commentDate = commentDate;
         this.user = user;
         this.board = board;
+    }
+
+    public Comment(CommentCreateRequest commentCreateRequest, User user, Board board) {
+        this.commentContent = commentCreateRequest.getCommentContent();
+        this.commentDate = LocalDateTime.now();
+        this.user = user;
+        this.board = board;
+    }
+
+    public void modifyComment(CommentModifyRequest commentModifyRequest) {
+        this.commentContent = commentModifyRequest.getCommentContent();
     }
 }
