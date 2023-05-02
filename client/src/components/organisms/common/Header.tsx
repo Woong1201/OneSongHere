@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
-  const buttonColor = whiteMode ? 'other' : 'primary';
+  const buttonColor = whiteMode ? 'main' : 'primary';
 
   return (
     <div className="header">
@@ -32,7 +32,12 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
         {user ? (
           <ProfileImage imageUrl={user.picture} size="small" />
         ) : (
-          <Button label="로그인" color={buttonColor} onClick={onLoginClick} />
+          <Button
+            label="로그인"
+            color={buttonColor}
+            onClick={onLoginClick}
+            type="submit"
+          />
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import './reset.scss';
+import './App.scss';
 // router 경로들 import
 import Main from 'pages/Main';
 import Login from 'pages/Login';
@@ -25,11 +25,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/albums" element={<Albums />} />
+            <Route path="/*" element={<Notfound />} />
           </Route>
           <Route path="/compose" element={<Compose />} />
           <Route path="/relay" element={<Relay />} />
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="/albums" element={<Albums />} />
           <Route path="/board" element={<Board />} />
           <Route path="/board/:articleId" element={<Article />} />
           <Route path="/create" element={<Create />} />
