@@ -1,0 +1,20 @@
+.main {
+  &__layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vw;
+    &-header {
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      z-index: 1;
+      width: 100%;
+    }
+    &-body {
+      flex-grow: 1;
+      position: relative;
+    }
+  }
+}

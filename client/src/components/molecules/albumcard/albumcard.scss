@@ -1,0 +1,43 @@
+.album-card {
+    display: flex;
+    position: relative;
+    width: 600px;
+    height: 200px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+
+    &__cover-box{
+        margin: 10px;
+
+    }
+    &__cover-frame {
+        margin: 10px;
+        width: 180px;
+        height: 180px;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+    }
+    &__cover-image {
+        object-fit: fill;
+        width: 180px;
+        height: 180px;
+    }
+    &__info-box{
+        margin: 10px;
+        width: 100%;
+        height: 180px;
+        display: flex;
+           flex-direction: column;
+        position: relative;
+    }
+
+    &__info-studio-like{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+
+
+}
