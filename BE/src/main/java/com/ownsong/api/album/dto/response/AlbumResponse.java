@@ -40,10 +40,13 @@ public class AlbumResponse {
     @NotNull
     private boolean userLike = false;
 
+    @Schema(description = "장르", example = "힙합")
+    private String genre;
+
     private long albumId;
 
     @Builder
-    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName, long albumId) {
+    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName, long albumId, String genre) {
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.likes = likes;
@@ -51,6 +54,7 @@ public class AlbumResponse {
         this.userId = userId;
         this.nickName = nickName;
         this.albumId = albumId;
+        this.genre = genre;
     }
 
 
