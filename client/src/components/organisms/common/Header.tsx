@@ -7,6 +7,7 @@ import TextButton from 'components/atoms/buttons/TextButton';
 import { Button } from 'components/atoms/buttons/Button';
 import ProfileImage from 'components/atoms/profile/ProfileImage';
 import Dropdown from 'components/molecules/header/Dropdown';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   user?: User;
@@ -17,26 +18,31 @@ interface HeaderProps {
 const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
   const buttonColor = whiteMode ? 'main' : 'primary';
 
+  const navigate = useNavigate();
+  const navigateLoginPage = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="header">
-      <LogoIcon />
+      <LogoIcon goHome />
       <nav className="header__nav-list">
         <div className="header__nav-item">
           <TextButton label="작곡" white={whiteMode} />
           <Dropdown />
         </div>
         <TextButton label="커뮤니티" white={whiteMode} />
-        <TextButton label="작품" white={whiteMode} />
+        <TextButton label="작품" white={whiteMode} to="/albums" />
       </nav>
       <div>
         {user ? (
           <ProfileImage imageUrl={user.picture} size="small" />
         ) : (
           <Button
+            type="button"
             label="로그인"
             color={buttonColor}
-            onClick={onLoginClick}
-            type="submit"
+            onClick={navigateLoginPage}
           />
         )}
       </div>

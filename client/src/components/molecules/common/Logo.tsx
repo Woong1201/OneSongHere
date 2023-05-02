@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Logo = () => {
+interface LogoProps {
+  goHome?: boolean;
+}
+
+const Logo = ({ goHome = false }: LogoProps) => {
   return <div />;
 };
 
