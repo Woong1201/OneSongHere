@@ -81,6 +81,21 @@ public class AlbumService {
         return albumResponse;
     }
 
+    @Transactional
+    public boolean deleteAlbumArticle(long albumId, User user){
+        Album album;
+        try{
+            album = albumRepository.findById(albumId).get();
+        }catch (Exception e){
+            return false;
+        }
+        if(album.getUser().getUserID() != user.getUserID()){
+            return false;
+        }
+        albumRepository.delete(album);
+        return true;
+    }
+
 
 
 
