@@ -5,7 +5,7 @@ import { TextInput } from '../../atoms/inputs/TextInput';
 
 interface SearchBarProps {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SearchBar = ({ label, onClick }: SearchBarProps) => {

@@ -11,6 +11,9 @@ import Mypage from 'pages/Mypage';
 import Albums from 'pages/Albums';
 import MainLayout from 'pages/MainLayout';
 import Notfound from 'pages/Notfound';
+import Article from 'pages/Article';
+import Board from 'pages/Board';
+import Create from 'pages/Create';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           <Route path="/relay" element={<Relay />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/albums" element={<Albums />} />
+          <Route path="/board" element={<Board />} />
+          <Route path="/board/:articleId" element={<Article />} />
+          <Route path="/create" element={<Create />} />
           <Route path="/*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
