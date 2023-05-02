@@ -3,6 +3,7 @@ package com.ownsong.api.album.entity;
 
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,7 +47,8 @@ public class Album {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user) {
+    @Builder
+    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user, String genre) {
         this.albumId = albumId;
         this.albumUrl = albumUrl;
         this.albumTitle = albumTitle;
@@ -54,6 +56,7 @@ public class Album {
         this.numberOfLikes = numberOfLikes;
         this.privates = privates;
         this.user = user;
+        this.genre = genre;
     }
 
     public void updateNumberOfLikes(boolean isLike){
