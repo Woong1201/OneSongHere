@@ -3,6 +3,7 @@ package com.ownsong.api.album.controller;
 
 import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.album.dto.response.AlbumResponse;
+import com.ownsong.api.album.entity.QAlbum;
 import com.ownsong.api.album.service.AlbumService;
 import com.ownsong.api.album.service.S3Service;
 import com.ownsong.api.user.entity.User;
@@ -72,7 +73,7 @@ public class AlbumController {
 
     @Operation(summary = "앨범 검색어 조회", description = "앨범 검색어 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = QAlbum.class))),
     })
     @GetMapping(value = "/search/{search}")
     public ResponseEntity<?> findAlbums(@PathVariable String search){
@@ -101,8 +102,40 @@ public class AlbumController {
         }
         AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
         return ResponseEntity.ok().body(album);
-
     }
+
+    @Operation(summary = "앨범 게시물 삭제", description = "앨범 게시물 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success"),
+    })
+    @DeleteMapping(value = "{albumId}")
+    public ResponseEntity<?> deleteAlbumArticle(@PathVariable long albumId){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        if(!albumService.deleteAlbumArticle(albumId, user)){
+            return ResponseEntity.status(400).body("wrong access");
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "앨범 게시물 수정", description = "앨범 게시물 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+    })
+    @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        if(!albumService.editAlbumArticle(albumArticleCreateRequest, file, user)){
+            return ResponseEntity.status(400).body("wrong access");
+        }
+        return ResponseEntity.ok().build();
+    }
+
 
 
 

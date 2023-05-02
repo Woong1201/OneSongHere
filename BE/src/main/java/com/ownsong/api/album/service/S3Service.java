@@ -33,18 +33,18 @@ public class S3Service {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
-        String imagePath;
+        String filePath;
 //        파일 업로드
         try (InputStream inputStream = file.getInputStream()) {
             amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
 //            올린 오브젝트에 대한 s3 url
-            imagePath = amazonS3.getUrl(bucket, fileName).toString();
+            filePath = amazonS3.getUrl(bucket, fileName).toString();
         } catch (IOException e) {
             throw new IllegalArgumentException("파일 업땅");
         }
 
-        return imagePath;
+        return filePath;
     }
 
     private String createFileName(String fileName) {

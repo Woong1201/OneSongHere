@@ -27,10 +27,14 @@ public class AlbumArticleCreateRequest {
     @NotNull
     private String genre;
 
-    public AlbumArticleCreateRequest(String albumTitle, String albumContent, boolean privates, String genre) {
+    @Schema(description = "앨범 아이디", example = "1")
+    private long albumId;
+
+    public AlbumArticleCreateRequest(String albumTitle, String albumContent, boolean privates, String genre, long albumId) {
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.privates = privates;
         this.genre = genre;
+        this.albumId = albumId;
     }
 }
