@@ -2,10 +2,14 @@ package com.ownsong.api.board.service;
 
 import com.ownsong.api.board.dto.request.BoardCreateRequest;
 import com.ownsong.api.board.dto.request.BoardModifyRequest;
+import com.ownsong.api.board.dto.request.CommentCreateRequest;
+import com.ownsong.api.board.dto.request.CommentModifyRequest;
 import com.ownsong.api.board.dto.response.BoardListResponse;
 import com.ownsong.api.board.dto.response.BoardResponse;
 import com.ownsong.api.board.entity.Board;
+import com.ownsong.api.board.entity.Comment;
 import com.ownsong.api.board.repository.BoardRepository;
+import com.ownsong.api.board.repository.CommentRepository;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.repository.UserRepository;
 import com.ownsong.api.user.social.Constant;
@@ -25,6 +29,7 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     public BoardResponse createBoard(BoardCreateRequest boardCreateRequest, User user) {
         Board board = boardRepository.save(new Board(boardCreateRequest, user));
@@ -113,5 +118,56 @@ public class BoardService {
             boardListResponses.add(new BoardListResponse(board));
         }
         return boardListResponses;
+    }
+
+    public BoardResponse createComment(CommentCreateRequest commentCreateRequest, User user) {
+        Board board;
+        // board 가 db 에 존재하는지 확인
+        try {
+            board = boardRepository.findById(commentCreateRequest.getBoardId()).get();
+        }catch (Exception e) {
+            return null;
+        }
+        // comment 를 db 에 저장
+        Comment comment = commentRepository.save(new Comment(commentCreateRequest, user, board));
+        board.getComments().add(comment);
+
+        return new BoardResponse(board);
+    }
+
+    public BoardResponse modifyComment(CommentModifyRequest commentModifyRequest, User user) {
+        Comment comment;
+        // 수정하려는 comment 가 db 에 존재하는지 확인
+        try {
+            comment = commentRepository.findById(commentModifyRequest.getCommentId()).get();
+        }catch (Exception e) {
+            return null;
+        }
+
+        // comment 를 수정 후 db에 저장
+        comment.modifyComment(commentModifyRequest);
+        commentRepository.save(comment);
+
+        return new BoardResponse(comment.getBoard());
+    }
+
+    public BoardResponse deleteComment(Long commentId, User user) {
+        Comment comment;
+        // 삭제하려는 comment 가 db 에 존재하는지 확인
+        try {
+            comment = commentRepository.findById(commentId).get();
+        }catch (Exception e) {
+            return null;
+        }
+
+        // comment 의 삭제 권한 확인
+        if (comment.getUser().getUserID() != user.getUserID())
+            return null;
+
+        // comment 삭제 후 board 리턴
+        Board board = comment.getBoard();
+        board.getComments().remove(comment);
+        boardRepository.save(board);
+        return new BoardResponse(board);
     }
 }
