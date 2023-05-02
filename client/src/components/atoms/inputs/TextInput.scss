@@ -3,9 +3,14 @@
 
 .text-input {
     font-family: 'Pretendard';
-    font-weight: 200;
     padding: 0.5rem;
     outline: none;
     border: none;
     background-color: transparent;
+    width: 400px;
+
+    &--border {
+        border: 2px solid $main-theme-color;
+        border-radius: 10px;
+    }
 }
