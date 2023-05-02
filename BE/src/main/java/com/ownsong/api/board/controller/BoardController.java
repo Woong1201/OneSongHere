@@ -2,6 +2,8 @@ package com.ownsong.api.board.controller;
 
 import com.ownsong.api.board.dto.request.BoardCreateRequest;
 import com.ownsong.api.board.dto.request.BoardModifyRequest;
+import com.ownsong.api.board.dto.request.CommentCreateRequest;
+import com.ownsong.api.board.dto.request.CommentModifyRequest;
 import com.ownsong.api.board.dto.response.BoardListResponse;
 import com.ownsong.api.board.dto.response.BoardResponse;
 import com.ownsong.api.board.service.BoardService;
@@ -75,7 +77,7 @@ public class BoardController {
 
     @Operation(summary = "게시글 삭제", description = "게시글 삭제 메서드입니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "게시글 삭제 성공"),
+            @ApiResponse(responseCode = "201", description = "게시글 삭제 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = BoardListResponse.class)))),
             @ApiResponse(responseCode = "400", description = "bad request operation")
     })
     @DeleteMapping("/{boardId}")
@@ -130,5 +132,66 @@ public class BoardController {
         Constant.SearchType searchType = Constant.SearchType.valueOf(type.toUpperCase());
         // boardList 조회
         return ResponseEntity.status(200).body(boardService.searchBoards(searchType, search));
+    }
+
+    @Operation(summary = "댓글 등록", description = "댓글 등록 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "댓글 등록 성공", content = @Content(schema = @Schema(implementation = BoardResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PostMapping("/comments")
+    public ResponseEntity<?> commentAdd(@RequestBody CommentCreateRequest commentCreateRequest) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null) {
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+        }
+        // 입력받은 comment 를 db에 add
+        BoardResponse boardResponse = boardService.createComment(commentCreateRequest, user);
+
+        return ResponseEntity.status(200).body(boardResponse);
+    }
+
+    @Operation(summary = "댓글 수정", description = "댓글 수정 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "댓글 수정 성공", content = @Content(schema = @Schema(implementation = BoardResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PutMapping("/comments")
+    public ResponseEntity<?> commentModify(@RequestBody CommentModifyRequest commentModifyRequest) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null) {
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+        }
+        // 입력받은 comment 를 db 에서 확인 후 수정
+        BoardResponse boardResponse = boardService.modifyComment(commentModifyRequest, user);
+        if (boardResponse == null)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(boardResponse);
+    }
+
+    @Operation(summary = "댓글 삭제", description = "댓글 삭제 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "댓글 삭제 성공", content = @Content(schema = @Schema(implementation = BoardResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<?> commentDelete(@PathVariable Long commentId) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null) {
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+        }
+        // 입력받은 comment 를 db 에서 확인 후 수정
+        BoardResponse boardResponse = boardService.deleteComment(commentId, user);
+        if (boardResponse == null)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(boardResponse);
     }
 }
