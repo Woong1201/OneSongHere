@@ -10,8 +10,18 @@ interface HallOfFameBGProps {
 
 const HallOfFameBG = ({ imgPath }: HallOfFameBGProps) => {
   return (
-    <div>
-      <AlbumImage imageUrl={imgPath} size="fame" />
+    <div className="halloffame">
+      <div className="halloffame__foreground-container">
+        <div className="halloffame__foreground-cover">
+          <AlbumImage imageUrl={imgPath} />
+        </div>
+      </div>
+      <div className="halloffame__background-blur" />
+      <img
+        src={imgPath}
+        alt="배경 이미지가 없습니다"
+        className="halloffame__background"
+      />
     </div>
   );
 };

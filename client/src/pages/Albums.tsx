@@ -1,12 +1,14 @@
 import AlbumCard from 'components/molecules/albumcard/albumcard';
 import { Button } from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
+import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import './Albums.scss';
 
 export default function Albums() {
   return (
     <div className="album-container">
       <h1>명예의 전당</h1>
+      <HallOfFameBG imgPath="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F19%2F2018%2F02%2F13%2Ffield-image-ham-slices-hero-2000.jpg&q=60" />
       {/* 생성날짜가 이번 달이고, 하트 개수가 가장 많은 앨범 세 개를 골라서 캐러셀으로 출력(자동전환) */}
       <div>
         <Button
