@@ -1,6 +1,7 @@
 package com.ownsong.api.album.entity;
 
 
+import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -65,6 +66,13 @@ public class Album {
         }else{
             this.numberOfLikes += 1;
         }
+    }
+    public void updateAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, String fileUrl){
+        this.albumTitle = albumArticleCreateRequest.getAlbumTitle();
+        this.albumContent = albumArticleCreateRequest.getAlbumContent();
+        this.privates = !albumArticleCreateRequest.isPrivates();
+        this.genre = albumArticleCreateRequest.getGenre();
+        this.albumUrl = fileUrl;
     }
 
 
