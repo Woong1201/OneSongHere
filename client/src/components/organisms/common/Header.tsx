@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
-  const buttonColor = whiteMode ? 'other' : 'primary';
+  const buttonColor = whiteMode ? 'main' : 'primary';
 
   return (
     <div className="header">
