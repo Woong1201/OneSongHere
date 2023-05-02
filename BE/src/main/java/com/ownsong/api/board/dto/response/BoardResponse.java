@@ -1,12 +1,15 @@
 package com.ownsong.api.board.dto.response;
 
 import com.ownsong.api.board.entity.Board;
+import com.ownsong.api.board.entity.Comment;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -40,6 +43,10 @@ public class BoardResponse {
     @NotNull
     private LocalDateTime boardDate;
 
+    @Schema(description = "댓글 리스트", example = "comment List")
+    @NotNull
+    private List<CommentResponse> commentResponses = new ArrayList<>();
+
     public BoardResponse(Board board) {
         this.boardId = board.getBoardId();
         this.boardTitle = board.getBoardTitle();
@@ -48,5 +55,8 @@ public class BoardResponse {
         this.boardDate = board.getBoardDate();
         this.userId = board.getUser().getUserID();
         this.nickName = board.getUser().getNickname();
+        for (Comment comment : board.getComments()) {
+            commentResponses.add(new CommentResponse(comment));
+        }
     }
 }
