@@ -10,11 +10,12 @@ interface CardTitleProps {
    * 넘으면 말줄임표 넣어버리는 기준
    */
   maxWidth?: number;
+  color?: string;
 }
 
-const CardTitle = ({ title, maxWidth }: CardTitleProps) => {
+const CardTitle = ({ title, maxWidth, color }: CardTitleProps) => {
   return (
-    <span className="card-title" style={{ maxWidth }}>
+    <span className="card-title" style={{ maxWidth, color }}>
       {title}
     </span>
   );
