@@ -1,0 +1,36 @@
+.halloffame{
+    width: 100%;
+    backdrop-filter: blur(4px);
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    &__background-blur{
+        height: 100%;
+        width: 100%;
+        backdrop-filter: blur(4px);
+        background: rgba(220, 220, 220, 0.2);
+        position: absolute;
+    }
+
+    &__background{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+    
+    &__foreground-container{
+        width: 40%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+    }
+
+    &__foreground-cover{
+        position: absolute;
+        z-index: 1;
+    }
+}

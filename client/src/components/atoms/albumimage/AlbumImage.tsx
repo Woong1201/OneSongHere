@@ -9,7 +9,7 @@ interface AlbumImageProps {
   /**
    * 이미지 크기
    */
-  size?: 'small' | 'medium';
+  size?: 'small' | 'medium' | 'large';
 }
 
 const AlbumImage = ({ imageUrl, size = 'medium' }: AlbumImageProps) => {
