@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import 'pages/Main';
-import MainBanner from 'components/molecules/mainbody/MainBanner';
+import MainBanner from 'components/organisms/main/MainBanner';
 import TransparencyText from '../components/atoms/transparencytext/TransparencyText';
 
 const Main = () => {
