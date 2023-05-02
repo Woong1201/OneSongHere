@@ -38,6 +38,7 @@ public class AlbumService {
         List<AlbumResponse> albums = albumRepository.getAlbumArticles();
         for(AlbumResponse albumResponse : albums){
             long albumId = albumResponse.getAlbumId();
+
             Likes userLike = albumRepository.findUserLike(albumId, userId);
             albumResponse.setUserLike(userLike);
         }
@@ -56,12 +57,12 @@ public class AlbumService {
 
     @Transactional
     public AlbumResponse creatAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, MultipartFile file, User user){
-        String imagePath = s3Service.uploadFile(file);
+        String filePath = s3Service.uploadFile(file);
         Album album = Album.builder()
                 .albumTitle(albumArticleCreateRequest.getAlbumTitle())
                 .albumContent(albumArticleCreateRequest.getAlbumContent())
                 .numberOfLikes(0)
-                .albumUrl(imagePath)
+                .albumUrl(filePath)
                 .user(user)
                 .genre(albumArticleCreateRequest.getGenre())
                 .build();
@@ -71,7 +72,7 @@ public class AlbumService {
                 .albumTitle(album.getAlbumTitle())
                 .albumContent(album.getAlbumContent())
                 .likes(0)
-                .albumUrl(imagePath)
+                .albumUrl(filePath)
                 .albumId(album.getAlbumId())
                 .nickName(user.getNickname())
                 .userId(user.getUserID())
@@ -93,6 +94,23 @@ public class AlbumService {
             return false;
         }
         albumRepository.delete(album);
+        return true;
+    }
+
+    @Transactional
+    public boolean editAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, MultipartFile file, User user){
+        Album album;
+        String filePath;
+        try{
+            album = albumRepository.findById(albumArticleCreateRequest.getAlbumId()).get();
+            filePath = s3Service.uploadFile(file);
+        }catch (Exception e){
+            return false;
+        }
+        if(album.getUser().getUserID() != user.getUserID()){
+            return false;
+        }
+        album.updateAlbumArticle(albumArticleCreateRequest, filePath);
         return true;
     }
 
