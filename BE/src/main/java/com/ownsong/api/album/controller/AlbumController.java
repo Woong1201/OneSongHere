@@ -101,8 +101,24 @@ public class AlbumController {
         }
         AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
         return ResponseEntity.ok().body(album);
-
     }
+
+    @Operation(summary = "앨범 게시물 삭제", description = "앨범 게시물 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+    })
+    @DeleteMapping(value = "{albumId}")
+    public ResponseEntity<?> deleteAlbumArticle(@PathVariable long albumId){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        if(!albumService.deleteAlbumArticle(albumId, user)){
+            return ResponseEntity.status(400).body("wrong access");
+        }
+        return ResponseEntity.ok().build();
+    }
+
 
 
 
