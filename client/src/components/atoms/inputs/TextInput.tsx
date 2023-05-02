@@ -1,12 +1,26 @@
 import React from 'react';
 import './TextInput.scss';
 
-interface ButtonProps {
+interface TextInputProps {
   label: string;
-  onClick?: () => void;
+  value: string;
+  stroke?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export const TextInput = ({ label, ...props }: ButtonProps) => {
+export const TextInput = ({
+  label,
+  value,
+  stroke = false,
+  ...props
+}: TextInputProps) => {
+  const border = stroke ? 'text-input--border' : null;
   return (
-    <input type="text" placeholder={label} className="text-input" {...props} />
+    <input
+      type="text"
+      placeholder={label}
+      className={['text-input', border].join(' ')}
+      value={value}
+      {...props}
+    />
   );
 };

@@ -39,6 +39,7 @@ export const GenreButtonList = () => {
         <Button
           key={genre.name}
           onClick={() => handleClick(genre.name)}
+          type="button"
           tag
           label={genre.name}
           color={select.includes(genre.name) ? 'primary' : 'other'}
