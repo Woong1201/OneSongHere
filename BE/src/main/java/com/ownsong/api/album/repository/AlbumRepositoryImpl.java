@@ -28,7 +28,8 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                                 album.albumUrl,
                                 album.user.userID,
                                 album.user.nickname,
-                                album.albumId))
+                                album.albumId,
+                                album.genre))
                 .from(album)
                 .where(album.albumId.eq(albumId))
                 .fetchOne();
@@ -45,7 +46,8 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                         album.albumUrl,
                         album.user.userID,
                         album.user.nickname,
-                        album.albumId))
+                        album.albumId,
+                        album.genre))
                 .from(album)
                 .fetch();
         return albumArticles;
@@ -61,7 +63,8 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                         album.albumUrl,
                         album.user.userID,
                         album.user.nickname,
-                        album.albumId))
+                        album.albumId,
+                        album.genre))
                 .from(album)
                 .where(album.albumTitle.contains(search))
                 .fetch();
