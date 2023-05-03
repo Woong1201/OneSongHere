@@ -15,7 +15,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {
-    label: '검색어를 입력해주세요.',
-  },
+  args: {},
 };
