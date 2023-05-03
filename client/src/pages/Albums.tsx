@@ -5,7 +5,7 @@ import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import './Albums.scss';
 
-export default function Albums() {
+const Albums = () => {
   return (
     <div className="album-container">
       <SectionTitle title="명예의 전당" />
@@ -50,4 +50,6 @@ export default function Albums() {
       />
     </div>
   );
-}
+};
+
+export default Albums;
