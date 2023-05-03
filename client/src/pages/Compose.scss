@@ -1,0 +1,13 @@
+.compose-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__search-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 1440px;
+    height: 30vh;
+  }
+}
