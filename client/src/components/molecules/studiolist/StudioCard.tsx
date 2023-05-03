@@ -43,7 +43,7 @@ const StudioCard = ({
       </div>
       <div className="studio-card__info">
         <div className="studio-card__title">
-          <CardTitle title={studioTitle} maxWidth={400} />
+          <CardTitle title={studioTitle} maxWidth={180} />
         </div>
         <div className="studio-card__date">
           <CardDate startDate={startDate} endDate={endDate} />
