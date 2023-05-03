@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 const URL = 'http://onesonghere.r-e.kr:8080/api/v1';
 
 // application/json 타입
-function apiInstance(): AxiosInstance {
+const apiInstance = (): AxiosInstance => {
   const AxiosInst = axios.create({
     baseURL: URL,
     headers: {
@@ -12,10 +12,10 @@ function apiInstance(): AxiosInstance {
   });
 
   return AxiosInst;
-}
+};
 
 // multipart/form-data 형식
-function apiFormInstance(): AxiosInstance {
+const apiFormInstance = (): AxiosInstance => {
   const AxiosInst = axios.create({
     baseURL: URL,
     headers: {
@@ -24,6 +24,6 @@ function apiFormInstance(): AxiosInstance {
   });
 
   return AxiosInst;
-}
+};
 
 export { apiInstance, apiFormInstance };
