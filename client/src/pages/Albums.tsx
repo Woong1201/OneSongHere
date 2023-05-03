@@ -1,4 +1,4 @@
-import AlbumCard from 'components/molecules/albumcard/albumcard';
+import AlbumCard from 'components/molecules/albumcard/AlbumCard';
 import { Button } from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';

@@ -26,13 +26,13 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/albums" element={<Albums />} />
             <Route path="/board" element={<Board />} />
+            <Route path="/compose" element={<Compose />} />
+            <Route path="/relay" element={<Relay />} />
+            <Route path="/mypage" element={<Mypage />} />
             <Route path="/board/:articleId" element={<Article />} />
             <Route path="/board/write" element={<ArticleWrite />} />
             <Route path="/*" element={<Notfound />} />
           </Route>
-          <Route path="/compose" element={<Compose />} />
-          <Route path="/relay" element={<Relay />} />
-          <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </BrowserRouter>
     </div>
