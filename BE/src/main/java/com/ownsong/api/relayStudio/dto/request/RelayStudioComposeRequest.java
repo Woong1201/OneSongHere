@@ -1,4 +1,4 @@
-package com.ownsong.api.relayStudio.request;
+package com.ownsong.api.relayStudio.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
