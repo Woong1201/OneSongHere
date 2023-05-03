@@ -22,8 +22,10 @@ const HallOfFameBG = ({
   return (
     <div className="halloffame">
       <div className="halloffame__foreground-container">
-        <CardTitle title={albumTitle} />
-        <TextButton label={albumStudio} />
+        <div className="halloffame__foreground-info">
+          <CardTitle title={albumTitle} />
+          <TextButton label={albumStudio} />
+        </div>
         <div className="halloffame__foreground-cover">
           <AlbumImage imageUrl={imgPath} />
         </div>

@@ -21,7 +21,7 @@
     }
     
     &__foreground-container{
-        width: 40%;
+        width: 50%;
         height: 100%;
         position: absolute;
         display: flex;
@@ -30,7 +30,17 @@
     }
 
     &__foreground-cover{
+        display: block;
         position: absolute;
         z-index: 1;
+    }
+
+    &__foreground-info{
+        padding-left: 120px;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
     }
 }
