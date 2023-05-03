@@ -9,12 +9,14 @@ const MainLayout = () => {
   const isMainPage = location.pathname === '/';
   const [whiteMode, setWhiteMode] = useState(false);
 
+  const fixedMode = isMainPage ? 'main__layout-header--fixed' : '';
+
   const handleScroll = () => {
     if (isMainPage) {
       const scrollPosition = window.pageYOffset;
       const viewportWidth = window.innerWidth;
 
-      if (scrollPosition > 0.62 * viewportWidth) {
+      if (scrollPosition > 0.61 * viewportWidth) {
         setWhiteMode(false);
       } else {
         setWhiteMode(true);
@@ -34,7 +36,7 @@ const MainLayout = () => {
 
   return (
     <div className="main__layout">
-      <div className="main__layout-header">
+      <div className={['main__layout-header', fixedMode].join(' ')}>
         <Header whiteMode={whiteMode} />
       </div>
       <div className="main__layout-body">
