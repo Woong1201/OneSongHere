@@ -1,4 +1,4 @@
-export default function Create() {
+export default function ArticleWrite() {
   return (
     <>
       <div>커뮤니티 글쓰는 페이지</div>

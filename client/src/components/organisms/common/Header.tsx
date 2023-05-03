@@ -31,7 +31,7 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
           <TextButton label="작곡" white={whiteMode} />
           <Dropdown />
         </div>
-        <TextButton label="커뮤니티" white={whiteMode} />
+        <TextButton label="커뮤니티" white={whiteMode} to="/board" />
         <TextButton label="작품" white={whiteMode} to="/albums" />
       </nav>
       <div>
