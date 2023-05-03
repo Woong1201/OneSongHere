@@ -1,7 +1,7 @@
 package com.ownsong.api.relayStudio.controller;
 
-import com.ownsong.api.relayStudio.request.RelayStudioCreateRequest;
-import com.ownsong.api.relayStudio.response.RelayStudioResponse;
+import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
+import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.relayStudio.service.RelayStudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
