@@ -9,15 +9,21 @@ interface HallOfFameBGProps {
   // 작품 앨범 커버
   imgPath: string;
   // 작품 앨범 제목
+  albumTitle: string;
   // 스튜디오
+  albumStudio: string;
 }
 
-const HallOfFameBG = ({ imgPath }: HallOfFameBGProps) => {
+const HallOfFameBG = ({
+  imgPath,
+  albumTitle,
+  albumStudio,
+}: HallOfFameBGProps) => {
   return (
     <div className="halloffame">
       <div className="halloffame__foreground-container">
-        <CardTitle title="두부김치는 정말 맛있습니다" />
-        <TextButton label="리얼로" />
+        <CardTitle title={albumTitle} />
+        <TextButton label={albumStudio} />
         <div className="halloffame__foreground-cover">
           <AlbumImage imageUrl={imgPath} />
         </div>

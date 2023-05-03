@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function Notfound() {
+const Notfound = () => {
   return (
     <>
       <div>지정되어 있지 않은 경로입니다!</div>
@@ -9,4 +9,5 @@ export default function Notfound() {
       <Link to="/">메인 페이지</Link>
     </>
   );
-}
+};
+export default Notfound;
