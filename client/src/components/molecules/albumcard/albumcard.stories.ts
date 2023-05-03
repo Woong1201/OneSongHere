@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import AlbumCard from 'components/molecules/albumcard/albumcard';
+import AlbumCard from 'components/molecules/albumcard/AlbumCard';
 
 const meta = {
   title: 'molecule/AlbumCard/AlbumCard',

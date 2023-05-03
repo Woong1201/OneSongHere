@@ -1,5 +1,5 @@
 import React from 'react';
-import 'components/molecules/albumcard/albumcard.scss';
+import 'components/molecules/albumcard/AlbumCard.scss';
 // atom import
 import CardTitle from 'components/atoms/common/CardTitle';
 import Chip from 'components/atoms/common/Chip';

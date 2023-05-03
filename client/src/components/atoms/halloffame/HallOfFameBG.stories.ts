@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 
 const meta = {
-  title: 'atoms/HallOfFame/HallOfFameBG',
+  title: 'atom/HallOfFame/HallOfFameBG',
   component: HallOfFameBG,
   tags: ['autodocs'],
   argTypes: {

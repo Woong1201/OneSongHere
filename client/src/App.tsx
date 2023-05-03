@@ -13,7 +13,7 @@ import MainLayout from 'pages/MainLayout';
 import Notfound from 'pages/Notfound';
 import Article from 'pages/Article';
 import Board from 'pages/Board';
-import Create from 'pages/Create';
+import ArticleWrite from 'pages/ArticleWrite';
 
 function App() {
   return (
@@ -25,15 +25,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/albums" element={<Albums />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/compose" element={<Compose />} />
+            <Route path="/relay" element={<Relay />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/board/:articleId" element={<Article />} />
+            <Route path="/board/write" element={<ArticleWrite />} />
             <Route path="/*" element={<Notfound />} />
           </Route>
-          <Route path="/compose" element={<Compose />} />
-          <Route path="/relay" element={<Relay />} />
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/board/:articleId" element={<Article />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
     </div>
