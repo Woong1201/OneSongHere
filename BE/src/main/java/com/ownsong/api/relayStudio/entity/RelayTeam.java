@@ -24,4 +24,7 @@ public class RelayTeam {
 
     @Column(name = "VOTE_FLAG")
     private Boolean voteFlag;
+
+    @Column(name = "RELAY_ORDER", columnDefinition = "INT UNSIGNED")
+    private int relayOrder;
 }
