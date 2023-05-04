@@ -1,0 +1,28 @@
+.studio-list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  &__title {
+    display: flex;
+    justify-content: flex-start;
+    padding-left:30px
+  }
+
+  &__button {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+    margin-bottom: 30px;
+  }
+
+  &__studio-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+  }
+
+}
