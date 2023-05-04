@@ -2,6 +2,7 @@ package com.ownsong.api.studio.entity;
 
 
 import com.ownsong.api.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,9 @@ public class StudioTeam {
     @JoinColumn(name = "STUDIO_ID")
     private Studio studio;
 
+    @Builder
+    public StudioTeam(User user, Studio studio) {
+        this.user = user;
+        this.studio = studio;
+    }
 }
