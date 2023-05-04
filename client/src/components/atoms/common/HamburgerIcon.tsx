@@ -15,11 +15,11 @@ const HamburgerIcon = ({
   const width = () => {
     switch (size) {
       case Size.Small:
-        return 50;
+        return 20;
       case Size.Medium:
-        return 100;
+        return 40;
       case Size.Large:
-        return 150;
+        return 60;
       default:
         return 100;
     }
