@@ -2,6 +2,7 @@ package com.ownsong.api.relayStudio.controller;
 
 import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
+import com.ownsong.api.relayStudio.dto.request.RelayStudioVoteRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.relayStudio.service.RelayStudioService;
 import com.ownsong.api.user.entity.User;
@@ -109,5 +110,26 @@ public class RelayStudioController {
             return ResponseEntity.status(400).body("잘못된 접근");
 
         return ResponseEntity.status(200).body(null);
+    }
+
+    @Operation(summary = "relayStudio 투표", description = "relayStudio 투표 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudio 투표 성공", content = @Content(schema = @Schema(implementation = RelayStudioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PatchMapping("/vote")
+    public ResponseEntity<?> relayStudioCompose(@RequestBody RelayStudioVoteRequest relayStudioVoteRequest) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null)
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+
+        // 입력받은 relayStudio 투표 가능한지 확인 후 db update
+        RelayStudioResponse relayStudioResponse = relayStudioService.voteRelayStudio(relayStudioVoteRequest, user);
+        if (relayStudioResponse == null)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(relayStudioResponse);
     }
 }
