@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class StudioCreateResponse {
+public class StudioResponse {
 
     @Schema(description = "스튜디오 id", example = "1")
     @NotNull
@@ -34,7 +34,7 @@ public class StudioCreateResponse {
     private LocalDateTime endDate;
 
     @Builder
-    public StudioCreateResponse(long studioId, String studioTitle, String genre, long hostId, LocalDateTime endDate) {
+    public StudioResponse(long studioId, String studioTitle, String genre, long hostId, LocalDateTime endDate) {
         this.studioId = studioId;
         this.studioTitle = studioTitle;
         this.genre = genre;
