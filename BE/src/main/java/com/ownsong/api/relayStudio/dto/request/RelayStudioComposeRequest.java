@@ -9,18 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RelayStudioComposeRequest {
 
-    @Schema(description = "각 인원의 담당 마디 수", example = "4")
+    @Schema(description = "relayStudioID", example = "4")
     private long relayStudioID;
 
-    @Schema(description = "제목", example = "제목입니다.")
-    private String relayStudioTitle;
+    @Schema(description = "악보", example = "[[1, 2], [0, 1]]")
+    private String relayStudioSheet;
 
-    @Schema(description = "최대 인원 수", example = "6")
-    private int limitOfUsers;
-
-    @Schema(description = "각 인원의 담당 마디 수", example = "4")
-    private int numberOfBars;
-
-//    태그에 대하여 나중에 추가
-
+    @Schema(description = "완료 : true, 중간저장 : false", example = "true")
+    private boolean complete;
 }
