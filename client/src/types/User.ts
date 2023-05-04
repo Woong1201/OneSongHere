@@ -1,5 +1,6 @@
 interface User {
   userId: number;
+  accessToken: string;
   nickname: string;
   picture: string;
 }
