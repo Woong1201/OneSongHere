@@ -14,6 +14,8 @@ import Notfound from 'pages/Notfound';
 import Article from 'pages/Article';
 import Board from 'pages/Board';
 import ArticleWrite from 'pages/ArticleWrite';
+import Studio from 'pages/Studio';
+import RelayStudio from 'pages/RelayStudio';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
             <Route path="/board/write" element={<ArticleWrite />} />
             <Route path="/*" element={<Notfound />} />
           </Route>
+          <Route path="/studio" element={<Studio />} />
+          <Route path="/relaystudio" element={<RelayStudio />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,0 +1,12 @@
+.studio__header-menu {
+  position: relative;
+}
+.studio__header-dropdown {
+  position: absolute;
+  left: -100px;
+  padding-top: 12px;
+}
+
+.studio__header-menu:hover .header__dropdown-list {
+  display: flex;
+}

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ModalForm from './ModalForm';
+import DrumIcon from './DrumIcon';
 
 const meta = {
-  title: 'organism/modal/ModalForm',
-  component: ModalForm,
+  title: 'atom/StudioTab/DrumIcon',
+  component: DrumIcon,
   tags: ['autodocs'],
   argTypes: {
     //
   },
-} satisfies Meta<typeof ModalForm>;
+} satisfies Meta<typeof DrumIcon>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
