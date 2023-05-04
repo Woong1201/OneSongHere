@@ -17,11 +17,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class CorsFilter extends OncePerRequestFilter {
-    private static final List<String> ALLOWED_ORIGINS = new ArrayList<>(
-            Arrays.asList(
-                    "http://localhost:3000"
-            )
-    );
+    private static final String ALLOWED_ORIGIN =  "http://localhost:3000";
 
     @Override
     protected void doFilterInternal(
@@ -30,9 +26,7 @@ public class CorsFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         try{
-            String origin = request.getHeader("Origin");
-            log.info("Origin : {}", origin);
-            response.addHeader("Access-Control-Allow-Origin", origin);
+            response.addHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
             response.addHeader("Access-Control-Allow-Headers", "Authorization");
             response.setIntHeader("Access-Control-Max-Age", 3600);
