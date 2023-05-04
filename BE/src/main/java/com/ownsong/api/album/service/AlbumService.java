@@ -4,10 +4,10 @@ import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.album.dto.response.AlbumResponse;
 import com.ownsong.api.album.entity.Album;
 import com.ownsong.api.album.entity.Likes;
+import com.ownsong.api.album.entity.LikesId;
 import com.ownsong.api.album.repository.AlbumRepository;
 import com.ownsong.api.album.repository.LikesRepository;
 import com.ownsong.api.user.entity.User;
-import com.ownsong.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,9 +24,7 @@ import java.util.List;
 public class AlbumService {
     private final AlbumRepository albumRepository;
     private final LikesRepository likesRepository;
-    private final UserRepository userRepository;
     private final S3Service s3Service;
-    private EntityManager entityManager;
     public AlbumResponse findAlbumArticle(long albumId, long userId){
         AlbumResponse albumArticle = albumRepository.findAlbumArticle(albumId);
         Likes userLike = albumRepository.findUserLike(albumId, userId);
@@ -117,37 +115,30 @@ public class AlbumService {
 
 
 
-//    @Transactional
-//    public void updateAlbumArticleLike(long albumId, long userId){
-//        Album album = albumRepository.findById(albumId).orElse(null);
-//
-////        좋아요 가져온다음에 좋아요인지 싫어요인지에 따라 바꾸고 총 좋아요 수 업뎃
-//
-//        User user = userRepository.findById(userId).orElse(null);
-//        LikesId key = new LikesId(user, album);
-//
-//        Likes userLike = likesRepository.findById(key).orElse(null);
-//
-//        if(userLike != null){
-//            likesRepository.deleteLikes(userLike.getUser().getUserID(), userLike.getAlbum().getAlbumId());
-////            likesRepository.delete(userLike);
-//            album.updateNumberOfLikes(false);
-//        }
-////        else{
-////            User user = userRepository.findById(userId).orElse(null);
-////            Album userAlbum = albumRepository.findById(albumId).orElse(null);
-////
-////            Likes likes = Likes.builder()
-////                    .user(user)
-////                    .album(userAlbum)
-////                    .build();
-////            album.updateNumberOfLikes(true);
-////            likesRepository.save(likes);
-////        }
-//
-////        총 좋아요 수 업데이트
-//        albumRepository.save(album);
-//    }
+    @Transactional
+    public void updateAlbumArticleLike(long albumId, User user){
+        Album album = albumRepository.findById(albumId).orElse(null);
+//        좋아요 가져온다음에 좋아요인지 싫어요인지에 따라 바꾸고 총 좋아요 수 업뎃
+        LikesId key = new LikesId(user, album);
+
+        if(likesRepository.findById(key).isPresent()){
+            // likes를 앨범과의 관계에서 끊고 likes 삭제 후 저장
+            Likes likes = likesRepository.findById(key).get();
+            album.getLikesList().remove(likes);
+            likesRepository.deleteLikesByAlbumAndUser(album, user);
+            album.updateNumberOfLikes(false);
+        }
+        else{
+            Likes likes = Likes.builder()
+                    .user(user)
+                    .album(album)
+                    .build();
+            album.getLikesList().add(likes);
+            album.updateNumberOfLikes(true);
+        }
+//        총 좋아요 수 업데이트 & else 에서 관계 맺은 앨범 업데이트
+        albumRepository.save(album);
+    }
 
 
 
