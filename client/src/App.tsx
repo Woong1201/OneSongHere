@@ -17,7 +17,7 @@ import ArticleWrite from 'pages/ArticleWrite';
 import Studio from 'pages/Studio';
 import RelayStudio from 'pages/RelayStudio';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
@@ -41,6 +41,6 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
