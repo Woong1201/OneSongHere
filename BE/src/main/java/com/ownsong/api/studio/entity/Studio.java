@@ -32,7 +32,7 @@ public class Studio {
     @Column(name = "STUDIO_SHEET", columnDefinition = "TEXT")
     private String studioSheet;
 
-    @Column(name =" GENRE", length = 10)
+    @Column(name ="GENRE", length = 10)
     private String genre;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,12 +43,13 @@ public class Studio {
     private List<StudioTeam> studioTeams = new ArrayList<>();
 
     @Builder
-    public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet, User user) {
+    public Studio(long studioID, String studioTitle, LocalDateTime endDate, String studioSheet, User user, String genre) {
         this.studioID = studioID;
         this.studioTitle = studioTitle;
         this.endDate = endDate;
         this.studioSheet = studioSheet;
         this.user = user;
+        this.genre = genre;
     }
 
 
