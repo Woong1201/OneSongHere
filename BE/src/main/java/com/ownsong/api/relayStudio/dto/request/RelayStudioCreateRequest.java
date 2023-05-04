@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class RelayStudioCreateRequest {
@@ -18,6 +20,7 @@ public class RelayStudioCreateRequest {
     @Schema(description = "각 인원의 담당 마디 수", example = "4")
     private int numberOfBars;
 
-//    태그에 대하여 나중에 추가
+    @Schema(description = "태그", example = "[\"락\", \"발라드\", \"십덕\"]")
+    private List<String> tags;
 
 }
