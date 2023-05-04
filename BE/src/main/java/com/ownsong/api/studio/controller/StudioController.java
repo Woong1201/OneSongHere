@@ -3,7 +3,9 @@ package com.ownsong.api.studio.controller;
 
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
 import com.ownsong.api.studio.dto.responese.StudioResponse;
+import com.ownsong.api.studio.repository.StudioRepository;
 import com.ownsong.api.studio.service.StudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
@@ -31,6 +33,7 @@ import java.util.List;
 public class StudioController {
     private final UserService userService;
     private final StudioService studioService;
+    private final StudioRepository studioRepository;
 
     @Operation(summary = "참여중인 Studio 전체 조회", description = "참여중인 스튜디오 조회 API")
     @ApiResponses(value = {
@@ -65,6 +68,28 @@ public class StudioController {
             return ResponseEntity.status(400).body("로그인 안한 상태");
 
         StudioResponse studio = studioService.createStudio(studioCreateRequest, user);
+        return ResponseEntity.status(200).body(studio);
+    }
+
+    @Operation(summary = "스튜디오 입장", description = "스튜디오 입장 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "스튜디오 입장", content = @Content(schema = @Schema(implementation = StudioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @GetMapping(value = "{studioId}")
+    public ResponseEntity<?> enterStudio(@PathVariable long studioId) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null)
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+        if(studioRepository.findById(studioId) == null){
+            return ResponseEntity.status(400).body("해당 스튜디오가 없슴");
+        }
+
+        // 참여 중인 스튜디오 조회
+        StudioEntranceResponse studio = studioService.getParticipatedStudioInfo(studioId);
+
         return ResponseEntity.status(200).body(studio);
     }
 }
