@@ -2,6 +2,7 @@ package com.ownsong.api.relayStudio.entity;
 
 
 import com.ownsong.api.notification.entity.Notification;
+import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
@@ -90,5 +91,23 @@ public class RelayStudio {
     public void participate(User user) {
         this.status = 2;
         this.user = user;
+        this.endDate = LocalDateTime.now().plusWeeks(1);
+    }
+
+    public void update(RelayStudioComposeRequest relayStudioComposeRequest) {
+        this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
+        // 해당 유저의 relay 완료시 status 업데이트 및 투표 초기화
+        if (relayStudioComposeRequest.isComplete()) {
+            this.status = 3;
+            for (RelayTeam relayTeam : this.relayTeams) {
+                relayTeam.initializeVoteFlag();
+            }
+        }
+    }
+
+    public void leader(RelayStudioComposeRequest relayStudioComposeRequest) {
+        this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
+        this.status = 1;
+        this.numberOfUsers = 1;
     }
 }
