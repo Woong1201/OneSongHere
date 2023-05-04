@@ -33,7 +33,7 @@ const Albums = () => {
         albumStudio="정육점"
       />
       {/* 생성날짜가 이번 달이고, 하트 개수가 가장 많은 앨범 세 개를 골라서 캐러셀으로 출력(자동전환) */}
-      <SearchBar label="곡 이름을 검색하세요" />
+      <SearchBar />
       <div>
         <Button
           tag={false}

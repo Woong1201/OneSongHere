@@ -46,7 +46,7 @@ const Modal = ({ onClickModal, children }: PropsWithChildren<ModalProps>) => {
           />
         </div>
         <br />
-        <div className="modal--buttons">
+        <div className="modal__buttons">
           <Button type="button" label="취소" />
           <Button type="submit" label="방 생성" color="primary" />
         </div>
