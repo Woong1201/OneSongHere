@@ -15,7 +15,7 @@ const Board = () => {
     <div className="board__container">
       <div>커뮤니티 전체 페이지</div>
       <div>입니다</div>
-      <SearchBar label="검색어를 입력하세요" />
+      <SearchBar />
       <Button
         label="글쓰기"
         type="submit"
