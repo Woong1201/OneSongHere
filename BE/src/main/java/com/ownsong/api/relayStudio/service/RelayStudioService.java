@@ -1,8 +1,11 @@
 package com.ownsong.api.relayStudio.service;
 
 import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
+import com.ownsong.api.relayStudio.dto.request.RelayStudioVoteRequest;
 import com.ownsong.api.relayStudio.entity.RelayStudio;
+import com.ownsong.api.relayStudio.entity.RelayStudioTag;
 import com.ownsong.api.relayStudio.entity.RelayTeam;
+import com.ownsong.api.relayStudio.entity.RelayTeamId;
 import com.ownsong.api.relayStudio.repository.RelayStudioRepository;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
@@ -22,8 +25,11 @@ public class RelayStudioService {
     private final RelayTeamRepository relayTeamRepository;
 
     public RelayStudioResponse createRelayStudio(RelayStudioCreateRequest relayStudioCreateRequest, User user) {
-        RelayStudio relayStudio = relayStudioRepository.save(new RelayStudio(relayStudioCreateRequest, user));
-        return new RelayStudioResponse(relayStudio, false, false);
+        RelayStudio relayStudio = new RelayStudio(relayStudioCreateRequest, user);
+        for (String relayStudioTagContent : relayStudioCreateRequest.getTags()) {
+            relayStudio.getRelayStudioTags().add(new RelayStudioTag(relayStudio, relayStudioTagContent));
+        }
+        return new RelayStudioResponse(relayStudioRepository.save(relayStudio), false, false);
     }
 
     public RelayStudioResponse participateRelayStudio(Long relayStudioId, User user) {
@@ -102,5 +108,43 @@ public class RelayStudioService {
             return false;
         }
         return false;
+    }
+
+    public RelayStudioResponse voteRelayStudio(RelayStudioVoteRequest relayStudioVoteRequest, User user) {
+        RelayStudio relayStudio;
+        // 해당 relayStudio 존재 여부 확인
+        try {
+            relayStudio = relayStudioRepository.findById(relayStudioVoteRequest.getRelayStudioId()).get();
+        }catch (Exception e) {
+            return null;
+        }
+        // 해당 relayStudio status 를 통해 투표중인지 확인
+        if (relayStudio.getStatus() != 3)
+            return null;
+
+        // 투표권한이 있는지 확인 후 db 업데이트
+        try {
+            for (RelayTeam relayTeam : relayStudio.getRelayTeams()) {
+                if (relayTeam.getUser().getUserID() == user.getUserID()) {
+                    if (relayTeam.isVoteFlag())
+                        return null;
+                    relayTeam.vote();
+                    relayStudio.vote(relayStudioVoteRequest.isVote());
+
+                    // 만약 모두 투표한 경우 studio 대기 상태로 update (추후 알림 필요)
+                    if (relayStudio.getNumberOfUsers() == relayStudio.getNumberOfVotes()) {
+                        if (relayStudio.getAgree() >= relayStudio.getNumberOfUsers()/2) {
+                            relayStudio.getRelayTeams().add(new RelayTeam(relayStudio));
+                        }
+                        relayStudio.completeVote();
+                    }
+                    return new RelayStudioResponse(relayStudioRepository.save(relayStudio), true, true);
+                }
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return null;
     }
 }
