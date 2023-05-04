@@ -1,7 +1,9 @@
 package com.ownsong.api.studio.repository;
 
-import com.ownsong.api.studio.dto.responese.StudioCreateResponse;
-import com.ownsong.api.user.entity.QUser;
+import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
+import com.ownsong.api.studio.dto.responese.StudioParticipatedUserResponse;
+import com.ownsong.api.studio.dto.responese.StudioResponse;
 import com.ownsong.api.user.entity.User;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import static com.ownsong.api.studio.entity.QStudio.studio;
 import static com.ownsong.api.studio.entity.QStudioTeam.studioTeam;
+import static com.ownsong.api.user.entity.QUser.user;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -20,9 +23,9 @@ public class StudioRepositoryImpl implements StudioRepositorySupport{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<StudioCreateResponse> getParticipatedStudios(User user){
+    public List<StudioResponse> getParticipatedStudios(User user){
 
-        List<StudioCreateResponse> studios = new ArrayList<>();
+        List<StudioResponse> studios = new ArrayList<>();
 
         List<Long> studioIds = queryFactory
                 .select(studioTeam.studio.studioID)
@@ -31,8 +34,8 @@ public class StudioRepositoryImpl implements StudioRepositorySupport{
                 .fetch();
 
         for(Long studioId : studioIds){
-            StudioCreateResponse result = queryFactory
-                    .select(Projections.constructor(StudioCreateResponse.class,
+            StudioResponse result = queryFactory
+                    .select(Projections.constructor(StudioResponse.class,
                             studio.studioID,
                             studio.studioTitle,
                             studio.genre,
@@ -45,4 +48,40 @@ public class StudioRepositoryImpl implements StudioRepositorySupport{
         }
         return  studios;
     }
+
+    @Override
+    public StudioEntranceResponse getParticipatedStudioInfo(long studioId) {
+        List<StudioParticipatedUserResponse> studioUsers = new ArrayList<>();
+        List<Long> userIds = queryFactory
+                .select(studioTeam.studio.studioID)
+                .from(studioTeam)
+                .where(studioTeam.studio.studioID.eq(studioId))
+                .fetch();
+
+        for(Long userId : userIds){
+            StudioParticipatedUserResponse result = queryFactory
+                    .select(Projections.constructor(StudioParticipatedUserResponse.class,
+                            user.userID,
+                            user.nickname,
+                            user.profileUrl))
+                    .from(user)
+                    .where(user.userID.eq(userId))
+                    .fetchOne();
+            studioUsers.add(result);
+        }
+
+        StudioEntranceResponse result = queryFactory
+                .select(Projections.constructor(StudioEntranceResponse.class,
+                        studio.studioTitle,
+                        studio.genre,
+                        studio.studioSheet))
+                .from(studio)
+                .where(studio.studioID.eq(studioId))
+                .fetchOne();
+
+        result.setUsers(studioUsers);
+        return result;
+    }
+
+
 }
