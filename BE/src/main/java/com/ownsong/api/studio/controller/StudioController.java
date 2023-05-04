@@ -1,9 +1,9 @@
 package com.ownsong.api.studio.controller;
 
 
-import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
-import com.ownsong.api.studio.dto.responese.StudioCreateResponse;
+import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.responese.StudioResponse;
 import com.ownsong.api.studio.service.StudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
@@ -20,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,7 +34,7 @@ public class StudioController {
 
     @Operation(summary = "참여중인 Studio 전체 조회", description = "참여중인 스튜디오 조회 API")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "전체 스튜디오 조회 성공", content = @Content(schema = @Schema(implementation = RelayStudioResponse.class))),
+            @ApiResponse(responseCode = "201", description = "전체 스튜디오 조회 성공", content = @Content(schema = @Schema(implementation = StudioResponse.class))),
             @ApiResponse(responseCode = "400", description = "bad request operation")
     })
     @GetMapping()
@@ -47,8 +46,25 @@ public class StudioController {
             return ResponseEntity.status(400).body("로그인 안한 상태");
 
         // 참여 중인 스튜디오 조회
-        List<StudioCreateResponse> studios = studioService.getParticipatedStudios(user);
+        List<StudioResponse> studios = studioService.getParticipatedStudios(user);
 
         return ResponseEntity.status(200).body(studios);
+    }
+
+    @Operation(summary = "스튜디오 생성", description = "스튜디오 생성 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "스튜디오 생성 성공", content = @Content(schema = @Schema(implementation = StudioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PostMapping()
+    public ResponseEntity<?> createStudio(@RequestBody StudioCreateRequest studioCreateRequest) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null)
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+
+        StudioResponse studio = studioService.createStudio(studioCreateRequest, user);
+        return ResponseEntity.status(200).body(studio);
     }
 }
