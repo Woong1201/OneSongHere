@@ -2,6 +2,7 @@ package com.ownsong.api.studio.service;
 
 
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
 import com.ownsong.api.studio.dto.responese.StudioResponse;
 import com.ownsong.api.studio.entity.Studio;
 import com.ownsong.api.studio.repository.StudioRepository;
@@ -50,4 +51,12 @@ public class StudioService {
         studioRepository.save(studio);
         return studioResponse;
     }
+
+    public StudioEntranceResponse getParticipatedStudioInfo(long studioId){
+
+        StudioEntranceResponse studioInfo = studioRepository.getParticipatedStudioInfo(studioId);
+
+        return studioInfo;
+    }
+
 }
