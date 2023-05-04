@@ -1,6 +1,9 @@
+import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
+
 const Article = () => {
   return (
     <>
+      <ArticleHeader />
       <div>게시글 헤더 molecules</div>
       <div>제목</div>
       <div>프로필아이콘</div>
