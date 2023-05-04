@@ -1,7 +1,7 @@
 package com.ownsong.common;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -15,6 +15,7 @@ import java.util.List;
 
 
 @Slf4j
+@Component
 public class CorsFilter extends OncePerRequestFilter {
     private static final List<String> ALLOWED_ORIGINS = new ArrayList<>(
             Arrays.asList(
@@ -30,6 +31,7 @@ public class CorsFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         try{
             String origin = request.getHeader("Origin");
+            log.info("Origin : {}", origin);
             response.addHeader("Access-Control-Allow-Origin", origin);
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
             response.addHeader("Access-Control-Allow-Headers", "Authorization");
