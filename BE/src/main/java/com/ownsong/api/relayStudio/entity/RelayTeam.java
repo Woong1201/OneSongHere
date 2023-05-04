@@ -44,7 +44,15 @@ public class RelayTeam {
         this.voteFlag = false;
     }
 
+    public RelayTeam(User user, int relayOrder) {
+        this.user = user;
+        this.relayOrder = relayOrder;
+    }
+
     public void initializeVoteFlag() {
         this.voteFlag = false;
+    }
+    public void vote() {
+        this.voteFlag = true;
     }
 }
