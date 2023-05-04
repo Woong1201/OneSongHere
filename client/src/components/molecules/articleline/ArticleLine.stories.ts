@@ -4,7 +4,7 @@ import ArticleLine from './ArticleLine';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: 'molecules/articleline/ArticleLine',
+  title: 'molecule/articleline/ArticleLine',
   component: ArticleLine,
   tags: ['autodocs'],
   argTypes: {
