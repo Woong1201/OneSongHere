@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { Button } from 'components/atoms/buttons/Button';
-import { TextInput } from 'components/atoms/inputs/TextInput';
+import Button from 'components/atoms/buttons/Button';
+import TextInput from 'components/atoms/inputs/TextInput';
 import './WriteFrame.scss';
 
 const WriteFrame = () => {

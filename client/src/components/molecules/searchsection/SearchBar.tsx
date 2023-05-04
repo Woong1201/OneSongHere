@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchBar.scss';
 import SearchIcon from '../../../assets/images/icon/search_icon.svg';
-import { TextInput } from '../../atoms/inputs/TextInput';
+import TextInput from '../../atoms/inputs/TextInput';
 
 interface SearchBarProps {
   onClick?: () => void;

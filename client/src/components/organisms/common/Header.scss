@@ -18,7 +18,12 @@
   &__nav-item {
     position: relative;
   }
-  &__nav-item:hover .header__dropdown {
+  &__nav-item:hover .header__dropdown-list {
     display: flex;
   }
+}
+
+.header__dropdown {
+  padding-top: 10px;
+  position: absolute;
 }

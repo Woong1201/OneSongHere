@@ -1,6 +1,6 @@
-import { TextInput } from 'components/atoms/inputs/TextInput';
+import TextInput from 'components/atoms/inputs/TextInput';
 import React, { PropsWithChildren, useState } from 'react';
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import './ModalForm.scss';
 
 interface ModalProps {

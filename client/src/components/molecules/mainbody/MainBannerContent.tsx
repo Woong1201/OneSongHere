@@ -1,7 +1,7 @@
 import React from 'react';
 import './MainBannerContent.scss';
 import MainBannerText from 'components/atoms/mainbanner/MainBannerText';
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 
 interface MainBannerContentProps {
   content: string[];

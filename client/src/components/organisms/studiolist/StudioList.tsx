@@ -1,9 +1,10 @@
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';
 
-interface Album {
+interface Studio {
+  studioId: number;
   studioTitle: string;
   startDate: Date;
   endDate: Date;
@@ -16,11 +17,35 @@ interface Album {
 
 const StudioList = () => {
   const date = new Date();
-  const albums: Album[] = [
-    { studioTitle: '몰라', startDate: date, endDate: date, tag: '재즈' },
-    { studioTitle: '마라', startDate: date, endDate: date, tag: '컨트리' },
-    { studioTitle: '랄라', startDate: date, endDate: date, tag: '팝' },
-    { studioTitle: '링티제로', startDate: date, endDate: date, tag: '재즈' },
+  const studios: Studio[] = [
+    {
+      studioId: 1,
+      studioTitle: '몰라',
+      startDate: date,
+      endDate: date,
+      tag: '재즈',
+    },
+    {
+      studioId: 2,
+      studioTitle: '마라',
+      startDate: date,
+      endDate: date,
+      tag: '컨트리',
+    },
+    {
+      studioId: 3,
+      studioTitle: '랄라',
+      startDate: date,
+      endDate: date,
+      tag: '팝',
+    },
+    {
+      studioId: 4,
+      studioTitle: '링티제로',
+      startDate: date,
+      endDate: date,
+      tag: '재즈',
+    },
   ];
 
   function chunk<T>(array: T[], size: number): T[][] {
@@ -31,7 +56,7 @@ const StudioList = () => {
     return chunked;
   }
 
-  const chunkedAlbums: Album[][] = chunk(albums, 3);
+  const chunkedStudios: Studio[][] = chunk(studios, 3);
 
   return (
     <div className="studio-list">
@@ -41,20 +66,17 @@ const StudioList = () => {
       <div className="studio-list__button">
         <Button type="button" label="생성하기" color="primary" />
       </div>
-      {albums ? (
-        chunkedAlbums.map((albumRow) => (
-          <div
-            key={albumRow[0].studioTitle}
-            className="studio-list__studio-row"
-          >
-            {albumRow.map((album: Album) => (
+      {studios ? (
+        chunkedStudios.map((studioRow) => (
+          <div key={studioRow[0].studioId} className="studio-list__studio-row">
+            {studioRow.map((studio: Studio) => (
               <div className="studio-list__studio">
                 <StudioCard
-                  key={album.studioTitle}
-                  studioTitle={album.studioTitle}
-                  startDate={album.startDate}
-                  endDate={album.endDate}
-                  tag={album.tag}
+                  key={studio.studioId}
+                  studioTitle={studio.studioTitle}
+                  startDate={studio.startDate}
+                  endDate={studio.endDate}
+                  tag={studio.tag}
                 />
               </div>
             ))}

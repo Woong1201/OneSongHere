@@ -1,6 +1,6 @@
 import ArticleLine from 'components/molecules/articleline/ArticleLine';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import TextButton from 'components/atoms/buttons/TextButton';
 import { useNavigate } from 'react-router-dom';
 import './Board.scss';
