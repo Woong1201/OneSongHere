@@ -4,7 +4,7 @@ import 'components/organisms/common/Header.scss';
 import User from 'types/User';
 import LogoIcon from 'components/atoms/common/LogoIcon';
 import TextButton from 'components/atoms/buttons/TextButton';
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import ProfileImage from 'components/atoms/profile/ProfileImage';
 import Dropdown from 'components/molecules/header/Dropdown';
 import { useNavigate } from 'react-router-dom';

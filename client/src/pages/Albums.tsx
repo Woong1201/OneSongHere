@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AlbumCard from 'components/molecules/albumcard/AlbumCard';
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';

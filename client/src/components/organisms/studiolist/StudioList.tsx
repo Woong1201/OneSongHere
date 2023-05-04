@@ -1,4 +1,4 @@
-import { Button } from 'components/atoms/buttons/Button';
+import Button from 'components/atoms/buttons/Button';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';

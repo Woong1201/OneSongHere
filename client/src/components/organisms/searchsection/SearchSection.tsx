@@ -1,4 +1,4 @@
-import { GenreButtonList } from 'components/molecules/searchsection/GenreButtonList';
+import GenreButtonList from 'components/molecules/searchsection/GenreButtonList';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import './SearchSection.scss';
 
