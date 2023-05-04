@@ -32,6 +32,9 @@ public class Studio {
     @Column(name = "STUDIO_SHEET", columnDefinition = "TEXT")
     private String studioSheet;
 
+    @Column(name =" GENRE", length = 10)
+    private String genre;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
