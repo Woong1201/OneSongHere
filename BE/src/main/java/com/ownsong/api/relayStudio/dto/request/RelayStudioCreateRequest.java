@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RelayStudioCreateRequest {
 
-    @Schema(description = "각 인원의 담당 마디 수", example = "4")
-    private long relayStudioID;
-
     @Schema(description = "제목", example = "제목입니다.")
     private String relayStudioTitle;
 

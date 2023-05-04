@@ -36,10 +36,13 @@ public class RelayStudioResponse {
 
     @Schema(description = "투표 완료 인원 수", example = "4")
     private int numberOfVotes;
+
     @Schema(description = "동의 수", example = "4")
     private int agree;
+
     @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중)", example = "4")
     private int status;
+
     @Schema(description = "현재 작곡중인 userId", example = "1")
     @NotNull
     private long userId;
@@ -47,7 +50,10 @@ public class RelayStudioResponse {
     @Schema(description = "참여중인 유저인지 여부", example = "true")
     private boolean participate;
 
-    public RelayStudioResponse(RelayStudio relayStudio, boolean participate) {
+    @Schema(description = "투표 완료 여부", example = "true")
+    private boolean vote;
+
+    public RelayStudioResponse(RelayStudio relayStudio, boolean participate, boolean vote) {
         this.relayStudioID = relayStudio.getRelayStudioID();
         this.relayStudioTitle = relayStudio.getRelayStudioTitle();
         this.endDate = relayStudio.getEndDate();
@@ -60,6 +66,7 @@ public class RelayStudioResponse {
         this.status = relayStudio.getStatus();
         this.userId = relayStudio.getUser().getUserID();
         this.participate = participate;
+        this.vote =vote;
     }
 
 }
