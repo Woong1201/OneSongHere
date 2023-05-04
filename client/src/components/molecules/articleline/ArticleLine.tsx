@@ -26,7 +26,7 @@ const ArticleLine = ({
   return (
     <div>
       <div>{num}</div>
-      <TextButton label={title} to="/board" />
+      <TextButton label={title} to={`/board/${String(num)}`} />
       <div>{commentCnt}</div>
       <TextButton label={writer} />
       <div>{birthday}</div>
