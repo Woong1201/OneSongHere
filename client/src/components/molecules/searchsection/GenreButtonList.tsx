@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './GenreButtonList.scss';
-import { Button } from '../../atoms/buttons/Button';
+import Button from '../../atoms/buttons/Button';
 
 // 장르 인터페이스 생성
 interface Genre {
   name: string;
 }
 
-export const GenreButtonList = () => {
+const GenreButtonList = () => {
   // 전체 장르 리스트 만들기
   const genres: Genre[] = [
     { name: '컨트리' },
@@ -48,3 +48,5 @@ export const GenreButtonList = () => {
     </div>
   );
 };
+
+export default GenreButtonList;
