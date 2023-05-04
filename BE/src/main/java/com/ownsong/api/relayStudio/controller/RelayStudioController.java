@@ -1,5 +1,6 @@
 package com.ownsong.api.relayStudio.controller;
 
+import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.relayStudio.service.RelayStudioService;
@@ -69,4 +70,44 @@ public class RelayStudioController {
         return ResponseEntity.status(200).body(relayStudioResponse);
     }
 
+    @Operation(summary = "relayStudio 작곡", description = "relayStudio 작곡 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudio 작곡 성공", content = @Content(schema = @Schema(implementation = RelayStudioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PatchMapping()
+    public ResponseEntity<?> relayStudioCompose(@RequestBody RelayStudioComposeRequest relayStudioComposeRequest) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null)
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+
+        // 입력받은 relayStudio 작곡 가능한지 확인 후 db update
+        RelayStudioResponse relayStudioResponse = relayStudioService.composeRelayStudio(relayStudioComposeRequest, user);
+        if (relayStudioResponse == null)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(relayStudioResponse);
+    }
+
+    @Operation(summary = "delete 예시", description = "relayTeam 삭제 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayTeam 삭제 성공"),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @DeleteMapping("/team/{relayStudioId}")
+    public ResponseEntity<?> deleteTeam(@PathVariable Long relayStudioId) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null)
+            return ResponseEntity.status(400).body("로그인 안한 상태");
+
+        // 입력받은 relayStudio team 제거
+        if (relayStudioService.deleteTeam(relayStudioId, user) == false)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(null);
+    }
 }
