@@ -7,7 +7,7 @@ interface TextInputProps {
   stroke?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export const TextInput = ({
+const TextInput = ({
   label,
   value,
   stroke = false,
@@ -24,3 +24,5 @@ export const TextInput = ({
     />
   );
 };
+
+export default TextInput;
