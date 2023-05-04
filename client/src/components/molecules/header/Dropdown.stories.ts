@@ -15,8 +15,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const IsShowed: Story = {
-  args: { isShowed: true },
+  args: {
+    isShowed: true,
+    items: [
+      { label: '일반', route: '/compose' },
+      { label: '릴레이', route: '/relay' },
+    ],
+  },
 };
 export const IsHidden: Story = {
-  args: {},
+  args: {
+    items: [
+      { label: '일반', route: '/compose' },
+      { label: '릴레이', route: '/relay' },
+    ],
+  },
 };

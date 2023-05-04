@@ -23,13 +23,20 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
     navigate('/login');
   };
 
+  const headerDropdownList = [
+    { label: '일반', route: '/compose' },
+    { label: '릴레이', route: '/relay' },
+  ];
+
   return (
     <div className="header">
       <LogoIcon goHome />
       <nav className="header__nav-list">
         <div className="header__nav-item">
           <TextButton label="작곡" white={whiteMode} />
-          <Dropdown />
+          <div className="header__dropdown">
+            <Dropdown items={headerDropdownList} />
+          </div>
         </div>
         <TextButton label="커뮤니티" white={whiteMode} to="/board" />
         <TextButton label="작품" white={whiteMode} to="/albums" />
