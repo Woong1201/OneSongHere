@@ -1,5 +1,6 @@
 package com.ownsong.api.user.controller;
 
+import com.ownsong.api.user.dto.response.RedirectUrl;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.dto.response.UserLoginResponse;
 import com.ownsong.api.user.service.OAuthService;
@@ -43,6 +44,15 @@ public class UserController {
         Constant.SocialLoginType socialLoginType = Constant.SocialLoginType.valueOf(SocialLoginPath.toUpperCase());
         // socialLogin 주소를 redirect 해주는 method
         oAuthService.request(socialLoginType);
+    }
+
+    @GetMapping("/loginUrlGet/{socialLoginType}") //GOOGLE, KAKAO, NAVER 등이 들어올 것이다.
+    public ResponseEntity<?> socialLoginRedirectGey(@PathVariable(name="socialLoginType") String SocialLoginPath) throws IOException {
+        // socialLoginType 의 enum class
+        Constant.SocialLoginType socialLoginType = Constant.SocialLoginType.valueOf(SocialLoginPath.toUpperCase());
+        // socialLogin 주소를 return 해주는 method
+        String redirectURL = oAuthService.getRequest(socialLoginType);
+        return ResponseEntity.status(200).body(new RedirectUrl(redirectURL));
     }
 
     // user login 에 따른 interceptor 처리에 대한 예시
