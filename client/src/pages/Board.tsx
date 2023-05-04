@@ -54,12 +54,7 @@ const Board = () => {
           </thead>
           <tbody>
             {articles.map((article) => (
-              <tr key={article.id}>
-                <td>{article.id}</td>
-                <td>{article.title}</td>
-                <td>{article.writer}</td>
-                <td>{article.date}</td>
-                <td>{article.viewCnt}</td>
+              <tr key={article.id} className="test">
                 <ArticleLine
                   num={article.id}
                   title={article.title}
@@ -71,14 +66,6 @@ const Board = () => {
             ))}
           </tbody>
         </table>
-
-        <ArticleLine
-          num={1}
-          title="what"
-          commentCnt={2}
-          writer="are"
-          birthday="you doing"
-        />
       </div>
     </div>
   );
