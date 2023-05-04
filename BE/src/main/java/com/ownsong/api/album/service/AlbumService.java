@@ -122,7 +122,10 @@ public class AlbumService {
         LikesId key = new LikesId(user, album);
 
         if(likesRepository.findById(key).isPresent()){
-            likesRepository.deleteById(key);
+            // likes를 앨범과의 관계에서 끊고 likes 삭제 후 저장
+            Likes likes = likesRepository.findById(key).get();
+            album.getLikesList().remove(likes);
+            likesRepository.deleteLikesByAlbumAndUser(album, user);
             album.updateNumberOfLikes(false);
         }
         else{
@@ -130,10 +133,10 @@ public class AlbumService {
                     .user(user)
                     .album(album)
                     .build();
+            album.getLikesList().add(likes);
             album.updateNumberOfLikes(true);
-            likesRepository.save(likes);
         }
-//        총 좋아요 수 업데이트
+//        총 좋아요 수 업데이트 & else 에서 관계 맺은 앨범 업데이트
         albumRepository.save(album);
     }
 
