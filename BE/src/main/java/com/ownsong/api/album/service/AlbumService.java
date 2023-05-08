@@ -109,6 +109,8 @@ public class AlbumService {
             return false;
         }
         album.updateAlbumArticle(albumArticleCreateRequest, filePath);
+        albumRepository.save(album);
+
         return true;
     }
 
