@@ -16,7 +16,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Slf4j
@@ -28,21 +27,15 @@ import java.io.IOException;
 public class UserController {
     private final OAuthService oAuthService;
     private final HttpServletResponse response;
-    private final HttpSession httpSession;
-
 
     @ResponseBody
-    @GetMapping(value = "/auth/callback/{socialLoginType}")
+    @GetMapping(value = "/auth/{socialLoginType}")
     public ResponseEntity<?> callback (
             @PathVariable(name = "socialLoginType") String socialLoginPath,
             @RequestParam(name = "code") String code)throws IOException {
-        System.out.println("============");
-        System.out.println(code);
         Constant.SocialLoginType socialLoginType = Constant.SocialLoginType.valueOf(socialLoginPath.toUpperCase());
         // 일회성 code 를 통해 access-token 을 발급 받고 이를 통해 유저 정보를 받아옴.
         UserLoginResponse userLoginResponse = oAuthService.oAuthLogin(socialLoginType,code);
-        httpSession.setAttribute("userLoginResponse", userLoginResponse);
-        response.sendRedirect("http://localhost:3000/googleLogin");
         return ResponseEntity.status(200).body(userLoginResponse);
     }
 
