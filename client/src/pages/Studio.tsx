@@ -1,4 +1,4 @@
-import StudioHeader from 'components/organisms/common/studio/StudioHeader';
+import StudioHeader from 'components/organisms/studio/StudioHeader';
 import './Studio.scss';
 
 const Studio = () => {
