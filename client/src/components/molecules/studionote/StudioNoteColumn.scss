@@ -1,0 +1,14 @@
+@import 'styles/_variables';
+
+.studio__note-column {
+  display: flex;
+  flex-direction: column;
+  > button {
+    &:not(:last-child) {
+      border-bottom: 0px;
+    }
+    &:nth-child(7) {
+      border-bottom: 3px rgba($main-theme-color, 0.5) solid;
+    }
+  }
+}
