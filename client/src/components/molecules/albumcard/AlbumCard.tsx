@@ -44,7 +44,7 @@ const AlbumCard = ({
   return (
     <div
       className="album-card"
-      style={{ width: `${width >= 768 ? '500px' : '500px'}` }}
+      style={{ width: `${width >= 768 ? '440px' : '440px'}` }}
     >
       {/* 사진 영역 */}
       <div className="album-card__cover-box">

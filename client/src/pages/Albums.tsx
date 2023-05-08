@@ -60,7 +60,7 @@ const Albums = () => {
     <div className="album__container">
       <div
         className="halloffame__container"
-        style={{ width: `${width >= 600 ? '1200px' : '80vw'}` }}
+        style={{ width: `${width >= 992 ? '1000px' : '100%'}` }}
       >
         <SectionTitle title="명예의 전당" />
       </div>
@@ -89,12 +89,16 @@ const Albums = () => {
       </div>
       <div
         className="cards__container"
-        // style={{ width: `${width >= 1070 ? '80vw' : '100vw'}` }}
+        style={{ width: `${width >= 1200 ? '1000px' : '100%'}` }}
       >
         <Container>
-          <Row>
+          <Row
+            style={{
+              width: `${width >= 992 ? '100%' : '500px'}`,
+            }}
+          >
             {albumlist.map((album) => (
-              <Col sm={12} md={6}>
+              <Col sm={12} md={12} lg={6}>
                 <div key={album.albumId}>
                   <AlbumCard
                     imgPath={album.albumUrl}
