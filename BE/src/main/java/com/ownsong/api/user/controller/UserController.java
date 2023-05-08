@@ -5,6 +5,7 @@ import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.dto.response.UserLoginResponse;
 import com.ownsong.api.user.service.OAuthService;
 import com.ownsong.api.user.social.Constant;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,9 @@ public class UserController {
     private final OAuthService oAuthService;
     private final HttpServletResponse response;
 
+    @Operation(summary = "code 를 받아서 로그인 user return", description = "code 를 받아서 로그인 user return")
     @ResponseBody
-    @GetMapping(value = "/auth/{socialLoginType}")
+    @GetMapping(value = "/auth/callback/{socialLoginType}")
     public ResponseEntity<?> callback (
             @PathVariable(name = "socialLoginType") String socialLoginPath,
             @RequestParam(name = "code") String code)throws IOException {
