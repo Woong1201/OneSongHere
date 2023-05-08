@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
+// 컴포넌트 import
 import AlbumCard from 'components/molecules/albumcard/AlbumCard';
 import Button from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
+// SCSS import
 import './Albums.scss';
+// api 모듈 import
 import { getAlbums } from 'services/album';
+// axios return 값 타입 정의 import
 import Album from 'types/Album';
+// grid import
+import { Container, Row, Col } from 'react-grid-system';
 
 const Albums = () => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -21,6 +27,7 @@ const Albums = () => {
     };
   }, []);
 
+  // 작품들 데이터 가져오는 api용 list 초기화
   const [albumlist, getAlbumList] = useState<Album[]>([
     {
       albumTitle: '',
@@ -80,6 +87,19 @@ const Albums = () => {
           type="button"
         />
       </div>
+      <Container>
+        <Row>
+          <Col sm={12} md={6} lg={4}>
+            <div style={{ width: '120px' }}>안녕하세요</div>
+          </Col>
+          <Col sm={12} md={6} lg={4}>
+            <div style={{ width: '120px' }}>저는 햄입니다</div>
+          </Col>
+          <Col sm={12} md={6} lg={4}>
+            <div style={{ width: '120px' }}>아주 맛있습니다</div>
+          </Col>
+        </Row>
+      </Container>
       <ul>
         {albumlist.map((album) => (
           <li key={album.albumId}>
