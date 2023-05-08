@@ -21,9 +21,14 @@ public class StudioSheetRequest {
     @NotNull
     private String studioSheet;
 
+    @Schema(description = "악보 제목", example = "띵작 123")
+    @NotNull
+    private String sheetTitle;
+
     @Builder
-    public StudioSheetRequest(long studioId, String studioSheet) {
+    public StudioSheetRequest(long studioId, String studioSheet, String sheetTitle) {
         this.studioId = studioId;
         this.studioSheet = studioSheet;
+        this.sheetTitle = sheetTitle;
     }
 }
