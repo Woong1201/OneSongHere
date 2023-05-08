@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import './AlbumImage.scss';
+import altImage from 'assets/images/main_page_banner.png';
 
 interface AlbumImageProps {
   /**
@@ -13,6 +14,10 @@ interface AlbumImageProps {
 }
 
 const AlbumImage = ({ imageUrl, size = 'medium' }: AlbumImageProps) => {
+  const HandleUnloadedImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = altImage;
+  };
+
   return (
     <div
       className={[
@@ -20,7 +25,12 @@ const AlbumImage = ({ imageUrl, size = 'medium' }: AlbumImageProps) => {
         `album-image__container-${size}`,
       ].join(' ')}
     >
-      <img src={imageUrl} alt="" className="album-image__img" />
+      <img
+        src={imageUrl}
+        alt="이미지 없음"
+        onError={HandleUnloadedImage}
+        className="album-image__img"
+      />
     </div>
   );
 };
