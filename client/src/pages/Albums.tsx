@@ -5,6 +5,8 @@ import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import './Albums.scss';
+import { getAlbums } from 'services/album';
+import Album from 'types/Album';
 
 const Albums = () => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -17,6 +19,34 @@ const Albums = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  const [albumlist, getAlbumList] = useState<Album[]>([
+    {
+      albumTitle: '',
+      albumContent: '',
+      likes: 0,
+      albumUrl: '',
+      userId: 0,
+      nickName: '',
+      userLike: false,
+      genre: '',
+      albumId: 0,
+    },
+  ]);
+  const getAlbumData = () => {
+    getAlbums(
+      ({ data }) => {
+        console.log(data);
+        getAlbumList(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+  useEffect(() => {
+    getAlbumData();
   }, []);
 
   return (
@@ -50,22 +80,20 @@ const Albums = () => {
           type="button"
         />
       </div>
-      <AlbumCard
-        imgPath="https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2013/03/ham3.jpg?crop=1xw:0.845763723150358xh;center,top"
-        albumTitle="그슬린 햄"
-        albumStudio="정육점"
-        like={false}
-        tag="컨트리"
-        albumInfo="정육점에서 막 사온 햄을 바싹 구워먹는 상상을 담은 경쾌한 피아노 음색이 특징이다."
-      />
-      <AlbumCard
-        imgPath="https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2013/03/ham3.jpg?crop=1xw:0.845763723150358xh;center,top"
-        albumTitle="그슬린 햄"
-        albumStudio="정육점"
-        like={false}
-        tag="컨트리"
-        albumInfo="정육점에서 막 사온 햄을 바싹 구워먹는 상상을 담은 경쾌한 피아노 음색이 특징이다."
-      />
+      <ul>
+        {albumlist.map((album) => (
+          <li key={album.albumId}>
+            <AlbumCard
+              imgPath={album.albumUrl}
+              albumTitle={album.albumTitle}
+              albumStudio={album.nickName}
+              like={album.userLike}
+              tag={album.genre}
+              albumInfo={album.albumContent}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
