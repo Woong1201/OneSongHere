@@ -111,7 +111,9 @@ public class StudioController {
         if(user == null){
             return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
         }
-
+        if(!studioService.saveStudioSheet(studioSheetRequest, user)){
+            return ResponseEntity.status(400).body("해당 스튜디오에 참여하고있지 않습니다.");
+        }
 
         return ResponseEntity.ok().build();
     }
