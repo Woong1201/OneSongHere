@@ -24,13 +24,20 @@ const ArticleLine = ({
   birthday,
 }: ArticleLineProps) => {
   return (
-    <div>
-      <div>{num}</div>
-      <TextButton label={title} to="/board" />
-      <div>{commentCnt}</div>
-      <TextButton label={writer} />
-      <div>{birthday}</div>
-    </div>
+    <>
+      <td>{num}</td>
+      <td>
+        <TextButton label={title} to={`/board/${String(num)}`} />
+      </td>
+      <td>{commentCnt}</td>
+      <td>
+        <TextButton label={writer} />
+      </td>
+      <td>{birthday}</td>
+      {/* <p className="articleline"> */}
+
+      {/* </p> */}
+    </>
   );
 };
 

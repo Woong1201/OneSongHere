@@ -1,9 +1,12 @@
+import './ArticleWrite.scss';
+import WriteFrame from 'components/organisms/writeframe/WriteFrame';
+
 const ArticleWrite = () => {
+  // 렌더링
   return (
-    <>
-      <div>커뮤니티 글쓰는 페이지</div>
-      <div>입니다</div>
-    </>
+    <div>
+      <WriteFrame />
+    </div>
   );
 };
 
