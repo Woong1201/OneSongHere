@@ -40,7 +40,8 @@ public class User {
     @Column(name = "PROFILE_URL")
     private String profileUrl;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    영속성 컨텍스트 종료 방지를 위해 EAGER로 설정
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Studio> studios = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

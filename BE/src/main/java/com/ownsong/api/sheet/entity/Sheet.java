@@ -2,6 +2,7 @@ package com.ownsong.api.sheet.entity;
 
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +29,7 @@ public class Sheet {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-
+    @Builder
     public Sheet(Long sheetID, String sheetMatrix, String sheetTitle, User user) {
         this.sheetID = sheetID;
         this.sheetMatrix = sheetMatrix;
