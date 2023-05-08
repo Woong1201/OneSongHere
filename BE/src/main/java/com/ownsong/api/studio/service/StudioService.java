@@ -4,6 +4,8 @@ package com.ownsong.api.studio.service;
 import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.album.entity.Album;
 import com.ownsong.api.album.repository.AlbumRepository;
+import com.ownsong.api.sheet.entity.Sheet;
+import com.ownsong.api.sheet.repository.SheetRepository;
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
 import com.ownsong.api.studio.dto.request.StudioSheetRequest;
 import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
@@ -16,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,8 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudioService {
     private final StudioRepository studioRepository;
-    private final StudioTeamRepository studioTeamRepository;
-    private final AlbumRepository albumRepository;
+    private final SheetRepository sheetRepository;
 
     public List<StudioResponse> getParticipatedStudios(User user){
         List<StudioResponse> studios = studioRepository.getParticipatedStudios(user);
@@ -77,7 +77,7 @@ public class StudioService {
         return false;
     }
 
-
+//    스튜디오에 악보 저장
     @Transactional
     public boolean saveStudioSheet(StudioSheetRequest studioSheetRequest, User user){
         Studio studio;
@@ -93,6 +93,29 @@ public class StudioService {
         studio.updateStudioSheet(studioSheetRequest.getStudioSheet());
         log.info("user : {}, studioSheet : {}",user, studioSheetRequest.getStudioSheet());
         studioRepository.save(studio);
+        return true;
+    }
+
+//    개인 악보 저장
+    @Transactional
+    public boolean saveSheet(StudioSheetRequest studioSheetRequest, User user){
+        Studio studio;
+        try{
+            studio = studioRepository.findById(studioSheetRequest.getStudioId()).get();
+        }catch (Exception e){
+            log.info("saveStudioSheet error : {}", e.getMessage());
+            return false;
+        }
+        if(!isInStudio(user, studio.getStudioID())){
+            return false;
+        }
+        Sheet sheet = Sheet.builder()
+                .sheetTitle(studioSheetRequest.getSheetTitle())
+                .sheetMatrix(studioSheetRequest.getStudioSheet())
+                .user(user)
+                .build();
+        sheetRepository.save(sheet);
+
         return true;
     }
 }
