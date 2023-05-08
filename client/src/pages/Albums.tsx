@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // 컴포넌트 import
-import AlbumCard from 'components/molecules/albumcard/AlbumCard';
 import Button from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
+import AlbumCardsGrid from 'components/organisms/albums/albumcards/AlbumCardsGrid';
 // SCSS import
 import './Albums.scss';
-// api 모듈 import
-import { getAlbums } from 'services/album';
-// axios return 값 타입 정의 import
-import Album from 'types/Album';
-// grid import
-import { Container, Row, Col } from 'react-grid-system';
 
 const Albums = () => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -25,35 +19,6 @@ const Albums = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-
-  // 작품들 데이터 가져오는 api용 list 초기화
-  const [albumlist, getAlbumList] = useState<Album[]>([
-    {
-      albumTitle: '',
-      albumContent: '',
-      likes: 0,
-      albumUrl: '',
-      userId: 0,
-      nickName: '',
-      userLike: false,
-      genre: '',
-      albumId: 0,
-    },
-  ]);
-  const getAlbumData = () => {
-    getAlbums(
-      ({ data }) => {
-        console.log(data);
-        getAlbumList(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };
-  useEffect(() => {
-    getAlbumData();
   }, []);
 
   return (
@@ -87,33 +52,7 @@ const Albums = () => {
           type="button"
         />
       </div>
-      <div
-        className="cards__container"
-        style={{ width: `${width >= 1200 ? '1000px' : '100%'}` }}
-      >
-        <Container>
-          <Row
-            style={{
-              width: `${width >= 992 ? '100%' : '500px'}`,
-            }}
-          >
-            {albumlist.map((album) => (
-              <Col sm={12} md={12} lg={6}>
-                <div key={album.albumId}>
-                  <AlbumCard
-                    imgPath={album.albumUrl}
-                    albumTitle={album.albumTitle}
-                    albumStudio={album.nickName}
-                    like={album.userLike}
-                    tag={album.genre}
-                    albumInfo={album.albumContent}
-                  />
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </div>
+      <AlbumCardsGrid />
     </div>
   );
 };

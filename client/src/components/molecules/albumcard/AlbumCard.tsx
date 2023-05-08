@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import 'components/molecules/albumcard/AlbumCard.scss';
+// scss import
+import './AlbumCard.scss';
 // atom import
 import CardTitle from 'components/atoms/common/CardTitle';
 import Chip from 'components/atoms/common/Chip';
@@ -55,10 +56,10 @@ const AlbumCard = ({
       {/* 정보 영역 */}
       <div className="album-card__info-box">
         <div>
-          <CardTitle title={albumTitle} maxWidth={400} />
+          <CardTitle title={albumTitle} maxWidth={180} />
         </div>
         <div className="album-card__info-studio-like">
-          <div>{albumStudio}</div>
+          <div className="album-card__info-studio">{albumStudio}</div>
           <LikeHeart isPushed={like} />
         </div>
         <div>
