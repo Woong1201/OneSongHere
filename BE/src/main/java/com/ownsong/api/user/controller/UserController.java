@@ -42,7 +42,7 @@ public class UserController {
         // 일회성 code 를 통해 access-token 을 발급 받고 이를 통해 유저 정보를 받아옴.
         UserLoginResponse userLoginResponse = oAuthService.oAuthLogin(socialLoginType,code);
         httpSession.setAttribute("userLoginResponse", userLoginResponse);
-        response.sendRedirect("localhost:3000/googleLogin");
+        response.sendRedirect("http://localhost:3000/googleLogin");
         return ResponseEntity.status(200).body(userLoginResponse);
     }
 
