@@ -1,8 +1,14 @@
 import { atom } from 'recoil';
+import User from 'types/User';
 
-const userProfileState = atom({
+const userState = atom<User>({
   key: 'userProfileState',
-  default: null,
+  default: {
+    userId: 0,
+    accessToken: '',
+    nickname: '',
+    picture: '',
+  },
 });
 
-export default userProfileState;
+export default userState;
