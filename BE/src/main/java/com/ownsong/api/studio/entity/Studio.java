@@ -52,5 +52,8 @@ public class Studio {
         this.genre = genre;
     }
 
+    public void updateStudioSheet(String sheet){
+        this.studioSheet = sheet;
+    }
 
 }
