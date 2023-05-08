@@ -1,6 +1,6 @@
 import React from 'react';
 import './ArticleHeader.scss';
-import Profile from 'components/molecules/Profilesection/Profile';
+import Profile from 'components/molecules/profilesection/Profile';
 
 // interface ArticleHeaderProps {}
 // {}: ArticleHeaderProps
