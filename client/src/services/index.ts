@@ -8,7 +8,6 @@ const apiInstance = (): AxiosInstance => {
     baseURL: URL,
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      withCredentials: true,
     },
   });
 
@@ -20,7 +19,6 @@ const loginApiInstance = (): AxiosInstance => {
     baseURL: '',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      withCredentials: true,
     },
   });
 

@@ -10,28 +10,11 @@ const getLogin = async (
 ): Promise<void> => {
   await api({
     method: 'get',
-    url: '/user/auth/google',
-    headers: { code: `${code}` },
+    url: '/user/auth/callback/google',
+    params: { code },
   })
     .then(success)
     .catch(fail);
 };
 
 export { getLogin };
-
-// const loginApi = loginApiInstance();
-
-// const handleLogin = async (
-//   customUrl: string,
-//   success: (response: AxiosResponse) => void,
-//   fail: (error: AxiosError) => void
-// ): Promise<void> => {
-//   await loginApi({
-//     method: 'get',
-//     url: customUrl,
-//   })
-//     .then(success)
-//     .catch(fail);
-// };
-
-// export { handleLogin };
