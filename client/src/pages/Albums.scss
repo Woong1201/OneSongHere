@@ -4,8 +4,12 @@
     flex-direction: column;
 }
 .halloffame__container{
-    width: 50vh;
+    // width: 50vh;
     margin-bottom: 10px;
     display: flex;
     justify-content: start;
+}
+.cards__container{
+    margin-top: 20px;
+    margin-bottom: 30px;
 }

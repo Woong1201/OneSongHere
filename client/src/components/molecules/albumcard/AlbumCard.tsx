@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'components/molecules/albumcard/AlbumCard.scss';
 // atom import
 import CardTitle from 'components/atoms/common/CardTitle';
@@ -29,8 +29,23 @@ const AlbumCard = ({
   tag,
   albumInfo,
 }: AlbumCardProps) => {
+  // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="album-card">
+    <div
+      className="album-card"
+      style={{ width: `${width >= 768 ? '500px' : '500px'}` }}
+    >
       {/* 사진 영역 */}
       <div className="album-card__cover-box">
         {/* <div className="album-card__cover-frame"> */}

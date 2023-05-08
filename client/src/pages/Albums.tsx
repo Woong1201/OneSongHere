@@ -60,7 +60,7 @@ const Albums = () => {
     <div className="album__container">
       <div
         className="halloffame__container"
-        style={{ width: `${width >= 600 ? '50vw' : '80vw'}` }}
+        style={{ width: `${width >= 600 ? '1200px' : '80vw'}` }}
       >
         <SectionTitle title="명예의 전당" />
       </div>
@@ -87,33 +87,29 @@ const Albums = () => {
           type="button"
         />
       </div>
-      <Container>
-        <Row>
-          <Col sm={12} md={6} lg={4}>
-            <div style={{ width: '120px' }}>안녕하세요</div>
-          </Col>
-          <Col sm={12} md={6} lg={4}>
-            <div style={{ width: '120px' }}>저는 햄입니다</div>
-          </Col>
-          <Col sm={12} md={6} lg={4}>
-            <div style={{ width: '120px' }}>아주 맛있습니다</div>
-          </Col>
-        </Row>
-      </Container>
-      <ul>
-        {albumlist.map((album) => (
-          <li key={album.albumId}>
-            <AlbumCard
-              imgPath={album.albumUrl}
-              albumTitle={album.albumTitle}
-              albumStudio={album.nickName}
-              like={album.userLike}
-              tag={album.genre}
-              albumInfo={album.albumContent}
-            />
-          </li>
-        ))}
-      </ul>
+      <div
+        className="cards__container"
+        // style={{ width: `${width >= 1070 ? '80vw' : '100vw'}` }}
+      >
+        <Container>
+          <Row>
+            {albumlist.map((album) => (
+              <Col sm={12} md={6}>
+                <div key={album.albumId}>
+                  <AlbumCard
+                    imgPath={album.albumUrl}
+                    albumTitle={album.albumTitle}
+                    albumStudio={album.nickName}
+                    like={album.userLike}
+                    tag={album.genre}
+                    albumInfo={album.albumContent}
+                  />
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
     </div>
   );
 };
