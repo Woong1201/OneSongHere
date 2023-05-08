@@ -8,6 +8,19 @@ const apiInstance = (): AxiosInstance => {
     baseURL: URL,
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
+      withCredentials: true,
+    },
+  });
+
+  return AxiosInst;
+};
+
+const loginApiInstance = (): AxiosInstance => {
+  const AxiosInst = axios.create({
+    baseURL: '',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      withCredentials: true,
     },
   });
 
@@ -26,4 +39,4 @@ const apiFormInstance = (): AxiosInstance => {
   return AxiosInst;
 };
 
-export { apiInstance, apiFormInstance };
+export { apiInstance, apiFormInstance, loginApiInstance };

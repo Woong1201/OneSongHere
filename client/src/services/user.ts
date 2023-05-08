@@ -1,18 +1,37 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { apiInstance } from './index';
+import { apiInstance, loginApiInstance } from './index';
 
 const api = apiInstance();
 
-const handleGoogleLogin = async (
+const getLogin = async (
+  code: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   await api({
     method: 'get',
-    url: '/user/loginUrl/google',
+    url: '/user/auth/google',
+    headers: { code: `${code}` },
   })
     .then(success)
     .catch(fail);
 };
 
-export { handleGoogleLogin };
+export { getLogin };
+
+// const loginApi = loginApiInstance();
+
+// const handleLogin = async (
+//   customUrl: string,
+//   success: (response: AxiosResponse) => void,
+//   fail: (error: AxiosError) => void
+// ): Promise<void> => {
+//   await loginApi({
+//     method: 'get',
+//     url: customUrl,
+//   })
+//     .then(success)
+//     .catch(fail);
+// };
+
+// export { handleLogin };
