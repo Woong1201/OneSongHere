@@ -105,7 +105,7 @@ public class StudioController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = StudioSheetRequest.class))),
     })
-    @PatchMapping(value = "/save")
+    @PatchMapping(value = "/sheet")
     public ResponseEntity<?> saveStudioSheet(@RequestBody StudioSheetRequest studioSheetRequest){
         User user = userService.getLoginUser();
         if(user == null){
@@ -115,6 +115,22 @@ public class StudioController {
             return ResponseEntity.status(400).body("해당 스튜디오에 참여하고있지 않습니다.");
         }
 
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "일반 스튜디오 작곡 저장(개인 악보저장)", description = "개인 악보저장")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = StudioSheetRequest.class))),
+    })
+    @PatchMapping(value = "/save")
+    public ResponseEntity<?> saveSheet(@RequestBody StudioSheetRequest studioSheetRequest){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        if(!studioService.saveSheet(studioSheetRequest, user)){
+            return ResponseEntity.status(400).body("해당 스튜디오에 참여하고있지 않습니다.");
+        }
         return ResponseEntity.ok().build();
     }
 
