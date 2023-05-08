@@ -1,7 +1,11 @@
 package com.ownsong.api.studio.service;
 
 
+import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
+import com.ownsong.api.album.entity.Album;
+import com.ownsong.api.album.repository.AlbumRepository;
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.request.StudioSheetRequest;
 import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
 import com.ownsong.api.studio.dto.responese.StudioResponse;
 import com.ownsong.api.studio.entity.Studio;
@@ -12,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +28,7 @@ import java.util.List;
 public class StudioService {
     private final StudioRepository studioRepository;
     private final StudioTeamRepository studioTeamRepository;
+    private final AlbumRepository albumRepository;
 
     public List<StudioResponse> getParticipatedStudios(User user){
         List<StudioResponse> studios = studioRepository.getParticipatedStudios(user);
@@ -59,4 +65,32 @@ public class StudioService {
         return studioInfo;
     }
 
+    public boolean isInStudio(User user, long studioId){
+        List<Studio> studios = user.getStudios();
+        Studio studio = studioRepository.findById(studioId).get();
+        for(Studio s : studios){
+            if(s.equals(studio)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+//    @Transactional
+//    public boolean saveStudioSheet(StudioSheetRequest studioSheetRequest, User user){
+//        Studio studio;
+//        try{
+//            studio = studioRepository.findById(studioSheetRequest.getStudioId()).get();
+//        }catch (Exception e){
+//            return false;
+//        }
+//        if(album.getUser().getUserID() != user.getUserID()){
+//            return false;
+//        }
+//        album.updateAlbumArticle(albumArticleCreateRequest, filePath);
+//        albumRepository.save(album);
+//
+//        return true;
+//    }
 }
