@@ -65,11 +65,12 @@ public class StudioService {
         return studioInfo;
     }
 
+
+//   유저가 해당 스튜디오에 참여하고 있는지 아닌지를 판별
     public boolean isInStudio(User user, long studioId){
         List<Studio> studios = user.getStudios();
-        Studio studio = studioRepository.findById(studioId).get();
-        for(Studio s : studios){
-            if(s.equals(studio)){
+        for(Studio studio : studios){
+            if(studio.getStudioID() == studioId){
                 return true;
             }
         }
@@ -77,20 +78,21 @@ public class StudioService {
     }
 
 
-//    @Transactional
-//    public boolean saveStudioSheet(StudioSheetRequest studioSheetRequest, User user){
-//        Studio studio;
-//        try{
-//            studio = studioRepository.findById(studioSheetRequest.getStudioId()).get();
-//        }catch (Exception e){
-//            return false;
-//        }
-//        if(album.getUser().getUserID() != user.getUserID()){
-//            return false;
-//        }
-//        album.updateAlbumArticle(albumArticleCreateRequest, filePath);
-//        albumRepository.save(album);
-//
-//        return true;
-//    }
+    @Transactional
+    public boolean saveStudioSheet(StudioSheetRequest studioSheetRequest, User user){
+        Studio studio;
+        try{
+            studio = studioRepository.findById(studioSheetRequest.getStudioId()).get();
+        }catch (Exception e){
+            log.info("saveStudioSheet error : {}", e.getMessage());
+            return false;
+        }
+        if(!isInStudio(user, studio.getStudioID())){
+            return false;
+        }
+        studio.updateStudioSheet(studioSheetRequest.getStudioSheet());
+        log.info("user : {}, studioSheet : {}",user, studioSheetRequest.getStudioSheet());
+        studioRepository.save(studio);
+        return true;
+    }
 }
