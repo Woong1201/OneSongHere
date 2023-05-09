@@ -54,7 +54,7 @@ public class StudioService {
         StudioResponse studioResponse = StudioResponse.builder()
                 .studioId(studio.getStudioID())
                 .studioTitle(studioCreateRequest.getStudioTitle())
-                .hostId(user.getNickname())
+                .hostId(user.getUserID())
                 .genre(studioCreateRequest.getGenre())
                 .endDate(endDate)
                 .build();
