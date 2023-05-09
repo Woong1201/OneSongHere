@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import StudioNoteGrid from './StudioNoteGrid';
 import './StudioNoteScroll.scss';
 
@@ -12,60 +12,75 @@ const StudioNoteScroll = ({
   updateScrollPosition,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [localScrollPosition, setLocalScrollPosition] =
+    useState(scrollPosition);
+  const [bodyLeftPosition, setBodyLeftPosition] = useState(0);
+  const onClick = (event: React.MouseEvent) => {
+    const parent = scrollRef.current;
 
-  const onMouseDown = (event: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(event.pageX - (scrollBodyRef.current!.offsetLeft as number));
-    setScrollLeft(scrollBodyRef.current!.offsetLeft as number);
-  };
+    if (parent) {
+      const x = event.pageX - parent.offsetLeft;
+      const maxScrollLeft = parent.offsetWidth;
+      const newScrollPosition = (x * 4414) / maxScrollLeft;
 
-  const onMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const onMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    if (!isDragging) return;
-    event.preventDefault();
-
-    const el = scrollBodyRef.current;
-    const x = event.pageX - (el!.offsetParent as HTMLElement)!.offsetLeft;
-    const walk = x - startX;
-    el!.style.left = `${scrollLeft + walk}px`;
-
-    const scrollBodyPositionRatio =
-      (scrollLeft + walk) /
-      ((el!.offsetParent as HTMLElement)!.offsetWidth - el!.offsetWidth);
-    updateScrollPosition(scrollBodyPositionRatio);
+      if (scrollBodyRef.current) {
+        const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
+        const newLeft = Math.max(
+          scrollBodyRef.current.offsetWidth / 2,
+          Math.min(
+            x - halfScrollBodyWidth,
+            parent.offsetWidth - scrollBodyRef.current.offsetWidth / 2
+          )
+        );
+        setLocalScrollPosition(newScrollPosition);
+        setBodyLeftPosition(newLeft);
+        updateScrollPosition(newScrollPosition);
+      }
+    }
   };
 
   useEffect(() => {
-    if (scrollBodyRef.current && scrollBodyRef.current.offsetParent) {
-      scrollBodyRef.current.style.left = `${
-        scrollPosition *
-        ((scrollBodyRef.current.offsetParent as HTMLElement).offsetWidth -
-          scrollBodyRef.current.offsetWidth)
-      }px`;
+    setLocalScrollPosition(scrollPosition);
+  }, [scrollPosition]);
+  useEffect(() => {
+    if (scrollBodyRef.current && scrollRef.current) {
+      const parent = scrollRef.current;
+      const maxScrollLeft = parent.offsetWidth;
+      const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
+      const newLeft =
+        ((scrollPosition > halfScrollBodyWidth
+          ? scrollPosition
+          : halfScrollBodyWidth) /
+          4414) *
+          maxScrollLeft -
+        halfScrollBodyWidth;
+      setLocalScrollPosition(scrollPosition);
+      setBodyLeftPosition(
+        Math.max(
+          scrollBodyRef.current.offsetWidth / 2,
+          Math.min(
+            newLeft,
+            parent.offsetWidth - scrollBodyRef.current.offsetWidth / 2
+          )
+        )
+      );
     }
   }, [scrollPosition]);
 
   return (
-    <div className="studio_note__scroll">
+    <div
+      role="presentation"
+      className="studio_note__scroll"
+      ref={scrollRef}
+      onClick={onClick}
+    >
       <StudioNoteGrid />
       <div
         role="presentation"
         className="studio_note__scroll-body"
-        onMouseDown={onMouseDown}
-        onMouseLeave={onMouseLeave}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
         ref={scrollBodyRef}
+        style={{ left: `${bodyLeftPosition}px` }}
       />
     </div>
   );

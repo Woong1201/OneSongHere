@@ -42,7 +42,9 @@ const StudioNoteContainer = ({
 
     requestAnimationFrame(() => {
       if (ref.current) {
-        ref.current.scrollLeft = scrollLeft - move;
+        const newScrollLeft = Math.max(0, Math.min(4414, scrollLeft - move)); // Make sure it's not less than 0 or greater than 4414
+        ref.current.scrollLeft = newScrollLeft;
+        updateScrollPosition(newScrollLeft);
       }
     });
   };
@@ -66,9 +68,10 @@ const StudioNoteContainer = ({
   };
 
   useEffect(() => {
-    updateScrollPosition(scrollLeft);
-  }, [scrollLeft]);
-
+    if (ref.current) {
+      ref.current.scrollLeft = scrollPosition;
+    }
+  }, [scrollPosition]);
   return (
     <div
       role="presentation"
