@@ -1,0 +1,39 @@
+.studio__note-grid {
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    &:not(:last-child) {
+      > button {
+        border-right: 0px;
+      }
+    }
+    &:nth-child(2n) {
+      > button {
+        border-right: 1px solid black;
+      }
+    }
+    &:nth-child(2n + 1) {
+      > button {
+        border-left: 0px solid black;
+      }
+    }
+    &:nth-child(1) {
+      > button {
+        border-left: 1px solid #ccc;
+      }
+    }
+    &:nth-child(8n + 5),
+    &:nth-child(8n + 6),
+    &:nth-child(8n + 7),
+    &:nth-child(8n + 8) {
+      > button {
+        background-color: rgba(0, 0, 0, 0.03);
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+}
