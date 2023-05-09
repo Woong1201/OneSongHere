@@ -26,11 +26,27 @@ const WriteFrame = () => {
     navigate(-1);
   };
 
+  const getCsrfToken = (): string => {
+    const name = 'csrftoken';
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i += 1) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(`${name}=`)) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return 'error';
+  };
+
+  const csrftoken = getCsrfToken();
+  console.log(csrftoken);
+
   const postArticleData = () => {
     postArticle(
       title,
       '구인',
       '산호백화현상이 무엇이죠?',
+      csrftoken,
       ({ data }) => {
         console.log(data);
       },
