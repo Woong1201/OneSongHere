@@ -14,6 +14,17 @@ const apiInstance = (): AxiosInstance => {
   return AxiosInst;
 };
 
+// const loginApiInstance = (): AxiosInstance => {
+//   const AxiosInst = axios.create({
+//     baseURL: '',
+//     headers: {
+//       'Content-Type': 'application/json;charset=utf-8',
+//     },
+//   });
+
+//   return AxiosInst;
+// };
+
 // multipart/form-data 형식
 const apiFormInstance = (): AxiosInstance => {
   const AxiosInst = axios.create({
