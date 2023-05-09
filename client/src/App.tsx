@@ -16,6 +16,7 @@ import Board from 'pages/Board';
 import ArticleWrite from 'pages/ArticleWrite';
 import Studio from 'pages/Studio';
 import RelayStudio from 'pages/RelayStudio';
+import GoogleLogin from 'pages/GoogleLogin';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login/google" element={<GoogleLogin />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/albums" element={<Albums />} />
             <Route path="/board" element={<Board />} />

@@ -3,26 +3,13 @@ import LoginButton from 'components/atoms/buttons/LoginButton';
 import google from 'assets/images/icon/google.svg';
 import kakao from 'assets/images/icon/kakao.svg';
 import naver from 'assets/images/icon/naver.svg';
-import { handleGoogleLogin } from 'services/user';
-import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
-import userProfileState from 'store/userAtom';
 
 const Login = () => {
-  const [userProfile, setUserProfile] = useRecoilState(userProfileState);
-  const navigate = useNavigate();
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&response_type=code&redirect_uri=http://localhost:3000/login/google&client_id=${clientId}`;
 
-  const handleLogin = () => {
-    handleGoogleLogin(
-      ({ data }) => {
-        setUserProfile(data);
-        console.log(userProfile);
-        navigate('/main');
-      },
-      (error) => {
-        console.log('로그인 에러', error);
-      }
-    );
+  const getCustomUrl = () => {
+    window.location.assign(url);
   };
 
   return (
@@ -33,7 +20,7 @@ const Login = () => {
 
       <div className="login-page__buttons">
         <LoginButton
-          onClick={handleLogin}
+          onClick={getCustomUrl}
           type="google"
           src={google}
           label="Google로 시작하기"
