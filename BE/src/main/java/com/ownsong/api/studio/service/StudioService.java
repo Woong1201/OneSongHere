@@ -1,19 +1,19 @@
 package com.ownsong.api.studio.service;
 
 
-import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
-import com.ownsong.api.album.entity.Album;
-import com.ownsong.api.album.repository.AlbumRepository;
 import com.ownsong.api.sheet.entity.Sheet;
 import com.ownsong.api.sheet.repository.SheetRepository;
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.request.StudioInviteRequest;
 import com.ownsong.api.studio.dto.request.StudioSheetRequest;
 import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
 import com.ownsong.api.studio.dto.responese.StudioResponse;
 import com.ownsong.api.studio.entity.Studio;
+import com.ownsong.api.studio.entity.StudioTeam;
 import com.ownsong.api.studio.repository.StudioRepository;
 import com.ownsong.api.studio.repository.StudioTeamRepository;
 import com.ownsong.api.user.entity.User;
+import com.ownsong.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,8 @@ import java.util.List;
 public class StudioService {
     private final StudioRepository studioRepository;
     private final SheetRepository sheetRepository;
+    private final UserRepository userRepository;
+    private final StudioTeamRepository studioTeamRepository;
 
     public List<StudioResponse> getParticipatedStudios(User user){
         List<StudioResponse> studios = studioRepository.getParticipatedStudios(user);
@@ -116,6 +118,35 @@ public class StudioService {
                 .build();
         sheetRepository.save(sheet);
 
+        return true;
+    }
+
+    public boolean invite(User user, StudioInviteRequest studioInviteRequest) {
+        Studio studio;
+        // studio 조회
+        try {
+            studio = studioRepository.findById(studioInviteRequest.getStudioId()).get();
+        } catch (Exception e) {
+            return false;
+        }
+        // studio 초대 권한 확인
+        try {
+            StudioTeam studioTeam = studioTeamRepository.findByStudioAndUser(studio, user);
+            if (studioTeam == null)
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+        // 초대하려는 유저 조회
+        User inviteUser;
+        try {
+            inviteUser = userRepository.findByEmail(studioInviteRequest.getEmail());
+        } catch (Exception e) {
+            return false;
+        }
+        // 유저 초대
+        studio.getStudioTeams().add(new StudioTeam(inviteUser, studio));
+        studioRepository.save(studio);
         return true;
     }
 }
