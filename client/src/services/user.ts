@@ -1,5 +1,5 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { apiInstance, loginApiInstance } from './index';
+import { apiInstance } from './index';
 
 const api = apiInstance();
 
