@@ -16,7 +16,6 @@ const StudioNote = () => {
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
       />
-      {scrollPosition}
       <StudioNoteContainer
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
