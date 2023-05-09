@@ -28,4 +28,16 @@ const getArticle = async (
     .catch(fail);
 };
 
-export { getBoards, getArticle };
+const postArticle = async (
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  await api({
+    method: 'post',
+    url: '/board',
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { getBoards, getArticle, postArticle };
