@@ -1,0 +1,16 @@
+.studio__body {
+  width: 100%;
+  height: calc(100% - 47px);
+  display: flex;
+  flex-direction: row;
+}
+.studio__content {
+  width: 70%;
+  height: 100%;
+}
+.studio__side {
+  // 레이아웃 표시용 -> 나중에 삭제
+  width: 30%;
+  box-sizing: border-box;
+  border: 1px solid yellow;
+}
