@@ -3,11 +3,14 @@ package com.ownsong.api.relayStudio.controller;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioVoteRequest;
+import com.ownsong.api.relayStudio.dto.response.RelayStudioListResponse;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.relayStudio.service.RelayStudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
+import com.ownsong.api.user.social.Constant;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -132,4 +136,71 @@ public class RelayStudioController {
 
         return ResponseEntity.status(200).body(relayStudioResponse);
     }
+
+    @Operation(summary = "relayStudio 상세 조회", description = "relayStudio 상세 조회 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudio 상세 조회 성공", content = @Content(schema = @Schema(implementation = RelayStudioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @GetMapping("/{relayStudioId}")
+    public ResponseEntity<?> relayStudioGet(@PathVariable Long relayStudioId) throws IOException {
+        User user = userService.getLoginUser();
+
+        // 입력받은 relayStudioId 에 해당하는 relayStudio 를 조회
+        RelayStudioResponse relayStudioResponse = relayStudioService.getRelayStudio(relayStudioId, user);
+        if (relayStudioResponse == null)
+            return ResponseEntity.status(400).body("잘못된 접근");
+
+        return ResponseEntity.status(200).body(relayStudioResponse);
+    }
+
+    @Operation(summary = "relayStudio 전체 조회", description = "relayStudio 를 참여중인 것과 참여가능한 것 나누어 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudios 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioListResponse.class)))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @GetMapping("/")
+    public ResponseEntity<?> relayStudiosGet() throws IOException {
+        User user = userService.getLoginUser();
+        return ResponseEntity.status(200).body(relayStudioService.getRelayStudios(user));
+    }
+
+    @Operation(summary = "relayStudio 검색", description = "relayStudios 검색 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudios 검색 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioListResponse.class)))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @GetMapping("/search/{type}/{search}")
+    public ResponseEntity<?> relayStudiosSearch(@PathVariable String type, @PathVariable String search) throws IOException {
+        User user = userService.getLoginUser();
+        Constant.SearchType searchType = Constant.SearchType.valueOf(type.toUpperCase());
+        return ResponseEntity.status(200).body(relayStudioService.searchRelayStudios(user, searchType, search));
+    }
+
+//    @Operation(summary = "relayStudio 전체 조회", description = "relayStudio 전체 조회 메서드입니다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "relayStudio 전체 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioResponse.class)))),
+//            @ApiResponse(responseCode = "400", description = "bad request operation")
+//    })
+//    @GetMapping("/all")
+//    public ResponseEntity<?> relayStudiosAllGet() throws IOException {
+//        User user = userService.getLoginUser();
+//        return ResponseEntity.status(200).body(relayStudioService.getAllRelayStudios(user));
+//    }
+//
+//    @Operation(summary = "참여중인 relayStudio 조회", description = "참여중인 relayStudio 조회 메서드입니다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "참여중인 relayStudio 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioResponse.class)))),
+//            @ApiResponse(responseCode = "400", description = "bad request operation")
+//    })
+//    @GetMapping("/participate")
+//    public ResponseEntity<?> participateRelayStudiosGet() throws IOException {
+//        User user = userService.getLoginUser();
+//        if (user == null) {
+//            return ResponseEntity.status(200).body(new ArrayList<>());
+//        }
+//        return ResponseEntity.status(200).body(relayStudioService.getParticipateRelayStudios(user));
+//    }
+
+
 }
