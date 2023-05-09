@@ -1,23 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { getLogin } from 'services/user';
-import userState from 'store/userAtom';
+import { LoginState } from 'store/LoginState';
+import User from 'types/User';
 
 const GoogleLogin = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const navigate = useNavigate();
 
   const handleLogin = (code: string) => {
     getLogin(
       code,
       ({ data }) => {
-        // setUser({
-        //   userId: data.userID,
-        //   nickname: data.nickName,
-        //   picture: data.picture,
-        //   accessToken: data.accessToken,
-        // });
+        const { accessToken } = data;
+        const { userID } = data;
+        const { nickName } = data;
+        const { picture } = data;
+
+        const user: User = {
+          userId: userID,
+          nickname: nickName,
+          picture,
+        };
+
+        if (accessToken) localStorage.setItem('accessToken', accessToken);
+        if (localStorage.getItem('accessToken')) {
+          setIsLoggedIn(true);
+          localStorage.setItem('user', JSON.stringify(user));
+        }
       },
       (error) => {
         console.log('로그인 에러', error);
@@ -32,7 +43,6 @@ const GoogleLogin = () => {
     if (!code) return;
 
     handleLogin(code);
-    console.log('user: ', user);
     navigate('/');
   }, [navigate]);
   return <div />;
