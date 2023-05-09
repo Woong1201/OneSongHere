@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import StudioNoteContainer from 'components/molecules/studionote/StudioNoteContainer';
+import StudioNoteScroll from './StudioNoteScroll';
 
 const meta = {
-  title: 'molecule/StudioNote/StudioNoteContainer',
-  component: StudioNoteContainer,
+  title: 'molecule/StudioNote/StudioNoteScroll',
+  component: StudioNoteScroll,
   tags: ['autodocs'],
   argTypes: {
     //
   },
-} satisfies Meta<typeof StudioNoteContainer>;
+} satisfies Meta<typeof StudioNoteScroll>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

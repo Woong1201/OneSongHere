@@ -6,7 +6,7 @@ interface StudioNoteColumnProps {
   rowIndex: number;
 }
 
-const Column = 14;
+const Column = 24;
 
 const StudioNoteColumn = ({ rowIndex }: StudioNoteColumnProps) => {
   return (

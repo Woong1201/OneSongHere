@@ -1,13 +1,15 @@
 @import 'styles/_variables';
 
 .studio__note-column {
-  display: flex;
-  flex-direction: column;
+  height: 480px;
+  display: grid;
+  grid-auto-rows: 2fr;
+
   > button {
     &:not(:last-child) {
       border-bottom: 0px;
     }
-    &:nth-child(7) {
+    &:nth-child(12) {
       border-bottom: 3px rgba($main-theme-color, 0.5) solid;
     }
   }
