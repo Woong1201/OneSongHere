@@ -46,7 +46,7 @@ const WriteFrame = () => {
       title,
       '구인',
       '산호백화현상이 무엇이죠?',
-      csrftoken,
+      // csrftoken,
       ({ data }) => {
         console.log(data);
       },

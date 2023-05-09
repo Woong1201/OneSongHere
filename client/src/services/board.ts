@@ -32,14 +32,14 @@ const postArticle = async (
   title: string,
   head: string,
   content: string,
-  csrfToken: string,
+  // csrfToken: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
   console.log('token :', token);
   await api({
-    headers: { Authorization: `Bearer ${token}`, 'X-CSRF-Token': csrfToken },
+    headers: { Authorization: `Bearer ${token}` },
     method: 'post',
     url: '/board',
     data: {
