@@ -2,6 +2,7 @@ package com.ownsong.api.relayStudio.service;
 
 import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioVoteRequest;
+import com.ownsong.api.relayStudio.dto.response.RelayStudioListResponse;
 import com.ownsong.api.relayStudio.entity.RelayStudio;
 import com.ownsong.api.relayStudio.entity.RelayStudioTag;
 import com.ownsong.api.relayStudio.entity.RelayTeam;
@@ -11,10 +12,14 @@ import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.relayStudio.repository.RelayTeamRepository;
 import com.ownsong.api.user.entity.User;
+import com.ownsong.api.user.social.Constant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -142,9 +147,141 @@ public class RelayStudioService {
                 }
             }
         }catch (Exception e) {
-            System.out.println(e);
             return null;
         }
         return null;
     }
+
+    public RelayStudioResponse getRelayStudio(Long relayStudioId, User user) {
+        RelayStudio relayStudio;
+        // 해당 relayStudio 존재 여부 확인
+        try {
+            relayStudio = relayStudioRepository.findById(relayStudioId).get();
+        }catch (Exception e) {
+            return null;
+        }
+
+        // relayTeam 존재 여부에 따라
+        try {
+            RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+            return new RelayStudioResponse(relayStudio, true, relayTeam.isVoteFlag());
+        }catch (Exception e) {
+            // relayTeam 이 구인중일때만 조회 가능
+            if (relayStudio.getStatus() != 1)
+                return null;
+            return new RelayStudioResponse(relayStudio, false, false);
+        }
+    }
+
+    public HashMap<String, List<RelayStudioListResponse>> getRelayStudios(User user) {
+        List<RelayStudio> relayStudios = relayStudioRepository.findAll();
+        HashMap<String, List<RelayStudioListResponse>> hashMap = new HashMap<>();
+        List<RelayStudioListResponse> participateRelayStudioResponses = new ArrayList<>();
+        List<RelayStudioListResponse> relayStudioResponses = new ArrayList<>();
+
+        for (RelayStudio relayStudio : relayStudios) {
+            try {
+                RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+                if (relayTeam != null) {
+                    participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                }
+                else if (relayStudio.getStatus() == 1) {
+                    relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                }
+            } catch (Exception e) {
+                if (relayStudio.getStatus() == 1) {
+                    relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                }
+            }
+        }
+        hashMap.put("participate", participateRelayStudioResponses);
+        hashMap.put("all", relayStudioResponses);
+        return hashMap;
+    }
+
+    public HashMap<String, List<RelayStudioListResponse>> searchRelayStudios(User user, Constant.SearchType searchType, String search) {
+        List<RelayStudio> relayStudios;
+        List<RelayStudioListResponse> participateRelayStudioResponses = new ArrayList<>();
+        List<RelayStudioListResponse> relayStudioResponses = new ArrayList<>();
+        HashMap<String, List<RelayStudioListResponse>> hashMap = new HashMap<>();
+        if (searchType == Constant.SearchType.TITLE) {
+            relayStudios = relayStudioRepository.findByRelayStudioTitleContaining(search);
+            for (RelayStudio relayStudio : relayStudios) {
+                try {
+                    RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+                    if (relayTeam != null) {
+                        participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                    }
+                    else if (relayStudio.getStatus() == 1) {
+                        relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                    }
+                } catch (Exception e) {
+                    if (relayStudio.getStatus() == 1) {
+                        relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                    }
+                }
+            }
+        } else if (searchType == Constant.SearchType.TAG) {
+            relayStudios = relayStudioRepository.findAll();
+            for (RelayStudio relayStudio : relayStudios) {
+                for (RelayStudioTag relayStudioTag : relayStudio.getRelayStudioTags()) {
+                    if (relayStudioTag.getRelayStudioTagContent().equals(search)) {
+                        try {
+                            RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+                            if (relayTeam != null) {
+                                participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                            }
+                            else if (relayStudio.getStatus() == 1) {
+                                relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                            }
+                        } catch (Exception e) {
+                            if (relayStudio.getStatus() == 1) {
+                                relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        } else {
+            hashMap.put("participate", new ArrayList<>());
+            hashMap.put("all", new ArrayList<>());
+            return hashMap;
+        }
+
+        hashMap.put("participate", participateRelayStudioResponses);
+        hashMap.put("all", relayStudioResponses);
+        return hashMap;
+    }
+
+//    public List<RelayStudioResponse> getAllRelayStudios(User user) {
+//        List<RelayStudio> relayStudios = relayStudioRepository.findAll();
+//        List<RelayStudioResponse> relayStudioResponses = new ArrayList<>();
+//
+//        for (RelayStudio relayStudio : relayStudios) {
+//            try {
+//                RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+//                relayStudioResponses.add(new RelayStudioResponse(relayStudio, true, relayTeam.isVoteFlag()));
+//            } catch (Exception e) {
+//                if (relayStudio.getStatus() == 1) {
+//                    relayStudioResponses.add(new RelayStudioResponse(relayStudio, false, false));
+//                }
+//            }
+//        }
+//        return relayStudioResponses;
+//    }
+//
+//    public List<RelayStudioResponse> getParticipateRelayStudios(User user) {
+//        List<RelayStudio> relayStudios = relayStudioRepository.findAll();
+//        List<RelayStudioResponse> relayStudioResponses = new ArrayList<>();
+//
+//        for (RelayStudio relayStudio : relayStudios) {
+//            try {
+//                RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
+//                relayStudioResponses.add(new RelayStudioResponse(relayStudio, true, relayTeam.isVoteFlag()));
+//            } catch (Exception e) {
+//            }
+//        }
+//        return relayStudioResponses;
+//    }
 }

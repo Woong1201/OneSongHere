@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RelayTeamRepository extends JpaRepository<RelayTeam, RelayTeamId> {
     void deleteRelayTeamByUserAndRelayStudio(User user, RelayStudio relayStudio);
+    RelayTeam findRelayTeamByUserAndRelayStudio(User user, RelayStudio relayStudio);
 
 }
