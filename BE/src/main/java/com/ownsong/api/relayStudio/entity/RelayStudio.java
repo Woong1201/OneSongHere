@@ -63,8 +63,11 @@ public class RelayStudio {
     @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
     private List<RelayTeam> relayTeams = new ArrayList<>();
 
+    @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
+    private List<RelayStudioTag> relayStudioTags = new ArrayList<>();
+
     @Builder
-    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, int numberOfVotes, int numberOfUsers, int agree, int limitOfUsers, int numberOfBars, int status, User user) {
+    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, int numberOfVotes, int numberOfUsers, int agree, int limitOfUsers, int numberOfBars, int status, User user, List<RelayStudioTag> relayStudioTags) {
         this.relayStudioID = relayStudioID;
         this.relayStudioTitle = relayStudioTitle;
         this.endDate = endDate;
@@ -76,6 +79,7 @@ public class RelayStudio {
         this.numberOfBars = numberOfBars;
         this.status = status;
         this.user = user;
+        this.relayStudioTags = relayStudioTags;
     }
 
     public RelayStudio(RelayStudioCreateRequest relayStudioCreateRequest, User user) {
@@ -99,6 +103,8 @@ public class RelayStudio {
         // 해당 유저의 relay 완료시 status 업데이트 및 투표 초기화
         if (relayStudioComposeRequest.isComplete()) {
             this.status = 3;
+            this.agree = 0;
+            this.numberOfVotes = 0;
             for (RelayTeam relayTeam : this.relayTeams) {
                 relayTeam.initializeVoteFlag();
             }
@@ -109,5 +115,18 @@ public class RelayStudio {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
         this.status = 1;
         this.numberOfUsers = 1;
+    }
+
+    public void vote(boolean vote) {
+        this.numberOfVotes += 1;
+        if (vote == true)
+            this.agree += 1;
+    }
+
+    public void completeVote() {
+        this.status = 1;
+        if (agree >= this.numberOfUsers/2) {
+            this.numberOfUsers += 1;
+        }
     }
 }
