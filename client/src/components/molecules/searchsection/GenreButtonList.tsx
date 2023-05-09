@@ -34,7 +34,7 @@ const GenreButtonList = () => {
   // map() 메서드를 활용해서 장르를 하나씩 불러온다.
   // 불러온 장르가 선택된 것이면 색 스타일을'primary'로 하고 아니면 'other'로 한다.
   return (
-    <div>
+    <div className="genre-buttons">
       {genres.map((genre) => (
         <Button
           key={genre.name}
