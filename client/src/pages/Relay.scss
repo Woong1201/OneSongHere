@@ -1,0 +1,33 @@
+@import 'styles/_variables';
+.relay-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    &__search-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 1440px;
+      height: 30vh;
+    }
+    &__studio-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 1440px;
+      margin-bottom: 30px;
+    }
+    &__studio-list-all {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 1440px;
+    }
+    &__line {
+        width: 1380px;
+        border: 1px solid $header-color;
+        margin-bottom: 20px;
+    }
+  }
+  
