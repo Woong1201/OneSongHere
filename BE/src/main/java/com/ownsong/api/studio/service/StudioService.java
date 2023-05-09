@@ -42,21 +42,23 @@ public class StudioService {
     public StudioResponse createStudio(StudioCreateRequest studioCreateRequest, User user){
         LocalDateTime endDate = LocalDateTime.now().plusDays(7);
 
-        Studio studio = Studio.builder()
+        Studio studio = studioRepository.save(Studio.builder()
                 .studioTitle(studioCreateRequest.getStudioTitle())
                 .user(user)
                 .genre(studioCreateRequest.getGenre())
                 .endDate(endDate)
-                .build();
+                .build());
 
+        studio.getStudioTeams().add(new StudioTeam(user, studio));
+        studioRepository.save(studio);
         StudioResponse studioResponse = StudioResponse.builder()
+                .studioId(studio.getStudioID())
                 .studioTitle(studioCreateRequest.getStudioTitle())
                 .hostId(user.getNickname())
                 .genre(studioCreateRequest.getGenre())
                 .endDate(endDate)
                 .build();
 
-        studioRepository.save(studio);
         return studioResponse;
     }
 
@@ -121,6 +123,7 @@ public class StudioService {
         return true;
     }
 
+    @Transactional
     public boolean invite(User user, StudioInviteRequest studioInviteRequest) {
         Studio studio;
         // studio 조회
@@ -141,6 +144,8 @@ public class StudioService {
         User inviteUser;
         try {
             inviteUser = userRepository.findByEmail(studioInviteRequest.getEmail());
+            if (inviteUser == null)
+                return false;
         } catch (Exception e) {
             return false;
         }
