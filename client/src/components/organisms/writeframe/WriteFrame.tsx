@@ -2,10 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Button from 'components/atoms/buttons/Button';
 import TextInput from 'components/atoms/inputs/TextInput';
+import { postArticle } from 'services/board';
 import './WriteFrame.scss';
 
 const WriteFrame = () => {
+  // 제목, 헤더(카테고리), 내용 - useState 정의 및 초기화
   const [title, setTitle] = useState<string>('');
+  const [header, setHeader] = useState<string>('');
+  const [content, setContent] = useState<string>('');
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -22,6 +26,20 @@ const WriteFrame = () => {
     navigate(-1);
   };
 
+  const postArticleData = () => {
+    postArticle(
+      title,
+      '구인',
+      '산호백화현상이 무엇이죠?',
+      ({ data }) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   // 렌더링
   return (
     <div className="write">
@@ -36,7 +54,12 @@ const WriteFrame = () => {
           />
         </div>
         <div className="write__buttons">
-          <Button label="등록" type="submit" color="primary" />
+          <Button
+            label="등록"
+            type="submit"
+            color="primary"
+            onClick={postArticleData}
+          />
           <Button label="취소" type="button" onClick={goBack} />
         </div>
       </form>

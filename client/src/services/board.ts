@@ -29,12 +29,20 @@ const getArticle = async (
 };
 
 const postArticle = async (
+  title: string,
+  head: string,
+  content: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   await api({
     method: 'post',
     url: '/board',
+    data: {
+      boardTitle: title,
+      header: head,
+      boardContent: content,
+    },
   })
     .then(success)
     .catch(fail);
