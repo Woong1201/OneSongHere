@@ -29,15 +29,15 @@ public class StudioResponse {
     @NotNull
     private LocalDateTime endDate;
     @Schema(description = "호스트(방장) id", example = "3")
-    private String hostId;
+    private long hostId;
 
 
     @Builder
-    public StudioResponse(long studioId, String studioTitle, String genre, LocalDateTime endDate, String hostId) {
+    public StudioResponse(long studioId, String studioTitle, String genre, long hostId, LocalDateTime endDate) {
         this.studioId = studioId;
         this.studioTitle = studioTitle;
         this.genre = genre;
-        this.endDate = endDate;
         this.hostId = hostId;
+        this.endDate = endDate;
     }
 }
