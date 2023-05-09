@@ -12,10 +12,16 @@ interface Studio {
 }
 
 // interface StudioListProps {
-//   albums?: Album;
+//   studios?: Studio;
+//   title: string;
+//   isParticipating: boolean;
 // }
 
-const StudioList = () => {
+interface StudioListProps {
+  isParticipating?: boolean;
+}
+
+const StudioList = ({ isParticipating = false }: StudioListProps) => {
   const date = new Date();
   const studios: Studio[] = [
     {
@@ -63,9 +69,13 @@ const StudioList = () => {
       <div className="studio-list__title">
         <SectionTitle title="작업중인 곡" />
       </div>
-      <div className="studio-list__button">
-        <Button type="button" label="생성하기" color="primary" />
-      </div>
+      {isParticipating ? (
+        <div className="studio-list__button">
+          <Button type="button" label="생성하기" color="primary" />
+        </div>
+      ) : (
+        <div className="studio-list__blank" />
+      )}
       {studios ? (
         chunkedStudios.map((studioRow) => (
           <div key={studioRow[0].studioId} className="studio-list__studio-row">
