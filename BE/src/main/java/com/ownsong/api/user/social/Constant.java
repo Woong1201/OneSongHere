@@ -10,6 +10,7 @@ public class Constant {
     public enum SearchType{
         NICKNAME,
         TITLE,
-        HEADER
+        HEADER,
+        TAG
     }
 }
