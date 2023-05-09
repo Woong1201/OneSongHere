@@ -1,0 +1,11 @@
+.studio__note-item {
+  width: 50px;
+  height: 35px;
+  border: 1px solid #ccc;
+  background: none;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

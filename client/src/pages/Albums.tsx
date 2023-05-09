@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import AlbumCard from 'components/molecules/albumcard/AlbumCard';
+// 컴포넌트 import
 import Button from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
+import AlbumCardsGrid from 'components/organisms/albums/albumcards/AlbumCardsGrid';
+// SCSS import
 import './Albums.scss';
 
 const Albums = () => {
@@ -23,7 +25,7 @@ const Albums = () => {
     <div className="album__container">
       <div
         className="halloffame__container"
-        style={{ width: `${width >= 600 ? '50vw' : '80vw'}` }}
+        style={{ width: `${width >= 992 ? '1000px' : '100%'}` }}
       >
         <SectionTitle title="명예의 전당" />
       </div>
@@ -50,22 +52,7 @@ const Albums = () => {
           type="button"
         />
       </div>
-      <AlbumCard
-        imgPath="https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2013/03/ham3.jpg?crop=1xw:0.845763723150358xh;center,top"
-        albumTitle="그슬린 햄"
-        albumStudio="정육점"
-        like={false}
-        tag="컨트리"
-        albumInfo="정육점에서 막 사온 햄을 바싹 구워먹는 상상을 담은 경쾌한 피아노 음색이 특징이다."
-      />
-      <AlbumCard
-        imgPath="https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2013/03/ham3.jpg?crop=1xw:0.845763723150358xh;center,top"
-        albumTitle="그슬린 햄"
-        albumStudio="정육점"
-        like={false}
-        tag="컨트리"
-        albumInfo="정육점에서 막 사온 햄을 바싹 구워먹는 상상을 담은 경쾌한 피아노 음색이 특징이다."
-      />
+      <AlbumCardsGrid />
     </div>
   );
 };

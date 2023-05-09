@@ -1,5 +1,6 @@
 import React from 'react';
 import Size from 'types/Size';
+import './HamburgerIcon.scss';
 
 interface HamburgerIconProps {
   // 너비, 너비에 따라 높이는 비례해서 설정
