@@ -100,13 +100,20 @@ public class RelayStudio {
 
     public void update(RelayStudioComposeRequest relayStudioComposeRequest) {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
-        // 해당 유저의 relay 완료시 status 업데이트 및 투표 초기화
+        // 해당 유저의 relay 완료시 status 업데이트, 투표 초기화, noti 생성
         if (relayStudioComposeRequest.isComplete()) {
             this.status = 3;
             this.agree = 0;
             this.numberOfVotes = 0;
             for (RelayTeam relayTeam : this.relayTeams) {
                 relayTeam.initializeVoteFlag();
+                this.getNotifications().add(
+                        Notification.builder()
+                                .user(relayTeam.getUser())
+                                .type("voteStart")
+                                .relayStudio(this)
+                                .build()
+                );
             }
         }
     }
