@@ -38,7 +38,7 @@ const App = () => {
             <Route path="/*" element={<Notfound />} />
           </Route>
           <Route path="/studio" element={<Studio />} />
-          <Route path="/relaystudio" element={<RelayStudio />} />
+          <Route path="/relay/:relayStudioId" element={<RelayStudio />} />
         </Routes>
       </BrowserRouter>
     </div>
