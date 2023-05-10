@@ -17,6 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     scrollPosition: 1,
+    pianoInstance: null,
     updateScrollPosition: (position) => console.log(position),
   },
 };
