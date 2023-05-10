@@ -105,9 +105,10 @@ public class RelayStudio {
             this.status = 3;
             this.agree = 0;
             this.numberOfVotes = 0;
+            this.getNotifications().clear();
             for (RelayTeam relayTeam : this.relayTeams) {
                 relayTeam.initializeVoteFlag();
-                this.getNotifications().add(
+                this.notifications.add(
                         Notification.builder()
                                 .user(relayTeam.getUser())
                                 .type("voteStart")
@@ -138,9 +139,10 @@ public class RelayStudio {
         String notiType = "voteEnd";
         if (this.numberOfUsers == this.limitOfUsers)
             notiType = "compositionComplete";
+        this.getNotifications().clear();
         for (RelayTeam relayTeam : this.relayTeams) {
             relayTeam.initializeVoteFlag();
-            this.getNotifications().add(
+            this.notifications.add(
                     Notification.builder()
                             .user(relayTeam.getUser())
                             .type(notiType)
