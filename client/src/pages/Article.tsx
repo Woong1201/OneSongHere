@@ -85,8 +85,8 @@ const Article = () => {
         </div>
         {/* <div>프로필아이콘</div>
         <div>조회수</div> */}
-        <CommentInput boardid={Number(boardId.articleId)} />
       </div>
+      <CommentInput boardid={Number(boardId.articleId)} />
     </div>
   );
 };

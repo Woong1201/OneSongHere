@@ -38,6 +38,7 @@ const postArticle = async (
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
   // console.log('token :', token);
+  // elseif로 alert
   await api({
     headers: { Authorization: `Bearer ${token}` },
     method: 'post',
