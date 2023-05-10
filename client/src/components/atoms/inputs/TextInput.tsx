@@ -3,7 +3,7 @@ import './TextInput.scss';
 
 interface TextInputProps {
   label: string;
-  value: string;
+  value: string | number;
   stroke?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
