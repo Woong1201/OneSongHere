@@ -3,7 +3,10 @@ import StudioNoteScroll from 'components/molecules/studionote/StudioNoteScroll';
 import React, { useState } from 'react';
 import './StudioNote.scss';
 
-const StudioNote = () => {
+interface StudioNoteProps {
+  addNote: (name: string, timing: number) => void;
+}
+const StudioNote = ({ addNote }: StudioNoteProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const updateScrollPosition = (position: number) => {
@@ -19,6 +22,7 @@ const StudioNote = () => {
       <StudioNoteContainer
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
+        addNote={addNote}
       />
     </div>
   );

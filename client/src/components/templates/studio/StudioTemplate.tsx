@@ -1,30 +1,33 @@
 import StudioHeader from 'components/organisms/studio/StudioHeader';
-import React from 'react';
+import React, { useState } from 'react';
 import './StudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
+import Note from 'types/Note';
 
 const StudioTemplate = () => {
-  const notes = [
-    { note: ['D#5'], duration: '4n', timing: 0.125 },
-    { note: ['E5'], duration: '4n', timing: 0.25 },
-    { note: ['D#5'], duration: '4n', timing: 0.375 },
-    { note: ['Eb4', 'G4', 'Bb4'], duration: '4n', timing: 0.5 },
-    { note: ['B4'], duration: '4n', timing: 0.725 },
-    { note: ['C5'], duration: '4n', timing: 0.975 },
-    { note: ['D#5'], duration: '4n', timing: 1.125 },
-    { note: ['E5'], duration: '4n', timing: 1.25 },
-    { note: ['F5'], duration: '4n', timing: 1.375 },
-    { note: ['G5'], duration: '4n', timing: 1.5 },
-  ];
+  const [notes, setNotes] = useState<Note[]>([]);
+  const addNote = (name: string, timing: number) => {
+    const newNotes = notes.map((note) => {
+      return note.timing === timing
+        ? { ...note, names: [...(note.names as string[]), name] }
+        : note;
+    });
+    if (notes.length === newNotes.length) {
+      setNotes([...notes, { names: [name], duration: '8n', timing }]);
+    } else {
+      setNotes(newNotes);
+    }
+  };
+
   return (
     <>
       <StudioHeader notes={notes} />
       <div className="studio__body">
         <div className="studio__content">
-          <StudioNote />
+          <StudioNote addNote={addNote} />
           <StudioInstrument />
         </div>
         <div className="studio__side">

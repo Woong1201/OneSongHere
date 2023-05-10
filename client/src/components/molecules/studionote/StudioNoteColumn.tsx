@@ -4,6 +4,7 @@ import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
 
 interface StudioNoteColumnProps {
   timing: number;
+  addNote?: (name: string, timing: number) => void;
 }
 
 const Column = 24;
@@ -35,12 +36,19 @@ const noteList = [
   'B5',
 ].reverse();
 
-const StudioNoteColumn = ({ timing }: StudioNoteColumnProps) => {
+const StudioNoteColumn = ({ timing, addNote }: StudioNoteColumnProps) => {
   return (
     <div className="studio__note-column">
       {noteList.map((note) => {
         const key = `${timing}-${note}`;
-        return <StudioNoteItem key={key} timing={timing} note={note} />;
+        return (
+          <StudioNoteItem
+            addNote={addNote}
+            key={key}
+            timing={timing}
+            note={note}
+          />
+        );
       })}
     </div>
   );

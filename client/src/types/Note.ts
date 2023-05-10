@@ -1,5 +1,5 @@
 interface Note {
-  note: string | string[];
+  names: string | string[];
   duration: string;
   timing: number;
 }

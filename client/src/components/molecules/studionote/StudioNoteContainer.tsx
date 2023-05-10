@@ -5,11 +5,13 @@ import StudioNoteGrid from './StudioNoteGrid';
 interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
+  addNote: (name: string, timing: number) => void;
 }
 
 const StudioNoteContainer = ({
   scrollPosition,
   updateScrollPosition,
+  addNote,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -70,13 +72,10 @@ const StudioNoteContainer = ({
     const el = ref.current;
     if (!el) return;
 
-    // Calculate new scroll position
     const newScrollLeft = el.scrollLeft + event.deltaX;
 
-    // Make sure it's not less than 0 or greater than 4414
     const limitedScrollLeft = Math.max(0, Math.min(4414, newScrollLeft));
 
-    // Set scroll position
     el.scrollLeft = limitedScrollLeft;
     updateScrollPosition(limitedScrollLeft);
   };
@@ -97,7 +96,7 @@ const StudioNoteContainer = ({
       onWheel={onWheel} // Add onWheel event here
       ref={ref}
     >
-      <StudioNoteGrid />
+      <StudioNoteGrid addNote={addNote} />
     </div>
   );
 };

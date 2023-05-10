@@ -32,7 +32,11 @@ const StudioControll = ({ notes }: StudioControllProps) => {
       notes.forEach((note) => {
         const now = Tone.now();
         // triggerAttackRelease로 재생해줍니다 노트, 지속시간, 타이밍
-        piano.triggerAttackRelease(note.note, note.duration, now + note.timing);
+        piano.triggerAttackRelease(
+          note.names,
+          note.duration,
+          now + note.timing
+        );
       });
     });
   };

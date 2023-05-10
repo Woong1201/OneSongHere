@@ -1,11 +1,15 @@
+@import 'styles/_variables';
+
 .studio__note-item {
   width: 35px;
-  // height: 35px;
   border: 1px solid #ccc;
   background: none;
 
   &:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1);
+  }
+  &--selected {
+    background-color: rgba($main-theme-color, 0.4) !important;
   }
 }
