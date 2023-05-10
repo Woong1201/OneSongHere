@@ -46,7 +46,7 @@ const ArticleLine = ({
       </td>
       <td>
         {/* 날짜 출력용 삼항연산자 */}
-        {Math.floor(diffDate) > 0 ? (
+        {Math.floor(diffDate) < 1 ? (
           <div>
             {`0${String(postedDate.getHours())}`.slice(-2)}:
             {`0${String(postedDate.getMinutes())}`.slice(-2)}

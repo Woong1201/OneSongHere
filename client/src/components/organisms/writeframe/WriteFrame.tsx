@@ -44,7 +44,7 @@ const WriteFrame = () => {
   const postArticleData = () => {
     postArticle(
       title,
-      '구인',
+      '질문',
       '산호백화현상이 무엇이죠?',
       // csrftoken,
       ({ data }) => {

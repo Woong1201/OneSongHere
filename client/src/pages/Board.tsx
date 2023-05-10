@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 // 컴포넌트 import
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import Button from 'components/atoms/buttons/Button';
@@ -8,19 +9,32 @@ import { useNavigate } from 'react-router-dom';
 import { getCategorized } from 'services/board';
 import './Board.scss';
 
+interface Article {
+  boardId: number;
+  userId: number;
+  nickName: string;
+  boardTitle: string;
+  header: string;
+  boardDate: string;
+}
+
 const Board = () => {
+  // 글쓰기 페이지로 이동
   const navigate = useNavigate();
   const navigateWritePage = () => {
     navigate('/board/write');
   };
 
+  // 카테고리 버튼을 누르면 getCategorized api로 뽑아온 데이터를
+  // getArticleBoard에 넣어 Article 형식에 맞게 바꾼 articles로 반환한다
+  const [articles, getArticleBoard] = useState<Article[]>([]);
   const categorization = (search: string) => () => {
     getCategorized(
       'header',
       search,
       ({ data }) => {
-        console.log('구인 클릭함');
-        console.log(search, ': 구인 데이터', data);
+        console.log(search, '로 찾은 데이터', data);
+        getArticleBoard(data);
       },
       (error) => {
         console.log(error);
@@ -47,7 +61,7 @@ const Board = () => {
           color="primary"
           onClick={navigateWritePage}
         />
-        <ArticleBoard />
+        <ArticleBoard filteredArticles={articles} />
       </div>
     </div>
   );
