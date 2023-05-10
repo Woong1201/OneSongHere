@@ -4,20 +4,25 @@ import Header from 'components/organisms/common/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import 'pages/MainLayout.scss';
 import User from 'types/User';
+import { UserState } from 'store/UserState';
+import { useRecoilState } from 'recoil';
+import { LoginState } from 'store/LoginState';
 
 const MainLayout = () => {
   const location = useLocation();
   const isMainPage = location.pathname === '/';
   const [whiteMode, setWhiteMode] = useState(false);
 
-  // localstorage에서 user 정보 가져오기
-  const storedUser = localStorage.getItem('user');
-  let user: User | null;
-  if (storedUser) {
-    user = JSON.parse(storedUser) as User;
-  } else {
-    user = null;
-  }
+  const [user, setUser] = useRecoilState(UserState);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser) as User);
+    } else {
+      setUser(null);
+    }
+  }, [LoginState]);
 
   const fixedMode = isMainPage ? 'main__layout-header--fixed' : '';
 
