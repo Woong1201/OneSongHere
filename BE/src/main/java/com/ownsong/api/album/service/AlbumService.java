@@ -53,6 +53,7 @@ public class AlbumService {
         return albums;
     }
 
+    // 앨범커버에 대해서는 프론트 생성페이지 나오고 작업해야함
     @Transactional
     public AlbumResponse creatAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, MultipartFile file, User user){
         String filePath = s3Service.uploadFile(file);
@@ -60,7 +61,7 @@ public class AlbumService {
                 .albumTitle(albumArticleCreateRequest.getAlbumTitle())
                 .albumContent(albumArticleCreateRequest.getAlbumContent())
                 .numberOfLikes(0)
-                .albumUrl(filePath)
+                .mp3Url(filePath)
                 .user(user)
                 .genre(albumArticleCreateRequest.getGenre())
                 .build();
@@ -70,7 +71,7 @@ public class AlbumService {
                 .albumTitle(album.getAlbumTitle())
                 .albumContent(album.getAlbumContent())
                 .likes(0)
-                .albumUrl(filePath)
+                .mp3Url(filePath)
                 .albumId(album.getAlbumId())
                 .nickName(user.getNickname())
                 .userId(user.getUserID())

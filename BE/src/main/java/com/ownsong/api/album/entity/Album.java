@@ -41,6 +41,9 @@ public class Album {
     @Column(name = "GENRE", length = 10)
     private String genre;
 
+    @Column(name = "MP3_URL")
+    private String mp3Url;
+
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Likes> likesList = new ArrayList<>();
 
@@ -49,7 +52,7 @@ public class Album {
     private User user;
 
     @Builder
-    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user, String genre) {
+    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user, String genre, String mp3Url) {
         this.albumId = albumId;
         this.albumUrl = albumUrl;
         this.albumTitle = albumTitle;
@@ -58,6 +61,7 @@ public class Album {
         this.privates = privates;
         this.user = user;
         this.genre = genre;
+        this.mp3Url = mp3Url;
     }
 
     public void updateNumberOfLikes(boolean isLike){

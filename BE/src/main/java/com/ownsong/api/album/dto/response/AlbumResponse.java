@@ -24,7 +24,7 @@ public class AlbumResponse {
     @NotNull
     private long likes;
 
-    @Schema(description = "앨범 s3 주소", example = "https://s3어쩌구저쩌구")
+    @Schema(description = "앨범 커버 s3 주소", example = "https://s3어쩌구저쩌구")
     @NotNull
     private String albumUrl;
 
@@ -43,10 +43,13 @@ public class AlbumResponse {
     @Schema(description = "장르", example = "힙합")
     private String genre;
 
+    @Schema(description = "앨범 mp3 s3 주소", example = "https://s3어쩌구저쩌구")
+    private String mp3Url;
+
     private long albumId;
 
     @Builder
-    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName, long albumId, String genre) {
+    public AlbumResponse(String albumTitle, String albumContent, long likes, String albumUrl, long userId, String nickName, long albumId, String genre, String mp3Url) {
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.likes = likes;
@@ -55,6 +58,7 @@ public class AlbumResponse {
         this.nickName = nickName;
         this.albumId = albumId;
         this.genre = genre;
+        this.mp3Url = mp3Url;
     }
 
 
