@@ -10,6 +10,9 @@ import Dropdown from 'components/molecules/header/Dropdown';
 import ProfileDropdown from 'components/molecules/header/ProfileDropdown';
 import ProfileIcon from 'components/atoms/profiledropdown/ProfileIcon';
 import LogoutIcon from 'components/atoms/profiledropdown/LogoutIcon';
+import { useRecoilState } from 'recoil';
+import { LoginState } from 'store/LoginState';
+import { UserState } from 'store/UserState';
 
 interface HeaderProps {
   user?: User;
@@ -25,6 +28,17 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
     navigate('/login');
   };
 
+  const [, setIsLoggedIn] = useRecoilState(LoginState);
+  const [, setUser] = useRecoilState(UserState);
+
+  const logoutHandler = () => {
+    localStorage.removeItem('accessToken');
+    setIsLoggedIn(false);
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/');
+  };
+
   const headerDropdownList = [
     { label: '일반', route: '/compose' },
     { label: '릴레이', route: '/relay' },
@@ -32,7 +46,7 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
 
   const profileDropdownList = [
     { label: '내 프로필', icon: <ProfileIcon />, route: '/mypage' },
-    { label: '로그아웃', icon: <LogoutIcon /> },
+    { label: '로그아웃', icon: <LogoutIcon />, onClick: logoutHandler },
   ];
 
   return (
