@@ -1,5 +1,7 @@
 package com.ownsong.api.board.entity;
 
+import com.ownsong.api.board.dto.request.BoardCreateRequest;
+import com.ownsong.api.board.dto.request.BoardModifyRequest;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,5 +51,19 @@ public class Board {
         this.boardContent = boardContent;
         this.boardDate = boardDate;
         this.user = user;
+    }
+
+    public Board(BoardCreateRequest boardCreateRequest, User user) {
+        this.boardTitle = boardCreateRequest.getBoardTitle();
+        this.header = boardCreateRequest.getHeader();
+        this.user = user;
+        this.boardContent = boardCreateRequest.getBoardContent();
+        this.boardDate = LocalDateTime.now();
+    }
+
+    public void updateBoard(BoardModifyRequest boardModifyRequest) {
+        this.boardTitle = boardModifyRequest.getBoardTitle();
+        this.header = boardModifyRequest.getHeader();
+        this.boardContent = boardModifyRequest.getBoardContent();
     }
 }

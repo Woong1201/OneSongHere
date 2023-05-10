@@ -1,6 +1,6 @@
 package com.ownsong.api.user.service;
 
-import com.ownsong.api.user.response.UserLoginResponse;
+import com.ownsong.api.user.dto.response.UserLoginResponse;
 import com.ownsong.api.user.social.Constant;
 import com.ownsong.api.user.social.GoogleOAuth;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,19 @@ public class OAuthService {
         }
 
         response.sendRedirect(redirectURL);
+    }
+
+    public String getRequest(Constant.SocialLoginType socialLoginType) throws IOException {
+        String redirectURL;
+        switch (socialLoginType){
+            case GOOGLE:
+                //각 소셜 로그인을 요청하면 소셜로그인 페이지로 리다이렉트 해주는 프로세스이다.
+                redirectURL= googleOAuth.getOAuthRedirectURL();
+                break;
+            default:
+                throw new IllegalArgumentException("알 수 없는 소셜 로그인 형식입니다.");
+        }
+        return redirectURL;
     }
 
     public UserLoginResponse oAuthLogin(Constant.SocialLoginType socialLoginType, String code) throws IOException {

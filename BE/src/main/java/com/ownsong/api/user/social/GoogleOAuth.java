@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.repository.UserRepository;
-import com.ownsong.api.user.response.UserLoginResponse;
+import com.ownsong.api.user.dto.response.UserLoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

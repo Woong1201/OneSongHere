@@ -40,7 +40,11 @@ public class User {
     @Column(name = "PROFILE_URL")
     private String profileUrl;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(name = "EMAIL", length = 30)
+    private String email;
+
+//    영속성 컨텍스트 종료 방지를 위해 EAGER로 설정
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Studio> studios = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -79,5 +83,6 @@ public class User {
         this.UID = (String)googleResponse.getBody().get("id");
         this.nickname = (String)googleResponse.getBody().get("name");
         this.profileUrl = (String)googleResponse.getBody().get("picture");
+        this.email = (String)googleResponse.getBody().get("email");
     }
 }

@@ -6,4 +6,11 @@ public class Constant {
         KAKAO,
         NAVER
     }
+
+    public enum SearchType{
+        NICKNAME,
+        TITLE,
+        HEADER,
+        TAG
+    }
 }
