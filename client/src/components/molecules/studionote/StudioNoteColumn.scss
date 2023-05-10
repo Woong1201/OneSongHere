@@ -4,7 +4,6 @@
   height: 480px;
   display: grid;
   grid-auto-rows: 2fr;
-
   > button {
     &:not(:last-child) {
       border-bottom: 0px;

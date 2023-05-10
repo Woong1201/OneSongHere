@@ -8,7 +8,7 @@ const StudioNoteGrid = () => {
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {
-        return <StudioNoteColumn key={rowIndex} rowIndex={rowIndex} />;
+        return <StudioNoteColumn key={rowIndex} timing={rowIndex * 0.25} />;
       })}
     </div>
   );

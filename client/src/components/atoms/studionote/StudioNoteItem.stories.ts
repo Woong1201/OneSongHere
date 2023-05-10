@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    rowIndex: 0,
-    columnIndex: 0,
+    timing: 0,
+    note: 'D4',
   },
 };

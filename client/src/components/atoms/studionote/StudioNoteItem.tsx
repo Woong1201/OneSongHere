@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './StudioNoteItem.scss';
 
 interface StudioNoteItemProps {
-  rowIndex: number;
-  columnIndex: number;
+  timing: number;
+  note: string;
 }
 
-const StudioNoteItem = ({ rowIndex, columnIndex }: StudioNoteItemProps) => {
+const StudioNoteItem = ({ timing, note }: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const selectNote = () => {
@@ -18,9 +18,8 @@ const StudioNoteItem = ({ rowIndex, columnIndex }: StudioNoteItemProps) => {
       type="button"
       className={['studio__note-item', '--selected'].join(' ')}
       onClick={selectNote}
-    >
-      {/* {rowIndex}-{columnIndex} */}
-    </button>
+      aria-label={`${timing}-${note}`}
+    />
   );
 };
 
