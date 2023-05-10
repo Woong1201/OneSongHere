@@ -4,7 +4,7 @@ import './Button.scss';
 interface ButtonProps {
   tag?: boolean;
   color?: 'primary' | 'other' | 'main';
-  size?: 'samll' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large';
   label: string;
   shadow?: boolean;
   type: 'button' | 'submit';

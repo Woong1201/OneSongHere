@@ -6,7 +6,11 @@ import TextInput from 'components/atoms/inputs/TextInput';
 // post api import
 import { postComment } from 'services/board';
 
-const CommentInput = () => {
+interface CommentProps {
+  boardid: number;
+}
+
+const CommentInput = ({ boardid }: CommentProps) => {
   const [comment, setComment] = useState<string>('');
 
   const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +19,7 @@ const CommentInput = () => {
 
   const postCommentData = () => {
     postComment(
-      1,
+      boardid,
       comment,
       ({ data }) => {
         console.log(data);
@@ -33,6 +37,7 @@ const CommentInput = () => {
         type="submit"
         color="other"
         onClick={postCommentData}
+        size="small"
       />
       <TextInput
         label="댓글을 입력해주세요"

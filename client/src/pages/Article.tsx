@@ -66,7 +66,7 @@ const Article = () => {
       <div>댓글 영역</div>
       <div>댓글 목록 molecules</div>
       <div>댓글 atom </div>
-      <CommentInput />
+      <CommentInput boardid={Number(boardId.articleId)} />
       <div>댓글 입력 atom</div>
     </>
   );
