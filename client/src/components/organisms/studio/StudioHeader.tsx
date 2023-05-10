@@ -5,8 +5,12 @@ import StudioControll from 'components/molecules/studioheader/StudioControll';
 import StudioTitle from 'components/molecules/studioheader/StudioTitle';
 import StudioMenu from 'components/molecules/studioheader/StudioMenu';
 import User from 'types/User';
+import Note from 'types/Note';
 
-const StudioHeader = () => {
+interface StudioHeaderProps {
+  notes: Note[];
+}
+const StudioHeader = ({ notes }: StudioHeaderProps) => {
   const users: User[] = [
     {
       userId: 1,
@@ -29,7 +33,7 @@ const StudioHeader = () => {
 
   return (
     <div className="studio__header">
-      <StudioControll />
+      <StudioControll notes={notes} />
       <StudioTitle />
       <ProfileImageList users={users} />
       <StudioMenu />
