@@ -30,6 +30,12 @@ interface BoardResponse {
 const Article = () => {
   const boardId = useParams();
   const [articleInfo, getArticleInfo] = useState<BoardResponse>();
+  // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
+  const strHeader = String(articleInfo?.header);
+  const strTitle = String(articleInfo?.boardTitle);
+  const strNickname = String(articleInfo?.nickName);
+  const strDate = String(articleInfo?.boardDate);
+
   useEffect(() => {
     getArticle(
       Number(boardId.articleId),
@@ -45,19 +51,16 @@ const Article = () => {
   return (
     <div className="article__entire">
       <div className="article__container">
-        <div>게시글 헤더 molecules</div>
-        {articleInfo?.header}
-        <ArticleHeader />
-        <div>제목</div>
-        {articleInfo?.boardTitle}
-        <div>이름</div>
-        {articleInfo?.nickName}
+        <ArticleHeader
+          header={strHeader}
+          title={strTitle}
+          nickname={strNickname}
+          date={strDate}
+        />
         <div>본문</div>
         {articleInfo?.boardContent}
-        {articleInfo?.boardDate}
-        <div>날짜</div>
-        {articleInfo?.boardId}
-        {articleInfo?.userId}
+        {/* {articleInfo?.boardId}
+        {articleInfo?.userId} */}
         <div className="comments__container--header">
           <div style={{ display: 'flex', marginBottom: '10px' }}>
             댓글 수
