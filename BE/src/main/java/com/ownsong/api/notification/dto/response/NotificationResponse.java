@@ -18,7 +18,8 @@ public class NotificationResponse {
     @Schema(description = "relayStudio 제목", example = "relayStudio 제목입니다.")
     private String relayStudioTitle;
 
-    @Schema(description = "notificationType", example = "투표시작, 투표완료, 작곡완료")
+    @Schema(description = "notificationType",
+            example = "투표시작 : voteStart, 투표완료 : voteEnd, 작곡완료 : complete, 투표 결과로 relay 거부 (작곡자에게) : relayAvoid")
     private String type;
 
     public NotificationResponse(Notification notification) {
