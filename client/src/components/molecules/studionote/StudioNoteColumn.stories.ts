@@ -17,5 +17,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     timing: 0,
+    pianoInstance: null,
   },
 };

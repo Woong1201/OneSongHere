@@ -1,10 +1,12 @@
 import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
+import * as Tone from 'tone';
 
 interface StudioNoteColumnProps {
   timing: number;
   addNote?: (name: string, timing: number) => void;
+  pianoInstance: Tone.Sampler | null;
 }
 
 const Column = 24;
@@ -36,7 +38,11 @@ const noteList = [
   'B5',
 ].reverse();
 
-const StudioNoteColumn = ({ timing, addNote }: StudioNoteColumnProps) => {
+const StudioNoteColumn = ({
+  timing,
+  addNote,
+  pianoInstance,
+}: StudioNoteColumnProps) => {
   return (
     <div className="studio__note-column">
       {noteList.map((note) => {
@@ -47,6 +53,7 @@ const StudioNoteColumn = ({ timing, addNote }: StudioNoteColumnProps) => {
             key={key}
             timing={timing}
             note={note}
+            pianoInstance={pianoInstance}
           />
         );
       })}

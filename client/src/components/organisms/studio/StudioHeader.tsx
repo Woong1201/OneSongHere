@@ -6,11 +6,13 @@ import StudioTitle from 'components/molecules/studioheader/StudioTitle';
 import StudioMenu from 'components/molecules/studioheader/StudioMenu';
 import User from 'types/User';
 import Note from 'types/Note';
+import * as Tone from 'tone';
 
 interface StudioHeaderProps {
   notes: Note[];
+  pianoInstance: Tone.Sampler | null;
 }
-const StudioHeader = ({ notes }: StudioHeaderProps) => {
+const StudioHeader = ({ notes, pianoInstance }: StudioHeaderProps) => {
   const users: User[] = [
     {
       userId: 1,
@@ -33,7 +35,7 @@ const StudioHeader = ({ notes }: StudioHeaderProps) => {
 
   return (
     <div className="studio__header">
-      <StudioControll notes={notes} />
+      <StudioControll notes={notes} pianoInstance={pianoInstance} />
       <StudioTitle />
       <ProfileImageList users={users} />
       <StudioMenu />

@@ -1,15 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
+import * as Tone from 'tone';
 import StudioNoteGrid from './StudioNoteGrid';
 import './StudioNoteScroll.scss';
 
 interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
+  pianoInstance: Tone.Sampler | null;
 }
 
 const StudioNoteScroll = ({
   scrollPosition,
   updateScrollPosition,
+  pianoInstance,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -68,7 +71,7 @@ const StudioNoteScroll = ({
       ref={scrollRef}
       onClick={onClick}
     >
-      <StudioNoteGrid />
+      <StudioNoteGrid pianoInstance={pianoInstance} />
       <div
         role="presentation"
         className="studio_note__scroll-body"

@@ -2,42 +2,27 @@ import React from 'react';
 import './StudioControll.scss';
 import LogoIcon from 'components/atoms/common/LogoIcon';
 import PlayIcon from 'components/atoms/stuidioHeader/PlayIcon';
-
 import StopIcon from 'components/atoms/stuidioHeader/StopIcon';
-
 import * as Tone from 'tone';
 import Note from 'types/Note';
 
 interface StudioControllProps {
   notes: Note[];
+  pianoInstance: Tone.Sampler | null;
 }
 
-const StudioControll = ({ notes }: StudioControllProps) => {
+const StudioControll = ({ notes, pianoInstance }: StudioControllProps) => {
   // 시퀀스 재생 메소드
   const playSequence = () => {
-    // Tone의 Sampler로 피아노 파일 인스턴스를 만듭니다
-    const piano = new Tone.Sampler({
-      urls: {
-        C4: 'C4.mp3',
-        'D#4': 'Ds4.mp3',
-        'F#4': 'Fs4.mp3',
-        A4: 'A4.mp3',
-      },
-      release: 1,
-      baseUrl: 'https://tonejs.github.io/audio/salamander/',
-    }).toDestination();
-    // Tone이 로드된 후
-    Tone.loaded().then(() => {
-      // Notes 데이터에 각 노트들
-      notes.forEach((note) => {
-        const now = Tone.now();
-        // triggerAttackRelease로 재생해줍니다 노트, 지속시간, 타이밍
-        piano.triggerAttackRelease(
-          note.names,
-          note.duration,
-          now + note.timing
-        );
-      });
+    // Notes 데이터에 각 노트들
+    notes.forEach((note) => {
+      const now = Tone.now();
+      // triggerAttackRelease로 재생해줍니다 노트, 지속시간, 타이밍
+      (pianoInstance as Tone.Sampler).triggerAttackRelease(
+        note.names,
+        note.duration,
+        now + note.timing
+      );
     });
   };
 

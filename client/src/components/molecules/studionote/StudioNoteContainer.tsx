@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudioNoteContainer.scss';
+import * as Tone from 'tone';
 import StudioNoteGrid from './StudioNoteGrid';
 
 interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
   addNote: (name: string, timing: number) => void;
+  pianoInstance: Tone.Sampler | null;
 }
 
 const StudioNoteContainer = ({
   scrollPosition,
   updateScrollPosition,
   addNote,
+  pianoInstance,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -96,7 +99,7 @@ const StudioNoteContainer = ({
       onWheel={onWheel} // Add onWheel event here
       ref={ref}
     >
-      <StudioNoteGrid addNote={addNote} />
+      <StudioNoteGrid addNote={addNote} pianoInstance={pianoInstance} />
     </div>
   );
 };
