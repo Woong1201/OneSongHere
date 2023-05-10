@@ -18,7 +18,11 @@
   &__nav-item {
     position: relative;
   }
-  &__nav-item:hover .header__dropdown-list {
+  &__profile-item {
+    position: relative;
+  }
+  &__nav-item:hover .header__dropdown-list,
+  &__profile-item:hover .profile__dropdown-list {
     display: flex;
   }
 }
@@ -26,4 +30,10 @@
 .header__dropdown {
   padding-top: 10px;
   position: absolute;
+}
+.header__profile-dropdown {
+  position: absolute;
+  left: -140%;
+  top: 100%;
+  transform: translateX(-50%);
 }

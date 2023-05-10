@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProfileDropdown.scss';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProfileDropdownItem from 'components/atoms/profiledropdown/ProfileDropdownItem';
 
 interface Item {
@@ -14,7 +14,7 @@ interface ProfileDropdownProps {
   items: Item[];
 }
 const ProfileDropdown = ({ isShowed = false, items }: ProfileDropdownProps) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const mode = isShowed
     ? 'header__dropdown--showed'
@@ -23,12 +23,12 @@ const ProfileDropdown = ({ isShowed = false, items }: ProfileDropdownProps) => {
   const onClick = (item: Item) => {
     if (item.route) {
       return () => {
-        // navigate(item.route as string);
+        navigate(item.route as string);
       };
     }
     if (item.onClick) {
-      return item.onClick;
       // 라우터가 아닌 클릭 이벤트
+      return item.onClick;
     }
     return undefined;
   };
@@ -38,6 +38,7 @@ const ProfileDropdown = ({ isShowed = false, items }: ProfileDropdownProps) => {
       {items.map((item) => (
         <ProfileDropdownItem
           key={item.label}
+          icon={item.icon}
           label={item.label}
           onClick={onClick(item)}
         />

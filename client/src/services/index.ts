@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const URL = 'http://onesonghere.r-e.kr:8080/api/v1';
+const URL = 'https://onesonghere.r-e.kr/api/v1';
 
 // application/json 타입
 const apiInstance = (): AxiosInstance => {

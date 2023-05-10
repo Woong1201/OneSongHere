@@ -3,11 +3,21 @@ import Footer from 'components/molecules/footer/Footer';
 import Header from 'components/organisms/common/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import 'pages/MainLayout.scss';
+import User from 'types/User';
 
 const MainLayout = () => {
   const location = useLocation();
   const isMainPage = location.pathname === '/';
   const [whiteMode, setWhiteMode] = useState(false);
+
+  // localstorage에서 user 정보 가져오기
+  const storedUser = localStorage.getItem('user');
+  let user: User | null;
+  if (storedUser) {
+    user = JSON.parse(storedUser) as User;
+  } else {
+    user = null;
+  }
 
   const fixedMode = isMainPage ? 'main__layout-header--fixed' : '';
 
@@ -37,7 +47,11 @@ const MainLayout = () => {
   return (
     <div className="main__layout">
       <div className={['main__layout-header', fixedMode].join(' ')}>
-        <Header whiteMode={whiteMode} />
+        {user ? (
+          <Header user={user} whiteMode={whiteMode} />
+        ) : (
+          <Header whiteMode={whiteMode} />
+        )}
       </div>
       <div className="main__layout-body">
         <Outlet />
