@@ -3,6 +3,7 @@ import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
 import { getArticle } from 'services/board';
 import { useParams } from 'react-router-dom';
 import CommentInput from 'components/molecules/commentinput/CommentInput';
+import CommentLine from 'components/molecules/commentline/CommentLine';
 
 interface CommentResponse {
   commentId: number;
@@ -50,9 +51,11 @@ const Article = () => {
       {articleInfo?.userId}
       {articleInfo?.commentResponses.map((comment) => (
         <div key={comment.commentId}>
-          <div>{comment.nickName}</div>
-          <div>{comment.commentContent}</div>
-          <div>{comment.commentDate}</div>
+          <CommentLine
+            nickname={comment.nickName}
+            content={comment.commentContent}
+            date={comment.commentDate}
+          />
         </div>
       ))}
       <div>게시글 헤더 molecules</div>
