@@ -1,12 +1,12 @@
 package com.ownsong.api.relayStudio.service;
 
+import com.ownsong.api.notification.entity.Notification;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioComposeRequest;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioVoteRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioListResponse;
 import com.ownsong.api.relayStudio.entity.RelayStudio;
 import com.ownsong.api.relayStudio.entity.RelayStudioTag;
 import com.ownsong.api.relayStudio.entity.RelayTeam;
-import com.ownsong.api.relayStudio.entity.RelayTeamId;
 import com.ownsong.api.relayStudio.repository.RelayStudioRepository;
 import com.ownsong.api.relayStudio.dto.request.RelayStudioCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
@@ -84,7 +84,7 @@ public class RelayStudioService {
             return new RelayStudioResponse(relayStudio, true, false);
         }
 
-        // relayStudio 업데이트 및 투표 초기화 후 return (추후 알림 필요)
+        // relayStudio 업데이트 및 투표 초기화 후 return (추후 SSE 알림 필요)
         relayStudio.update(relayStudioComposeRequest);
         relayStudioRepository.save(relayStudio);
         return new RelayStudioResponse(relayStudio, false, false);
@@ -141,6 +141,16 @@ public class RelayStudioService {
                         if (relayStudio.getAgree() >= relayStudio.getNumberOfUsers()/2) {
                             relayStudio.getRelayTeams().add(new RelayTeam(relayStudio));
                         }
+                        // 투표 결과 반대 알림
+                        else {
+                            relayStudio.getNotifications().add(
+                                    Notification.builder()
+                                            .user(relayStudio.getUser())
+                                            .type("relayAvoid")
+                                            .relayStudio(relayStudio)
+                                            .build()
+                            );
+                        }
                         relayStudio.completeVote();
                     }
                     return new RelayStudioResponse(relayStudioRepository.save(relayStudio), true, true);
@@ -175,6 +185,7 @@ public class RelayStudioService {
 
     public HashMap<String, List<RelayStudioListResponse>> getRelayStudios(User user) {
         List<RelayStudio> relayStudios = relayStudioRepository.findAll();
+        // 참여중인 것과 참여가능한 것 나누어 조회
         HashMap<String, List<RelayStudioListResponse>> hashMap = new HashMap<>();
         List<RelayStudioListResponse> participateRelayStudioResponses = new ArrayList<>();
         List<RelayStudioListResponse> relayStudioResponses = new ArrayList<>();
@@ -185,6 +196,7 @@ public class RelayStudioService {
                 if (relayTeam != null) {
                     participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                 }
+                // relayTeam 이 구인중일때만 조회 가능
                 else if (relayStudio.getStatus() == 1) {
                     relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                 }
@@ -201,9 +213,12 @@ public class RelayStudioService {
 
     public HashMap<String, List<RelayStudioListResponse>> searchRelayStudios(User user, Constant.SearchType searchType, String search) {
         List<RelayStudio> relayStudios;
+        // 참여중인 것과 참여가능한 것 나누어 조회
         List<RelayStudioListResponse> participateRelayStudioResponses = new ArrayList<>();
         List<RelayStudioListResponse> relayStudioResponses = new ArrayList<>();
         HashMap<String, List<RelayStudioListResponse>> hashMap = new HashMap<>();
+
+        // title 에 대하여 조회
         if (searchType == Constant.SearchType.TITLE) {
             relayStudios = relayStudioRepository.findByRelayStudioTitleContaining(search);
             for (RelayStudio relayStudio : relayStudios) {
@@ -212,6 +227,7 @@ public class RelayStudioService {
                     if (relayTeam != null) {
                         participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                     }
+                    // relayTeam 이 구인중일때만 조회 가능
                     else if (relayStudio.getStatus() == 1) {
                         relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                     }
@@ -221,6 +237,7 @@ public class RelayStudioService {
                     }
                 }
             }
+        // tag 에 대하여 조회
         } else if (searchType == Constant.SearchType.TAG) {
             relayStudios = relayStudioRepository.findAll();
             for (RelayStudio relayStudio : relayStudios) {
@@ -231,6 +248,7 @@ public class RelayStudioService {
                             if (relayTeam != null) {
                                 participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                             }
+                            // relayTeam 이 구인중일때만 조회 가능
                             else if (relayStudio.getStatus() == 1) {
                                 relayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                             }
@@ -243,10 +261,6 @@ public class RelayStudioService {
                     }
                 }
             }
-        } else {
-            hashMap.put("participate", new ArrayList<>());
-            hashMap.put("all", new ArrayList<>());
-            return hashMap;
         }
 
         hashMap.put("participate", participateRelayStudioResponses);
