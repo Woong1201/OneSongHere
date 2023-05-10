@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
-import { getArticle } from 'services/board';
 import { useParams } from 'react-router-dom';
+import { getArticle } from 'services/board';
+// 컴포넌트 import
+import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
 import CommentInput from 'components/molecules/commentinput/CommentInput';
 import CommentLine from 'components/molecules/commentline/CommentLine';
+// SCSS import
+import './Article.scss';
 
 interface CommentResponse {
   commentId: number;
@@ -40,38 +43,51 @@ const Article = () => {
     );
   }, []);
   return (
-    <>
-      <ArticleHeader />
-      {articleInfo?.boardContent}
-      {articleInfo?.boardDate}
-      {articleInfo?.boardId}
-      {articleInfo?.boardTitle}
-      {articleInfo?.header}
-      {articleInfo?.nickName}
-      {articleInfo?.userId}
-      {articleInfo?.commentResponses.map((comment) => (
-        <div key={comment.commentId}>
-          <CommentLine
-            nickname={comment.nickName}
-            content={comment.commentContent}
-            date={comment.commentDate}
-          />
+    <div className="article__entire">
+      <div className="article__container">
+        <div>게시글 헤더 molecules</div>
+        {articleInfo?.header}
+        <ArticleHeader />
+        <div>제목</div>
+        {articleInfo?.boardTitle}
+        <div>이름</div>
+        {articleInfo?.nickName}
+        <div>본문</div>
+        {articleInfo?.boardContent}
+        {articleInfo?.boardDate}
+        <div>날짜</div>
+        {articleInfo?.boardId}
+        {articleInfo?.userId}
+        <div className="comments__container--header">
+          <div style={{ display: 'flex', marginBottom: '10px' }}>
+            댓글 수
+            <div
+              style={{
+                marginLeft: '15px',
+                color: '#4642FF',
+                fontWeight: 'bold',
+              }}
+            >
+              {articleInfo?.commentResponses.length}
+            </div>
+          </div>
         </div>
-      ))}
-      <div>게시글 헤더 molecules</div>
-      <div>제목</div>
-      <div>프로필아이콘</div>
-      <div>이름</div>
-      <div>날짜</div>
-      <div>조회수</div>
-      <div>댓글 수</div>
-      <div>본문</div>
-      <div>댓글 영역</div>
-      <div>댓글 목록 molecules</div>
-      <div>댓글 atom </div>
-      <CommentInput boardid={Number(boardId.articleId)} />
-      <div>댓글 입력 atom</div>
-    </>
+        <div className="comments__container--lines">
+          {articleInfo?.commentResponses.map((comment) => (
+            <div key={comment.commentId}>
+              <CommentLine
+                nickname={comment.nickName}
+                content={comment.commentContent}
+                date={comment.commentDate}
+              />
+            </div>
+          ))}
+        </div>
+        {/* <div>프로필아이콘</div>
+        <div>조회수</div> */}
+        <CommentInput boardid={Number(boardId.articleId)} />
+      </div>
+    </div>
   );
 };
 

@@ -9,11 +9,12 @@ interface CommentProps {
 
 const CommentLine = ({ nickname, content, date }: CommentProps) => {
   return (
-    <div>
-      안녕하세요
-      <div>{nickname}</div>
+    <div className="comment__container">
+      <div className="comment__header">
+        <div>{nickname}</div>
+        <div>{date}</div>
+      </div>
       <div>{content}</div>
-      <div>{date}</div>
     </div>
   );
 };

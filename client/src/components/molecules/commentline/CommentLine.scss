@@ -1,0 +1,13 @@
+.comment{
+  &__container {
+    display: inline-block;
+    width: 400px;
+    background-color: beige;
+    margin: 10px 0;
+    padding: 10px;
+  }
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+}

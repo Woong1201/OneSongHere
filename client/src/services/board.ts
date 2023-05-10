@@ -37,7 +37,7 @@ const postArticle = async (
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
-  console.log('token :', token);
+  // console.log('token :', token);
   await api({
     headers: { Authorization: `Bearer ${token}` },
     method: 'post',
@@ -58,18 +58,22 @@ const postComment = async (
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
-  const token = localStorage.getItem('accessToken');
-  await api({
-    headers: { Authorization: `Bearer ${token}` },
-    method: 'post',
-    url: '/board/comments',
-    data: {
-      boardId: id,
-      commentContent: content,
-    },
-  })
-    .then(success)
-    .catch(fail);
+  if (content === '') {
+    alert('댓글 내용을 채운 뒤 등록해주세요!');
+  } else {
+    const token = localStorage.getItem('accessToken');
+    await api({
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'post',
+      url: '/board/comments',
+      data: {
+        boardId: id,
+        commentContent: content,
+      },
+    })
+      .then(success)
+      .catch(fail);
+  }
 };
 
 export { getBoards, getArticle, postArticle, postComment };

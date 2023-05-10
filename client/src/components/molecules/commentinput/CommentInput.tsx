@@ -28,6 +28,7 @@ const CommentInput = ({ boardid }: CommentProps) => {
         console.log('error :', error);
       }
     );
+    setComment('');
   };
 
   return (
