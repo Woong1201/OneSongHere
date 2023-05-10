@@ -47,7 +47,8 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                         album.user.userID,
                         album.user.nickname,
                         album.albumId,
-                        album.genre))
+                        album.genre,
+                        album.mp3Url))
                 .from(album)
                 .fetch();
         return albumArticles;
