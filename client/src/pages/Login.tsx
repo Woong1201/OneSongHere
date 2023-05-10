@@ -6,7 +6,8 @@ import naver from 'assets/images/icon/naver.svg';
 
 const Login = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&response_type=code&redirect_uri=http://localhost:3000/login/google&client_id=${clientId}`;
+  const uri = process.env.REACT_APP_URI;
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&response_type=code&redirect_uri=${uri}/login/google&client_id=${clientId}`;
 
   const getCustomUrl = () => {
     window.location.assign(url);
