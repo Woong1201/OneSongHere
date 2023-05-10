@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'components/organisms/common/Header.scss';
 import User from 'types/User';
 import LogoIcon from 'components/atoms/common/LogoIcon';
@@ -7,7 +7,9 @@ import TextButton from 'components/atoms/buttons/TextButton';
 import Button from 'components/atoms/buttons/Button';
 import ProfileImage from 'components/atoms/profile/ProfileImage';
 import Dropdown from 'components/molecules/header/Dropdown';
-import { useNavigate } from 'react-router-dom';
+import ProfileDropdown from 'components/molecules/header/ProfileDropdown';
+import ProfileIcon from 'components/atoms/profiledropdown/ProfileIcon';
+import LogoutIcon from 'components/atoms/profiledropdown/LogoutIcon';
 
 interface HeaderProps {
   user?: User;
@@ -28,6 +30,11 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
     { label: '릴레이', route: '/relay' },
   ];
 
+  const profileDropdownList = [
+    { label: '내 프로필', icon: <ProfileIcon />, route: '/mypage' },
+    { label: '로그아웃', icon: <LogoutIcon /> },
+  ];
+
   return (
     <div className="header">
       <LogoIcon goHome />
@@ -43,7 +50,12 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
       </nav>
       <div>
         {user ? (
-          <ProfileImage imageUrl={user.picture} size="small" />
+          <div className="header__profile-item">
+            <ProfileImage imageUrl={user.picture} size="small" />
+            <div className="header__profile-dropdown">
+              <ProfileDropdown items={profileDropdownList} />
+            </div>
+          </div>
         ) : (
           <Button
             type="button"
