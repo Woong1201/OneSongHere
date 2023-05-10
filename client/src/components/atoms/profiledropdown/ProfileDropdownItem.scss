@@ -1,6 +1,8 @@
 @import 'styles/_variables';
 
 .profile-dropdown__item {
+  display: flex;
+  justify-content: space-between;
   padding: 9px 20px;
   cursor: pointer;
   width: 100%;
