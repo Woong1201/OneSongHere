@@ -135,5 +135,18 @@ public class RelayStudio {
         if (agree >= this.numberOfUsers/2) {
             this.numberOfUsers += 1;
         }
+        String notiType = "voteEnd";
+        if (this.numberOfUsers == this.limitOfUsers)
+            notiType = "compositionComplete";
+        for (RelayTeam relayTeam : this.relayTeams) {
+            relayTeam.initializeVoteFlag();
+            this.getNotifications().add(
+                    Notification.builder()
+                            .user(relayTeam.getUser())
+                            .type(notiType)
+                            .relayStudio(this)
+                            .build()
+            );
+        }
     }
 }
