@@ -19,9 +19,9 @@ const ArticleBoard = () => {
   useEffect(() => {
     getBoards(
       ({ data }) => {
-        console.log(data);
+        console.log(data, 'and ', typeof data);
         getArticleBoard(data);
-        console.log(articles);
+        console.log('articles :', articles);
       },
       (error) => {
         console.log(error);
