@@ -39,7 +39,7 @@ const WriteFrame = () => {
   };
 
   const csrftoken = getCsrfToken();
-  console.log(csrftoken);
+  console.log('csrftoken :', csrftoken);
 
   const postArticleData = () => {
     postArticle(
@@ -51,7 +51,7 @@ const WriteFrame = () => {
         console.log(data);
       },
       (error) => {
-        console.log(error);
+        console.log('error', error);
       }
     );
   };

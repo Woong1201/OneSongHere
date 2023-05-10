@@ -52,4 +52,24 @@ const postArticle = async (
     .catch(fail);
 };
 
-export { getBoards, getArticle, postArticle };
+const postComment = async (
+  id: number,
+  content: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'post',
+    url: '/board/comments',
+    data: {
+      boardId: id,
+      commentContent: content,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { getBoards, getArticle, postArticle, postComment };
