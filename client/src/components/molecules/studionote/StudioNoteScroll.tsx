@@ -17,10 +17,11 @@ const StudioNoteScroll = ({
   const onClick = (event: React.MouseEvent) => {
     const parent = scrollRef.current;
 
-    if (parent) {
+    if (parent && scrollBodyRef.current) {
       const x = event.pageX - parent.offsetLeft;
       const maxScrollLeft = parent.offsetWidth;
-      const newScrollPosition = (x * 4414) / maxScrollLeft;
+      const newScrollPosition =
+        (x * 4414) / (maxScrollLeft - scrollBodyRef.current.offsetWidth);
 
       if (scrollBodyRef.current) {
         const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
@@ -45,25 +46,17 @@ const StudioNoteScroll = ({
   useEffect(() => {
     if (scrollBodyRef.current && scrollRef.current) {
       const parent = scrollRef.current;
-      const maxScrollLeft = parent.offsetWidth;
       const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
-      const newLeft =
-        ((scrollPosition > halfScrollBodyWidth
-          ? scrollPosition
-          : halfScrollBodyWidth) /
-          4414) *
-          maxScrollLeft -
-        halfScrollBodyWidth;
-      // setLocalScrollPosition(scrollPosition);
-      setBodyLeftPosition(
-        Math.max(
-          0,
-          Math.min(
-            newLeft,
-            parent.offsetWidth - scrollBodyRef.current.offsetWidth
-          )
+      const maxScrollLeft =
+        parent.offsetWidth - scrollBodyRef.current.offsetWidth;
+      const newLeft = Math.max(
+        0,
+        Math.min(
+          (scrollPosition * maxScrollLeft) / 4414 - halfScrollBodyWidth,
+          maxScrollLeft
         )
       );
+      setBodyLeftPosition(newLeft);
     }
   }, [scrollPosition]);
 
