@@ -5,35 +5,39 @@ import TextButton from 'components/atoms/buttons/TextButton';
 
 interface ArticleLineProps {
   //   게시글 번호
-  num: number;
-  //   게시글 제목
-  title: string;
-  //   댓글 개수
-  commentCnt: number;
+  boardId: number;
+  //   유저 번호
+  userId: number;
   //   글쓴이
-  writer: string;
+  nickName: string;
+  //   게시글 제목
+  boardTitle: string;
+  //   헤더
+  header: string;
   //   생성 날짜
-  birthday: string;
+  boardDate: string;
 }
 
 const ArticleLine = ({
-  num,
-  title,
-  commentCnt,
-  writer,
-  birthday,
+  boardId,
+  userId,
+  nickName,
+  boardTitle,
+  header,
+  boardDate,
 }: ArticleLineProps) => {
   return (
     <>
-      <td>{num}</td>
+      <td>{boardId}</td>
+      <td>{header}</td>
       <td>
-        <TextButton label={title} to={`/board/${String(num)}`} />
+        <TextButton label={boardTitle} to={`/board/${String(boardId)}`} />
       </td>
-      <td>{commentCnt}</td>
+      {/* <td>{userId}</td> */}
       <td>
-        <TextButton label={writer} />
+        <TextButton label={nickName} />
       </td>
-      <td>{birthday}</td>
+      <td>{boardDate}</td>
       {/* <p className="articleline"> */}
 
       {/* </p> */}

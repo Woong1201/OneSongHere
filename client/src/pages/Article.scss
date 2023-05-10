@@ -1,0 +1,22 @@
+.article{
+  &__entire{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  &__container{
+    width: 800px;
+  }
+}
+
+.comments__container{
+
+  &--header{
+    border-bottom: 3px solid #4642FF;
+  }
+  &--lines{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
