@@ -159,7 +159,7 @@ public class RelayStudioController {
             @ApiResponse(responseCode = "201", description = "relayStudios 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioListResponse.class)))),
             @ApiResponse(responseCode = "400", description = "bad request operation")
     })
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<?> relayStudiosGet() throws IOException {
         User user = userService.getLoginUser();
         return ResponseEntity.status(200).body(relayStudioService.getRelayStudios(user));
