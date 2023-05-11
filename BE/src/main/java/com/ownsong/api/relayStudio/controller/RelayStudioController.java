@@ -9,6 +9,9 @@ import com.ownsong.api.relayStudio.service.RelayStudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
 import com.ownsong.api.user.social.Constant;
+import com.ownsong.exception.ErrorCode;
+import com.ownsong.exception.ErrorResponse;
+import com.ownsong.exception.customException.UserException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.ownsong.exception.ErrorCode.USER_UNAUTHORIZED;
 
 @Slf4j
 @RestController
@@ -45,8 +50,10 @@ public class RelayStudioController {
         User user = userService.getLoginUser();
 
         // non-login 상태면 user = null
-        if (user == null)
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+        if (user == null){
+//            return ResponseEntity.status(USER_UNAUTHORIZED.getStatus()).body(ErrorResponse.of(USER_UNAUTHORIZED));
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+        }
 
         // 입력받은 relayStudio 를 db에 add
         RelayStudioResponse relayStudioResponse = relayStudioService.createRelayStudio(relayStudioCreateRequest, user);
