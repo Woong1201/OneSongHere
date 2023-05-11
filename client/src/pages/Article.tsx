@@ -29,12 +29,19 @@ interface BoardResponse {
 
 const Article = () => {
   const boardId = useParams();
+  // 게시글 정보 useState
   const [articleInfo, getArticleInfo] = useState<BoardResponse>();
+  // 댓글 정보 useState
+  const [comments, getComments] = useState<CommentResponse[]>([]);
   // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
   const strHeader = String(articleInfo?.header);
   const strTitle = String(articleInfo?.boardTitle);
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
+
+  const handleAddComment = (comment: CommentResponse) => {
+    getComments([...comments, comment]);
+  };
 
   useEffect(() => {
     getArticle(
@@ -42,12 +49,14 @@ const Article = () => {
       ({ data }) => {
         console.log('data :', data);
         getArticleInfo(data);
+        getComments(data.commentResponses);
       },
       (error) => {
         console.log(error);
       }
     );
   }, []);
+
   return (
     <div className="article__entire">
       <div className="article__container">
@@ -59,8 +68,7 @@ const Article = () => {
         />
         <div>본문</div>
         {articleInfo?.boardContent}
-        {/* {articleInfo?.boardId}
-        {articleInfo?.userId} */}
+
         <div className="comments__container--header">
           <div style={{ display: 'flex', marginBottom: '10px' }}>
             댓글 수
@@ -86,10 +94,23 @@ const Article = () => {
             </div>
           ))}
         </div>
-        {/* <div>프로필아이콘</div>
-        <div>조회수</div> */}
       </div>
-      <CommentInput boardid={Number(boardId.articleId)} />
+      <div>
+        헤이헤이
+        {comments?.map((comment) => (
+          <div key={comment.commentId}>
+            <CommentLine
+              nickname={comment.nickName}
+              content={comment.commentContent}
+              date={comment.commentDate}
+            />
+          </div>
+        ))}
+      </div>
+      <CommentInput
+        boardid={Number(boardId.articleId)}
+        onAddComment={handleAddComment}
+      />
     </div>
   );
 };

@@ -44,8 +44,8 @@ const WriteFrame = () => {
   const postArticleData = () => {
     postArticle(
       title,
-      '질문',
-      '산호백화현상이 무엇이죠?',
+      '잡담',
+      '복날송 리메이크 정말 끝내주네요...',
       // csrftoken,
       ({ data }) => {
         console.log(data);

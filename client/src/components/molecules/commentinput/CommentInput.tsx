@@ -8,13 +8,22 @@ import { postComment } from 'services/board';
 // SCSS import
 import './CommentInput.scss';
 
-interface CommentProps {
-  boardid: number;
+interface CommentResponse {
+  commentId: number;
+  userId: number;
+  nickName: string;
+  commentContent: string;
+  commentDate: string;
 }
 
-const CommentInput = ({ boardid }: CommentProps) => {
-  const [comment, setComment] = useState<string>('');
+interface CommentProps {
+  boardid: number;
+  onAddComment: (comment: CommentResponse) => void;
+}
 
+const CommentInput = ({ boardid, onAddComment }: CommentProps) => {
+  const [comment, setComment] = useState<string>('');
+  const [addComment, setAddComment] = useState<CommentResponse>();
   const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
   };
@@ -25,12 +34,16 @@ const CommentInput = ({ boardid }: CommentProps) => {
       comment,
       ({ data }) => {
         console.log(data);
+        setAddComment(data.commentResponses);
+        console.log('addComment : ', addComment);
       },
       (error) => {
         console.log('error :', error);
       }
     );
+    // onAddComment(addComment);
     setComment('');
+    console.log('addComment2 : ', addComment);
   };
 
   return (

@@ -30,8 +30,11 @@ const ArticleLine = ({
   const todayDate = new Date();
   const postedDate = new Date(boardDate);
   postedDate.setHours(postedDate.getHours() + 9);
+  console.log('오늘시간', todayDate.getTime());
+  todayDate.setHours(0, 0, 0, 0);
+  console.log(todayDate, postedDate);
+  // 오늘 아침 정각보다 빠르면 일로, 아니면 시간으로
   const diffMSec = todayDate.getTime() - postedDate.getTime();
-  const diffDate = diffMSec / (24 * 60 * 60 * 1000);
 
   return (
     <>
@@ -46,7 +49,7 @@ const ArticleLine = ({
       </td>
       <td>
         {/* 날짜 출력용 삼항연산자 */}
-        {Math.floor(diffDate) < 1 ? (
+        {Math.floor(diffMSec) < 0 ? (
           <div>
             {`0${String(postedDate.getHours())}`.slice(-2)}:
             {`0${String(postedDate.getMinutes())}`.slice(-2)}
