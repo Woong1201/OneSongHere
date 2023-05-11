@@ -178,16 +178,20 @@ public class RelayStudioService {
         // relayTeam 존재 여부에 따라
         try {
             RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
-            if (relayTeam != null ||
-                    (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID())) {
+            if (relayTeam != null) {
                 return new RelayStudioResponse(relayStudio, true, relayTeam.isVoteFlag());
             }
+            else if (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID()) {
+                return new RelayStudioResponse(relayStudio, true, false);
+            }
+            else if (relayStudio.getStatus() == 1)
+                return new RelayStudioResponse(relayStudio, false, false);
             return null;
         }catch (Exception e) {
             // relayTeam 이 구인중일때만 조회 가능
             if (relayStudio.getStatus() != 1)
-                return null;
-            return new RelayStudioResponse(relayStudio, false, false);
+                return new RelayStudioResponse(relayStudio, false, false);
+            return null;
         }
     }
 
