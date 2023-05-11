@@ -2,6 +2,8 @@ package com.ownsong.common;
 
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.repository.UserRepository;
+import com.ownsong.exception.ErrorCode;
+import com.ownsong.exception.customException.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -48,11 +50,17 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         // accessToken 적절한지 확인
-        String googleUrl = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<MultiValueMap<String, String>> googleRequest = new HttpEntity(headers);
-        ResponseEntity<Map> googleResponse = new RestTemplate().exchange(googleUrl, HttpMethod.GET, googleRequest, Map.class);
-        String UID = (String) googleResponse.getBody().get("id");
+        String UID;
+        try {
+            String googleUrl = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity<MultiValueMap<String, String>> googleRequest = new HttpEntity(headers);
+            ResponseEntity<Map> googleResponse = new RestTemplate().exchange(googleUrl, HttpMethod.GET, googleRequest, Map.class);
+            UID = (String) googleResponse.getBody().get("id");
+        } catch (Exception e) {
+            log.error("부적절한 토큰", e);
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+        }
 
         // db 에서 유저 조회
         List<User> users = userRepository.findByUID(UID);
