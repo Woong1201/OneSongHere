@@ -51,6 +51,7 @@ const Article = () => {
   };
 
   useEffect(() => {
+    // 게시글 내용 get
     getArticle(
       Number(boardId.articleId),
       ({ data }) => {
@@ -62,10 +63,11 @@ const Article = () => {
         console.log(error);
       }
     );
-
+    // 로그인 여부 판별
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser) as User);
+      console.log('우저:', user?.userId);
     } else {
       setUser(null);
     }
@@ -98,28 +100,18 @@ const Article = () => {
           </div>
         </div>
         <div className="comments__container--lines">
-          {articleInfo?.commentResponses.map((comment) => (
+          {comments?.map((comment) => (
             <div key={comment.commentId}>
               <CommentLine
                 nickname={comment.nickName}
                 content={comment.commentContent}
                 date={comment.commentDate}
+                userId={comment.userId}
+                loginId={user?.userId}
               />
             </div>
           ))}
         </div>
-      </div>
-      <div>
-        헤이헤이
-        {comments?.map((comment) => (
-          <div key={comment.commentId}>
-            <CommentLine
-              nickname={comment.nickName}
-              content={comment.commentContent}
-              date={comment.commentDate}
-            />
-          </div>
-        ))}
       </div>
       {user ? (
         <CommentInput

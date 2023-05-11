@@ -42,10 +42,11 @@ const WriteFrame = () => {
   console.log('csrftoken :', csrftoken);
 
   const postArticleData = () => {
+    // 백엔드 쪽에 새로운 게시글 정보 post
     postArticle(
       title,
       '잡담',
-      '이렇게 수준 높은 곡을 저는 언제쯤이면 작곡할 수 있을까요?',
+      '젓가락 행진곡은 생각보다 수준이 높습니다',
       // csrftoken,
       ({ data }) => {
         console.log(data);
@@ -54,6 +55,9 @@ const WriteFrame = () => {
         console.log('error', error);
       }
     );
+    // 커뮤니티 board 페이지로 이동 후 데이터 리로드
+    navigate('/board');
+    window.location.reload();
   };
 
   // 렌더링
@@ -76,6 +80,7 @@ const WriteFrame = () => {
             color="primary"
             onClick={postArticleData}
           />
+
           <Button label="취소" type="button" onClick={goBack} />
         </div>
       </form>

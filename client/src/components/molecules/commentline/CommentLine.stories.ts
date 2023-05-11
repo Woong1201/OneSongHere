@@ -15,5 +15,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Page: Story = {
-  args: { nickname: '돌고래', content: '끼이익 끼이익', date: '2023.05.10' },
+  args: {
+    nickname: '돌고래',
+    content: '끼이익 끼이익',
+    date: '2023.05.10',
+    userId: 1,
+    loginId: 1,
+  },
 };
