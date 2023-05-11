@@ -13,12 +13,14 @@ interface StudioHeaderProps {
   pianoInstance: Tone.Sampler | null;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
+  setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 const StudioHeader = ({
   notes,
   pianoInstance,
   changePlayingStyle,
   revertPlayingStyle,
+  setNoteColumnStyle,
 }: StudioHeaderProps) => {
   const users: User[] = [
     {
@@ -47,6 +49,7 @@ const StudioHeader = ({
         pianoInstance={pianoInstance}
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
+        setNoteColumnStyle={setNoteColumnStyle}
       />
       <StudioTitle />
       <ProfileImageList users={users} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './StudioNoteItem.scss';
 import * as Tone from 'tone';
 
@@ -17,11 +17,14 @@ const StudioNoteItem = ({
 }: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(false);
 
-  const playNote = (noteName: string) => {
-    if (pianoInstance !== null) {
-      pianoInstance.triggerAttackRelease(noteName, '8n');
-    }
-  };
+  const playNote = useCallback(
+    (noteName: string) => {
+      if (pianoInstance !== null) {
+        pianoInstance.triggerAttackRelease(noteName, '8n');
+      }
+    },
+    [pianoInstance]
+  );
 
   const selectNote = () => {
     setIsSelected(!isSelected);

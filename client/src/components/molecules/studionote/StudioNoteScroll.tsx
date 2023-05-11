@@ -9,6 +9,7 @@ interface StudioNoteScrollProps {
   updateScrollPosition: (position: number) => void;
   pianoInstance: Tone.Sampler | null;
   notes: Note[];
+  noteColumnStyle: boolean[];
 }
 
 const StudioNoteScroll = ({
@@ -16,6 +17,7 @@ const StudioNoteScroll = ({
   updateScrollPosition,
   pianoInstance,
   notes,
+  noteColumnStyle,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +76,11 @@ const StudioNoteScroll = ({
       ref={scrollRef}
       onClick={onClick}
     >
-      <StudioNoteGrid notes={notes} pianoInstance={pianoInstance} />
+      <StudioNoteGrid
+        noteColumnStyle={noteColumnStyle}
+        notes={notes}
+        pianoInstance={pianoInstance}
+      />
       <div
         role="presentation"
         className="studio_note__scroll-body"

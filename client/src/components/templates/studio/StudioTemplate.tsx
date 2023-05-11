@@ -1,5 +1,5 @@
 import StudioHeader from 'components/organisms/studio/StudioHeader';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './StudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
@@ -10,35 +10,38 @@ import * as Tone from 'tone';
 
 const StudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const updateNote = (name: string, timing: number) => {
-    let isExistingNote = false;
+  const updateNote = useCallback(
+    (name: string, timing: number) => {
+      let isExistingNote = false;
 
-    let updatedNotes = notes.map((note) => {
-      if (note.timing === timing) {
-        isExistingNote = true;
+      let updatedNotes = notes.map((note) => {
+        if (note.timing === timing) {
+          isExistingNote = true;
 
-        if (note.names.includes(name)) {
-          return {
-            ...note,
-            names: (note.names as string[]).filter((n) => n !== name),
-          };
+          if (note.names.includes(name)) {
+            return {
+              ...note,
+              names: (note.names as string[]).filter((n) => n !== name),
+            };
+          }
+          return { ...note, names: [...(note.names as string[]), name] };
         }
-        return { ...note, names: [...(note.names as string[]), name] };
+        return note;
+      });
+
+      if (!isExistingNote) {
+        updatedNotes = [
+          ...updatedNotes,
+          { names: [name], duration: '8n', timing },
+        ];
       }
-      return note;
-    });
 
-    if (!isExistingNote) {
-      updatedNotes = [
-        ...updatedNotes,
-        { names: [name], duration: '8n', timing },
-      ];
-    }
+      const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
 
-    const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
-
-    setNotes(cleanedNotes);
-  };
+      setNotes(cleanedNotes);
+    },
+    [notes]
+  );
 
   const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
 
@@ -57,7 +60,10 @@ const StudioTemplate = () => {
       setPianoInstance(sampler);
     });
   }, []);
-  const [playingColumn, setPlayingColumn] = useState(false);
+
+  const [noteColumnStyle, setNoteColumnStyle] = useState(
+    Array(150).fill(false)
+  );
 
   const changePlayingStyle = (timing: number) => {
     // const element = document.getElementById(timing.toString());
@@ -80,6 +86,7 @@ const StudioTemplate = () => {
         pianoInstance={pianoInstance}
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
+        setNoteColumnStyle={setNoteColumnStyle}
       />
       <div className="studio__body">
         <div className="studio__content">
@@ -87,6 +94,7 @@ const StudioTemplate = () => {
             notes={notes}
             updateNote={updateNote}
             pianoInstance={pianoInstance}
+            noteColumnStyle={noteColumnStyle}
           />
           <StudioInstrument />
         </div>

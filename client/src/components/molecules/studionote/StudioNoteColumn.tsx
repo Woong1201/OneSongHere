@@ -9,6 +9,7 @@ interface StudioNoteColumnProps {
   timing: number;
   updateNote?: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
+  noteStyle: boolean;
 }
 
 const Column = 24;
@@ -45,9 +46,15 @@ const StudioNoteColumn = ({
   timing,
   updateNote,
   pianoInstance,
+  noteStyle,
 }: StudioNoteColumnProps) => {
+  const columnClassNames = noteStyle
+    ? 'studio__note-column playing'
+    : 'studio__note-column';
+
   return (
-    <div className="studio__note-column" id={timing.toString()}>
+    <div className={columnClassNames} id={timing.toString()}>
+      {noteStyle}
       {noteList.map((note) => {
         const key = `${timing}-${note}`;
         return (

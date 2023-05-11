@@ -10,6 +10,7 @@ interface StudioNoteScrollProps {
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
+  noteColumnStyle: boolean[];
 }
 
 const StudioNoteContainer = ({
@@ -18,6 +19,7 @@ const StudioNoteContainer = ({
   updateScrollPosition,
   updateNote,
   pianoInstance,
+  noteColumnStyle,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -106,6 +108,7 @@ const StudioNoteContainer = ({
         notes={notes}
         updateNote={updateNote}
         pianoInstance={pianoInstance}
+        noteColumnStyle={noteColumnStyle}
       />
     </div>
   );

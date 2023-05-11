@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './StudioControll.scss';
 import LogoIcon from 'components/atoms/common/LogoIcon';
 import PlayIcon from 'components/atoms/stuidioHeader/PlayIcon';
@@ -11,6 +11,7 @@ interface StudioControllProps {
   pianoInstance: Tone.Sampler | null;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
+  setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 
 const StudioControll = ({
@@ -18,24 +19,44 @@ const StudioControll = ({
   pianoInstance,
   changePlayingStyle,
   revertPlayingStyle,
+  setNoteColumnStyle,
 }: StudioControllProps) => {
   // 시퀀스 재생 메소드
-  const playSequence = () => {
-    // Notes 데이터에 각 노트들
+  const playSequence = useCallback(() => {
+    const initialStyle = Array(150).fill(false);
+
     notes.forEach((note) => {
       const now = Tone.now();
-      // triggerAttackRelease로 재생해줍니다 노트, 지속시간, 타이밍
       (pianoInstance as Tone.Sampler).triggerAttackRelease(
         note.names,
         note.duration,
         now + note.timing
       );
-      changePlayingStyle(note.timing);
-      Tone.Transport.scheduleOnce((time) => {
-        // revertPlayingStyle(note.timing);
-      }, now + note.timing + Tone.Time('8n').toSeconds());
+
+      setTimeout(() => {
+        const newStyle = [...initialStyle];
+        newStyle[note.timing * 4] = true;
+        setNoteColumnStyle(newStyle);
+      }, note.timing * 1000);
+
+      setTimeout(() => {
+        setNoteColumnStyle([...initialStyle]);
+      }, (note.timing * 4 + Tone.Time('8n').toSeconds()) * 1000);
     });
-  };
+
+    // 칸 다 재생하는건데 아직 느려서 잘 안됨
+    // for (let i = 0; i < 150; i += 1) {
+    //   setTimeout(() => {
+    //     const newStyle = [...initialStyle];
+    //     newStyle[i] = true;
+    //     setNoteColumnStyle(newStyle);
+    //   }, i * 250);
+
+    //   setTimeout(() => {
+    //     setNoteColumnStyle([...initialStyle]);
+    //   }, (i + 0.25) * 250);
+    // }
+  }, [notes, pianoInstance, setNoteColumnStyle]);
 
   const stopSequence = () => {
     Tone.Transport.stop();
