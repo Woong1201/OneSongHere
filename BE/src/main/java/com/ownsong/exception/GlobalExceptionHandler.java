@@ -2,6 +2,9 @@ package com.ownsong.exception;
 
 import com.ownsong.exception.customException.AlbumException;
 import com.ownsong.exception.customException.BoardException;
+import com.ownsong.exception.customException.RelayStudioException;
+import com.ownsong.exception.customException.UserException;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,6 +97,22 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AlbumException.class)
     protected ResponseEntity<ErrorResponse> handleAlbumException(final AlbumException e) {
         log.error("handleEntityNotFoundException(Album)", e);
+        final ErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse response = ErrorResponse.of(errorCode);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+    }
+
+    @ExceptionHandler(UserException.class)
+    protected ResponseEntity<ErrorResponse> handleUserException(final UserException e) {
+        log.error("handleEntityNotFoundException(User)", e);
+        final ErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse response = ErrorResponse.of(errorCode);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+    }
+
+    @ExceptionHandler(RelayStudioException.class)
+    protected ResponseEntity<ErrorResponse> handleRelayStudioException(final RelayStudioException e) {
+        log.error("handleEntityNotFoundException(RelayStudioException)", e);
         final ErrorCode errorCode = e.getErrorCode();
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
