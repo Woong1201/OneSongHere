@@ -26,28 +26,27 @@ const WriteFrame = () => {
     navigate(-1);
   };
 
-  const getCsrfToken = (): string => {
-    const name = 'csrftoken';
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i += 1) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(`${name}=`)) {
-        return cookie.substring(name.length + 1);
-      }
-    }
-    return 'error';
-  };
+  // const getCsrfToken = (): string => {
+  //   const name = 'csrftoken';
+  //   const cookies = document.cookie.split(';');
+  //   for (let i = 0; i < cookies.length; i += 1) {
+  //     const cookie = cookies[i].trim();
+  //     if (cookie.startsWith(`${name}=`)) {
+  //       return cookie.substring(name.length + 1);
+  //     }
+  //   }
+  //   return 'error';
+  // };
 
-  const csrftoken = getCsrfToken();
-  console.log('csrftoken :', csrftoken);
+  // const csrftoken = getCsrfToken();
+  // console.log('csrftoken :', csrftoken);
 
   const postArticleData = () => {
     // 백엔드 쪽에 새로운 게시글 정보 post
     postArticle(
       title,
-      '잡담',
-      '젓가락 행진곡은 생각보다 수준이 높습니다',
-      // csrftoken,
+      '홍보',
+      'https://www.youtube.com/watch?v=yyEEoBJ_9hE',
       ({ data }) => {
         console.log(data);
       },
@@ -56,8 +55,8 @@ const WriteFrame = () => {
       }
     );
     // 커뮤니티 board 페이지로 이동 후 데이터 리로드
-    navigate('/board');
-    window.location.reload();
+    // navigate('/board');
+    // window.location.reload();
   };
 
   // 렌더링

@@ -35,8 +35,10 @@ const Article = () => {
   const boardId = useParams();
   // 게시글 정보 useState
   const [articleInfo, getArticleInfo] = useState<BoardResponse>();
+
   // 댓글 정보 useState
   const [comments, getComments] = useState<CommentResponse[]>([]);
+
   // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
   const strHeader = String(articleInfo?.header);
   const strTitle = String(articleInfo?.boardTitle);
@@ -50,6 +52,7 @@ const Article = () => {
     getComments([...comments, comment]);
   };
 
+  console.log(comments, typeof comments);
   useEffect(() => {
     // 게시글 내용 get
     getArticle(
@@ -63,11 +66,10 @@ const Article = () => {
         console.log(error);
       }
     );
-    // 로그인 여부 판별
+    // 로그인 여부 판별 및 로그인 유저 아이디 등 정보 받아옴
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser) as User);
-      console.log('우저:', user?.userId);
     } else {
       setUser(null);
     }
@@ -99,6 +101,8 @@ const Article = () => {
             </div>
           </div>
         </div>
+
+        {/* 댓글 목록 */}
         <div className="comments__container--lines">
           {comments?.map((comment) => (
             <div key={comment.commentId}>
@@ -113,6 +117,8 @@ const Article = () => {
           ))}
         </div>
       </div>
+
+      {/* 로그인 여부에 따라 댓글 입력창 출력 */}
       {user ? (
         <CommentInput
           boardid={Number(boardId.articleId)}

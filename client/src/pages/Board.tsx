@@ -46,7 +46,7 @@ const Board = () => {
   };
 
   // Login 여부 확인
-  const isLogin = useRecoilValue(LoginState);
+  const isLoginQ = useRecoilValue(LoginState);
 
   return (
     <div>
@@ -61,7 +61,7 @@ const Board = () => {
         <div>커뮤니티 전체 페이지</div>
         <div>입니다</div>
         <SearchBar />
-        {isLogin ? (
+        {isLoginQ ? (
           <Button
             label="글쓰기"
             type="submit"

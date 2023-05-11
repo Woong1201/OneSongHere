@@ -17,6 +17,7 @@ const CommentLine = ({
   userId,
   loginId,
 }: CommentProps) => {
+  // 인자로 받아온 date에 + 9시간 (한국시간)
   const newDate = new Date(date);
   newDate.setHours(newDate.getHours() + 9);
 
