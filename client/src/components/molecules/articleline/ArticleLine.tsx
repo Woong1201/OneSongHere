@@ -30,10 +30,8 @@ const ArticleLine = ({
   const todayDate = new Date();
   const postedDate = new Date(boardDate);
   postedDate.setHours(postedDate.getHours() + 9);
-  console.log('오늘시간', todayDate.getTime());
+  // 오늘 아침 정각보다 빠르면 날짜로, 아니면 시간으로 하도록, diffMsec 계산
   todayDate.setHours(0, 0, 0, 0);
-  console.log(todayDate, postedDate);
-  // 오늘 아침 정각보다 빠르면 일로, 아니면 시간으로
   const diffMSec = todayDate.getTime() - postedDate.getTime();
 
   return (

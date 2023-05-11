@@ -7,6 +7,10 @@ import CommentInput from 'components/molecules/commentinput/CommentInput';
 import CommentLine from 'components/molecules/commentline/CommentLine';
 // SCSS import
 import './Article.scss';
+// recoil 관련 import
+import User from 'types/User';
+import { UserState } from 'store/UserState';
+import { useRecoilState } from 'recoil';
 
 interface CommentResponse {
   commentId: number;
@@ -39,6 +43,9 @@ const Article = () => {
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
 
+  // 로그인 여부에 따라 댓글 입력창 닫아놓기 위해
+  const [user, setUser] = useRecoilState(UserState);
+
   const handleAddComment = (comment: CommentResponse) => {
     getComments([...comments, comment]);
   };
@@ -55,6 +62,13 @@ const Article = () => {
         console.log(error);
       }
     );
+
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser) as User);
+    } else {
+      setUser(null);
+    }
   }, []);
 
   return (
@@ -107,10 +121,14 @@ const Article = () => {
           </div>
         ))}
       </div>
-      <CommentInput
-        boardid={Number(boardId.articleId)}
-        onAddComment={handleAddComment}
-      />
+      {user ? (
+        <CommentInput
+          boardid={Number(boardId.articleId)}
+          onAddComment={handleAddComment}
+        />
+      ) : (
+        <div />
+      )}
     </div>
   );
 };

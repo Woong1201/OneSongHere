@@ -45,7 +45,7 @@ const WriteFrame = () => {
     postArticle(
       title,
       '잡담',
-      '복날송 리메이크 정말 끝내주네요...',
+      '이렇게 수준 높은 곡을 저는 언제쯤이면 작곡할 수 있을까요?',
       // csrftoken,
       ({ data }) => {
         console.log(data);
