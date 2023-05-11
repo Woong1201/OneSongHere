@@ -10,7 +10,7 @@ interface StudioNoteColumnProps {
   pianoInstance: Tone.Sampler | null;
   noteColumnStyle: boolean[];
 }
-const Row = 150;
+const Row = 160;
 
 const StudioNoteGrid = ({
   notes,

@@ -62,7 +62,7 @@ const StudioTemplate = () => {
   }, []);
 
   const [noteColumnStyle, setNoteColumnStyle] = useState(
-    Array(150).fill(false)
+    Array(160).fill(false)
   );
 
   const changePlayingStyle = (timing: number) => {
