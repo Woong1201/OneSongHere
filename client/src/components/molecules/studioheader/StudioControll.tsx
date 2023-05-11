@@ -13,6 +13,7 @@ interface StudioControllProps {
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
+  clearNotes: () => void;
 }
 
 const StudioControll = ({
@@ -21,6 +22,7 @@ const StudioControll = ({
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
+  clearNotes,
 }: StudioControllProps) => {
   // 시퀀스 재생 메소드
   const playSequence = useCallback(() => {
@@ -80,7 +82,15 @@ const StudioControll = ({
       >
         <StopIcon size={30} />
       </button> */}
-      <Button label="지우기" type="button" />
+      <div className="studio__header-clear-button">
+        <Button
+          size="small"
+          color="primary"
+          label="지우기"
+          type="button"
+          onClick={clearNotes}
+        />
+      </div>
     </div>
   );
 };

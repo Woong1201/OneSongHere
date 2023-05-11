@@ -75,11 +75,10 @@ const StudioTemplate = () => {
   );
 
   const changePlayingStyle = (timing: number) => {
-    // const element = document.getElementById(timing.toString());
-    // console.log(element);
-    // if (element) {
-    //   element.classList.add('playing');
-    // }
+    const element = document.getElementById(timing.toString());
+    if (element) {
+      element.classList.add('playing');
+    }
   };
   const revertPlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
@@ -97,6 +96,10 @@ const StudioTemplate = () => {
     [pianoInstance]
   );
 
+  const clearNotes = useCallback(() => {
+    setNotes([]);
+  }, [setNotes]);
+
   return (
     <>
       <StudioHeader
@@ -105,6 +108,7 @@ const StudioTemplate = () => {
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
+        clearNotes={clearNotes}
       />
       <div className="studio__body">
         <div className="studio__content">

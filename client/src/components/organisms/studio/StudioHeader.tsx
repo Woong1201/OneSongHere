@@ -14,6 +14,7 @@ interface StudioHeaderProps {
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
+  clearNotes: () => void;
 }
 const StudioHeader = ({
   notes,
@@ -21,6 +22,7 @@ const StudioHeader = ({
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
+  clearNotes,
 }: StudioHeaderProps) => {
   const users: User[] = [
     {
@@ -50,6 +52,7 @@ const StudioHeader = ({
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
+        clearNotes={clearNotes}
       />
       <StudioTitle />
       <ProfileImageList users={users} />
