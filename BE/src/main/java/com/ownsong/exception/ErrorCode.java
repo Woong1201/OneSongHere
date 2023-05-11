@@ -12,7 +12,13 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "G006", "Internal Server Error"),
 
     //USER
-    USER_UNAUTHORIZED(401, "U001", "로그인이 유효하지 않습니다.");
+    USER_UNAUTHORIZED(401, "U001", "로그인이 유효하지 않습니다."),
+    USER_FORBIDDEN(403, "U003", "해당 권한이 없습니다."),
+
+
+    //Studio
+    INVALID_RELAY_STUDIO_INPUT_VALUE(400, "R001", "  잘못된 입력 값입니다.");
+
 
     private final String code;
     private final String message;
