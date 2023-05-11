@@ -1,8 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CommentLine.scss';
 import TextButton from 'components/atoms/buttons/TextButton';
 
+// api import
+import { deleteComment } from 'services/board';
+
 interface CommentProps {
+  commentId: number;
   nickname: string;
   content: string;
   date: string;
@@ -11,6 +16,7 @@ interface CommentProps {
 }
 
 const CommentLine = ({
+  commentId,
   nickname,
   content,
   date,
@@ -20,6 +26,21 @@ const CommentLine = ({
   // 인자로 받아온 date에 + 9시간 (한국시간)
   const newDate = new Date(date);
   newDate.setHours(newDate.getHours() + 9);
+
+  const navigate = useNavigate();
+
+  const deleteCommentData = () => {
+    deleteComment(
+      commentId,
+      ({ data }) => {
+        console.log('data:', data);
+        navigate(0);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   return (
     <div className="comment__container">
@@ -35,7 +56,7 @@ const CommentLine = ({
           {loginId === userId ? (
             <p>
               &nbsp;&nbsp;
-              <TextButton label="삭제" />
+              <TextButton label="삭제" onClick={deleteCommentData} />
             </p>
           ) : (
             <div />

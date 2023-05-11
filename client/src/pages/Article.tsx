@@ -102,6 +102,7 @@ const Article = () => {
           {comments?.map((comment) => (
             <div key={comment.commentId}>
               <CommentLine
+                commentId={comment.commentId}
                 nickname={comment.nickName}
                 content={comment.commentContent}
                 date={comment.commentDate}

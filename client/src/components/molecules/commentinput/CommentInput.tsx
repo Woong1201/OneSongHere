@@ -26,6 +26,7 @@ const CommentInput = ({ boardid }: CommentProps) => {
       comment,
       ({ data }) => {
         console.log('data :', data);
+        // 댓글 생성 후 동일 페이지로 재이동
         navigate(0);
       },
       (error) => {

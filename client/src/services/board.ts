@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse, AxiosError, responseEncoding } from 'axios';
 import { apiInstance } from './index';
 
 const api = apiInstance();
@@ -91,4 +91,60 @@ const postComment = async (
   }
 };
 
-export { getBoards, getArticle, getCategorized, postArticle, postComment };
+const deleteArticle = async (
+  boardId: number,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'delete',
+    url: `/board/${boardId}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
+const deleteComment = async (
+  id: number,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'delete',
+    url: `/board/comments/${id}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
+const updateComment = async (
+  commentId: number,
+  commentContent: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'put',
+    url: '/board/comments',
+    data: { commentId, commentContent },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export {
+  getBoards,
+  getArticle,
+  getCategorized,
+  postArticle,
+  postComment,
+  deleteArticle,
+  deleteComment,
+  updateComment,
+};
