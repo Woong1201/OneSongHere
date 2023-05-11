@@ -1,5 +1,10 @@
 .studio__instrument {
   height: 30%;
   box-sizing: border-box;
-  border: 1px solid chartreuse;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.studio__piano-container {
+  width: 1000px;
 }

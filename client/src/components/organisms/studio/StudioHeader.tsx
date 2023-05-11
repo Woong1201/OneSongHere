@@ -11,8 +11,17 @@ import * as Tone from 'tone';
 interface StudioHeaderProps {
   notes: Note[];
   pianoInstance: Tone.Sampler | null;
+  changePlayingStyle: (timing: number) => void;
+  revertPlayingStyle: (timing: number) => void;
+  setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
-const StudioHeader = ({ notes, pianoInstance }: StudioHeaderProps) => {
+const StudioHeader = ({
+  notes,
+  pianoInstance,
+  changePlayingStyle,
+  revertPlayingStyle,
+  setNoteColumnStyle,
+}: StudioHeaderProps) => {
   const users: User[] = [
     {
       userId: 1,
@@ -35,7 +44,13 @@ const StudioHeader = ({ notes, pianoInstance }: StudioHeaderProps) => {
 
   return (
     <div className="studio__header">
-      <StudioControll notes={notes} pianoInstance={pianoInstance} />
+      <StudioControll
+        notes={notes}
+        pianoInstance={pianoInstance}
+        changePlayingStyle={changePlayingStyle}
+        revertPlayingStyle={revertPlayingStyle}
+        setNoteColumnStyle={setNoteColumnStyle}
+      />
       <StudioTitle />
       <ProfileImageList users={users} />
       <StudioMenu />

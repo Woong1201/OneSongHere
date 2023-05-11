@@ -16,7 +16,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    columnNote: { names: ['q'], duration: '8n', timing: 0 },
     timing: 0,
     pianoInstance: null,
+    noteStyle: true,
   },
 };
