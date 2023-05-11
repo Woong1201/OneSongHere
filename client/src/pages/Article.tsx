@@ -7,6 +7,10 @@ import CommentInput from 'components/molecules/commentinput/CommentInput';
 import CommentLine from 'components/molecules/commentline/CommentLine';
 // SCSS import
 import './Article.scss';
+// recoil 관련 import
+import User from 'types/User';
+import { UserState } from 'store/UserState';
+import { useRecoilState } from 'recoil';
 
 interface CommentResponse {
   commentId: number;
@@ -29,25 +33,48 @@ interface BoardResponse {
 
 const Article = () => {
   const boardId = useParams();
+  // 게시글 정보 useState
   const [articleInfo, getArticleInfo] = useState<BoardResponse>();
+
+  // 댓글 정보 useState
+  const [comments, getComments] = useState<CommentResponse[]>([]);
+
   // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
   const strHeader = String(articleInfo?.header);
   const strTitle = String(articleInfo?.boardTitle);
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
 
+  // 로그인 여부에 따라 댓글 입력창 닫아놓기 위해
+  const [user, setUser] = useRecoilState(UserState);
+
+  const handleAddComment = (comment: CommentResponse) => {
+    getComments([...comments, comment]);
+  };
+
+  console.log(comments, typeof comments);
   useEffect(() => {
+    // 게시글 내용 get
     getArticle(
       Number(boardId.articleId),
       ({ data }) => {
         console.log('data :', data);
         getArticleInfo(data);
+        getComments(data.commentResponses);
       },
       (error) => {
         console.log(error);
       }
     );
+    // 로그인 여부 판별 및 로그인 유저 아이디 등 정보 받아옴
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser) as User);
+    } else {
+      setUser(null);
+    }
   }, []);
+
   return (
     <div className="article__entire">
       <div className="article__container">
@@ -59,8 +86,7 @@ const Article = () => {
         />
         <div>본문</div>
         {articleInfo?.boardContent}
-        {/* {articleInfo?.boardId}
-        {articleInfo?.userId} */}
+
         <div className="comments__container--header">
           <div style={{ display: 'flex', marginBottom: '10px' }}>
             댓글 수
@@ -75,21 +101,32 @@ const Article = () => {
             </div>
           </div>
         </div>
+
+        {/* 댓글 목록 */}
         <div className="comments__container--lines">
-          {articleInfo?.commentResponses.map((comment) => (
+          {comments?.map((comment) => (
             <div key={comment.commentId}>
               <CommentLine
                 nickname={comment.nickName}
                 content={comment.commentContent}
                 date={comment.commentDate}
+                userId={comment.userId}
+                loginId={user?.userId}
               />
             </div>
           ))}
         </div>
-        {/* <div>프로필아이콘</div>
-        <div>조회수</div> */}
       </div>
-      <CommentInput boardid={Number(boardId.articleId)} />
+
+      {/* 로그인 여부에 따라 댓글 입력창 출력 */}
+      {user ? (
+        <CommentInput
+          boardid={Number(boardId.articleId)}
+          onAddComment={handleAddComment}
+        />
+      ) : (
+        <div />
+      )}
     </div>
   );
 };

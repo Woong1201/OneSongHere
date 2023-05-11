@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 // 컴포넌트 import
-import Button from 'components/atoms/buttons/Button';
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import HallOfFameBG from 'components/atoms/halloffame/HallOfFameBG';
 import SectionTitle from 'components/atoms/common/SectionTitle';
@@ -36,22 +35,6 @@ const Albums = () => {
       />
       {/* 생성날짜가 이번 달이고, 하트 개수가 가장 많은 앨범 세 개를 골라서 캐러셀으로 출력(자동전환) */}
       <SearchBar />
-      <div>
-        <Button
-          tag={false}
-          label="일반"
-          color="primary"
-          shadow={false}
-          type="button"
-        />
-        <Button
-          tag={false}
-          label="릴레이"
-          color="other"
-          shadow={false}
-          type="button"
-        />
-      </div>
       <AlbumCardsGrid />
     </div>
   );
