@@ -1,13 +1,11 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StudioNoteItem.scss';
-import * as Tone from 'tone';
 
 interface StudioNoteItemProps {
   timing: number;
   note: string;
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string) => void;
-  pianoInstance: Tone.Sampler | null;
   selected: boolean;
 }
 
@@ -16,7 +14,6 @@ const StudioNoteItem = ({
   note,
   updateNote,
   playNote,
-  pianoInstance,
   selected,
 }: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(selected);

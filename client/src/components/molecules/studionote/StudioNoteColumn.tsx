@@ -1,7 +1,6 @@
 import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
-import * as Tone from 'tone';
 import Note from 'types/Note';
 
 interface StudioNoteColumnProps {
@@ -9,7 +8,6 @@ interface StudioNoteColumnProps {
   timing: number;
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string) => void;
-  pianoInstance: Tone.Sampler | null;
   noteStyle: boolean;
 }
 
@@ -47,7 +45,6 @@ const StudioNoteColumn = ({
   timing,
   updateNote,
   playNote,
-  pianoInstance,
   noteStyle,
 }: StudioNoteColumnProps) => {
   const columnClassNames = noteStyle
@@ -65,7 +62,6 @@ const StudioNoteColumn = ({
             key={key}
             timing={timing}
             note={note}
-            pianoInstance={pianoInstance}
             selected={isSelected}
             playNote={playNote}
           />

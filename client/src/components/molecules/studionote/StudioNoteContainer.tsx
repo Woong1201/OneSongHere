@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudioNoteContainer.scss';
-import * as Tone from 'tone';
 import Note from 'types/Note';
 import StudioNoteGrid from './StudioNoteGrid';
 
@@ -10,7 +9,6 @@ interface StudioNoteScrollProps {
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
   playNote: (noteName: string) => void;
-  pianoInstance: Tone.Sampler | null;
   noteColumnStyle: boolean[];
 }
 
@@ -20,7 +18,6 @@ const StudioNoteContainer = ({
   updateScrollPosition,
   updateNote,
   playNote,
-  pianoInstance,
   noteColumnStyle,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -110,7 +107,6 @@ const StudioNoteContainer = ({
         notes={notes}
         updateNote={updateNote}
         playNote={playNote}
-        pianoInstance={pianoInstance}
         noteColumnStyle={noteColumnStyle}
       />
     </div>

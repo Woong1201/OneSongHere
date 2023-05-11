@@ -112,7 +112,6 @@ const StudioTemplate = () => {
             notes={notes}
             updateNote={updateNote}
             playNote={playNote}
-            pianoInstance={pianoInstance}
             noteColumnStyle={noteColumnStyle}
           />
           <StudioInstrument
