@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { LoginState } from 'store/LoginState';
 // 컴포넌트 import
 import SearchBar from 'components/molecules/searchsection/SearchBar';
 import Button from 'components/atoms/buttons/Button';
@@ -22,6 +24,7 @@ const Board = () => {
   // 글쓰기 페이지로 이동
   const navigate = useNavigate();
   const navigateWritePage = () => {
+    console.log(LoginState);
     navigate('/board/write');
   };
 
@@ -42,6 +45,9 @@ const Board = () => {
     );
   };
 
+  // Login 여부 확인
+  const isLogin = useRecoilValue(LoginState);
+
   return (
     <div>
       <div className="category__container">
@@ -55,12 +61,16 @@ const Board = () => {
         <div>커뮤니티 전체 페이지</div>
         <div>입니다</div>
         <SearchBar />
-        <Button
-          label="글쓰기"
-          type="submit"
-          color="primary"
-          onClick={navigateWritePage}
-        />
+        {isLogin ? (
+          <Button
+            label="글쓰기"
+            type="submit"
+            color="primary"
+            onClick={navigateWritePage}
+          />
+        ) : (
+          <div style={{ height: '38px' }} />
+        )}
         <ArticleBoard filteredArticles={articles} />
       </div>
     </div>
