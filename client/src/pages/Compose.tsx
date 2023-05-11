@@ -9,7 +9,7 @@ const Compose = () => {
         <SearchSection />
       </div>
       <div className="compose-page__studio-list">
-        <StudioList isParticipating />
+        {/* <StudioList title="참여중인 곡" isParticipating /> */}
       </div>
     </div>
   );

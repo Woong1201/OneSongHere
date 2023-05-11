@@ -3,59 +3,20 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';
 import { useCallback, useState } from 'react';
+import RelayStudio from 'types/RelayStudio';
 import Modal from '../modal/ModalForm';
 
-interface Studio {
-  studioId: number;
-  studioTitle: string;
-  startDate: Date;
-  endDate: Date;
-  tag: string;
-}
-
-// interface StudioListProps {
-//   studios?: Studio;
-//   title: string;
-//   isParticipating: boolean;
-// }
-
 interface StudioListProps {
+  studios: RelayStudio[];
   isParticipating?: boolean;
+  title: string;
 }
 
-const StudioList = ({ isParticipating = false }: StudioListProps) => {
-  const date = new Date();
-  const studios: Studio[] = [
-    {
-      studioId: 1,
-      studioTitle: '몰라',
-      startDate: date,
-      endDate: date,
-      tag: '재즈',
-    },
-    {
-      studioId: 2,
-      studioTitle: '마라',
-      startDate: date,
-      endDate: date,
-      tag: '컨트리',
-    },
-    {
-      studioId: 3,
-      studioTitle: '랄라',
-      startDate: date,
-      endDate: date,
-      tag: '팝',
-    },
-    {
-      studioId: 4,
-      studioTitle: '링티제로',
-      startDate: date,
-      endDate: date,
-      tag: '재즈',
-    },
-  ];
-
+const StudioList = ({
+  studios,
+  isParticipating = false,
+  title,
+}: StudioListProps) => {
   function chunk<T>(array: T[], size: number): T[][] {
     const chunked: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
@@ -64,7 +25,7 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
     return chunked;
   }
 
-  const chunkedStudios: Studio[][] = chunk(studios, 3);
+  const chunkedStudios: RelayStudio[][] = chunk(studios, 3);
 
   // modal
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -73,10 +34,19 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
+  const endDateStringtoDate = (date: string) => {
+    return new Date(date);
+  };
+
+  const getStartDate = (date: string) => {
+    const endDate = new Date(date);
+    return new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+  };
+
   return (
     <div className="studio-list">
       <div className="studio-list__title">
-        <SectionTitle title="작업중인 곡" />
+        <SectionTitle title={title} />
       </div>
       {isParticipating ? (
         <div className="studio-list__button">
@@ -97,15 +67,18 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
       )}
       {studios ? (
         chunkedStudios.map((studioRow) => (
-          <div key={studioRow[0].studioId} className="studio-list__studio-row">
-            {studioRow.map((studio: Studio) => (
-              <div className="studio-list__studio" key={studio.studioId}>
+          <div
+            key={studioRow[0].relayStudioID}
+            className="studio-list__studio-row"
+          >
+            {studioRow.map((studio: RelayStudio) => (
+              <div className="studio-list__studio" key={studio.relayStudioID}>
                 <StudioCard
-                  key={studio.studioId}
-                  studioTitle={studio.studioTitle}
-                  startDate={studio.startDate}
-                  endDate={studio.endDate}
-                  tag={studio.tag}
+                  key={studio.relayStudioID}
+                  studioTitle={studio.relayStudioTitle}
+                  startDate={getStartDate(studio.endDate)}
+                  endDate={endDateStringtoDate(studio.endDate)}
+                  tags={studio.tags}
                 />
               </div>
             ))}
