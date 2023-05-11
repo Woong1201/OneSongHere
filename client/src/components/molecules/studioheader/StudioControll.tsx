@@ -5,6 +5,7 @@ import PlayIcon from 'components/atoms/stuidioHeader/PlayIcon';
 import StopIcon from 'components/atoms/stuidioHeader/StopIcon';
 import * as Tone from 'tone';
 import Note from 'types/Note';
+import Button from 'components/atoms/buttons/Button';
 
 interface StudioControllProps {
   notes: Note[];
@@ -41,7 +42,7 @@ const StudioControll = ({
 
       setTimeout(() => {
         setNoteColumnStyle([...initialStyle]);
-      }, (note.timing * 4 + Tone.Time('8n').toSeconds()) * 1000);
+      }, (note.timing + Tone.Time('8n').toSeconds()) * 1000);
     });
 
     // 칸 다 재생하는건데 아직 느려서 잘 안됨
@@ -79,6 +80,7 @@ const StudioControll = ({
       >
         <StopIcon size={30} />
       </button> */}
+      <Button label="지우기" type="button" />
     </div>
   );
 };

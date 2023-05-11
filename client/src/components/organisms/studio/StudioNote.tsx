@@ -8,11 +8,13 @@ import Note from 'types/Note';
 interface StudioNoteProps {
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
+  playNote: (noteName: string) => void;
   pianoInstance: Tone.Sampler | null;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({
   updateNote,
+  playNote,
   pianoInstance,
   notes,
   noteColumnStyle,
@@ -37,6 +39,7 @@ const StudioNote = ({
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
         updateNote={updateNote}
+        playNote={playNote}
         pianoInstance={pianoInstance}
         noteColumnStyle={noteColumnStyle}
       />

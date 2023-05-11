@@ -7,6 +7,7 @@ import StudioNoteColumn from './StudioNoteColumn';
 interface StudioNoteColumnProps {
   notes: Note[];
   updateNote?: (name: string, timing: number) => void;
+  playNote?: (noteName: string) => void;
   pianoInstance: Tone.Sampler | null;
   noteColumnStyle: boolean[];
 }
@@ -15,6 +16,7 @@ const Row = 160;
 const StudioNoteGrid = ({
   notes,
   updateNote,
+  playNote,
   pianoInstance,
   noteColumnStyle,
 }: StudioNoteColumnProps) => {
@@ -28,6 +30,7 @@ const StudioNoteGrid = ({
           <StudioNoteColumn
             columnNote={columnNote}
             updateNote={updateNote}
+            playNote={playNote}
             key={rowIndex}
             timing={rowIndex * 0.25}
             pianoInstance={pianoInstance}

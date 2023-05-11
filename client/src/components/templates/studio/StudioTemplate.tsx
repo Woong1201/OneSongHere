@@ -42,6 +42,15 @@ const StudioTemplate = () => {
     },
     [notes]
   );
+  const findInputTiming = () => {
+    // 0부터 0.25 * 150까지 배열
+    const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+    // 현재 타이밍들
+    const timings = notes.map((note) => note.timing);
+    // 그 배열중에 현재 배열에 notes에 없는 첫번째 타이밍값 리턴
+
+    return possibleNoteTiming.find((num) => !timings.includes(num)) || 0;
+  };
 
   const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
 
@@ -79,6 +88,15 @@ const StudioTemplate = () => {
     }
   };
 
+  const playNote = useCallback(
+    (noteName: string) => {
+      if (pianoInstance !== null) {
+        pianoInstance.triggerAttackRelease(noteName, '8n');
+      }
+    },
+    [pianoInstance]
+  );
+
   return (
     <>
       <StudioHeader
@@ -93,10 +111,15 @@ const StudioTemplate = () => {
           <StudioNote
             notes={notes}
             updateNote={updateNote}
+            playNote={playNote}
             pianoInstance={pianoInstance}
             noteColumnStyle={noteColumnStyle}
           />
-          <StudioInstrument />
+          <StudioInstrument
+            updateNote={updateNote}
+            findInputTiming={findInputTiming}
+            playNote={playNote}
+          />
         </div>
         <div className="studio__side">
           <StudioCam />

@@ -19,5 +19,6 @@ export const Primary: Story = {
     timing: 0,
     note: 'D4',
     pianoInstance: null,
+    selected: true,
   },
 };
