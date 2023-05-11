@@ -98,7 +98,8 @@ public class BoardController {
             throw new UserException(ErrorCode.USER_FORBIDDEN);
         }
 
-        return ResponseEntity.status(200).body(null);
+        // 삭제 후 게시판 메인 페이지를 위한 boardList return
+        return ResponseEntity.status(200).body(boardService.getBoards());
     }
 
     @Operation(summary = "게시글 상세 조회", description = "게시글 상세 조회 메서드입니다.")
