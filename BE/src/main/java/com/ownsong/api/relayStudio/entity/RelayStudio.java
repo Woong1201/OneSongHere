@@ -89,13 +89,13 @@ public class RelayStudio {
         this.numberOfBars = relayStudioCreateRequest.getNumberOfBars();
         this.numberOfUsers = 0;
         this.status = 2;
+        this.endDate = LocalDateTime.now().plusWeeks(1);
         this.user = user;
     }
 
     public void participate(User user) {
         this.status = 2;
         this.user = user;
-        this.endDate = LocalDateTime.now().plusWeeks(1);
     }
 
     public void update(RelayStudioComposeRequest relayStudioComposeRequest) {
