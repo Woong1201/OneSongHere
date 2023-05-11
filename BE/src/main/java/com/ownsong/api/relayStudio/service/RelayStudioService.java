@@ -286,6 +286,28 @@ public class RelayStudioService {
         return hashMap;
     }
 
+    public boolean deleteRelayStudio(Long relayStudioId, User user) {
+        RelayStudio relayStudio;
+        // 해당 relayStudio 존재 여부 확인
+        try {
+            relayStudio = relayStudioRepository.findById(relayStudioId).get();
+        }catch (Exception e) {
+            return false;
+        }
+
+        // 삭제가능한지 확인 (해당 relayStudio 를 만들었고, 아무도 참가하지 않은 경우에만 삭제 가능)
+        if (relayStudio.getNumberOfUsers() == 0 && relayStudio.getUser().getUserID() == user.getUserID()) {
+            relayStudioRepository.delete(relayStudio);
+            return true;
+        }
+
+        if (relayStudio.getNumberOfUsers() == 1 && relayStudio.getStatus() == 1 && relayStudio.getUser().getUserID() == user.getUserID()) {
+            relayStudioRepository.delete(relayStudio);
+            return true;
+        }
+        return false;
+    }
+
 //    public List<RelayStudioResponse> getAllRelayStudios(User user) {
 //        List<RelayStudio> relayStudios = relayStudioRepository.findAll();
 //        List<RelayStudioResponse> relayStudioResponses = new ArrayList<>();
