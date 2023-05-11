@@ -4,18 +4,21 @@ import * as Tone from 'tone';
 import StudioNoteColumn from './StudioNoteColumn';
 
 interface StudioNoteColumnProps {
-  addNote?: (name: string, timing: number) => void;
+  updateNote?: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
 }
 const Row = 150;
 
-const StudioNoteGrid = ({ addNote, pianoInstance }: StudioNoteColumnProps) => {
+const StudioNoteGrid = ({
+  updateNote,
+  pianoInstance,
+}: StudioNoteColumnProps) => {
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {
         return (
           <StudioNoteColumn
-            addNote={addNote}
+            updateNote={updateNote}
             key={rowIndex}
             timing={rowIndex * 0.25}
             pianoInstance={pianoInstance}

@@ -5,7 +5,7 @@ import * as Tone from 'tone';
 
 interface StudioNoteColumnProps {
   timing: number;
-  addNote?: (name: string, timing: number) => void;
+  updateNote?: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
 }
 
@@ -40,7 +40,7 @@ const noteList = [
 
 const StudioNoteColumn = ({
   timing,
-  addNote,
+  updateNote,
   pianoInstance,
 }: StudioNoteColumnProps) => {
   return (
@@ -49,7 +49,7 @@ const StudioNoteColumn = ({
         const key = `${timing}-${note}`;
         return (
           <StudioNoteItem
-            addNote={addNote}
+            updateNote={updateNote}
             key={key}
             timing={timing}
             note={note}

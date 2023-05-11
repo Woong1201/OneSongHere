@@ -10,17 +10,34 @@ import * as Tone from 'tone';
 
 const StudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const addNote = (name: string, timing: number) => {
-    const newNotes = notes.map((note) => {
-      return note.timing === timing
-        ? { ...note, names: [...(note.names as string[]), name] }
-        : note;
+  const updateNote = (name: string, timing: number) => {
+    let isExistingNote = false;
+
+    let updatedNotes = notes.map((note) => {
+      if (note.timing === timing) {
+        isExistingNote = true;
+
+        if (note.names.includes(name)) {
+          return {
+            ...note,
+            names: (note.names as string[]).filter((n) => n !== name),
+          };
+        }
+        return { ...note, names: [...(note.names as string[]), name] };
+      }
+      return note;
     });
-    if (notes.length === newNotes.length) {
-      setNotes([...notes, { names: [name], duration: '8n', timing }]);
-    } else {
-      setNotes(newNotes);
+
+    if (!isExistingNote) {
+      updatedNotes = [
+        ...updatedNotes,
+        { names: [name], duration: '8n', timing },
+      ];
     }
+
+    const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
+
+    setNotes(cleanedNotes);
   };
 
   const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
@@ -46,7 +63,7 @@ const StudioTemplate = () => {
       <StudioHeader notes={notes} pianoInstance={pianoInstance} />
       <div className="studio__body">
         <div className="studio__content">
-          <StudioNote addNote={addNote} pianoInstance={pianoInstance} />
+          <StudioNote updateNote={updateNote} pianoInstance={pianoInstance} />
           <StudioInstrument />
         </div>
         <div className="studio__side">

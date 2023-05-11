@@ -6,14 +6,14 @@ import StudioNoteGrid from './StudioNoteGrid';
 interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
-  addNote: (name: string, timing: number) => void;
+  updateNote: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
 }
 
 const StudioNoteContainer = ({
   scrollPosition,
   updateScrollPosition,
-  addNote,
+  updateNote,
   pianoInstance,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -99,7 +99,7 @@ const StudioNoteContainer = ({
       onWheel={onWheel} // Add onWheel event here
       ref={ref}
     >
-      <StudioNoteGrid addNote={addNote} pianoInstance={pianoInstance} />
+      <StudioNoteGrid updateNote={updateNote} pianoInstance={pianoInstance} />
     </div>
   );
 };

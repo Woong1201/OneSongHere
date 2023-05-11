@@ -5,10 +5,10 @@ import './StudioNote.scss';
 import * as Tone from 'tone';
 
 interface StudioNoteProps {
-  addNote: (name: string, timing: number) => void;
+  updateNote: (name: string, timing: number) => void;
   pianoInstance: Tone.Sampler | null;
 }
-const StudioNote = ({ addNote, pianoInstance }: StudioNoteProps) => {
+const StudioNote = ({ updateNote, pianoInstance }: StudioNoteProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const updateScrollPosition = (position: number) => {
@@ -25,7 +25,7 @@ const StudioNote = ({ addNote, pianoInstance }: StudioNoteProps) => {
       <StudioNoteContainer
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
-        addNote={addNote}
+        updateNote={updateNote}
         pianoInstance={pianoInstance}
       />
     </div>
