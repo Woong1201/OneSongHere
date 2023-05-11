@@ -19,6 +19,6 @@ export const Primary: Story = {
     studioTitle: '샵빱뚜비두바',
     startDate: new Date(2023, 4, 28),
     endDate: new Date(2023, 5, 29),
-    tag: '재즈',
+    tags: '재즈',
   },
 };
