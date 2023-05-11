@@ -65,28 +65,30 @@ const StudioList = ({
       ) : (
         <div className="studio-list__blank" />
       )}
-      {studios ? (
-        chunkedStudios.map((studioRow) => (
-          <div
-            key={studioRow[0].relayStudioID}
-            className="studio-list__studio-row"
-          >
-            {studioRow.map((studio: RelayStudio) => (
-              <div className="studio-list__studio" key={studio.relayStudioID}>
-                <StudioCard
-                  key={studio.relayStudioID}
-                  studioTitle={studio.relayStudioTitle}
-                  startDate={getStartDate(studio.endDate)}
-                  endDate={endDateStringtoDate(studio.endDate)}
-                  tags={studio.tags}
-                />
-              </div>
-            ))}
-          </div>
-        ))
-      ) : (
-        <p>현재 작업중인 곡이 없습니다...</p>
-      )}
+      <div className="studio-list__container">
+        {studios ? (
+          chunkedStudios.map((studioRow) => (
+            <div
+              key={studioRow[0].relayStudioID}
+              className="studio-list__studio-row"
+            >
+              {studioRow.map((studio: RelayStudio) => (
+                <div className="studio-list__studio" key={studio.relayStudioID}>
+                  <StudioCard
+                    key={studio.relayStudioID}
+                    studioTitle={studio.relayStudioTitle}
+                    startDate={getStartDate(studio.endDate)}
+                    endDate={endDateStringtoDate(studio.endDate)}
+                    tags={studio.tags}
+                  />
+                </div>
+              ))}
+            </div>
+          ))
+        ) : (
+          <p>현재 작업중인 곡이 없습니다...</p>
+        )}
+      </div>
     </div>
   );
 };
