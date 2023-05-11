@@ -89,24 +89,32 @@ public class RelayStudio {
         this.numberOfBars = relayStudioCreateRequest.getNumberOfBars();
         this.numberOfUsers = 0;
         this.status = 2;
+        this.endDate = LocalDateTime.now().plusWeeks(1);
         this.user = user;
     }
 
     public void participate(User user) {
         this.status = 2;
         this.user = user;
-        this.endDate = LocalDateTime.now().plusWeeks(1);
     }
 
     public void update(RelayStudioComposeRequest relayStudioComposeRequest) {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
-        // 해당 유저의 relay 완료시 status 업데이트 및 투표 초기화
+        // 해당 유저의 relay 완료시 status 업데이트, 투표 초기화, noti 생성
         if (relayStudioComposeRequest.isComplete()) {
             this.status = 3;
             this.agree = 0;
             this.numberOfVotes = 0;
+            this.getNotifications().clear();
             for (RelayTeam relayTeam : this.relayTeams) {
                 relayTeam.initializeVoteFlag();
+                this.notifications.add(
+                        Notification.builder()
+                                .user(relayTeam.getUser())
+                                .type("voteStart")
+                                .relayStudio(this)
+                                .build()
+                );
             }
         }
     }
@@ -127,6 +135,20 @@ public class RelayStudio {
         this.status = 1;
         if (agree >= this.numberOfUsers/2) {
             this.numberOfUsers += 1;
+        }
+        String notiType = "voteEnd";
+        if (this.numberOfUsers == this.limitOfUsers)
+            notiType = "compositionComplete";
+        this.getNotifications().clear();
+        for (RelayTeam relayTeam : this.relayTeams) {
+            relayTeam.initializeVoteFlag();
+            this.notifications.add(
+                    Notification.builder()
+                            .user(relayTeam.getUser())
+                            .type(notiType)
+                            .relayStudio(this)
+                            .build()
+            );
         }
     }
 }
