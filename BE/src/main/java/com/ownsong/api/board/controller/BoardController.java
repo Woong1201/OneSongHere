@@ -10,6 +10,8 @@ import com.ownsong.api.board.service.BoardService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
 import com.ownsong.api.user.social.Constant;
+import com.ownsong.exception.ErrorCode;
+import com.ownsong.exception.customException.UserException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,7 +48,7 @@ public class BoardController {
 
         // non-login 상태면 user = null
         if (user == null) {
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
         // 입력받은 board 를 db에 add
         BoardResponse boardResponse = boardService.createBoard(boardCreateRequest, user);
@@ -65,12 +67,13 @@ public class BoardController {
 
         // non-login 상태면 user = null
         if (user == null)
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
 
         // 입력받은 board 로 수정
         BoardResponse boardResponse = boardService.modifyBoard(boardModifyRequest, user);
-        if (boardResponse == null)
-            return ResponseEntity.status(400).body("잘못된 접근");
+        if (boardResponse == null){
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
+        }
 
         return ResponseEntity.status(200).body(boardResponse);
     }
@@ -85,12 +88,15 @@ public class BoardController {
         User user = userService.getLoginUser();
 
         // non-login 상태면 user = null
-        if (user == null)
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+        if (user == null) {
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+        }
 
         // 입력받은 boardId 의 board 삭제
-        if (boardService.deleteBoard(boardId, user) == false)
-            return ResponseEntity.status(400).body("잘못된 접근");
+        // 남의 게시물 지우면 안됨
+        if (boardService.deleteBoard(boardId, user) == false){
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
+        }
 
         return ResponseEntity.status(200).body(null);
     }
@@ -104,8 +110,9 @@ public class BoardController {
     public ResponseEntity<?> boardGet(@PathVariable Long boardId) throws IOException {
         // 입력받은 boardId 의 board 조회
         BoardResponse boardResponse = boardService.getBoard(boardId);
-        if (boardResponse == null)
-            return ResponseEntity.status(400).body("잘못된 접근");
+        if (boardResponse == null){
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+        }
 
         return ResponseEntity.status(200).body(boardResponse);
     }
@@ -145,7 +152,7 @@ public class BoardController {
 
         // non-login 상태면 user = null
         if (user == null) {
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
         // 입력받은 comment 를 db에 add
         BoardResponse boardResponse = boardService.createComment(commentCreateRequest, user);
@@ -164,12 +171,13 @@ public class BoardController {
 
         // non-login 상태면 user = null
         if (user == null) {
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
         // 입력받은 comment 를 db 에서 확인 후 수정
         BoardResponse boardResponse = boardService.modifyComment(commentModifyRequest, user);
-        if (boardResponse == null)
-            return ResponseEntity.status(400).body("잘못된 접근");
+        if (boardResponse == null){
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
+        }
 
         return ResponseEntity.status(200).body(boardResponse);
     }
@@ -185,12 +193,13 @@ public class BoardController {
 
         // non-login 상태면 user = null
         if (user == null) {
-            return ResponseEntity.status(400).body("로그인 안한 상태");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
         // 입력받은 comment 를 db 에서 확인 후 수정
         BoardResponse boardResponse = boardService.deleteComment(commentId, user);
-        if (boardResponse == null)
-            return ResponseEntity.status(400).body("잘못된 접근");
+        if (boardResponse == null){
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
+        }
 
         return ResponseEntity.status(200).body(boardResponse);
     }
