@@ -1,6 +1,6 @@
 import Comment from './Comment';
 
-interface Board {
+interface Article {
   boardId: number;
   userId: number;
   nickName: string;
@@ -11,4 +11,4 @@ interface Board {
   commentResponses: Comment[];
 }
 
-export default Board;
+export default Article;

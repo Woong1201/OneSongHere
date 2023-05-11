@@ -4,9 +4,6 @@ import React, { useState, useEffect } from 'react';
 import ArticleLine from 'components/molecules/articleline/ArticleLine';
 // api 모듈 import
 import { getBoards } from 'services/board';
-// recoil 상태 import
-import { useRecoilValue } from 'recoil';
-import { ArticleState } from 'store/ArticleState';
 
 interface Article {
   boardId: number;
@@ -45,9 +42,6 @@ const ArticleBoard = ({
   }, [filteredArticles]);
   // useEffect의 deps 배열에 [filteredArticles]를 넣어 컴포넌트가 마운트 되거나,
   // 해당 값이 바뀔 때 함수가 호출되도록 함
-
-  const recoilArticles = useRecoilValue(ArticleState);
-  console.log('ㄹㅇ :', recoilArticles, typeof recoilArticles);
 
   return (
     <div>
