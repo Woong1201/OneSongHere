@@ -48,11 +48,6 @@ const Article = () => {
   // 로그인 여부에 따라 댓글 입력창 닫아놓기 위해
   const [user, setUser] = useRecoilState(UserState);
 
-  const handleAddComment = (comment: CommentResponse) => {
-    getComments([...comments, comment]);
-  };
-
-  console.log(comments, typeof comments);
   useEffect(() => {
     // 게시글 내용 get
     getArticle(
@@ -119,14 +114,7 @@ const Article = () => {
       </div>
 
       {/* 로그인 여부에 따라 댓글 입력창 출력 */}
-      {user ? (
-        <CommentInput
-          boardid={Number(boardId.articleId)}
-          onAddComment={handleAddComment}
-        />
-      ) : (
-        <div />
-      )}
+      {user ? <CommentInput boardid={Number(boardId.articleId)} /> : <div />}
     </div>
   );
 };
