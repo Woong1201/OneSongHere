@@ -4,6 +4,7 @@ package com.ownsong.api.notification.entity;
 import com.ownsong.api.relayStudio.entity.RelayStudio;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,9 +32,11 @@ public class Notification {
     @JoinColumn(name = "RELAY_STUDIO_ID")
     private RelayStudio relayStudio;
 
-    public Notification(long notiId, String type, User user) {
+    @Builder
+    public Notification(long notiId, String type, User user, RelayStudio relayStudio) {
         this.notiId = notiId;
         this.type = type;
         this.user = user;
+        this.relayStudio = relayStudio;
     }
 }
