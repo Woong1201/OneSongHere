@@ -17,8 +17,10 @@ public enum ErrorCode {
 
 
     //Studio
-    INVALID_RELAY_STUDIO_INPUT_VALUE(400, "R001", "  잘못된 입력 값입니다.");
+    INVALID_RELAY_STUDIO_INPUT_VALUE(400, "R001", "  잘못된 입력 값입니다."),
 
+    //Album
+    INVALID_ALBUM_INPUT_VALUE(400, "A001", "잘못된 입력 값입니다.");
 
     private final String code;
     private final String message;

@@ -41,6 +41,10 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
             accessToken = swaggerOAuth.replaceAll("Bearer ", "");
+            if (accessToken.equals("null")) {
+                log.info("non-login user interceptor quit");
+                return true;
+            }
         }
 
         // accessToken 적절한지 확인
