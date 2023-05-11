@@ -1,13 +1,12 @@
 import React from 'react';
 import './StudioNoteGrid.scss';
-import * as Tone from 'tone';
 import Note from 'types/Note';
 import StudioNoteColumn from './StudioNoteColumn';
 
 interface StudioNoteColumnProps {
   notes: Note[];
   updateNote?: (name: string, timing: number) => void;
-  pianoInstance: Tone.Sampler | null;
+  playNote?: (noteName: string) => void;
   noteColumnStyle: boolean[];
 }
 const Row = 160;
@@ -15,7 +14,7 @@ const Row = 160;
 const StudioNoteGrid = ({
   notes,
   updateNote,
-  pianoInstance,
+  playNote,
   noteColumnStyle,
 }: StudioNoteColumnProps) => {
   return (
@@ -28,9 +27,9 @@ const StudioNoteGrid = ({
           <StudioNoteColumn
             columnNote={columnNote}
             updateNote={updateNote}
+            playNote={playNote}
             key={rowIndex}
             timing={rowIndex * 0.25}
-            pianoInstance={pianoInstance}
             noteStyle={noteColumnStyle[rowIndex]}
           />
         );

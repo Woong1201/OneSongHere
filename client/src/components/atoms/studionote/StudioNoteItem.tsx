@@ -1,38 +1,34 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StudioNoteItem.scss';
-import * as Tone from 'tone';
 
 interface StudioNoteItemProps {
   timing: number;
   note: string;
   updateNote?: (name: string, timing: number) => void;
-  pianoInstance: Tone.Sampler | null;
+  playNote?: (noteName: string) => void;
+  selected: boolean;
 }
 
 const StudioNoteItem = ({
   timing,
   note,
   updateNote,
-  pianoInstance,
+  playNote,
+  selected,
 }: StudioNoteItemProps) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const playNote = useCallback(
-    (noteName: string) => {
-      if (pianoInstance !== null) {
-        pianoInstance.triggerAttackRelease(noteName, '8n');
-      }
-    },
-    [pianoInstance]
-  );
+  const [isSelected, setIsSelected] = useState(selected);
 
   const selectNote = () => {
     setIsSelected(!isSelected);
-    if (updateNote !== undefined) {
+    if (updateNote !== undefined && playNote !== undefined) {
       playNote(note);
       updateNote(note, timing);
     }
   };
+
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
 
   return (
     <button

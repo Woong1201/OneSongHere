@@ -18,6 +18,6 @@ export const Primary: Story = {
   args: {
     timing: 0,
     note: 'D4',
-    pianoInstance: null,
+    selected: true,
   },
 };

@@ -2,18 +2,17 @@ import StudioNoteContainer from 'components/molecules/studionote/StudioNoteConta
 import StudioNoteScroll from 'components/molecules/studionote/StudioNoteScroll';
 import React, { useState } from 'react';
 import './StudioNote.scss';
-import * as Tone from 'tone';
 import Note from 'types/Note';
 
 interface StudioNoteProps {
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
-  pianoInstance: Tone.Sampler | null;
+  playNote: (noteName: string) => void;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({
   updateNote,
-  pianoInstance,
+  playNote,
   notes,
   noteColumnStyle,
 }: StudioNoteProps) => {
@@ -29,7 +28,6 @@ const StudioNote = ({
         notes={notes}
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
-        pianoInstance={pianoInstance}
         noteColumnStyle={noteColumnStyle}
       />
       <StudioNoteContainer
@@ -37,7 +35,7 @@ const StudioNote = ({
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
         updateNote={updateNote}
-        pianoInstance={pianoInstance}
+        playNote={playNote}
         noteColumnStyle={noteColumnStyle}
       />
     </div>

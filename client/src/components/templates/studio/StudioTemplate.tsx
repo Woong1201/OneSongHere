@@ -42,6 +42,15 @@ const StudioTemplate = () => {
     },
     [notes]
   );
+  const findInputTiming = () => {
+    // 0부터 0.25 * 150까지 배열
+    const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+    // 현재 타이밍들
+    const timings = notes.map((note) => note.timing);
+    // 그 배열중에 현재 배열에 notes에 없는 첫번째 타이밍값 리턴
+
+    return possibleNoteTiming.find((num) => !timings.includes(num)) || 0;
+  };
 
   const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
 
@@ -66,11 +75,10 @@ const StudioTemplate = () => {
   );
 
   const changePlayingStyle = (timing: number) => {
-    // const element = document.getElementById(timing.toString());
-    // console.log(element);
-    // if (element) {
-    //   element.classList.add('playing');
-    // }
+    const element = document.getElementById(timing.toString());
+    if (element) {
+      element.classList.add('playing');
+    }
   };
   const revertPlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
@@ -78,6 +86,19 @@ const StudioTemplate = () => {
       element.classList.remove('playing');
     }
   };
+
+  const playNote = useCallback(
+    (noteName: string) => {
+      if (pianoInstance !== null) {
+        pianoInstance.triggerAttackRelease(noteName, '8n');
+      }
+    },
+    [pianoInstance]
+  );
+
+  const clearNotes = useCallback(() => {
+    setNotes([]);
+  }, [setNotes]);
 
   return (
     <>
@@ -87,16 +108,21 @@ const StudioTemplate = () => {
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
+        clearNotes={clearNotes}
       />
       <div className="studio__body">
         <div className="studio__content">
           <StudioNote
             notes={notes}
             updateNote={updateNote}
-            pianoInstance={pianoInstance}
+            playNote={playNote}
             noteColumnStyle={noteColumnStyle}
           />
-          <StudioInstrument />
+          <StudioInstrument
+            updateNote={updateNote}
+            findInputTiming={findInputTiming}
+            playNote={playNote}
+          />
         </div>
         <div className="studio__side">
           <StudioCam />
