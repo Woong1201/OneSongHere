@@ -9,9 +9,7 @@ import com.ownsong.api.relayStudio.service.RelayStudioService;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
 import com.ownsong.api.user.social.Constant;
-import com.ownsong.exception.BusinessException;
 import com.ownsong.exception.ErrorCode;
-import com.ownsong.exception.ErrorResponse;
 import com.ownsong.exception.customException.RelayStudioException;
 import com.ownsong.exception.customException.UserException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +26,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import static com.ownsong.exception.ErrorCode.*;
 
@@ -192,6 +188,29 @@ public class RelayStudioController {
         User user = userService.getLoginUser();
         Constant.SearchType searchType = Constant.SearchType.valueOf(type.toUpperCase());
         return ResponseEntity.status(200).body(relayStudioService.searchRelayStudios(user, searchType, search));
+    }
+
+    @Operation(summary = "relayStudio 삭제", description = "relayStudios 삭제 메서드입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "relayStudios 삭제 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RelayStudioListResponse.class)))),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @DeleteMapping("/{relayStudioId}")
+    public ResponseEntity<?> studioDelete(@PathVariable Long relayStudioId) throws IOException {
+        User user = userService.getLoginUser();
+
+        // non-login 상태면 user = null
+        if (user == null) {
+            throw new UserException(USER_UNAUTHORIZED);
+        }
+
+        // 입력받은 relayStudio 삭제 가능한지 확인 후 delete
+        if (relayStudioService.deleteRelayStudio(relayStudioId, user) == false) {
+            throw new UserException(USER_FORBIDDEN);
+        }
+
+        // 이후 메인 relayStudio 페이지로 로드할 수 있도록 List return
+        return ResponseEntity.status(200).body(relayStudioService.getRelayStudios(user));
     }
 
 //    @Operation(summary = "relayStudio 전체 조회", description = "relayStudio 전체 조회 메서드입니다.")
