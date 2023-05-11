@@ -57,13 +57,37 @@ const StudioTemplate = () => {
       setPianoInstance(sampler);
     });
   }, []);
+  const [playingColumn, setPlayingColumn] = useState(false);
+
+  const changePlayingStyle = (timing: number) => {
+    // const element = document.getElementById(timing.toString());
+    // console.log(element);
+    // if (element) {
+    //   element.classList.add('playing');
+    // }
+  };
+  const revertPlayingStyle = (timing: number) => {
+    const element = document.getElementById(timing.toString());
+    if (element) {
+      element.classList.remove('playing');
+    }
+  };
 
   return (
     <>
-      <StudioHeader notes={notes} pianoInstance={pianoInstance} />
+      <StudioHeader
+        notes={notes}
+        pianoInstance={pianoInstance}
+        changePlayingStyle={changePlayingStyle}
+        revertPlayingStyle={revertPlayingStyle}
+      />
       <div className="studio__body">
         <div className="studio__content">
-          <StudioNote updateNote={updateNote} pianoInstance={pianoInstance} />
+          <StudioNote
+            notes={notes}
+            updateNote={updateNote}
+            pianoInstance={pianoInstance}
+          />
           <StudioInstrument />
         </div>
         <div className="studio__side">

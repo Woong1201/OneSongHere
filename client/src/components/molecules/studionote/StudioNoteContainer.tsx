@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudioNoteContainer.scss';
 import * as Tone from 'tone';
+import Note from 'types/Note';
 import StudioNoteGrid from './StudioNoteGrid';
 
 interface StudioNoteScrollProps {
+  notes: Note[];
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
@@ -11,6 +13,7 @@ interface StudioNoteScrollProps {
 }
 
 const StudioNoteContainer = ({
+  notes,
   scrollPosition,
   updateScrollPosition,
   updateNote,
@@ -99,7 +102,11 @@ const StudioNoteContainer = ({
       onWheel={onWheel} // Add onWheel event here
       ref={ref}
     >
-      <StudioNoteGrid updateNote={updateNote} pianoInstance={pianoInstance} />
+      <StudioNoteGrid
+        notes={notes}
+        updateNote={updateNote}
+        pianoInstance={pianoInstance}
+      />
     </div>
   );
 };

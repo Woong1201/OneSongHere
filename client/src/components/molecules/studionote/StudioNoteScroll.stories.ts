@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    notes: [{ names: ['q'], duration: '8n', timing: 0 }],
     scrollPosition: 1,
     updateScrollPosition: (position) => console.log(position),
     pianoInstance: null,

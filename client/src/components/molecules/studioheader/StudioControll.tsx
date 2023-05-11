@@ -9,9 +9,16 @@ import Note from 'types/Note';
 interface StudioControllProps {
   notes: Note[];
   pianoInstance: Tone.Sampler | null;
+  changePlayingStyle: (timing: number) => void;
+  revertPlayingStyle: (timing: number) => void;
 }
 
-const StudioControll = ({ notes, pianoInstance }: StudioControllProps) => {
+const StudioControll = ({
+  notes,
+  pianoInstance,
+  changePlayingStyle,
+  revertPlayingStyle,
+}: StudioControllProps) => {
   // 시퀀스 재생 메소드
   const playSequence = () => {
     // Notes 데이터에 각 노트들
@@ -23,6 +30,10 @@ const StudioControll = ({ notes, pianoInstance }: StudioControllProps) => {
         note.duration,
         now + note.timing
       );
+      changePlayingStyle(note.timing);
+      Tone.Transport.scheduleOnce((time) => {
+        // revertPlayingStyle(note.timing);
+      }, now + note.timing + Tone.Time('8n').toSeconds());
     });
   };
 
