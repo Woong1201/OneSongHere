@@ -15,5 +15,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    notes: [
+      { names: ['D#5'], duration: '8n', timing: 0.25 },
+      { names: ['B4'], duration: '8n', timing: 1.25 },
+      { names: ['E5'], duration: '8n', timing: 0.5 },
+      { names: ['D#5'], duration: '8n', timing: 0.75 },
+      { names: ['Eb4', 'G4', 'Bb4'], duration: '8n', timing: 1 },
+    ],
+    pianoInstance: null,
+  },
 };

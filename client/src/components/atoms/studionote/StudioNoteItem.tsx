@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StudioNoteItem.scss';
+import * as Tone from 'tone';
 
 interface StudioNoteItemProps {
-  rowIndex: number;
-  columnIndex: number;
+  timing: number;
+  note: string;
+  addNote?: (name: string, timing: number) => void;
+  pianoInstance: Tone.Sampler | null;
 }
 
-const StudioNoteItem = ({ rowIndex, columnIndex }: StudioNoteItemProps) => {
+const StudioNoteItem = ({
+  timing,
+  note,
+  addNote,
+  pianoInstance,
+}: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(false);
+
+  const playNote = (noteName: string) => {
+    if (pianoInstance !== null) {
+      pianoInstance.triggerAttackRelease(noteName, '8n');
+    }
+  };
 
   const selectNote = () => {
     setIsSelected(!isSelected);
+    if (addNote !== undefined) {
+      playNote(note);
+      addNote(note, timing);
+    }
   };
 
   return (
     <button
       type="button"
-      className={['studio__note-item', '--selected'].join(' ')}
+      className={[
+        'studio__note-item',
+        isSelected ? 'studio__note-item--selected' : '',
+      ].join(' ')}
       onClick={selectNote}
-    >
-      {/* {rowIndex}-{columnIndex} */}
-    </button>
+      aria-label={`${timing}-${note}`}
+    />
   );
 };
 

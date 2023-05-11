@@ -2,6 +2,8 @@ import Button from 'components/atoms/buttons/Button';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';
+import { useCallback, useState } from 'react';
+import Modal from '../modal/ModalForm';
 
 interface Studio {
   studioId: number;
@@ -64,6 +66,13 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
 
   const chunkedStudios: Studio[][] = chunk(studios, 3);
 
+  // modal
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <div className="studio-list">
       <div className="studio-list__title">
@@ -71,7 +80,17 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
       </div>
       {isParticipating ? (
         <div className="studio-list__button">
-          <Button type="button" label="생성하기" color="primary" />
+          {isOpenModal && (
+            <div>
+              <Modal onClickModal={onClickModal} />
+            </div>
+          )}
+          <Button
+            type="button"
+            label="생성하기"
+            color="primary"
+            onClick={onClickModal}
+          />
         </div>
       ) : (
         <div className="studio-list__blank" />
@@ -80,7 +99,7 @@ const StudioList = ({ isParticipating = false }: StudioListProps) => {
         chunkedStudios.map((studioRow) => (
           <div key={studioRow[0].studioId} className="studio-list__studio-row">
             {studioRow.map((studio: Studio) => (
-              <div className="studio-list__studio">
+              <div className="studio-list__studio" key={studio.studioId}>
                 <StudioCard
                   key={studio.studioId}
                   studioTitle={studio.studioTitle}

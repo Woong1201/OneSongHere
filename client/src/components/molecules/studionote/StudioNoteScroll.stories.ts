@@ -18,5 +18,6 @@ export const Primary: Story = {
   args: {
     scrollPosition: 1,
     updateScrollPosition: (position) => console.log(position),
+    pianoInstance: null,
   },
 };
