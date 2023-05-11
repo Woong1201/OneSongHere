@@ -26,7 +26,8 @@ interface StudioCardProps {
   /**
    * 태그에 들어갈 장르명
    */
-  tag: string;
+  // 태그가 여러개일 경우 추가
+  tags: string | string[];
 }
 
 const StudioCard = ({
@@ -34,8 +35,15 @@ const StudioCard = ({
   studioTitle,
   startDate,
   endDate,
-  tag = '태그',
+  tags = '태그',
 }: StudioCardProps) => {
+  // 태그의 타입에 따라 렌더링
+  const renderTags = () => {
+    if (Array.isArray(tags)) {
+      return tags.map((item) => <Chip key={item} label={item} size="small" />);
+    }
+    return <Chip label={tags} size="small" />;
+  };
   return (
     <div className="studio-card">
       <div className="studio-card__record-image">
@@ -48,9 +56,7 @@ const StudioCard = ({
         <div className="studio-card__date">
           <CardDate startDate={startDate} endDate={endDate} />
         </div>
-        <div className="studio-card__tag">
-          <Chip label={tag} size="small" />
-        </div>
+        <div className="studio-card__tag">{renderTags()}</div>
       </div>
     </div>
   );

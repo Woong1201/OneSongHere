@@ -27,4 +27,18 @@ const postRelayStudio = async (
     .catch(fail);
 };
 
-export { postRelayStudio };
+const getRelayStudioList = async (
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'get',
+    url: '/relayStudios',
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { postRelayStudio, getRelayStudioList };
