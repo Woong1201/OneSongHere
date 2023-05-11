@@ -8,6 +8,10 @@ import com.ownsong.api.album.service.AlbumService;
 import com.ownsong.api.album.service.S3Service;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
+import com.ownsong.exception.BusinessException;
+import com.ownsong.exception.ErrorCode;
+import com.ownsong.exception.customException.AlbumException;
+import com.ownsong.exception.customException.UserException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,15 +45,16 @@ public class AlbumController {
     @GetMapping(value = "{albumId}")
     public ResponseEntity<?> getAlbum(@NotNull @PathVariable Long albumId){
         User user = userService.getLoginUser();
+        // 유저의 게시물 좋아요 여부 확인을 위해 userId 여부 분리
         if(user == null){
             userId = -1;
         }else{
             userId = user.getUserID();
         }
-
+        // 해당되는 앨범이 없으면 에러
         AlbumResponse album = albumService.findAlbumArticle(albumId, userId);
         if(album == null){
-            return ResponseEntity.status(400).body("잘못된 접근");
+            throw new BusinessException(ErrorCode.PAGE_NOT_FOUND);
         }
 
         return ResponseEntity.ok().body(album);
@@ -62,6 +67,7 @@ public class AlbumController {
     @GetMapping
     public ResponseEntity<?> getAlbums(){
         User user = userService.getLoginUser();
+        // 유저의 게시물 좋아요 여부 확인을 위해 userId 여부 분리
         if(user == null){
             userId = -1;
         }else{
@@ -78,15 +84,14 @@ public class AlbumController {
     @GetMapping(value = "/search/{search}")
     public ResponseEntity<?> findAlbums(@PathVariable String search){
         User user = userService.getLoginUser();
+        // 유저의 게시물 좋아요 여부 확인을 위해 userId 여부 분리
         if(user == null){
             userId = -1;
         }else{
             userId = user.getUserID();
         }
         List<AlbumResponse> albums = albumService.findAlbumArticles(userId, search);
-        if(albums == null){
-            return ResponseEntity.status(400).body("잘못된 접근");
-        }
+
         return ResponseEntity.ok().body(albums);
     }
 
@@ -97,10 +102,18 @@ public class AlbumController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
         User user = userService.getLoginUser();
+
+        // 비 로그인시 앨범 게시물 등록 불가
         if(user == null){
-            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
         AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
+
+        // 잘못된 request 전송시 에러
+        if(album == null){
+            throw new AlbumException(ErrorCode.INVALID_ALBUM_INPUT_VALUE);
+        }
+
         return ResponseEntity.ok().body(album);
     }
 
@@ -111,11 +124,14 @@ public class AlbumController {
     @DeleteMapping(value = "{albumId}")
     public ResponseEntity<?> deleteAlbumArticle(@PathVariable long albumId){
         User user = userService.getLoginUser();
+        // 로그인 하지 않을 시 게시물 삭제 불가
         if(user == null){
-            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+            throw new UserException(ErrorCode.ACCESS_UNAUTHORIZED);
         }
+
+        // 권한 없음 (남의 게시물을 지우지 말라구욧!
         if(!albumService.deleteAlbumArticle(albumId, user)){
-            return ResponseEntity.status(400).body("wrong access");
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
         }
         return ResponseEntity.ok().build();
     }
@@ -128,10 +144,12 @@ public class AlbumController {
     public ResponseEntity<?> editAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
         User user = userService.getLoginUser();
         if(user == null){
-            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
+
+        // 다른 사람의 게시물 지우는경우 접근 제한
         if(!albumService.editAlbumArticle(albumArticleCreateRequest, file, user)){
-            return ResponseEntity.status(400).body("wrong access");
+            throw new UserException(ErrorCode.USER_FORBIDDEN);
         }
         return ResponseEntity.ok().build();
     }
