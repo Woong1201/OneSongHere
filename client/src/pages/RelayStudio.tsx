@@ -1,7 +1,12 @@
+import RelayStudioTemplate from 'components/templates/relaystudio/RelayStudioTemplate';
 import React from 'react';
 
 const RelayStudio = () => {
-  return <div>릴레이 스튜디오</div>;
+  return (
+    <div className={['studio', 'main--full-page'].join(' ')}>
+      <RelayStudioTemplate />
+    </div>
+  );
 };
 
 export default RelayStudio;

@@ -4,7 +4,7 @@ import Button from 'components/atoms/buttons/Button';
 import './ModalForm.scss';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import CardTitle from 'components/atoms/common/CardTitle';
-import { postRelayStudio } from 'services/studio';
+import { postRelayStudio } from 'services/relayStudio';
 import { useNavigate } from 'react-router-dom';
 
 interface ModalProps {

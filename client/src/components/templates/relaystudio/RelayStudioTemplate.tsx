@@ -1,17 +1,20 @@
 import StudioHeader from 'components/organisms/studio/StudioHeader';
 import React, { useState, useEffect, useCallback } from 'react';
-import './StudioTemplate.scss';
+import './RelayStudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
+import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
+import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
-import Button from 'components/atoms/buttons/Button';
-import { postNotes } from 'services/relayStudio';
+import { getRelayStudioInfo, postNotes } from 'services/relayStudio';
 
-const StudioTemplate = () => {
+const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
+
   const updateNote = useCallback((name: string, timing: number) => {
     setNotes((prevNotes) => {
       let isExistingNote = false;
@@ -44,6 +47,7 @@ const StudioTemplate = () => {
       return cleanedNotes;
     });
   }, []);
+
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
     const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
@@ -71,6 +75,20 @@ const StudioTemplate = () => {
       setPianoInstance(sampler);
     });
   }, []);
+
+  const { relayStudioId } = useParams();
+  useEffect(() => {
+    const numRelayStudioId = Number(relayStudioId as string);
+    getRelayStudioInfo(
+      numRelayStudioId,
+      ({ data }) => {
+        setStudioInfo(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [relayStudioId]);
 
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
@@ -102,12 +120,31 @@ const StudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
-  const studioInfo = {
-    studioId: 1,
-    studioTitle: '제목입니다.',
-    genre: '힙합',
-    endDate: new Date(2012, 10, 2),
-    hostId: 34,
+  const submitNotes = () => {
+    const relayStudioID = 140;
+    const stringNote = JSON.stringify(notes);
+    const complete = false;
+    const noteData = {
+      relayStudioID,
+      relayStudioSheet: stringNote,
+      complete,
+    };
+    postNotes(
+      noteData,
+      ({ data }) => {
+        console.log(data);
+        const { relayStudioSheet } = data;
+        // const newString = JSON.parse(data);
+        // console.log(newString);
+        setNotes([]);
+        setTimeout(() => {
+          setNotes(JSON.parse(relayStudioSheet));
+        }, 1000);
+      },
+      (error) => {
+        console.log('에러', error);
+      }
+    );
   };
 
   return (
@@ -121,8 +158,8 @@ const StudioTemplate = () => {
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
       />
-      <div className="studio__body">
-        <div className="studio__content">
+      <div className="relay-studio__body">
+        <div className="relay-studio__content">
           <StudioNote
             notes={notes}
             updateNote={updateNote}
@@ -135,7 +172,7 @@ const StudioTemplate = () => {
             playNote={playNote}
           />
         </div>
-        <div className="studio__side">
+        <div className="relay-studio__side">
           <StudioCam />
           <StudioChat />
         </div>
@@ -144,4 +181,4 @@ const StudioTemplate = () => {
   );
 };
 
-export default StudioTemplate;
+export default RelayStudioTemplate;

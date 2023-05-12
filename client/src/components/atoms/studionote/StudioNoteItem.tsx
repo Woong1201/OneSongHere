@@ -5,7 +5,7 @@ interface StudioNoteItemProps {
   timing: number;
   note: string;
   updateNote?: (name: string, timing: number) => void;
-  playNote?: (noteName: string) => void;
+  playNote?: (noteName: string | string[]) => void;
   selected: boolean;
 }
 
