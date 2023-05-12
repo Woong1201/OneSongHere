@@ -41,7 +41,7 @@ public class Album {
     @Column(name = "GENRE", length = 10)
     private String genre;
 
-    @Column(name = "MP3_URL")
+    @Column(name = "MP3_URL", columnDefinition = "TEXT")
     private String mp3Url;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
