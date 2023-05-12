@@ -1,10 +1,12 @@
+@import 'styles/_variables';
+
 .select-box * { box-sizing: border-box; }
 .select-box {
   position: relative;
   width: 150px;
-  height: 35px;
-  border-radius: 4px;
-  border: 2px solid lightcoral;
+  height: 32px;
+  border-radius: 10px;
+  border: 2px solid $main-theme-color;
   background: url('../../../../public/assets/icon/KeyboardArrowDown.svg') calc(100% - 7px) center no-repeat;
   background-size: 20px;
   cursor: pointer;
@@ -20,12 +22,13 @@
     cursor: pointer;
   }
   &__option-list {
+    border: 2px solid $main-theme-color;
     position: absolute; 
     // top: 28px;
     left: 0;
     width: 100%;
-    background: lightcoral;
-    color: #fff;
+    background: white;
+    color: black;
     list-style-type: none;
     padding: 0;
     border-radius: 6px;
@@ -34,12 +37,13 @@
     transition: .3s ease-in;
   }
   &__option-item {
-    border-bottom: 1px dashed rgb(170, 72, 72);
+    border-bottom: 1px dashed $main-theme-color;
+    background-color: white;
     padding: 5px 15px 5px;
     transition: .1s;
   }
   &__option-item:hover {
-    background: rgb(175, 93, 93);
+    background: $light-main-theme-color;
   }
   &__option-item:last-child {
     border-bottom: 0 none;
@@ -54,17 +58,17 @@
   position: absolute; 
   top: 0; 
   right: 35px;
-  background: lightcoral;
+  background: $main-theme-color;
 }
 
 
 .select-box.active .select-box__option-list::-webkit-scrollbar {width: 6px; height: 0;}
 .select-box.active .select-box__option-list::-webkit-scrollbar-track {background: transparent; }
-.select-box.active .select-box__option-list::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
-.select-box.active .select-box__option-list::-webkit-scrollbar-thumb:hover {background: #303030;}
+.select-box.active .select-box__option-list::-webkit-scrollbar-thumb {background: $header-color; border-radius: 45px;}
+.select-box.active .select-box__option-list::-webkit-scrollbar-thumb:hover {background: $header-color;}
 
 .select-box.active .select-box__option-list {
-  max-height: 100px;
+  max-height: 50px;
 }
 
 
