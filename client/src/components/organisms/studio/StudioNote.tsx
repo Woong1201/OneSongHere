@@ -7,7 +7,7 @@ import Note from 'types/Note';
 interface StudioNoteProps {
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
-  playNote: (noteName: string) => void;
+  playNote: (noteName: string | string[]) => void;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({

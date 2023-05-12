@@ -88,7 +88,7 @@ const StudioTemplate = () => {
   };
 
   const playNote = useCallback(
-    (noteName: string) => {
+    (noteName: string | string[]) => {
       if (pianoInstance !== null) {
         pianoInstance.triggerAttackRelease(noteName, '8n');
       }

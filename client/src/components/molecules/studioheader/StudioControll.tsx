@@ -26,7 +26,7 @@ const StudioControll = ({
 }: StudioControllProps) => {
   // 시퀀스 재생 메소드
   const playSequence = useCallback(() => {
-    const initialStyle = Array(150).fill(false);
+    const initialStyle = Array(160).fill(false);
 
     notes.forEach((note) => {
       const now = Tone.now();
@@ -48,7 +48,7 @@ const StudioControll = ({
     });
 
     // 칸 다 재생하는건데 아직 느려서 잘 안됨
-    // for (let i = 0; i < 150; i += 1) {
+    // for (let i = 0; i < 160; i += 1) {
     //   setTimeout(() => {
     //     const newStyle = [...initialStyle];
     //     newStyle[i] = true;

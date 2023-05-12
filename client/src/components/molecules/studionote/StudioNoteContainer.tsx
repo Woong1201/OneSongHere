@@ -8,7 +8,7 @@ interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
-  playNote: (noteName: string) => void;
+  playNote: (noteName: string | string[]) => void;
   noteColumnStyle: boolean[];
 }
 

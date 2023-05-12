@@ -7,7 +7,7 @@ interface StudioNoteColumnProps {
   columnNote: Note | undefined;
   timing: number;
   updateNote?: (name: string, timing: number) => void;
-  playNote?: (noteName: string) => void;
+  playNote?: (noteName: string | string[]) => void;
   noteStyle: boolean;
 }
 

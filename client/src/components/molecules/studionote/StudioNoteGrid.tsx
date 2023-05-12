@@ -6,7 +6,7 @@ import StudioNoteColumn from './StudioNoteColumn';
 interface StudioNoteColumnProps {
   notes: Note[];
   updateNote?: (name: string, timing: number) => void;
-  playNote?: (noteName: string) => void;
+  playNote?: (noteName: string | string[]) => void;
   noteColumnStyle: boolean[];
 }
 const Row = 160;
