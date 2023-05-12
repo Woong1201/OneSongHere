@@ -5,13 +5,14 @@ import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
-import Note from 'types/Note';
+import { useParams } from 'react-router-dom';
+import { Note } from 'types/Note';
 import * as Tone from 'tone';
-import Button from 'components/atoms/buttons/Button';
-import { postNotes } from 'services/studio';
+import { getRelayStudioInfo, postNotes } from 'services/relayStudio';
 
 const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+
   const updateNote = useCallback((name: string, timing: number) => {
     setNotes((prevNotes) => {
       let isExistingNote = false;
@@ -44,6 +45,7 @@ const RelayStudioTemplate = () => {
       return cleanedNotes;
     });
   }, []);
+
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
     const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
@@ -71,6 +73,21 @@ const RelayStudioTemplate = () => {
       setPianoInstance(sampler);
     });
   }, []);
+
+  const { relayStudioId } = useParams();
+  useEffect(() => {
+    console.log(relayStudioId);
+    const numRelayStudioId = Number(relayStudioId as string);
+    getRelayStudioInfo(
+      numRelayStudioId,
+      ({ data }) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [relayStudioId]);
 
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
@@ -102,11 +119,26 @@ const RelayStudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
-  const clickTestButton = () => {
+  const submitNotes = () => {
+    const relayStudioID = 140;
+    const stringNote = JSON.stringify(notes);
+    const complete = false;
+    const noteData = {
+      relayStudioID,
+      relayStudioSheet: stringNote,
+      complete,
+    };
     postNotes(
-      notes,
+      noteData,
       ({ data }) => {
         console.log(data);
+        const { relayStudioSheet } = data;
+        // const newString = JSON.parse(data);
+        // console.log(newString);
+        setNotes([]);
+        setTimeout(() => {
+          setNotes(JSON.parse(relayStudioSheet));
+        }, 1000);
       },
       (error) => {
         console.log('에러', error);
