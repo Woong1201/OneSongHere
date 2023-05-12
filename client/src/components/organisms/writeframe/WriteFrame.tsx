@@ -15,6 +15,10 @@ const WriteFrame = () => {
     setTitle(event.target.value);
   };
 
+  const onChangeContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(event.target.value);
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // axios 성공하면 커뮤니티 메인 페이지로
@@ -31,7 +35,7 @@ const WriteFrame = () => {
     postArticle(
       title,
       '홍보',
-      'https://www.youtube.com/watch?v=yyEEoBJ_9hE',
+      content,
       ({ data }) => {
         console.log(data);
         // 커뮤니티 board 페이지로 이동
@@ -54,6 +58,17 @@ const WriteFrame = () => {
             value={title}
             stroke
             onChange={onChangeTitle}
+          />
+        </div>
+        <div>
+          <div className="write__label">본문</div>
+          <textarea
+            placeholder="내용을 입력해주세요"
+            value={content}
+            onChange={onChangeContent}
+            cols={60}
+            rows={10}
+            className="inputTextarea"
           />
         </div>
         <div className="write__buttons">

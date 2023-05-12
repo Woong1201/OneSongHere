@@ -46,12 +46,10 @@ const postArticle = async (
   title: string,
   head: string,
   content: string,
-  // csrfToken: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
-  // console.log('token :', token);
   // elseif로 alert
   await api({
     headers: { Authorization: `Bearer ${token}` },
