@@ -68,7 +68,6 @@ const postArticle = async (
       .then(success)
       .catch(fail);
   }
-  // elseif로 alert
 };
 
 const postComment = async (
