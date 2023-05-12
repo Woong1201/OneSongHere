@@ -10,7 +10,6 @@ interface StudioPianoProps {
 }
 const firstNote = MidiNumbers.fromNote('c4');
 const lastNote = MidiNumbers.fromNote('b5');
-console.log(KeyboardShortcuts.HOME_ROW);
 const keyboardShortcuts = KeyboardShortcuts.create({
   firstNote,
   lastNote,
@@ -101,7 +100,7 @@ const StudioPiano = ({
   };
 
   const pianoStopNote = (midiNumber: string) => {
-    console.log(2, midiNumber);
+    // console.log(2, midiNumber);
   };
 
   const noteRange = { first: firstNote, last: lastNote };

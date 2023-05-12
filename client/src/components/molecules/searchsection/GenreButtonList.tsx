@@ -18,12 +18,14 @@ const GenreButtonList = ({
 }: GenreButtonListProps) => {
   // 전체 장르 리스트 만들기
   const genres: Genre[] = [
-    { name: '컨트리' },
+    { name: 'POP' },
+    { name: '발라드' },
     { name: '힙합' },
-    { name: '락' },
+    { name: 'OST' },
+    { name: '댄스' },
+    { name: '인디' },
+    { name: '재즈' },
     { name: '클래식' },
-    { name: '팝' },
-    { name: '케이팝' },
   ];
 
   // 선택한 장르 배열

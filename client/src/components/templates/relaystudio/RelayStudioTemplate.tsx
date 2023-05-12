@@ -43,7 +43,6 @@ const RelayStudioTemplate = () => {
 
       const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
 
-      console.log(cleanedNotes);
       return cleanedNotes;
     });
   }, []);
@@ -77,8 +76,8 @@ const RelayStudioTemplate = () => {
   }, []);
 
   const { relayStudioId } = useParams();
+  const numRelayStudioId = Number(relayStudioId as string);
   useEffect(() => {
-    const numRelayStudioId = Number(relayStudioId as string);
     getRelayStudioInfo(
       numRelayStudioId,
       ({ data }) => {
@@ -120,8 +119,8 @@ const RelayStudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
-  const submitNotes = () => {
-    const relayStudioID = 140;
+  const saveRelayNotes = () => {
+    const relayStudioID = numRelayStudioId;
     const stringNote = JSON.stringify(notes);
     const complete = false;
     const noteData = {
@@ -132,14 +131,10 @@ const RelayStudioTemplate = () => {
     postNotes(
       noteData,
       ({ data }) => {
-        console.log(data);
         const { relayStudioSheet } = data;
-        // const newString = JSON.parse(data);
-        // console.log(newString);
-        setNotes([]);
-        setTimeout(() => {
-          setNotes(JSON.parse(relayStudioSheet));
-        }, 1000);
+        console.log('저장했다');
+        console.log(relayStudioSheet);
+        setNotes(JSON.parse(relayStudioSheet));
       },
       (error) => {
         console.log('에러', error);
@@ -157,6 +152,7 @@ const RelayStudioTemplate = () => {
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
+        saveNotes={saveRelayNotes}
       />
       <div className="relay-studio__body">
         <div className="relay-studio__content">

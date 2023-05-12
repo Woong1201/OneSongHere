@@ -6,6 +6,7 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import CardTitle from 'components/atoms/common/CardTitle';
 import { postRelayStudio } from 'services/relayStudio';
 import { useNavigate } from 'react-router-dom';
+import UpDownInput from 'components/atoms/inputs/UpDownInput';
 
 interface ModalProps {
   onClickModal: () => void;
@@ -41,17 +42,20 @@ const Modal = ({ onClickModal }: ModalProps) => {
     }
   };
 
-  const onChangeLimitOfUsers = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const numValue = parseInt(event.target.value, 10);
-    setLimitOfUsers(numValue);
+  const onChangeLimitOfUsers = (value: number) => {
+    // console.log(value);
+    setLimitOfUsers(value);
   };
-  const onChangenumberOfBars = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const numValue = parseInt(event.target.value, 10);
-    setNumberOfBars(numValue);
+
+  const onChangeNumberOfBars = (value: number) => {
+    setNumberOfBars(value);
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(title);
+    console.log(limitOfUsers);
+    console.log(numberOfBars);
 
     const postRelayStudioData = () => {
       postRelayStudio(
@@ -84,48 +88,51 @@ const Modal = ({ onClickModal }: ModalProps) => {
         <form onSubmit={onSubmit} className="modal__form">
           <div className="modal__studio-title">
             <CardTitle title="방 제목" />
-            <br />
-            <TextInput
-              stroke
-              label="제목을 입력해주세요"
-              value={title}
-              onChange={onChangeTitle}
-            />
+            <div className="modal__studio-title__input">
+              <TextInput
+                stroke
+                label="제목을 입력해주세요"
+                value={title}
+                short
+                onChange={onChangeTitle}
+              />
+            </div>
           </div>
           <div className="modal__studio-tag">
-            <CardTitle title="태그 / 장르" />
-            <br />
-            <TextInput
-              stroke
-              label="장르를 선택해주세요"
-              value={inputValue}
-              onChange={onChangeGenre}
-            />
+            <CardTitle title="장르" />
+            <div className="modal__studio-tag__input">
+              <TextInput
+                stroke
+                label="장르를 선택해주세요"
+                value={inputValue}
+                short
+                onChange={onChangeGenre}
+              />
+            </div>
           </div>
-          <div className="modal__studio-tag">
+          <div className="modal__up-down">
             <CardTitle title="인원 제한" />
-            <br />
-            <TextInput
-              stroke
-              label="장르를 선택해주세요"
-              value={limitOfUsers}
-              onChange={onChangeLimitOfUsers}
-            />
+            <UpDownInput aboutUser onSelect={onChangeLimitOfUsers} />
           </div>
-          <div className="modal__studio-tag">
+          <div className="modal__up-down">
             <CardTitle title="편집 길이" />
-            <br />
-            <TextInput
-              stroke
-              label="장르를 선택해주세요"
-              value={numberOfBars}
-              onChange={onChangenumberOfBars}
-            />
+            <UpDownInput onSelect={onChangeNumberOfBars} />
           </div>
-          <div className="modal__buttons">
-            <Button type="button" label="취소" onClick={onClickModal} />
-            <br className="modal__buttons--blank" />
-            <Button type="submit" label="방 생성" color="primary" />
+          <div className="modal__button__container">
+            <div className="modal__button">
+              <Button
+                size="small"
+                type="button"
+                label="취소"
+                onClick={onClickModal}
+              />
+              <Button
+                size="small"
+                type="submit"
+                label="방 생성"
+                color="primary"
+              />
+            </div>
           </div>
         </form>
       </div>
