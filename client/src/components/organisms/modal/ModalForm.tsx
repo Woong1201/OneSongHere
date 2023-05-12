@@ -6,6 +6,7 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import CardTitle from 'components/atoms/common/CardTitle';
 import { postRelayStudio } from 'services/studio';
 import { useNavigate } from 'react-router-dom';
+import SelectBox from 'components/atoms/inputs/SelectBox';
 
 interface ModalProps {
   onClickModal: () => void;
@@ -41,10 +42,10 @@ const Modal = ({ onClickModal }: ModalProps) => {
     }
   };
 
-  const onChangeLimitOfUsers = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const numValue = parseInt(event.target.value, 10);
-    setLimitOfUsers(numValue);
+  const onChangeLimitOfUsers = (value: number) => {
+    setLimitOfUsers(value);
   };
+
   const onChangenumberOfBars = (event: React.ChangeEvent<HTMLInputElement>) => {
     const numValue = parseInt(event.target.value, 10);
     setNumberOfBars(numValue);
@@ -105,12 +106,7 @@ const Modal = ({ onClickModal }: ModalProps) => {
           <div className="modal__studio-tag">
             <CardTitle title="인원 제한" />
             <br />
-            <TextInput
-              stroke
-              label="장르를 선택해주세요"
-              value={limitOfUsers}
-              onChange={onChangeLimitOfUsers}
-            />
+            <SelectBox onSelect={onChangeLimitOfUsers} />
           </div>
           <div className="modal__studio-tag">
             <CardTitle title="편집 길이" />
