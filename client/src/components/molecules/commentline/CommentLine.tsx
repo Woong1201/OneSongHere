@@ -5,6 +5,8 @@ import TextButton from 'components/atoms/buttons/TextButton';
 
 // api import
 import { deleteComment, updateComment } from 'services/board';
+import TextInput from 'components/atoms/inputs/TextInput';
+import Button from 'components/atoms/buttons/Button';
 
 interface CommentProps {
   commentId: number;
@@ -23,6 +25,11 @@ const CommentLine = ({
   userId,
   loginId,
 }: CommentProps) => {
+  const [comment, setComment] = useState<string>('');
+  const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(event.target.value);
+  };
+
   // 인자로 받아온 date에 + 9시간 (한국시간)
   const newDate = new Date(date);
   newDate.setHours(newDate.getHours() + 9);
@@ -42,13 +49,15 @@ const CommentLine = ({
       }
     );
   };
+
   // 댓글 수정 함수 정의
   const updateCommentData = () => {
     updateComment(
       commentId,
-      content,
+      comment,
       ({ data }) => {
         console.log('data: ', data);
+        navigate(0);
       },
       (error) => {
         console.log(error);
@@ -77,6 +86,13 @@ const CommentLine = ({
     };
   }, [handleClickOutside]);
 
+  // 수정 버튼을 누르면 수정 입력 영역으로 전환 및 팝업을 off
+  const [letsUpdate, setLetsUpdate] = useState(false);
+  const letsGoUpdate = () => {
+    setLetsUpdate(true);
+    setIsOpen(false);
+  };
+
   return (
     <div className="comment__container">
       <div className="comment__header">
@@ -100,7 +116,7 @@ const CommentLine = ({
               </button>
               {isOpen && (
                 <div ref={popupRef} className="commentOption__popup">
-                  <TextButton label="수정" onClick={updateCommentData} />
+                  <TextButton label="수정" onClick={letsGoUpdate} />
                   <div style={{ margin: '4px 0' }} />
                   <TextButton label="삭제" onClick={deleteCommentData} />
                 </div>
@@ -111,7 +127,24 @@ const CommentLine = ({
           )}
         </div>
       </div>
-      <div style={{ display: 'flex', textAlign: 'start' }}>{content}</div>
+      {letsUpdate ? (
+        <div>
+          <TextInput
+            label={content}
+            value={comment}
+            onChange={onChangeComment}
+          />
+          <Button
+            label="등록"
+            type="submit"
+            color="primary"
+            onClick={updateCommentData}
+            size="small"
+          />
+        </div>
+      ) : (
+        <div style={{ display: 'flex', textAlign: 'start' }}>{content}</div>
+      )}
     </div>
   );
 };
