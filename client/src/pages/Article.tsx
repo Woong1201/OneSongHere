@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getArticle } from 'services/board';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getArticle, deleteArticle } from 'services/board';
 // 컴포넌트 import
 import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
 import CommentInput from 'components/molecules/commentinput/CommentInput';
@@ -72,9 +72,31 @@ const Article = () => {
     }
   }, []);
 
+  const navigate = useNavigate();
+
+  const deleteArticleData = () => {
+    deleteArticle(
+      Number(boardId.articleId),
+      ({ data }) => {
+        console.log(data);
+        navigate('/board');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return (
     <div className="article__entire">
       <div className="article__container">
+        {user ? (
+          <button type="button" onClick={deleteArticleData}>
+            삭제
+          </button>
+        ) : (
+          <div />
+        )}
         <ArticleHeader
           header={strHeader}
           title={strTitle}
