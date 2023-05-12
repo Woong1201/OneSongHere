@@ -66,7 +66,7 @@ const StudioList = ({
         <div className="studio-list__blank" />
       )}
       <div className="studio-list__container">
-        {studios ? (
+        {studios.length > 0 ? (
           chunkedStudios.map((studioRow) => (
             <div
               key={studioRow[0].relayStudioID}
@@ -86,7 +86,7 @@ const StudioList = ({
             </div>
           ))
         ) : (
-          <p>현재 작업중인 곡이 없습니다...</p>
+          <p className="studio-list__empty">현재 작업중인 곡이 없습니다...</p>
         )}
       </div>
     </div>

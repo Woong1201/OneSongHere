@@ -57,6 +57,22 @@ const getRelayStudioInfo = async (
     .catch(fail);
 };
 
+const getStudioSearchResult = async (
+  type: string,
+  search: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'get',
+    url: `/relayStudios/search/${type}/${search}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
 const postNotes = async (
   data: relayNotes,
   success: (response: AxiosResponse) => void,
@@ -71,4 +87,10 @@ const postNotes = async (
     .catch(fail);
 };
 
-export { postRelayStudio, getRelayStudioList, getRelayStudioInfo, postNotes };
+export {
+  postRelayStudio,
+  getRelayStudioList,
+  getRelayStudioInfo,
+  getStudioSearchResult,
+  postNotes,
+};
