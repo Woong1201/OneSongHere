@@ -1,13 +1,13 @@
 import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 
 interface StudioNoteColumnProps {
   columnNote: Note | undefined;
   timing: number;
   updateNote?: (name: string, timing: number) => void;
-  playNote?: (noteName: string) => void;
+  playNote?: (noteName: string | string[]) => void;
   noteStyle: boolean;
 }
 

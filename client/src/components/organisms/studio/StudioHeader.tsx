@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './StudioHeader.scss';
 import ProfileImageList from 'components/molecules/studioheader/ProfileImageList';
 import StudioControll from 'components/molecules/studioheader/StudioControll';
 import StudioTitle from 'components/molecules/studioheader/StudioTitle';
 import StudioMenu from 'components/molecules/studioheader/StudioMenu';
 import User from 'types/User';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
+import { RelayStudioInfo } from 'types/RelayStudio';
+import { StudioInfo } from 'types/Studio';
 import * as Tone from 'tone';
 
 interface StudioHeaderProps {
+  studioInfo: RelayStudioInfo | StudioInfo | undefined;
   notes: Note[];
   pianoInstance: Tone.Sampler | null;
   changePlayingStyle: (timing: number) => void;
@@ -17,6 +20,7 @@ interface StudioHeaderProps {
   clearNotes: () => void;
 }
 const StudioHeader = ({
+  studioInfo,
   notes,
   pianoInstance,
   changePlayingStyle,
@@ -24,6 +28,19 @@ const StudioHeader = ({
   setNoteColumnStyle,
   clearNotes,
 }: StudioHeaderProps) => {
+  console.log(studioInfo);
+  let studioTitle = '';
+
+  if (studioInfo) {
+    if ('relayStudioTitle' in studioInfo) {
+      studioTitle = studioInfo.relayStudioTitle;
+    } else if ('studioTitle' in studioInfo) {
+      studioTitle = studioInfo.studioTitle;
+    }
+  }
+
+  // useEffect()
+
   const users: User[] = [
     {
       userId: 1,
@@ -54,7 +71,7 @@ const StudioHeader = ({
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
       />
-      <StudioTitle />
+      <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />
       <StudioMenu />
     </div>

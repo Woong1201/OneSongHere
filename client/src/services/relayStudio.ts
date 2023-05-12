@@ -1,4 +1,5 @@
 import { AxiosResponse, AxiosError } from 'axios';
+import { relayNotes } from 'types/Note';
 import { apiInstance } from './index';
 
 const api = apiInstance();
@@ -41,6 +42,21 @@ const getRelayStudioList = async (
     .catch(fail);
 };
 
+const getRelayStudioInfo = async (
+  relayStudioId: number,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'get',
+    url: `/relayStudios/${relayStudioId}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
 const getStudioSearchResult = async (
   type: string,
   search: string,
@@ -57,4 +73,24 @@ const getStudioSearchResult = async (
     .catch(fail);
 };
 
-export { postRelayStudio, getRelayStudioList, getStudioSearchResult };
+const postNotes = async (
+  data: relayNotes,
+  success: (response: AxiosResponse) => void,
+  fail: (response: AxiosError) => void
+): Promise<void> => {
+  await api({
+    method: 'post',
+    url: '/relayStudio/test',
+    data: { data },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export {
+  postRelayStudio,
+  getRelayStudioList,
+  getRelayStudioInfo,
+  getStudioSearchResult,
+  postNotes,
+};

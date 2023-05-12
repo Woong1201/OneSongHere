@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudioNoteContainer.scss';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import StudioNoteGrid from './StudioNoteGrid';
 
 interface StudioNoteScrollProps {
@@ -8,7 +8,7 @@ interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
-  playNote: (noteName: string) => void;
+  playNote: (noteName: string | string[]) => void;
   noteColumnStyle: boolean[];
 }
 

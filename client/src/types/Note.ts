@@ -4,4 +4,10 @@ interface Note {
   timing: number;
 }
 
-export default Note;
+interface relayNotes {
+  relayStudioID: number;
+  relayStudioSheet: string;
+  complete: boolean;
+}
+
+export type { Note, relayNotes };
