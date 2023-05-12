@@ -60,7 +60,7 @@ const Board = () => {
       <div className="board__container">
         <div>커뮤니티 전체 페이지</div>
         <div>입니다</div>
-        <SearchBar />
+        {/* <SearchBar /> */}
         {isLoginQ ? (
           <Button
             label="글쓰기"
