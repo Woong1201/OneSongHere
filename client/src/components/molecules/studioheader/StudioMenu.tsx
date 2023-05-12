@@ -3,11 +3,14 @@ import './StudioMenu.scss';
 import HamburgerIcon from 'components/atoms/common/HamburgerIcon';
 import Dropdown from 'components/molecules/header/Dropdown';
 
-const StudioMenu = () => {
+interface StudioMenuProps {
+  saveNotes: () => void;
+}
+const StudioMenu = ({ saveNotes }: StudioMenuProps) => {
   const StudioheaderDropdownList = [
-    { label: '저장하기', onClick: undefined },
+    { label: '저장하기', onClick: saveNotes },
     { label: '내보내기', onClick: undefined },
-    { label: '완성하기', onClick: undefined },
+    { label: '제출하기', onClick: undefined },
   ];
 
   return (

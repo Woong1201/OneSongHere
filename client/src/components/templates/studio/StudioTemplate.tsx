@@ -5,6 +5,7 @@ import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
+import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
 import * as Tone from 'tone';
 import Button from 'components/atoms/buttons/Button';
@@ -40,7 +41,6 @@ const StudioTemplate = () => {
 
       const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
 
-      console.log(cleanedNotes);
       return cleanedNotes;
     });
   }, []);
@@ -102,6 +102,29 @@ const StudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
+  const { studioId } = useParams();
+  const numStudioId = Number(studioId as string);
+
+  const saveNotes = () => {
+    const relayStudioID = numStudioId;
+    const stringNote = JSON.stringify(notes);
+    const complete = false;
+    const noteData = {
+      relayStudioID,
+      relayStudioSheet: stringNote,
+      complete,
+    };
+    postNotes(
+      noteData,
+      ({ data }) => {
+        const { relayStudioSheet } = data;
+        setNotes(JSON.parse(relayStudioSheet));
+      },
+      (error) => {
+        console.log('에러', error);
+      }
+    );
+  };
   const studioInfo = {
     studioId: 1,
     studioTitle: '제목입니다.',
@@ -113,6 +136,7 @@ const StudioTemplate = () => {
   return (
     <>
       <StudioHeader
+        saveNotes={saveNotes}
         studioInfo={studioInfo}
         notes={notes}
         pianoInstance={pianoInstance}
