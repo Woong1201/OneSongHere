@@ -10,10 +10,16 @@ interface StudioPianoProps {
 }
 const firstNote = MidiNumbers.fromNote('c4');
 const lastNote = MidiNumbers.fromNote('b5');
+console.log(KeyboardShortcuts.HOME_ROW);
 const keyboardShortcuts = KeyboardShortcuts.create({
   firstNote,
   lastNote,
-  keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  keyboardConfig: [
+    ...KeyboardShortcuts.HOME_ROW,
+    { natural: '4', flat: '7', sharp: '8' },
+    { natural: '5', flat: '8', sharp: '9' },
+    { natural: '6', flat: '9', sharp: '+' },
+  ],
 });
 
 const StudioPiano = ({
