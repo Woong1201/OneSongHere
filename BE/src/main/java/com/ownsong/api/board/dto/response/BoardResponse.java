@@ -23,6 +23,10 @@ public class BoardResponse {
     @NotNull
     private long userId;
 
+    @Schema(description = "picture", example = "profile.jpg")
+    @NotNull
+    private String picture;
+
     @Schema(description = "작성자 닉네임 입니다.", example = "Zi존두현")
     @NotNull
     private String nickName;
@@ -54,6 +58,7 @@ public class BoardResponse {
         this.boardContent = board.getBoardContent();
         this.boardDate = board.getBoardDate();
         this.userId = board.getUser().getUserID();
+        this.picture = board.getUser().getProfileUrl();
         this.nickName = board.getUser().getNickname();
         for (Comment comment : board.getComments()) {
             commentResponses.add(new CommentResponse(comment));
