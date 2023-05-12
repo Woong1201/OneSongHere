@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from service.s3_service import *
 from service.cover_service import *
+from service.chatgpt import *
 from schema import *
 import uvicorn
 import datetime
@@ -32,7 +33,14 @@ def startup_event():
 
 @app.post("/ai-api/v1/createCover")
 def creatCover(text, request: CoverImage):
-    text += "album, " + "music, " + "album cover"
+    
+    text = create_text(text)
+
+    try:
+        text.split(", ")
+    except:
+        text = "Moonlit angel, nostalgic notes, childhood memories, delicate vocals, retro reimagining, dreamlike atmosphere."
+
     cover_image = make_cover_image(text)
 
     if not os.path.exists("./cover"):
