@@ -121,8 +121,10 @@ public class RelayStudio {
 
     public void leader(RelayStudioComposeRequest relayStudioComposeRequest) {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
-        this.status = 1;
-        this.numberOfUsers = 1;
+        if (relayStudioComposeRequest.isComplete()) {
+            this.status = 1;
+            this.numberOfUsers = 1;
+        }
     }
 
     public void vote(boolean vote) {
@@ -137,8 +139,10 @@ public class RelayStudio {
             this.numberOfUsers += 1;
         }
         String notiType = "voteEnd";
-        if (this.numberOfUsers == this.limitOfUsers)
+        if (this.numberOfUsers == this.limitOfUsers) {
+            this.status = 4;
             notiType = "compositionComplete";
+        }
         this.getNotifications().clear();
         for (RelayTeam relayTeam : this.relayTeams) {
             relayTeam.initializeVoteFlag();
@@ -150,5 +154,6 @@ public class RelayStudio {
                             .build()
             );
         }
+        this.user = relayTeams.get(0).getUser();
     }
 }

@@ -37,7 +37,7 @@ public class RelayStudioResponse {
     @Schema(description = "종료일", example = "2023-04-28T16:41:33.6369331")
     private LocalDateTime endDate;
 
-    @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중)", example = "4")
+    @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중, 4:완료)", example = "4")
     private int status;
 
     @Schema(description = "현재 작곡중인 userId", example = "1")
