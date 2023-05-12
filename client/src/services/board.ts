@@ -50,19 +50,25 @@ const postArticle = async (
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
+  if (title === '') {
+    alert('게시글 제목을 입력해주세요!');
+  } else if (content === '') {
+    alert('게시글 내용을 입력해주세요!');
+  } else {
+    await api({
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'post',
+      url: '/board',
+      data: {
+        boardTitle: title,
+        header: head,
+        boardContent: content,
+      },
+    })
+      .then(success)
+      .catch(fail);
+  }
   // elseif로 alert
-  await api({
-    headers: { Authorization: `Bearer ${token}` },
-    method: 'post',
-    url: '/board',
-    data: {
-      boardTitle: title,
-      header: head,
-      boardContent: content,
-    },
-  })
-    .then(success)
-    .catch(fail);
 };
 
 const postComment = async (
