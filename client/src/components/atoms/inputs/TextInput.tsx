@@ -4,6 +4,7 @@ import './TextInput.scss';
 interface TextInputProps {
   label: string;
   value: string | number;
+  short?: boolean;
   stroke?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   doSearch?: () => void;
@@ -11,11 +12,13 @@ interface TextInputProps {
 const TextInput = ({
   label,
   value,
+  short = false,
   stroke = false,
   doSearch,
   ...props
 }: TextInputProps) => {
   const border = stroke ? 'text-input--border' : null;
+  const size = short ? 'text-input--short' : null;
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +34,7 @@ const TextInput = ({
     <input
       type="text"
       placeholder={label}
-      className={['text-input', border].join(' ')}
+      className={['text-input', border, size].join(' ')}
       value={value}
       onChange={handleInputChange}
       onKeyDown={handleEnter}
