@@ -14,6 +14,8 @@ interface AlbumCardProps {
   albumTitle: string;
   //   작업 스튜디오 이름
   albumStudio: string;
+  // 곡 url or 노트 오브젝트
+  mp3Url: string;
   //   좋아요 클릭 여부
   like: boolean;
   //   태그 장르명
@@ -26,6 +28,7 @@ const AlbumCard = ({
   imgPath,
   albumTitle,
   albumStudio,
+  mp3Url,
   like,
   tag,
   albumInfo,
@@ -41,6 +44,8 @@ const AlbumCard = ({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  console.log(mp3Url);
 
   return (
     <div

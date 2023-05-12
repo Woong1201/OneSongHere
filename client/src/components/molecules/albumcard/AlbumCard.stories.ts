@@ -20,6 +20,7 @@ export const Primary: Story = {
       'https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2013/03/ham3.jpg?crop=1xw:0.845763723150358xh;center,top',
     albumTitle: '그슬린 햄',
     albumStudio: '정육점',
+    mp3Url: '',
     like: true,
     tag: '컨트리',
     albumInfo:

@@ -27,6 +27,7 @@ const AlbumCardsGrid = () => {
     {
       albumTitle: '',
       albumContent: '',
+      mp3Url: '',
       likes: 0,
       albumUrl: '',
       userId: 0,
@@ -69,6 +70,7 @@ const AlbumCardsGrid = () => {
                   imgPath={album.albumUrl}
                   albumTitle={album.albumTitle}
                   albumStudio={album.nickName}
+                  mp3Url={album.mp3Url}
                   like={album.userLike}
                   tag={album.genre}
                   albumInfo={album.albumContent}
