@@ -7,14 +7,16 @@ import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
 import Note from 'types/Note';
 import * as Tone from 'tone';
+import Button from 'components/atoms/buttons/Button';
+import { postNotes } from 'services/studio';
 
 const StudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const updateNote = useCallback(
-    (name: string, timing: number) => {
+  const updateNote = useCallback((name: string, timing: number) => {
+    setNotes((prevNotes) => {
       let isExistingNote = false;
 
-      let updatedNotes = notes.map((note) => {
+      let updatedNotes = prevNotes.map((note) => {
         if (note.timing === timing) {
           isExistingNote = true;
 
@@ -38,10 +40,10 @@ const StudioTemplate = () => {
 
       const cleanedNotes = updatedNotes.filter((note) => note.names.length > 0);
 
-      setNotes(cleanedNotes);
-    },
-    [notes]
-  );
+      console.log(cleanedNotes);
+      return cleanedNotes;
+    });
+  }, []);
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
     const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
@@ -100,6 +102,18 @@ const StudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
+  const clickTestButton = () => {
+    postNotes(
+      notes,
+      ({ data }) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log('에러', error);
+      }
+    );
+  };
+
   return (
     <>
       <StudioHeader
@@ -126,6 +140,12 @@ const StudioTemplate = () => {
         </div>
         <div className="studio__side">
           <StudioCam />
+          <Button
+            label="테스트"
+            type="button"
+            color="primary"
+            onClick={clickTestButton}
+          />
           <StudioChat />
         </div>
       </div>
