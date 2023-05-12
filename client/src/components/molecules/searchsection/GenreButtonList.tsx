@@ -7,7 +7,15 @@ interface Genre {
   name: string;
 }
 
-const GenreButtonList = () => {
+interface GenreButtonListProps {
+  onChangeSearchType: () => void;
+  onChangeKeyword: (word: string) => void;
+}
+
+const GenreButtonList = ({
+  onChangeSearchType,
+  onChangeKeyword,
+}: GenreButtonListProps) => {
   // 전체 장르 리스트 만들기
   const genres: Genre[] = [
     { name: '컨트리' },
@@ -19,15 +27,23 @@ const GenreButtonList = () => {
   ];
 
   // 선택한 장르 배열
-  const [select, setSelect] = useState<Array<string>>([]);
+  const [select, setSelect] = useState<string>('');
 
   // 리스트에 들어있지 않으면 넣어주고
   // 리스트에 들어있으면 제외한 배열을 반환한다.
   const handleClick = (type: string) => {
-    if (!select.includes(type)) {
-      setSelect([...select, type]);
+    // if (!select.includes(type)) {
+    //   setSelect([...select, type]);
+    // } else {
+    //   setSelect(select.filter((genre) => genre !== type));
+    // }
+    if (select !== type) {
+      setSelect(type);
+      onChangeSearchType();
+      onChangeKeyword(type);
     } else {
-      setSelect(select.filter((genre) => genre !== type));
+      setSelect('');
+      onChangeKeyword('');
     }
   };
 
@@ -42,7 +58,7 @@ const GenreButtonList = () => {
           type="button"
           tag
           label={genre.name}
-          color={select.includes(genre.name) ? 'primary' : 'other'}
+          color={select === genre.name ? 'primary' : 'other'}
         />
       ))}
     </div>
