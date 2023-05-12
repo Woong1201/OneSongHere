@@ -181,8 +181,8 @@ public class RelayStudioService {
             if (relayTeam != null) {
                 return new RelayStudioResponse(relayStudio, true, relayTeam.isVoteFlag());
             }
-            else if (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID()) {
-                return new RelayStudioResponse(relayStudio, true, false);
+            else if (user != null && relayStudio.getUser().getUserID() == user.getUserID()) {
+                return new RelayStudioResponse(relayStudio, false, false);
             }
             else if (relayStudio.getStatus() == 1)
                 return new RelayStudioResponse(relayStudio, false, false);
@@ -205,9 +205,9 @@ public class RelayStudioService {
         for (RelayStudio relayStudio : relayStudios) {
             try {
                 RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
-                // 기존 참여자이거나, 새로운 참여자이면서 작곡중인 경우
+                // 기존 참여자이거나, 새로운 참여자인 경우
                 if (relayTeam != null ||
-                        (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID())) {
+                        (user != null && relayStudio.getUser().getUserID() == user.getUserID())) {
                     participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                 }
                 // 참여자가 아닌 경우 relayStudio 가 구인중일때만 조회 가능
@@ -238,9 +238,9 @@ public class RelayStudioService {
             for (RelayStudio relayStudio : relayStudios) {
                 try {
                     RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
-                    // 기존 참여자이거나, 새로운 참여자이면서 작곡중인 경우
+                    // 기존 참여자이거나, 새로운 참여자인 경우
                     if (relayTeam != null ||
-                            (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID())) {
+                            (user != null && relayStudio.getUser().getUserID() == user.getUserID())) {
                         participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                     }
                     // 참여자가 아닌 경우 relayStudio 가 구인중일때만 조회 가능
@@ -263,7 +263,7 @@ public class RelayStudioService {
                             RelayTeam relayTeam = relayTeamRepository.findRelayTeamByUserAndRelayStudio(user, relayStudio);
                             // 기존 참여자이거나, 새로운 참여자이면서 작곡중인 경우
                             if (relayTeam != null ||
-                                    (user != null && relayStudio.getStatus() == 2 && relayStudio.getUser().getUserID() == user.getUserID())) {
+                                    (user != null && relayStudio.getUser().getUserID() == user.getUserID())) {
                                 participateRelayStudioResponses.add(new RelayStudioListResponse(relayStudio));
                             }
                             // 참여자가 아닌 경우 relayStudio 가 구인중일때만 조회 가능
