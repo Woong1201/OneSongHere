@@ -3,7 +3,7 @@ import StudioList from 'components/organisms/studiolist/StudioList';
 import './Relay.scss';
 import relayStudio from 'types/RelayStudio';
 import { useEffect, useState } from 'react';
-import { getRelayStudioList } from 'services/studio';
+import { getRelayStudioList } from 'services/relayStudio';
 
 const Relay = () => {
   const [studioAll, setStudioAll] = useState<relayStudio[]>([]);

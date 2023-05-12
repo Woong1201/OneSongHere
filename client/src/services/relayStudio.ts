@@ -1,5 +1,4 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import Note from 'types/Note';
 import { apiInstance } from './index';
 
 const api = apiInstance();
@@ -43,14 +42,18 @@ const getRelayStudioList = async (
 };
 
 const postNotes = async (
-  notes: Note[],
+  data: {
+    relayStudioID: number;
+    relayStudioSheet: string;
+    complete: boolean;
+  },
   success: (response: AxiosResponse) => void,
   fail: (response: AxiosError) => void
 ): Promise<void> => {
   await api({
     method: 'post',
     url: '/relayStudio/test',
-    data: { notes },
+    data: { data },
   })
     .then(success)
     .catch(fail);
