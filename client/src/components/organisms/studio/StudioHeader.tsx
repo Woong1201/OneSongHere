@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './StudioHeader.scss';
 import ProfileImageList from 'components/molecules/studioheader/ProfileImageList';
 import StudioControll from 'components/molecules/studioheader/StudioControll';
@@ -18,6 +18,7 @@ interface StudioHeaderProps {
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
+  saveNotes: () => void;
 }
 const StudioHeader = ({
   studioInfo,
@@ -27,8 +28,8 @@ const StudioHeader = ({
   revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
+  saveNotes,
 }: StudioHeaderProps) => {
-  console.log(studioInfo);
   let studioTitle = '';
 
   if (studioInfo) {
@@ -38,8 +39,6 @@ const StudioHeader = ({
       studioTitle = studioInfo.studioTitle;
     }
   }
-
-  // useEffect()
 
   const users: User[] = [
     {
@@ -73,7 +72,7 @@ const StudioHeader = ({
       />
       <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />
-      <StudioMenu />
+      <StudioMenu saveNotes={saveNotes} />
     </div>
   );
 };

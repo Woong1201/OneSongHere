@@ -78,9 +78,12 @@ const postNotes = async (
   success: (response: AxiosResponse) => void,
   fail: (response: AxiosError) => void
 ): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  console.log(data);
   await api({
-    method: 'post',
-    url: '/relayStudio/test',
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'patch',
+    url: '/relayStudios',
     data: { data },
   })
     .then(success)
