@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import StudioNoteGrid from './StudioNoteGrid';
 import './StudioNoteScroll.scss';
 
