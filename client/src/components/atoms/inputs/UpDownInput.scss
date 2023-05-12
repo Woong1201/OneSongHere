@@ -1,0 +1,87 @@
+@import 'styles/variables';
+@import 'styles/_fonts.scss';
+// .up-down__input {
+//     border: 2px solid $main-theme-color;
+//     width: 50%;
+//     border-radius: 10px;
+//     padding: 10px;
+// }
+// input:focus {
+//     outline: none;
+// }
+.up-down {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 70%;
+  &__input {
+    padding: 10px;
+    width: 30%;
+    border: 2px solid $main-theme-color;
+    border-radius: 10px;
+    font-family: "Pretendard";
+    font-weight: 500;
+  }
+  &__button {
+    height: 38.67px;
+    display: flex;
+    flex-direction: column;
+    :active {
+      background-color: $light-main-theme-color;
+    }
+    &__plus {
+      display: flex;
+      align-items: center;
+      height: 50%;
+      width: 100%;
+    //   border: 2px solid $main-theme-color;
+    border: none;
+      border-radius: 3px;
+      background-color: white;
+      :active {
+        background-color: transparent;
+      }
+    }
+    &__minus {
+      display: flex;
+      align-items: center;
+      height: 50%;
+      width: 100%;
+    //   border: 2px solid $main-theme-color;
+    border: none;
+      border-radius: 3px;
+      background-color: white;
+      :active {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+input:focus {
+  outline: none;
+}
+
+/* input 기본 스타일 초기화 */
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
+input::-ms-clear {
+  display: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input {
+  box-sizing: border-box;
+}
