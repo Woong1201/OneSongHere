@@ -3,7 +3,7 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';
 import { useCallback, useState } from 'react';
-import RelayStudio from 'types/RelayStudio';
+import { RelayStudio } from 'types/RelayStudio';
 import Modal from '../modal/ModalForm';
 
 interface StudioListProps {

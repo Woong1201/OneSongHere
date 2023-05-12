@@ -7,11 +7,13 @@ import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
+import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postNotes } from 'services/relayStudio';
 
 const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
 
   const updateNote = useCallback((name: string, timing: number) => {
     setNotes((prevNotes) => {
@@ -81,7 +83,10 @@ const RelayStudioTemplate = () => {
     getRelayStudioInfo(
       numRelayStudioId,
       ({ data }) => {
+        setStudioInfo(data);
+        console.log('----');
         console.log(data);
+        console.log('----');
       },
       (error) => {
         console.log(error);

@@ -1,13 +1,13 @@
 import SearchSection from 'components/organisms/searchsection/SearchSection';
 import StudioList from 'components/organisms/studiolist/StudioList';
 import './Relay.scss';
-import relayStudio from 'types/RelayStudio';
+import { RelayStudio } from 'types/RelayStudio';
 import { useEffect, useState } from 'react';
 import { getRelayStudioList } from 'services/relayStudio';
 
 const Relay = () => {
-  const [studioAll, setStudioAll] = useState<relayStudio[]>([]);
-  const [studioParticipate, setStudioParticipate] = useState<relayStudio[]>([]);
+  const [studioAll, setStudioAll] = useState<RelayStudio[]>([]);
+  const [studioParticipate, setStudioParticipate] = useState<RelayStudio[]>([]);
 
   useEffect(() => {
     getRelayStudioList(
