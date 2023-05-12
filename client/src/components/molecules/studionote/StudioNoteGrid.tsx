@@ -1,6 +1,6 @@
 import React from 'react';
 import './StudioNoteGrid.scss';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import StudioNoteColumn from './StudioNoteColumn';
 
 interface StudioNoteColumnProps {

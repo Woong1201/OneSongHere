@@ -5,7 +5,7 @@ import StudioControll from 'components/molecules/studioheader/StudioControll';
 import StudioTitle from 'components/molecules/studioheader/StudioTitle';
 import StudioMenu from 'components/molecules/studioheader/StudioMenu';
 import User from 'types/User';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import * as Tone from 'tone';
 
 interface StudioHeaderProps {

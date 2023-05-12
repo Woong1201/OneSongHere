@@ -1,7 +1,7 @@
 import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 
 interface StudioNoteColumnProps {
   columnNote: Note | undefined;

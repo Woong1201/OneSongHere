@@ -2,7 +2,7 @@ import StudioNoteContainer from 'components/molecules/studionote/StudioNoteConta
 import StudioNoteScroll from 'components/molecules/studionote/StudioNoteScroll';
 import React, { useState } from 'react';
 import './StudioNote.scss';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 
 interface StudioNoteProps {
   notes: Note[];

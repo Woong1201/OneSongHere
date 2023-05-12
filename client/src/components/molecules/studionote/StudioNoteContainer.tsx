@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudioNoteContainer.scss';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import StudioNoteGrid from './StudioNoteGrid';
 
 interface StudioNoteScrollProps {

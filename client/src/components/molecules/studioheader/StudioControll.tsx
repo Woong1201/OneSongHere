@@ -4,7 +4,7 @@ import LogoIcon from 'components/atoms/common/LogoIcon';
 import PlayIcon from 'components/atoms/stuidioHeader/PlayIcon';
 import StopIcon from 'components/atoms/stuidioHeader/StopIcon';
 import * as Tone from 'tone';
-import Note from 'types/Note';
+import { Note } from 'types/Note';
 import Button from 'components/atoms/buttons/Button';
 
 interface StudioControllProps {
