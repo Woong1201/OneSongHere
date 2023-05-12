@@ -5,12 +5,12 @@ import StudioList from 'components/organisms/studiolist/StudioList';
 const Compose = () => {
   return (
     <div className="compose-page">
-      <div className="compose-page__search-section">
+      {/* <div className="compose-page__search-section">
         <SearchSection />
       </div>
       <div className="compose-page__studio-list">
-        {/* <StudioList title="참여중인 곡" isParticipating /> */}
-      </div>
+        <StudioList title="참여중인 곡" isParticipating />
+      </div> */}
     </div>
   );
 };

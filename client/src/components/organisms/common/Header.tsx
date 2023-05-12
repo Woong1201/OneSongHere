@@ -54,10 +54,10 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
       <LogoIcon goHome />
       <nav className="header__nav-list">
         <div className="header__nav-item">
-          <TextButton label="작곡" white={whiteMode} />
-          <div className="header__dropdown">
+          <TextButton label="작곡" white={whiteMode} to="/relay" />
+          {/* <div className="header__dropdown">
             <Dropdown items={headerDropdownList} />
-          </div>
+          </div> */}
         </div>
         <TextButton label="커뮤니티" white={whiteMode} to="/board" />
         <TextButton label="작품" white={whiteMode} to="/albums" />
