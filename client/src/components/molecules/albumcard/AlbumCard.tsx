@@ -45,8 +45,6 @@ const AlbumCard = ({
     };
   }, []);
 
-  console.log(mp3Url);
-
   return (
     <div
       className="album-card"

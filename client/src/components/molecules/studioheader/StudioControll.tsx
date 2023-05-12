@@ -26,7 +26,6 @@ const StudioControll = ({
 }: StudioControllProps) => {
   // 시퀀스 재생 메소드
   const playSequence = useCallback(() => {
-    console.log(notes);
     const initialStyle = Array(150).fill(false);
 
     notes.forEach((note) => {

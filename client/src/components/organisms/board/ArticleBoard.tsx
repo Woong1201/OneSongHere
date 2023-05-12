@@ -26,18 +26,19 @@ const ArticleBoard = ({
       // 필터된 데이터로 useState 실행하여 articles의 값 갱신(최신순 정렬을 위해 역순으로)
       getArticleBoard(filteredArticles.reverse());
     } else {
+      getArticleBoard([]);
       // 아니면 그냥 api로 back에서 데이터 가져옴
-      getBoards(
-        ({ data }) => {
-          console.log(data, 'and ', typeof data);
-          // 최신순으로 출력되도록 역순으로 담는다.
-          getArticleBoard(data.reverse());
-          console.log('articles :', articles);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      // getBoards(
+      //   ({ data }) => {
+      //     console.log(data, 'and ', typeof data);
+      //     // 최신순으로 출력되도록 역순으로 담는다.
+      //     getArticleBoard(data.reverse());
+      //     console.log('articles :', articles);
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
     }
   }, [filteredArticles]);
   // useEffect의 deps 배열에 [filteredArticles]를 넣어 컴포넌트가 마운트 되거나,

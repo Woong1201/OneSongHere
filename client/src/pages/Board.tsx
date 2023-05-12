@@ -8,7 +8,7 @@ import TextButton from 'components/atoms/buttons/TextButton';
 import ArticleBoard from 'components/organisms/board/ArticleBoard';
 import { useNavigate } from 'react-router-dom';
 // api import
-import { getCategorized } from 'services/board';
+import { getBoards, getCategorized } from 'services/board';
 import './Board.scss';
 
 interface Article {
@@ -33,17 +33,30 @@ const Board = () => {
   // getArticleBoard에 넣어 Article 형식에 맞게 바꾼 articles로 반환한다
   const [articles, getArticleBoard] = useState<Article[]>([]);
   const categorization = (search: string) => () => {
-    getCategorized(
-      'header',
-      search,
-      ({ data }) => {
-        console.log(search, '로 찾은 데이터', data);
-        getArticleBoard(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (search === '전체') {
+      getBoards(
+        ({ data }) => {
+          console.log(data, 'and ', typeof data);
+          getArticleBoard(data);
+          console.log('articles :', articles);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      getCategorized(
+        'header',
+        search,
+        ({ data }) => {
+          console.log(search, '로 찾은 데이터', data);
+          getArticleBoard(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   };
 
   // Login 여부 확인
@@ -59,23 +72,38 @@ const Board = () => {
     setKeyword(word);
   };
   useEffect(() => {
-    getCategorized(
-      'title',
-      keyword,
-      ({ data }) => {
-        console.log('검색결과 :', data);
-        getArticleBoard(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // 검색어가 공백일 경우
+    if (keyword === '') {
+      getBoards(
+        ({ data }) => {
+          console.log(data, 'and ', typeof data);
+          getArticleBoard(data);
+          console.log('articles :', articles);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      getCategorized(
+        'title',
+        keyword,
+        ({ data }) => {
+          console.log('검색결과 :', data);
+          getArticleBoard(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }, [keyword]);
 
   return (
     <div>
       <div className="category__container">
         {/* onclick으로 카테고리에 맞게 아티클들 필터링할 수 있게 해줘야 함 */}
+        <TextButton label="전체" onClick={categorization('전체')} />
         <TextButton label="구인" onClick={categorization('구인')} />
         <TextButton label="질문" onClick={categorization('질문')} />
         <TextButton label="홍보" onClick={categorization('홍보')} />
