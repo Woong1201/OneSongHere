@@ -23,6 +23,7 @@ interface CommentResponse {
 interface BoardResponse {
   boardId: number;
   userId: number;
+  picture: string;
   nickName: string;
   boardTitle: string;
   header: string;
@@ -42,6 +43,7 @@ const Article = () => {
   // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
   const strHeader = String(articleInfo?.header);
   const strTitle = String(articleInfo?.boardTitle);
+  const strPicture = String(articleInfo?.picture);
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
 
@@ -76,11 +78,12 @@ const Article = () => {
         <ArticleHeader
           header={strHeader}
           title={strTitle}
+          picture={strPicture}
           nickname={strNickname}
           date={strDate}
         />
         <div>본문</div>
-        {articleInfo?.boardContent}
+        <div className="article__content">{articleInfo?.boardContent}</div>
 
         <div className="comments__container--header">
           <div style={{ display: 'flex', marginBottom: '10px' }}>

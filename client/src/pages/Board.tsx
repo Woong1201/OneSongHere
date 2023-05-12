@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { LoginState } from 'store/LoginState';
 // 컴포넌트 import
@@ -14,6 +14,7 @@ import './Board.scss';
 interface Article {
   boardId: number;
   userId: number;
+  picture: string;
   nickName: string;
   boardTitle: string;
   header: string;
@@ -48,6 +49,29 @@ const Board = () => {
   // Login 여부 확인
   const isLoginQ = useRecoilValue(LoginState);
 
+  // SearchBar용 useState
+  const [searchType, setSearchType] = useState<string>('');
+  const [keyword, setKeyword] = useState<string>('');
+  const handleSearchType = (type: string) => {
+    setSearchType(type);
+  };
+  const handleKeyword = (word: string) => {
+    setKeyword(word);
+  };
+  useEffect(() => {
+    getCategorized(
+      'title',
+      keyword,
+      ({ data }) => {
+        console.log('검색결과 :', data);
+        getArticleBoard(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [keyword]);
+
   return (
     <div>
       <div className="category__container">
@@ -60,7 +84,10 @@ const Board = () => {
       <div className="board__container">
         <div>커뮤니티 전체 페이지</div>
         <div>입니다</div>
-        {/* <SearchBar /> */}
+        <SearchBar
+          onChangeSearchType={() => handleSearchType('TITLE')}
+          onChangeKeyword={handleKeyword}
+        />
         {isLoginQ ? (
           <Button
             label="글쓰기"
