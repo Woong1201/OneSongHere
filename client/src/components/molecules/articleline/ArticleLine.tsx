@@ -26,6 +26,14 @@ const ArticleLine = ({
   header,
   boardDate,
 }: ArticleLineProps) => {
+  // 작성 날짜와 현재 날짜 비교하여 게시글 작성 날짜 다르게 출력
+  const todayDate = new Date();
+  const postedDate = new Date(boardDate);
+  postedDate.setHours(postedDate.getHours() + 9);
+  // 오늘 아침 정각보다 빠르면 날짜로, 아니면 시간으로 하도록, diffMsec 계산
+  todayDate.setHours(0, 0, 0, 0);
+  const diffMSec = todayDate.getTime() - postedDate.getTime();
+
   return (
     <>
       <td>{boardId}</td>
@@ -37,10 +45,21 @@ const ArticleLine = ({
       <td>
         <TextButton label={nickName} />
       </td>
-      <td>{boardDate}</td>
-      {/* <p className="articleline"> */}
-
-      {/* </p> */}
+      <td>
+        {/* 날짜 출력용 삼항연산자 */}
+        {Math.floor(diffMSec) < 0 ? (
+          <div>
+            {`0${String(postedDate.getHours())}`.slice(-2)}:
+            {`0${String(postedDate.getMinutes())}`.slice(-2)}
+          </div>
+        ) : (
+          <div>
+            {String(postedDate.getUTCFullYear())}.
+            {`0${String(postedDate.getMonth() + 1)}`.slice(-2)}.
+            {`0${String(postedDate.getDate())}`.slice(-2)}
+          </div>
+        )}
+      </td>
     </>
   );
 };

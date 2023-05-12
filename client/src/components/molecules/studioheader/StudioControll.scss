@@ -1,8 +1,15 @@
 .studio__header-controll {
   display: flex;
+  height: 100%;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   &-icon {
     background: none;
     border: none;
   }
+}
+.studio__header-clear-button {
+  margin-left: 20px;
+  // height: 60%;
 }

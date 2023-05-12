@@ -37,4 +37,9 @@
   &__blank {
     height: 60px;
   }
+  &__empty {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+  }
 }

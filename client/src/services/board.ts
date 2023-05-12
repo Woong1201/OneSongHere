@@ -28,6 +28,20 @@ const getArticle = async (
     .catch(fail);
 };
 
+const getCategorized = async (
+  type: string,
+  search: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  await api({
+    method: 'get',
+    url: `/board/search/${type}/${search}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
 const postArticle = async (
   title: string,
   head: string,
@@ -77,4 +91,4 @@ const postComment = async (
   }
 };
 
-export { getBoards, getArticle, postArticle, postComment };
+export { getBoards, getArticle, getCategorized, postArticle, postComment };
