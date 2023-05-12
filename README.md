@@ -95,7 +95,7 @@ git clone https://lab.ssafy.com/s08-final/S08P31A808.git
 
 ## Service Architecture
 
-![서비스아키텍쳐](./assets/architecture.png)
+![서비스아키텍쳐](./assets/architecture.jpg)
 
 ### 📂디렉토리 구조
 
