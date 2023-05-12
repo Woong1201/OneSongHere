@@ -102,9 +102,18 @@ const StudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
+  const studioInfo = {
+    studioId: 1,
+    studioTitle: '제목입니다.',
+    genre: '힙합',
+    endDate: new Date(2012, 10, 2),
+    hostId: 34,
+  };
+
   return (
     <>
       <StudioHeader
+        studioInfo={studioInfo}
         notes={notes}
         pianoInstance={pianoInstance}
         changePlayingStyle={changePlayingStyle}

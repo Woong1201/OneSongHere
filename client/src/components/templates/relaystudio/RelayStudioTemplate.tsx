@@ -78,15 +78,11 @@ const RelayStudioTemplate = () => {
 
   const { relayStudioId } = useParams();
   useEffect(() => {
-    console.log(relayStudioId);
     const numRelayStudioId = Number(relayStudioId as string);
     getRelayStudioInfo(
       numRelayStudioId,
       ({ data }) => {
         setStudioInfo(data);
-        console.log('----');
-        console.log(data);
-        console.log('----');
       },
       (error) => {
         console.log(error);
@@ -154,6 +150,7 @@ const RelayStudioTemplate = () => {
   return (
     <>
       <StudioHeader
+        studioInfo={studioInfo}
         notes={notes}
         pianoInstance={pianoInstance}
         changePlayingStyle={changePlayingStyle}

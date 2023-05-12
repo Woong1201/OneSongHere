@@ -16,6 +16,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    studioInfo: {
+      relayStudioID: 1,
+      relayStudioTitle: '제목입니다.',
+      limitOfUsers: 6,
+      numberOfBars: 4,
+      relayStudioSheet: [],
+      numberOfUsers: 4,
+      endDate: new Date(2012, 10, 2),
+      status: 4,
+      userId: 1,
+      participate: true,
+      vote: true,
+      tags: ['락', '발라드', '십덕'],
+    },
     notes: [
       { names: ['D#5'], duration: '8n', timing: 0.25 },
       { names: ['B4'], duration: '8n', timing: 1.25 },
