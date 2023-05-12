@@ -16,6 +16,9 @@ const Albums = () => {
     setWidth(window.innerWidth);
   };
 
+  // 로딩 여부 관리
+  const [isLoading, setIsLoading] = useState(false);
+
   // SearchBar용 useState
   const [searchType, setSearchType] = useState<string>('');
   const [keyword, setKeyword] = useState<string>('');
@@ -27,13 +30,16 @@ const Albums = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     searchAlbums(
       keyword,
       ({ data }) => {
         console.log(data);
+        setIsLoading(false);
       },
       (error) => {
         console.log(error);
+        setIsLoading(false);
       }
     );
 
@@ -61,7 +67,7 @@ const Albums = () => {
         onChangeSearchType={() => handleSearchType('TITLE')}
         onChangeKeyword={handleKeyword}
       />
-      <AlbumCardsGrid />
+      {isLoading ? <div>로딩 중입니다...</div> : <AlbumCardsGrid />}
     </div>
   );
 };

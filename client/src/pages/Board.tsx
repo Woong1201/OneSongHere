@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 import { LoginState } from 'store/LoginState';
 // 컴포넌트 import
@@ -22,6 +22,9 @@ interface Article {
 }
 
 const Board = () => {
+  // 로딩 여부 관리
+  const [isLoading, setIsLoading] = useState(false);
+
   // 글쓰기 페이지로 이동
   const navigate = useNavigate();
   const navigateWritePage = () => {
@@ -32,32 +35,40 @@ const Board = () => {
   // 카테고리 버튼을 누르면 getCategorized api로 뽑아온 데이터를
   // getArticleBoard에 넣어 Article 형식에 맞게 바꾼 articles로 반환한다
   const [articles, getArticleBoard] = useState<Article[]>([]);
-  const categorization = (search: string) => () => {
-    if (search === '전체') {
-      getBoards(
-        ({ data }) => {
-          console.log(data, 'and ', typeof data);
-          getArticleBoard(data);
-          console.log('articles :', articles);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else {
-      getCategorized(
-        'header',
-        search,
-        ({ data }) => {
-          console.log(search, '로 찾은 데이터', data);
-          getArticleBoard(data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  };
+  const categorization = useCallback(
+    (search: string) => () => {
+      setIsLoading(true);
+      if (search === '전체') {
+        getBoards(
+          ({ data }) => {
+            console.log(data, 'and ', typeof data);
+            getArticleBoard(data);
+            console.log('articles :', articles);
+            setIsLoading(false);
+          },
+          (error) => {
+            console.log(error);
+            setIsLoading(false);
+          }
+        );
+      } else {
+        getCategorized(
+          'header',
+          search,
+          ({ data }) => {
+            console.log(search, '로 찾은 데이터', data);
+            getArticleBoard(data);
+            setIsLoading(false);
+          },
+          (error) => {
+            console.log(error);
+            setIsLoading(false);
+          }
+        );
+      }
+    },
+    []
+  );
 
   // Login 여부 확인
   const isLoginQ = useRecoilValue(LoginState);
@@ -72,6 +83,7 @@ const Board = () => {
     setKeyword(word);
   };
   useEffect(() => {
+    setIsLoading(true);
     // 검색어가 공백일 경우
     if (keyword === '') {
       getBoards(
@@ -79,9 +91,11 @@ const Board = () => {
           console.log(data, 'and ', typeof data);
           getArticleBoard(data);
           console.log('articles :', articles);
+          setIsLoading(false);
         },
         (error) => {
           console.log(error);
+          setIsLoading(false);
         }
       );
     } else {
@@ -91,9 +105,11 @@ const Board = () => {
         ({ data }) => {
           console.log('검색결과 :', data);
           getArticleBoard(data);
+          setIsLoading(false);
         },
         (error) => {
           console.log(error);
+          setIsLoading(false);
         }
       );
     }
@@ -126,7 +142,11 @@ const Board = () => {
         ) : (
           <div style={{ height: '38px' }} />
         )}
-        <ArticleBoard filteredArticles={articles} />
+        {isLoading ? (
+          <div>로딩 중입니다...</div>
+        ) : (
+          <ArticleBoard filteredArticles={articles} />
+        )}
       </div>
     </div>
   );
