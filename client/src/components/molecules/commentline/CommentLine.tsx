@@ -65,17 +65,30 @@ const CommentLine = ({
     );
   };
 
+  // 전체 영역 설정
+  const containerRef = useRef<HTMLDivElement>(null);
   // 수정/삭제 옵션 버튼 팝업 및 외부 영역 클릭 시 사라지도록
   const popupRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  // 수정 창이 활성화되어 있느냐의 상태
+  const [letsUpdate, setLetsUpdate] = useState(false);
+
   // ⋮ 버튼 클릭 시 팝업 토글(isOpen 상태 토글)
   const togglePopup = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
+    if (!letsUpdate) {
+      setIsOpen((prevIsOpen) => !prevIsOpen);
+    }
   };
   // 팝업한 영역이 있고, 팝업영역이 클릭된 영역을 포함하지 않을 경우, isOpen을 false로
   const handleClickOutside = useCallback((event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
       setIsOpen(false);
+    }
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
+      setLetsUpdate(false);
     }
   }, []);
   // 클릭을 받기 위한 useEffect
@@ -87,14 +100,13 @@ const CommentLine = ({
   }, [handleClickOutside]);
 
   // 수정 버튼을 누르면 수정 입력 영역으로 전환 및 팝업을 off
-  const [letsUpdate, setLetsUpdate] = useState(false);
   const letsGoUpdate = () => {
     setLetsUpdate(true);
     setIsOpen(false);
   };
 
   return (
-    <div className="comment__container">
+    <div ref={containerRef} className="comment__container">
       <div className="comment__header">
         <div>{nickname}</div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -128,7 +140,7 @@ const CommentLine = ({
         </div>
       </div>
       {letsUpdate ? (
-        <div>
+        <div className="commentUpdateSpace">
           <TextInput
             label={content}
             value={comment}
