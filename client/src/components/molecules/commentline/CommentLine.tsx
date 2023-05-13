@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CommentLine.scss';
 import TextButton from 'components/atoms/buttons/TextButton';
+import ProfileImage from 'components/atoms/profile/ProfileImage';
 
 // api import
 import { deleteComment, updateComment } from 'services/board';
@@ -11,6 +12,7 @@ import Button from 'components/atoms/buttons/Button';
 interface CommentProps {
   commentId: number;
   nickname: string;
+  picture: string;
   content: string;
   date: string;
   userId: number;
@@ -20,6 +22,7 @@ interface CommentProps {
 const CommentLine = ({
   commentId,
   nickname,
+  picture,
   content,
   date,
   userId,
@@ -108,7 +111,14 @@ const CommentLine = ({
   return (
     <div ref={containerRef} className="comment__container">
       <div className="comment__header">
-        <div>{nickname}</div>
+        <div style={{ display: 'flex' }}>
+          <ProfileImage
+            imageUrl={picture}
+            size="small"
+            arrangement="horizontal"
+          />
+          {nickname}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {String(newDate.getUTCFullYear())}.
           {`0${String(newDate.getMonth() + 1)}`.slice(-2)}.

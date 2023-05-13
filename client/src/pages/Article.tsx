@@ -15,6 +15,7 @@ import { useRecoilState } from 'recoil';
 interface CommentResponse {
   commentId: number;
   userId: number;
+  picture: string;
   nickName: string;
   commentContent: string;
   commentDate: string;
@@ -57,6 +58,7 @@ const Article = () => {
       ({ data }) => {
         console.log('data :', data);
         getArticleInfo(data);
+        console.log('댓글 :', data.commentResponses);
         getComments(data.commentResponses);
       },
       (error) => {
@@ -129,6 +131,7 @@ const Article = () => {
               <CommentLine
                 commentId={comment.commentId}
                 nickname={comment.nickName}
+                picture={comment.picture}
                 content={comment.commentContent}
                 date={comment.commentDate}
                 userId={comment.userId}
