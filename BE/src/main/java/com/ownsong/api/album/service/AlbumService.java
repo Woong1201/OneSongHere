@@ -34,15 +34,27 @@ public class AlbumService {
         return albumArticle;
     }
 
+//    public List<AlbumResponse> getAlbumArticles(long userId){
+//        List<AlbumResponse> albums = albumRepository.getAlbumArticles();
+//        for(AlbumResponse albumResponse : albums){
+//            long albumId = albumResponse.getAlbumId();
+//
+//            Likes userLike = albumRepository.findUserLike(albumId, userId);
+//            albumResponse.setUserLike(userLike);
+//        }
+//        return albums;
+//    }
     public List<AlbumResponse> getAlbumArticles(long userId){
-        List<AlbumResponse> albums = albumRepository.getAlbumArticles();
-        for(AlbumResponse albumResponse : albums){
-            long albumId = albumResponse.getAlbumId();
-
+        List<Album> albums = albumRepository.findAll();
+        List<AlbumResponse> albumResponses = new ArrayList<>();
+        for(Album album : albums){
+            AlbumResponse albumResponse = new AlbumResponse(album);
+            long albumId = album.getAlbumId();
             Likes userLike = albumRepository.findUserLike(albumId, userId);
             albumResponse.setUserLike(userLike);
+            albumResponses.add(albumResponse);
         }
-        return albums;
+        return albumResponses;
     }
 
     public List<AlbumResponse> findAlbumArticles(long userId, Constant.SearchType searchType, String search){
@@ -102,21 +114,45 @@ public class AlbumService {
 
 
 
+//    @Transactional
+//    public void updateAlbumArticleLike(long albumId, User user){
+//        Album album = albumRepository.findById(albumId).orElse(null);
+////        좋아요 가져온다음에 좋아요인지 싫어요인지에 따라 바꾸고 총 좋아요 수 업뎃
+//        LikesId key = new LikesId(user, album);
+//
+//        if(likesRepository.findById(key).isPresent()){
+//            // likes를 앨범과의 관계에서 끊고 likes 삭제 후 저장
+//            Likes likes = likesRepository.findById(key).get();
+//            album.getLikesList().remove(likes);
+//            likesRepository.deleteLikesByAlbumAndUser(album, user);
+//            album.updateNumberOfLikes(false);
+//        }
+//        else{
+//            Likes likes = Likes.builder()
+//                    .user(user)
+//                    .album(album)
+//                    .build();
+//            album.getLikesList().add(likes);
+//            album.updateNumberOfLikes(true);
+//        }
+////        총 좋아요 수 업데이트 & else 에서 관계 맺은 앨범 업데이트
+//        albumRepository.save(album);
+//    }
+
     @Transactional
     public void updateAlbumArticleLike(long albumId, User user){
         Album album = albumRepository.findById(albumId).orElse(null);
 //        좋아요 가져온다음에 좋아요인지 싫어요인지에 따라 바꾸고 총 좋아요 수 업뎃
-        LikesId key = new LikesId(user, album);
+        Likes likes = likesRepository.findByAlbumAndUser(album, user);
 
-        if(likesRepository.findById(key).isPresent()){
+        if(likes != null){
             // likes를 앨범과의 관계에서 끊고 likes 삭제 후 저장
-            Likes likes = likesRepository.findById(key).get();
             album.getLikesList().remove(likes);
             likesRepository.deleteLikesByAlbumAndUser(album, user);
             album.updateNumberOfLikes(false);
         }
         else{
-            Likes likes = Likes.builder()
+            likes = Likes.builder()
                     .user(user)
                     .album(album)
                     .build();
@@ -126,8 +162,6 @@ public class AlbumService {
 //        총 좋아요 수 업데이트 & else 에서 관계 맺은 앨범 업데이트
         albumRepository.save(album);
     }
-
-
 
 
 }
