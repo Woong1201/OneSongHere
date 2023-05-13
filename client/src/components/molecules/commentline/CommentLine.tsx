@@ -117,7 +117,8 @@ const CommentLine = ({
             size="small"
             arrangement="horizontal"
           />
-          {nickname}
+          &nbsp;&nbsp;
+          <div style={{ display: 'flex', alignSelf: 'center' }}>{nickname}</div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {String(newDate.getUTCFullYear())}.
