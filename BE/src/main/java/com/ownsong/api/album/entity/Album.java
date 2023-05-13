@@ -2,6 +2,7 @@ package com.ownsong.api.album.entity;
 
 
 import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
+import com.ownsong.api.album.dto.request.AlbumArticleModifyRequest;
 import com.ownsong.api.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,22 +27,16 @@ public class Album {
     @Column(name = "ALBUM_URL")
     private String albumUrl;
 
-    @Column(name = " ALBUM_TITLE", length = 30)
+    @Column(name = "ALBUM_TITLE", length = 30)
     private String albumTitle;
 
-    @Column(name = " ALBUM_CONTENT", length = 30)
+    @Column(name = "ALBUM_CONTENT", length = 30)
     private String albumContent;
 
     @Column(name = "NUMBER_OF_LIKES", columnDefinition = "INT UNSIGNED")
     private long numberOfLikes;
 
-    @Column(name = "PRIVATES")
-    private boolean privates;
-
-    @Column(name = "GENRE", length = 10)
-    private String genre;
-
-    @Column(name = "MP3_URL")
+    @Column(name = "MP3_URL", columnDefinition = "TEXT")
     private String mp3Url;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
@@ -51,32 +46,40 @@ public class Album {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<AlbumTag> albumTags = new ArrayList<>();
+
     @Builder
-    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, boolean privates, User user, String genre, String mp3Url) {
+    public Album(long albumId, String albumUrl, String albumTitle, String albumContent, long numberOfLikes, User user, String mp3Url) {
         this.albumId = albumId;
         this.albumUrl = albumUrl;
         this.albumTitle = albumTitle;
         this.albumContent = albumContent;
         this.numberOfLikes = numberOfLikes;
-        this.privates = privates;
         this.user = user;
-        this.genre = genre;
         this.mp3Url = mp3Url;
+    }
+
+    public Album(AlbumArticleCreateRequest albumArticleCreateRequest, User user) {
+        this.albumUrl = albumArticleCreateRequest.getAlbumUrl();
+        this.albumTitle = albumArticleCreateRequest.getAlbumTitle();
+        this.albumContent = albumArticleCreateRequest.getAlbumContent();
+        this.numberOfLikes = 0;
+        this.user = user;
+        this.mp3Url = albumArticleCreateRequest.getAlbumSheet();
     }
 
     public void updateNumberOfLikes(boolean isLike){
         if(isLike){
-            this.numberOfLikes -= 1;
-        }else{
             this.numberOfLikes += 1;
+        }else{
+            this.numberOfLikes -= 1;
         }
     }
-    public void updateAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, String fileUrl){
-        this.albumTitle = albumArticleCreateRequest.getAlbumTitle();
-        this.albumContent = albumArticleCreateRequest.getAlbumContent();
-        this.privates = !albumArticleCreateRequest.isPrivates();
-        this.genre = albumArticleCreateRequest.getGenre();
-        this.albumUrl = fileUrl;
+    public void updateAlbumArticle(AlbumArticleModifyRequest albumArticleModifyRequest){
+        this.albumTitle = albumArticleModifyRequest.getAlbumTitle();
+        this.albumContent = albumArticleModifyRequest.getAlbumContent();
+        this.albumUrl = albumArticleModifyRequest.getAlbumUrl();
     }
 
 

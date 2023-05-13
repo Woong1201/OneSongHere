@@ -11,7 +11,6 @@ import java.util.List;
 
 import static com.ownsong.api.album.entity.QAlbum.album;
 import static com.ownsong.api.album.entity.QLikes.likes;
-import static com.ownsong.api.user.entity.QUser.user;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,8 +27,7 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                                 album.albumUrl,
                                 album.user.userID,
                                 album.user.nickname,
-                                album.albumId,
-                                album.genre))
+                                album.albumId))
                 .from(album)
                 .where(album.albumId.eq(albumId))
                 .fetchOne();
@@ -47,7 +45,6 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                         album.user.userID,
                         album.user.nickname,
                         album.albumId,
-                        album.genre,
                         album.mp3Url))
                 .from(album)
                 .fetch();
@@ -64,8 +61,7 @@ public class AlbumRepositoryImpl implements AlbumRepositorySupport{
                         album.albumUrl,
                         album.user.userID,
                         album.user.nickname,
-                        album.albumId,
-                        album.genre))
+                        album.albumId))
                 .from(album)
                 .where(album.albumTitle.contains(search))
                 .fetch();

@@ -2,17 +2,19 @@ package com.ownsong.api.album.controller;
 
 
 import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
+import com.ownsong.api.album.dto.request.AlbumArticleModifyRequest;
 import com.ownsong.api.album.dto.response.AlbumResponse;
-import com.ownsong.api.album.entity.QAlbum;
 import com.ownsong.api.album.service.AlbumService;
 import com.ownsong.api.album.service.S3Service;
 import com.ownsong.api.user.entity.User;
 import com.ownsong.api.user.service.UserService;
+import com.ownsong.api.user.social.Constant;
 import com.ownsong.exception.BusinessException;
 import com.ownsong.exception.ErrorCode;
 import com.ownsong.exception.customException.AlbumException;
 import com.ownsong.exception.customException.UserException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,10 +22,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -62,7 +62,7 @@ public class AlbumController {
 
     @Operation(summary = "앨범 전체 조회", description = "앨범 전체 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = AlbumResponse.class)))),
     })
     @GetMapping
     public ResponseEntity<?> getAlbums(){
@@ -79,10 +79,10 @@ public class AlbumController {
 
     @Operation(summary = "앨범 검색어 조회", description = "앨범 검색어 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = QAlbum.class))),
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = AlbumResponse.class)))),
     })
-    @GetMapping(value = "/search/{search}")
-    public ResponseEntity<?> findAlbums(@PathVariable String search){
+    @GetMapping(value = "/search/{type}/{search}")
+    public ResponseEntity<?> findAlbums(@PathVariable String type, @PathVariable String search){
         User user = userService.getLoginUser();
         // 유저의 게시물 좋아요 여부 확인을 위해 userId 여부 분리
         if(user == null){
@@ -90,24 +90,49 @@ public class AlbumController {
         }else{
             userId = user.getUserID();
         }
-        List<AlbumResponse> albums = albumService.findAlbumArticles(userId, search);
+        // 검색 기준 (nickName, title)
+        Constant.SearchType searchType = Constant.SearchType.valueOf(type.toUpperCase());
+        List<AlbumResponse> albums = albumService.findAlbumArticles(userId, searchType, search);
 
         return ResponseEntity.ok().body(albums);
     }
 
+//    mp3 파일로 저장하는 api
+//    @Operation(summary = "앨범 게시물 등록", description = "앨범 게시물 등록")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+//    })
+//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<?> createAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+//        User user = userService.getLoginUser();
+//
+//        // 비 로그인시 앨범 게시물 등록 불가
+//        if(user == null){
+//            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+//        }
+//        AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
+//
+//        // 잘못된 request 전송시 에러
+//        if(album == null){
+//            throw new AlbumException(ErrorCode.INVALID_ALBUM_INPUT_VALUE);
+//        }
+//
+//        return ResponseEntity.ok().body(album);
+//    }
+
     @Operation(summary = "앨범 게시물 등록", description = "앨범 게시물 등록")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
     })
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+    @PostMapping()
+    public ResponseEntity<?> createAlbumArticle(@RequestBody AlbumArticleCreateRequest albumArticleCreateRequest){
         User user = userService.getLoginUser();
 
         // 비 로그인시 앨범 게시물 등록 불가
         if(user == null){
             throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
-        AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, file, user);
+        AlbumResponse album = albumService.creatAlbumArticle(albumArticleCreateRequest, user);
 
         // 잘못된 request 전송시 에러
         if(album == null){
@@ -136,25 +161,42 @@ public class AlbumController {
         return ResponseEntity.ok().build();
     }
 
+//    mp3 파일로 수정하는 api
+//    @Operation(summary = "앨범 게시물 수정", description = "앨범 게시물 수정")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+//    })
+//    @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<?> editAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+//        User user = userService.getLoginUser();
+//        if(user == null){
+//            throw new UserException(ErrorCode.USER_UNAUTHORIZED);
+//        }
+//
+//        // 다른 사람의 게시물 지우는경우 접근 제한
+//        if(!albumService.editAlbumArticle(albumArticleCreateRequest, file, user)){
+//            throw new UserException(ErrorCode.USER_FORBIDDEN);
+//        }
+//        return ResponseEntity.ok().build();
+//    }
+
     @Operation(summary = "앨범 게시물 수정", description = "앨범 게시물 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)),
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
     })
-    @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> editAlbumArticle(AlbumArticleCreateRequest albumArticleCreateRequest, @RequestPart MultipartFile file){
+    @PatchMapping()
+    public ResponseEntity<?> editAlbumArticle(AlbumArticleModifyRequest albumArticleModifyRequest){
         User user = userService.getLoginUser();
         if(user == null){
             throw new UserException(ErrorCode.USER_UNAUTHORIZED);
         }
 
-        // 다른 사람의 게시물 지우는경우 접근 제한
-        if(!albumService.editAlbumArticle(albumArticleCreateRequest, file, user)){
+        // 다른 사람의 게시물 수정하려는 경우 접근 제한
+        if(!albumService.editAlbumArticle(albumArticleModifyRequest, user)){
             throw new UserException(ErrorCode.USER_FORBIDDEN);
         }
         return ResponseEntity.ok().build();
     }
-
-
 
 
 
