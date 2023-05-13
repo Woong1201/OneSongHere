@@ -71,9 +71,9 @@ public class Album {
 
     public void updateNumberOfLikes(boolean isLike){
         if(isLike){
-            this.numberOfLikes -= 1;
-        }else{
             this.numberOfLikes += 1;
+        }else{
+            this.numberOfLikes -= 1;
         }
     }
     public void updateAlbumArticle(AlbumArticleModifyRequest albumArticleModifyRequest){
