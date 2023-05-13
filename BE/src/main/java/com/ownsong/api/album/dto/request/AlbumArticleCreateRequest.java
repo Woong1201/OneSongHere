@@ -1,14 +1,16 @@
 package com.ownsong.api.album.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AlbumArticleCreateRequest {
     @Schema(description = "앨범제목", example = "마작맨")
     @NotNull
@@ -18,23 +20,13 @@ public class AlbumArticleCreateRequest {
     @NotNull
     private String albumContent;
 
+    @Schema(description = "악보", example = "[[1, 2], [0, 1]]")
+    private String albumSheet;
 
-    @Schema(description = "공개/비공개 여부", example = "true(공개)")
-    @NotNull
-    private boolean privates;
+    @Schema(description = "태그", example = "[\"락\", \"발라드\", \"십덕\"]")
+    private List<String> tags;
 
-    @Schema(description = "장르(태그)", example = "힙합")
-    @NotNull
-    private String genre;
+    @Schema(description = "앨범 사진", example = "https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_org.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90")
+    private String albumUrl;
 
-    @Schema(description = "앨범 아이디", example = "1")
-    private long albumId;
-
-    public AlbumArticleCreateRequest(String albumTitle, String albumContent, boolean privates, String genre, long albumId) {
-        this.albumTitle = albumTitle;
-        this.albumContent = albumContent;
-        this.privates = privates;
-        this.genre = genre;
-        this.albumId = albumId;
-    }
 }
