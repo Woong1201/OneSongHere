@@ -91,6 +91,7 @@ const StudioNoteContainer = ({
       ref.current.scrollLeft = scrollPosition;
     }
   }, [scrollPosition]);
+
   return (
     <div
       role="presentation"
@@ -100,7 +101,7 @@ const StudioNoteContainer = ({
       onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
       onKeyDown={onKeyDown}
-      onWheel={onWheel} // Add onWheel event here
+      onWheel={onWheel}
       ref={ref}
     >
       <StudioNoteGrid

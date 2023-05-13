@@ -8,11 +8,36 @@ import StudioChat from 'components/organisms/studio/StudioChat';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
 import * as Tone from 'tone';
-import Button from 'components/atoms/buttons/Button';
-import { postNotes } from 'services/relayStudio';
+import { postRelayNotes } from 'services/relayStudio';
 
 const StudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
+  const [noteColumnStyle, setNoteColumnStyle] = useState(
+    Array(160).fill(false)
+  );
+  const [noteScrollPosition, setNoteScrollPosition] = useState(0);
+
+  const updateNoteScrollPosition = (position: number) => {
+    setNoteScrollPosition(position);
+  };
+
+  useEffect(() => {
+    const sampler = new Tone.Sampler({
+      urls: {
+        C4: 'C4.mp3',
+        'D#4': 'Ds4.mp3',
+        'F#4': 'Fs4.mp3',
+        A4: 'A4.mp3',
+      },
+      release: 1,
+      baseUrl: 'https://tonejs.github.io/audio/salamander/',
+    }).toDestination();
+    Tone.loaded().then(() => {
+      setPianoInstance(sampler);
+    });
+  }, []);
+
   const updateNote = useCallback((name: string, timing: number) => {
     setNotes((prevNotes) => {
       let isExistingNote = false;
@@ -44,6 +69,16 @@ const StudioTemplate = () => {
       return cleanedNotes;
     });
   }, []);
+
+  const playNote = useCallback(
+    (noteName: string | string[]) => {
+      if (pianoInstance !== null) {
+        pianoInstance.triggerAttackRelease(noteName, '8n');
+      }
+    },
+    [pianoInstance]
+  );
+
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
     const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
@@ -53,28 +88,6 @@ const StudioTemplate = () => {
 
     return possibleNoteTiming.find((num) => !timings.includes(num)) || 0;
   };
-
-  const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
-
-  useEffect(() => {
-    const sampler = new Tone.Sampler({
-      urls: {
-        C4: 'C4.mp3',
-        'D#4': 'Ds4.mp3',
-        'F#4': 'Fs4.mp3',
-        A4: 'A4.mp3',
-      },
-      release: 1,
-      baseUrl: 'https://tonejs.github.io/audio/salamander/',
-    }).toDestination();
-    Tone.loaded().then(() => {
-      setPianoInstance(sampler);
-    });
-  }, []);
-
-  const [noteColumnStyle, setNoteColumnStyle] = useState(
-    Array(160).fill(false)
-  );
 
   const changePlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
@@ -88,15 +101,6 @@ const StudioTemplate = () => {
       element.classList.remove('playing');
     }
   };
-
-  const playNote = useCallback(
-    (noteName: string | string[]) => {
-      if (pianoInstance !== null) {
-        pianoInstance.triggerAttackRelease(noteName, '8n');
-      }
-    },
-    [pianoInstance]
-  );
 
   const clearNotes = useCallback(() => {
     setNotes([]);
@@ -114,7 +118,7 @@ const StudioTemplate = () => {
       relayStudioSheet: stringNote,
       complete,
     };
-    postNotes(
+    postRelayNotes(
       noteData,
       ({ data }) => {
         const { relayStudioSheet } = data;
@@ -148,6 +152,8 @@ const StudioTemplate = () => {
       <div className="studio__body">
         <div className="studio__content">
           <StudioNote
+            scrollPosition={noteScrollPosition}
+            updateScrollPosition={updateNoteScrollPosition}
             notes={notes}
             updateNote={updateNote}
             playNote={playNote}
