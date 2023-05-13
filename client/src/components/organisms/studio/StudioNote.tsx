@@ -5,23 +5,21 @@ import './StudioNote.scss';
 import { Note } from 'types/Note';
 
 interface StudioNoteProps {
+  scrollPosition: number;
+  updateScrollPosition: (position: number) => void;
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
   playNote: (noteName: string | string[]) => void;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({
+  scrollPosition,
+  updateScrollPosition,
   updateNote,
   playNote,
   notes,
   noteColumnStyle,
 }: StudioNoteProps) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const updateScrollPosition = (position: number) => {
-    setScrollPosition(position);
-  };
-
   return (
     <div className="studio__note">
       <StudioNoteScroll
