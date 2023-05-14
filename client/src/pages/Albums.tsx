@@ -32,6 +32,7 @@ const Albums = () => {
   useEffect(() => {
     setIsLoading(true);
     searchAlbums(
+      'title',
       keyword,
       ({ data }) => {
         console.log(data);

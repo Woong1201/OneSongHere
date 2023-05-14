@@ -1,6 +1,6 @@
 import React from 'react';
 import './ArticleHeader.scss';
-import Profile from 'components/molecules/profilesection/Profile';
+import ProfileImage from 'components/atoms/profile/ProfileImage';
 
 interface ArticleHeaderProps {
   header: string;
@@ -25,12 +25,12 @@ const ArticleHeader = ({
         [{header}]&nbsp;&nbsp;{title}
       </div>
       <div className="header__profile-img">
-        <Profile
+        <ProfileImage
           imageUrl={picture}
-          nickName={nickname}
           size="small"
           arrangement="horizontal"
         />
+        {nickname}
       </div>
       <div>
         {String(newDate.getUTCFullYear())}.

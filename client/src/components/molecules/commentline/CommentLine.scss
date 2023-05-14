@@ -2,10 +2,10 @@
   position:relative;
   &__container {
     display: inline-block;
-    width: 400px;
-    background-color: beige;
-    margin: 10px 0;
-    padding: 10px;
+    width: 780px;
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 20px 0px;
+    border-bottom: 1px solid #E0D5F6;
   }
   &__header{
     display: flex;

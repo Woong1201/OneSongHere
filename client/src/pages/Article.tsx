@@ -111,7 +111,7 @@ const Article = () => {
 
         <div className="comments__container--header">
           <div style={{ display: 'flex', marginBottom: '10px' }}>
-            댓글 수
+            댓글
             <div
               style={{
                 marginLeft: '15px',

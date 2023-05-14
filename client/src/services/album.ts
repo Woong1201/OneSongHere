@@ -16,6 +16,7 @@ const getAlbums = async (
 };
 
 const searchAlbums = async (
+  type: string,
   search: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
@@ -24,7 +25,7 @@ const searchAlbums = async (
   await api({
     // headers: { Authorization: `Bearer ${token}` },
     method: 'get',
-    url: `/albums/search/${search}`,
+    url: `/albums/search/${type}/${search}`,
   })
     .then(success)
     .catch(fail);
