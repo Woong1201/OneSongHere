@@ -14,10 +14,19 @@ import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
 const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
-  const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
-  const [drumInstance, setDrumInstance] = useState<Tone.MembraneSynth | null>(
-    null
-  );
+  const [instrumentInstances, setInstrumentInstances] = useState<{
+    piano: Tone.Sampler | null;
+    drum: Tone.MembraneSynth | null;
+    casio: Tone.Sampler | null;
+  }>({
+    piano: null,
+    drum: null,
+    casio: null,
+  });
+
+  const [currentInstrument, setCurrentInstrument] = useState<string>('piano');
+  const [currentDrum, setCurrentDrum] = useState<string>('drum');
+
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
@@ -48,6 +57,8 @@ const RelayStudioTemplate = () => {
   }, []);
 
   useEffect(() => {
+    let isCancelled = false;
+
     const sampler = new Tone.Sampler({
       urls: {
         C4: 'C4.mp3',
@@ -58,16 +69,31 @@ const RelayStudioTemplate = () => {
       release: 1,
       baseUrl: 'https://tonejs.github.io/audio/salamander/',
     }).toDestination();
-    Tone.loaded().then(() => {
-      setPianoInstance(sampler);
-    });
-  }, []);
 
-  useEffect(() => {
     const synth = new Tone.MembraneSynth().toDestination();
+
+    const casio = new Tone.Sampler({
+      urls: {
+        A1: 'A1.mp3',
+        A2: 'A2.mp3',
+        'A#2': 'As1.mp3',
+      },
+      baseUrl: 'https://tonejs.github.io/audio/casio/',
+    }).toDestination();
+
     Tone.loaded().then(() => {
-      setDrumInstance(synth);
+      if (!isCancelled) {
+        setInstrumentInstances({
+          piano: sampler,
+          drum: synth,
+          casio,
+        });
+      }
     });
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const updateNote = useCallback(
@@ -137,14 +163,13 @@ const RelayStudioTemplate = () => {
     }
   };
 
-  const playNote = useCallback(
-    (noteName: string | string[]) => {
-      if (pianoInstance !== null) {
-        pianoInstance.triggerAttackRelease(noteName, '8n');
-      }
-    },
-    [pianoInstance]
-  );
+  const playNote = (noteName: string | string[]) => {
+    const instrumentInstance =
+      instrumentInstances[currentInstrument as 'piano' | 'casio'];
+    if (instrumentInstance) {
+      instrumentInstance.triggerAttackRelease(noteName, '8n');
+    }
+  };
 
   const clearNotes = useCallback(() => {
     setNotes([]);
@@ -173,11 +198,15 @@ const RelayStudioTemplate = () => {
 
   const playDrum = useCallback(
     (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
-      if (drumInstance !== null) {
-        drumInstance.triggerAttackRelease('c2', '8n');
+      const drumInstance = instrumentInstances[currentDrum as 'drum'];
+      if (drumInstance) {
+        drumInstance.triggerAttackRelease(
+          drumType === 'kick' ? 'C2' : 'D2',
+          '8n'
+        );
       }
     },
-    [drumInstance]
+    [currentDrum, instrumentInstances]
   );
 
   return (
@@ -185,7 +214,8 @@ const RelayStudioTemplate = () => {
       <StudioHeader
         studioInfo={studioInfo}
         notes={notes}
-        pianoInstance={pianoInstance}
+        instrumentInstances={instrumentInstances}
+        currentInstrument={currentInstrument}
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}

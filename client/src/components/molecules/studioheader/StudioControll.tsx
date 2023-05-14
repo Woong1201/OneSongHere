@@ -9,7 +9,12 @@ import Button from 'components/atoms/buttons/Button';
 
 interface StudioControllProps {
   notes: Note[];
-  pianoInstance: Tone.Sampler | null;
+  instrumentInstances: {
+    piano: Tone.Sampler | null;
+    drum: Tone.MembraneSynth | null;
+    casio: Tone.Sampler | null;
+  };
+  currentInstrument: string;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -18,7 +23,8 @@ interface StudioControllProps {
 
 const StudioControll = ({
   notes,
-  pianoInstance,
+  instrumentInstances,
+  currentInstrument,
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
@@ -30,11 +36,15 @@ const StudioControll = ({
 
     notes.forEach((note) => {
       const now = Tone.now();
-      (pianoInstance as Tone.Sampler).triggerAttackRelease(
-        note.names,
-        note.duration,
-        now + note.timing
-      );
+      const instrumentInstance =
+        instrumentInstances[currentInstrument as 'piano' | 'casio'];
+      if (instrumentInstance != null) {
+        instrumentInstance.triggerAttackRelease(
+          note.names,
+          note.duration,
+          now + note.timing
+        );
+      }
 
       setTimeout(() => {
         const newStyle = [...initialStyle];
@@ -59,7 +69,7 @@ const StudioControll = ({
     //     setNoteColumnStyle([...initialStyle]);
     //   }, (i + 0.25) * 250);
     // }
-  }, [notes, pianoInstance, setNoteColumnStyle]);
+  }, [notes, instrumentInstances, currentInstrument, setNoteColumnStyle]);
 
   const stopSequence = () => {
     Tone.Transport.stop();

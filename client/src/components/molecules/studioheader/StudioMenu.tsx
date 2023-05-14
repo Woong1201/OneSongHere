@@ -8,7 +8,7 @@ interface StudioMenuProps {
 }
 const StudioMenu = ({ saveNotes }: StudioMenuProps) => {
   const StudioheaderDropdownList = [
-    { label: '저장하기', onClick: saveNotes },
+    { label: '임시저장', onClick: saveNotes },
     { label: '내보내기', onClick: undefined },
     { label: '제출하기', onClick: undefined },
   ];
