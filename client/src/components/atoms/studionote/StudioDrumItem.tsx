@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StudioDrumItem.scss';
 
 interface StudioDrumItemProps {
@@ -28,8 +28,11 @@ StudioDrumItemProps) => {
       playDrum(power, type);
       updateDrum(type, timing);
     }
-    console.log(isSelected);
   };
+
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
 
   return (
     <button

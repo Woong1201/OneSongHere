@@ -51,7 +51,7 @@ const RelayStudioTemplate = () => {
         }
       },
       (error) => {
-        console.log(error);
+        console.log('릴레이 스튜디오 소환 에러:', error);
       }
     );
   }, []);
@@ -119,19 +119,25 @@ const RelayStudioTemplate = () => {
         setNotes((prevNotes) => {
           let isExistingNote = false;
           let updatedNotes = prevNotes.map((note) => {
-            if (note.timing === timing) {
+            // 같은 타이밍의 노트 명단이 있다면
+            if (note.timing === timing && note.instrumentType === 'melody') {
               isExistingNote = true;
+              // 노트 명단에 입력하는 노트가 있다면
               if (note.names.includes(name)) {
                 return {
+                  // 빼주고
                   ...note,
                   names: (note.names as string[]).filter((n) => n !== name),
                 };
               }
+              // 아니면 더해준다
               return { ...note, names: [...(note.names as string[]), name] };
             }
             return note;
           });
+          // 같은 타이밍의 노트 명단이 없는데 입력하는 노트가 없다면
           if (!isExistingNote) {
+            // 해당 타이밍의 새로운 노트 명단을 만들어준다
             updatedNotes = [
               ...updatedNotes,
               {
@@ -183,6 +189,13 @@ const RelayStudioTemplate = () => {
             { names: name, duration: '8n', timing, instrumentType: 'beat' },
           ];
         });
+        const updatedNotePosition = timing * 4 * 35;
+        if (
+          updatedNotePosition < noteScrollPosition ||
+          updatedNotePosition > 1195 + noteScrollPosition
+        ) {
+          setNoteScrollPosition(Math.max(updatedNotePosition - 50, 0));
+        }
       }
     },
     [noteScrollPosition]

@@ -64,13 +64,13 @@ const StudioNoteColumn = ({
   const snareNoteSelected =
     columnNotes?.some((columnNote) => {
       return (
-        columnNote.instrumentType === 'melody' && columnNote.names === 'kick'
+        columnNote.instrumentType === 'beat' && columnNote.names === 'snare'
       );
     }) || false;
   const kickNoteSelected =
     columnNotes?.some((columnNote) => {
       return (
-        columnNote.instrumentType === 'melody' && columnNote.names === 'kick'
+        columnNote.instrumentType === 'beat' && columnNote.names === 'kick'
       );
     }) || false;
 
