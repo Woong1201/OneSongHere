@@ -61,19 +61,19 @@ const RelayStudioTemplate = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const sampler = new Tone.Sampler({
-      urls: {
-        C2: 'kick.mp3',
-        G4: 'snare.mp3',
-      },
-      release: 1,
-      baseUrl: 'https://your-audio-files-url/',
-    }).toDestination();
-    Tone.loaded().then(() => {
-      setDrumInstance(sampler);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const sampler = new Tone.Sampler({
+  //     urls: {
+  //       C2: 'kick.mp3',
+  //       G4: 'snare.mp3',
+  //     },
+  //     release: 1,
+  //     baseUrl: 'https://your-audio-files-url/',
+  //   }).toDestination();
+  //   Tone.loaded().then(() => {
+  //     setDrumInstance(sampler);
+  //   });
+  // }, []);
 
   const updateNote = useCallback(
     (name: string, timing: number | undefined) => {
@@ -176,6 +176,13 @@ const RelayStudioTemplate = () => {
     );
   };
 
+  const playDrum = useCallback(
+    (beatPower: 'weak' | 'strong') => {
+      console.log(beatPower);
+    },
+    [drumInstance]
+  );
+
   return (
     <>
       <StudioHeader
@@ -196,6 +203,7 @@ const RelayStudioTemplate = () => {
             notes={notes}
             updateNote={updateNote}
             playNote={playNote}
+            playDrum={playDrum}
             noteColumnStyle={noteColumnStyle}
           />
           <StudioInstrument

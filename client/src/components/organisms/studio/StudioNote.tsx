@@ -10,6 +10,7 @@ interface StudioNoteProps {
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
   playNote: (noteName: string | string[]) => void;
+  playDrum: (beatPower: 'weak' | 'strong') => void;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({
@@ -17,6 +18,7 @@ const StudioNote = ({
   updateScrollPosition,
   updateNote,
   playNote,
+  playDrum,
   notes,
   noteColumnStyle,
 }: StudioNoteProps) => {
@@ -34,6 +36,7 @@ const StudioNote = ({
         updateScrollPosition={updateScrollPosition}
         updateNote={updateNote}
         playNote={playNote}
+        playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}
       />
     </div>

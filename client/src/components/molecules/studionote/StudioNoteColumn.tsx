@@ -2,12 +2,14 @@ import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
 import { Note } from 'types/Note';
+import StudioDrumItem from 'components/atoms/studionote/StudioDrumItem';
 
 interface StudioNoteColumnProps {
   columnNote: Note | undefined;
-  timing: number;
+  rowIndex: number;
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string | string[]) => void;
+  playDrum?: (beatPower: 'weak' | 'strong') => void;
   noteStyle: boolean;
 }
 
@@ -42,14 +44,18 @@ const noteList = [
 
 const StudioNoteColumn = ({
   columnNote,
-  timing,
+  rowIndex,
   updateNote,
   playNote,
+  playDrum,
   noteStyle,
 }: StudioNoteColumnProps) => {
   const columnClassNames = noteStyle
     ? 'studio__note-column playing'
     : 'studio__note-column';
+
+  const timing = rowIndex * 0.25;
+  const drumPower = rowIndex % 2 === 0 ? 'strong' : 'weak';
 
   return (
     <div className={columnClassNames} id={timing.toString()}>
@@ -67,6 +73,8 @@ const StudioNoteColumn = ({
           />
         );
       })}
+      <StudioDrumItem power={drumPower} playDrum={playDrum} />
+      <StudioDrumItem power={drumPower} playDrum={playDrum} />
     </div>
   );
 };

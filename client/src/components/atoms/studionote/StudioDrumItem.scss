@@ -6,6 +6,7 @@
   background: none;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   &:hover {
     cursor: pointer;
@@ -17,14 +18,14 @@
 
   &-circle {
     border-radius: 50%;
-    background-color: $header-color;
+    background-color: rgba($header-color, 0.4);
     &--small {
-      width: 6px;
-      height: 6px;
+      width: 4px;
+      height: 4px;
     }
     &--large {
-      width: 10px;
-      height: 10px;
+      width: 7px;
+      height: 7px;
     }
   }
 }

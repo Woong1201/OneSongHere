@@ -2,21 +2,32 @@ import React from 'react';
 import './StudioDrumItem.scss';
 
 interface StudioDrumItemProps {
-  size?: 'small' | 'large';
+  power?: 'strong' | 'weak';
+  playDrum?: (beatPower: 'weak' | 'strong') => void;
 }
 
-const StudioDrumItem = ({ size = 'small' }: StudioDrumItemProps) => {
+const StudioDrumItem = ({
+  power = 'weak',
+  playDrum = () => {
+    console.log();
+  },
+}: StudioDrumItemProps) => {
+  const circleSize = power === 'strong' ? 'large' : 'small';
+
+  const selectDrum = () => {
+    playDrum(power);
+  };
   return (
     <button
       type="button"
       className={['studio__drum-item'].join(' ')}
-      //   onClick={}
+      onClick={selectDrum}
       aria-label="a"
     >
       <div
         className={[
           'studio__drum-item-circle',
-          `studio__drum-item-circle--${size}`,
+          `studio__drum-item-circle--${circleSize}`,
         ].join(' ')}
       />
     </button>
