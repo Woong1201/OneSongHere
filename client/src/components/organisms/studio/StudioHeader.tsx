@@ -15,8 +15,10 @@ interface StudioHeaderProps {
   notes: Note[];
   instrumentInstances: {
     piano: Tone.Sampler | null;
-    drum: Tone.MembraneSynth | null;
     casio: Tone.Sampler | null;
+    bongo: {
+      [key: string]: Tone.Player;
+    } | null;
   };
   currentInstrument: string;
   changePlayingStyle: (timing: number) => void;

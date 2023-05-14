@@ -16,12 +16,12 @@ const RelayStudioTemplate = () => {
   const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
   const [instrumentInstances, setInstrumentInstances] = useState<{
     piano: Tone.Sampler | null;
-    drum: Tone.MembraneSynth | null;
     casio: Tone.Sampler | null;
+    bongo: { [key: string]: Tone.Player } | null; // 수정된 부분
   }>({
     piano: null,
-    drum: null,
     casio: null,
+    bongo: null,
   });
 
   const [currentInstrument, setCurrentInstrument] = useState<string>('piano');
@@ -59,20 +59,24 @@ const RelayStudioTemplate = () => {
   useEffect(() => {
     let isCancelled = false;
 
-    const sampler = new Tone.Sampler({
+    const pianoSampler = new Tone.Sampler({
       urls: {
         C4: 'C4.mp3',
+        C5: 'C5.mp3',
         'D#4': 'Ds4.mp3',
+        'D#5': 'Ds5.mp3',
         'F#4': 'Fs4.mp3',
+        'F#5': 'Fs5.mp3',
         A4: 'A4.mp3',
+        A5: 'A5.mp3',
       },
       release: 1,
       baseUrl: 'https://tonejs.github.io/audio/salamander/',
     }).toDestination();
 
-    const synth = new Tone.MembraneSynth().toDestination();
+    // const synth = new Tone.MembraneSynth().toDestination();
 
-    const casio = new Tone.Sampler({
+    const casioSampler = new Tone.Sampler({
       urls: {
         A1: 'A1.mp3',
         A2: 'A2.mp3',
@@ -81,12 +85,25 @@ const RelayStudioTemplate = () => {
       baseUrl: 'https://tonejs.github.io/audio/casio/',
     }).toDestination();
 
+    const kickPlayer = new Tone.Player({
+      url: 'https://tonejs.github.io/audio/drum-samples/CR78/kick.mp3',
+      autostart: false,
+    }).toDestination();
+
+    const snarePlayer = new Tone.Player({
+      url: 'https://tonejs.github.io/audio/drum-samples/CR78/snare.mp3',
+      autostart: false,
+    }).toDestination();
+
     Tone.loaded().then(() => {
       if (!isCancelled) {
         setInstrumentInstances({
-          piano: sampler,
-          drum: synth,
-          casio,
+          piano: pianoSampler,
+          casio: casioSampler,
+          bongo: {
+            kick: kickPlayer,
+            snare: snarePlayer,
+          },
         });
       }
     });
@@ -171,6 +188,21 @@ const RelayStudioTemplate = () => {
     }
   };
 
+  const playDrum = useCallback(
+    (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
+      console.log(beatPower, drumType);
+      if (instrumentInstances.bongo) {
+        const drumInstance = (
+          instrumentInstances.bongo as {
+            [key: string]: Tone.Player;
+          }
+        )[drumType];
+        drumInstance.start();
+      }
+    },
+    [instrumentInstances]
+  );
+
   const clearNotes = useCallback(() => {
     setNotes([]);
   }, [setNotes]);
@@ -195,19 +227,6 @@ const RelayStudioTemplate = () => {
       }
     );
   };
-
-  const playDrum = useCallback(
-    (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
-      const drumInstance = instrumentInstances[currentDrum as 'drum'];
-      if (drumInstance) {
-        drumInstance.triggerAttackRelease(
-          drumType === 'kick' ? 'C2' : 'D2',
-          '8n'
-        );
-      }
-    },
-    [currentDrum, instrumentInstances]
-  );
 
   return (
     <>
