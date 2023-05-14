@@ -86,7 +86,7 @@ const StudioControll = ({
           newStyle[i] = false;
           return newStyle;
         });
-      }, (i + 0.75) * 250);
+      }, (i + 1) * 250);
     }
   };
   const stopSequence = () => {
