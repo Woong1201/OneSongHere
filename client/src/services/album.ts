@@ -15,4 +15,30 @@ const getAlbums = async (
     .catch(fail);
 };
 
-export { getAlbums };
+const postAlbum = async (
+  title: string,
+  content: string,
+  albumSheet: Array<string>,
+  genre: Array<string>,
+  imgUrl: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'post',
+    url: '/albums',
+    data: {
+      AlbumTitle: title,
+      AlbumContent: content,
+      albumSheet,
+      tags: genre,
+      AlbumUrl: imgUrl,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { getAlbums, postAlbum };
