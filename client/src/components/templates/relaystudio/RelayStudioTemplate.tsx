@@ -60,42 +60,44 @@ const RelayStudioTemplate = () => {
     });
   }, []);
   const updateNote = useCallback(
-    (name: string, timing: number) => {
-      setNotes((prevNotes) => {
-        let isExistingNote = false;
-        let updatedNotes = prevNotes.map((note) => {
-          if (note.timing === timing) {
-            isExistingNote = true;
-            if (note.names.includes(name)) {
-              return {
-                ...note,
-                names: (note.names as string[]).filter((n) => n !== name),
-              };
+    (name: string, timing: number | undefined) => {
+      if (timing !== undefined) {
+        setNotes((prevNotes) => {
+          let isExistingNote = false;
+          let updatedNotes = prevNotes.map((note) => {
+            if (note.timing === timing) {
+              isExistingNote = true;
+              if (note.names.includes(name)) {
+                return {
+                  ...note,
+                  names: (note.names as string[]).filter((n) => n !== name),
+                };
+              }
+              return { ...note, names: [...(note.names as string[]), name] };
             }
-            return { ...note, names: [...(note.names as string[]), name] };
+            return note;
+          });
+          if (!isExistingNote) {
+            updatedNotes = [
+              ...updatedNotes,
+              { names: [name], duration: '8n', timing },
+            ];
           }
-          return note;
+          const cleanedNotes = updatedNotes.filter(
+            (note) => note.names.length > 0
+          );
+          return cleanedNotes;
         });
-        if (!isExistingNote) {
-          updatedNotes = [
-            ...updatedNotes,
-            { names: [name], duration: '8n', timing },
-          ];
+        // 현재 스크롤에 보이는 35 * 34 = 1190 + scrollposition
+        // 만약에 timing * 4 -> n번째 칸이 업데이트되는데 이 범위 밖에 있다면
+        // 35 * n을 스크롤 포지션으로 설정
+        const updatedNotePosition = timing * 4 * 35;
+        if (
+          updatedNotePosition < noteScrollPosition ||
+          updatedNotePosition > 1195 + noteScrollPosition
+        ) {
+          setNoteScrollPosition(Math.max(updatedNotePosition - 50, 0));
         }
-        const cleanedNotes = updatedNotes.filter(
-          (note) => note.names.length > 0
-        );
-        return cleanedNotes;
-      });
-      // 현재 스크롤에 보이는 35 * 34 = 1190 + scrollposition
-      // 만약에 timing * 4 -> n번째 칸이 업데이트되는데 이 범위 밖에 있다면
-      // 35 * n을 스크롤 포지션으로 설정
-      const updatedNotePosition = timing * 4 * 35;
-      if (
-        updatedNotePosition < noteScrollPosition ||
-        updatedNotePosition > 1195 + noteScrollPosition
-      ) {
-        setNoteScrollPosition(Math.max(updatedNotePosition - 50, 0));
       }
     },
     [noteScrollPosition]
@@ -108,7 +110,7 @@ const RelayStudioTemplate = () => {
     const timings = notes.map((note) => note.timing);
     // 그 배열중에 현재 배열에 notes에 없는 첫번째 타이밍값 리턴
 
-    return possibleNoteTiming.find((num) => !timings.includes(num)) || 0;
+    return possibleNoteTiming.find((num) => !timings.includes(num));
   };
 
   const changePlayingStyle = (timing: number) => {

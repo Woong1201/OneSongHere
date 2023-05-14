@@ -4,7 +4,7 @@ import StudioPiano from 'components/molecules/studioinstrument/StudioPiano';
 
 interface StudioInstrumentProps {
   updateNote: (name: string, timing: number) => void;
-  findInputTiming: () => number;
+  findInputTiming: () => number | undefined;
   playNote: (noteName: string | string[]) => void;
 }
 const StudioInstrument = ({
