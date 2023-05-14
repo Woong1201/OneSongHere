@@ -121,12 +121,14 @@ const CommentLine = ({
           <div style={{ display: 'flex', alignSelf: 'center' }}>{nickname}</div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {String(newDate.getUTCFullYear())}.
-          {`0${String(newDate.getMonth() + 1)}`.slice(-2)}.
-          {`0${String(newDate.getDate())}`.slice(-2)}
-          &nbsp;&nbsp;
-          {`0${String(newDate.getHours())}`.slice(-2)}:
-          {`0${String(newDate.getMinutes())}`.slice(-2)}
+          <div style={{ color: '#C1B8F5' }}>
+            {String(newDate.getUTCFullYear())}.
+            {`0${String(newDate.getMonth() + 1)}`.slice(-2)}.
+            {`0${String(newDate.getDate())}`.slice(-2)}
+            &nbsp;&nbsp;
+            {`0${String(newDate.getHours())}`.slice(-2)}:
+            {`0${String(newDate.getMinutes())}`.slice(-2)}
+          </div>
           {loginId === userId ? (
             <div style={{ display: 'flex' }}>
               &nbsp;&nbsp;

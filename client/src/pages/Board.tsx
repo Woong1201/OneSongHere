@@ -125,28 +125,33 @@ const Board = () => {
         <TextButton label="홍보" onClick={categorization('홍보')} />
         <TextButton label="잡담" onClick={categorization('잡담')} />
       </div>
-      <div className="board__container">
-        <div>커뮤니티 전체 페이지</div>
-        <div>입니다</div>
-        <SearchBar
-          onChangeSearchType={() => handleSearchType('TITLE')}
-          onChangeKeyword={handleKeyword}
-        />
-        {isLoginQ ? (
-          <Button
-            label="글쓰기"
-            type="submit"
-            color="primary"
-            onClick={navigateWritePage}
+      <div className="board__page">
+        <div className="board__banner">
+          <div className="board__banner--title">커뮤니티</div>
+        </div>
+        <div className="board__container">
+          <SearchBar
+            onChangeSearchType={() => handleSearchType('TITLE')}
+            onChangeKeyword={handleKeyword}
           />
-        ) : (
-          <div style={{ height: '38px' }} />
-        )}
-        {isLoading ? (
-          <div>로딩 중입니다...</div>
-        ) : (
-          <ArticleBoard filteredArticles={articles} />
-        )}
+          {isLoginQ ? (
+            <div className="board__write--button">
+              <Button
+                label="글쓰기"
+                type="submit"
+                color="primary"
+                onClick={navigateWritePage}
+              />
+            </div>
+          ) : (
+            <div style={{ height: '38px' }} />
+          )}
+          {isLoading ? (
+            <div>로딩 중입니다...</div>
+          ) : (
+            <ArticleBoard filteredArticles={articles} />
+          )}
+        </div>
       </div>
     </div>
   );
