@@ -52,6 +52,8 @@ const postArticle = async (
   const token = localStorage.getItem('accessToken');
   if (title === '') {
     alert('게시글 제목을 입력해주세요!');
+  } else if (head === '') {
+    alert('카테고리를 선택해주세요!');
   } else if (content === '') {
     alert('게시글 내용을 입력해주세요!');
   } else {

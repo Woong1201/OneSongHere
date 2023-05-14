@@ -11,6 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { getBoards, getCategorized } from 'services/board';
 import './Board.scss';
 
+// 카테고리 인터페이스
+interface Category {
+  name: string;
+}
+
+// 게시글 인터페이스
 interface Article {
   boardId: number;
   userId: number;
@@ -35,6 +41,16 @@ const Board = () => {
   // 카테고리 버튼을 누르면 getCategorized api로 뽑아온 데이터를
   // getArticleBoard에 넣어 Article 형식에 맞게 바꾼 articles로 반환한다
   const [articles, getArticleBoard] = useState<Article[]>([]);
+
+  // 카테고리 클릭 관련
+  const categories: Category[] = [
+    { name: '전체' },
+    { name: '구인' },
+    { name: '질문' },
+    { name: '홍보' },
+    { name: '잡담' },
+  ];
+
   const [categoryClick, setCategoryClick] = useState('전체');
   const categorization = useCallback(
     (search: string) => () => {
@@ -120,21 +136,18 @@ const Board = () => {
   return (
     <div>
       <div className="category__container">
-        <div className={categoryClick === '전체' ? 'category__active' : ''}>
-          <TextButton label="전체" onClick={categorization('전체')} />
-        </div>
-        <div className={categoryClick === '구인' ? 'category__active' : ''}>
-          <TextButton label="구인" onClick={categorization('구인')} />
-        </div>
-        <div className={categoryClick === '질문' ? 'category__active' : ''}>
-          <TextButton label="질문" onClick={categorization('질문')} />
-        </div>
-        <div className={categoryClick === '홍보' ? 'category__active' : ''}>
-          <TextButton label="홍보" onClick={categorization('홍보')} />
-        </div>
-        <div className={categoryClick === '잡담' ? 'category__active' : ''}>
-          <TextButton label="잡담" onClick={categorization('잡담')} />
-        </div>
+        {categories.map((category) => (
+          <div
+            className={
+              categoryClick === category.name ? 'category__active' : ''
+            }
+          >
+            <TextButton
+              label={category.name}
+              onClick={categorization(category.name)}
+            />
+          </div>
+        ))}
       </div>
       <div className="board__page">
         <div className="board__banner">

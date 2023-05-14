@@ -5,14 +5,31 @@ import TextInput from 'components/atoms/inputs/TextInput';
 import { postArticle } from 'services/board';
 import './WriteFrame.scss';
 
+// 카테고리 인터페이스
+interface Category {
+  name: string;
+}
+
 const WriteFrame = () => {
   // 제목, 헤더(카테고리), 내용 - useState 정의 및 초기화
   const [title, setTitle] = useState<string>('');
   const [header, setHeader] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
+  // 카테고리(헤더) 관련
+  const categories: Category[] = [
+    { name: '구인' },
+    { name: '질문' },
+    { name: '홍보' },
+    { name: '잡담' },
+  ];
+
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
+  };
+
+  const clickCategory = (category: string) => {
+    setHeader(category);
   };
 
   const onChangeContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -34,7 +51,7 @@ const WriteFrame = () => {
     // 백엔드 쪽에 새로운 게시글 정보 post
     postArticle(
       title,
-      '홍보',
+      header,
       content,
       ({ data }) => {
         console.log(data);
@@ -59,6 +76,18 @@ const WriteFrame = () => {
             stroke
             onChange={onChangeTitle}
           />
+        </div>
+        <div>
+          {categories.map((category) => (
+            <Button
+              key={category.name}
+              onClick={() => clickCategory(category.name)}
+              type="button"
+              tag
+              label={category.name}
+              color={header === category.name ? 'primary' : 'other'}
+            />
+          ))}
         </div>
         <div>
           <div className="write__label">본문</div>
