@@ -9,7 +9,7 @@ interface StudioNoteColumnProps {
   rowIndex: number;
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string | string[]) => void;
-  playDrum?: (beatPower: 'weak' | 'strong') => void;
+  playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteStyle: boolean;
 }
 
@@ -73,8 +73,8 @@ const StudioNoteColumn = ({
           />
         );
       })}
-      <StudioDrumItem power={drumPower} playDrum={playDrum} />
-      <StudioDrumItem power={drumPower} playDrum={playDrum} />
+      <StudioDrumItem power={drumPower} playDrum={playDrum} type="snare" />
+      <StudioDrumItem power={drumPower} playDrum={playDrum} type="kick" />
     </div>
   );
 };

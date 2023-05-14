@@ -7,7 +7,7 @@ interface StudioNoteColumnProps {
   notes: Note[];
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string | string[]) => void;
-  playDrum?: (beatPower: 'weak' | 'strong') => void;
+  playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
 }
 const Row = 160;

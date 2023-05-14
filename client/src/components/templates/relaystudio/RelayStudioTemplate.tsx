@@ -15,7 +15,9 @@ const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
   const [pianoInstance, setPianoInstance] = useState<Tone.Sampler | null>(null);
-  const [drumInstance, setDrumInstance] = useState<Tone.Sampler | null>(null);
+  const [drumInstance, setDrumInstance] = useState<Tone.MembraneSynth | null>(
+    null
+  );
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
@@ -61,19 +63,12 @@ const RelayStudioTemplate = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const sampler = new Tone.Sampler({
-  //     urls: {
-  //       C2: 'kick.mp3',
-  //       G4: 'snare.mp3',
-  //     },
-  //     release: 1,
-  //     baseUrl: 'https://your-audio-files-url/',
-  //   }).toDestination();
-  //   Tone.loaded().then(() => {
-  //     setDrumInstance(sampler);
-  //   });
-  // }, []);
+  useEffect(() => {
+    const synth = new Tone.MembraneSynth().toDestination();
+    Tone.loaded().then(() => {
+      setDrumInstance(synth);
+    });
+  }, []);
 
   const updateNote = useCallback(
     (name: string, timing: number | undefined) => {
@@ -177,8 +172,10 @@ const RelayStudioTemplate = () => {
   };
 
   const playDrum = useCallback(
-    (beatPower: 'weak' | 'strong') => {
-      console.log(beatPower);
+    (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
+      if (drumInstance !== null) {
+        drumInstance.triggerAttackRelease('c2', '8n');
+      }
     },
     [drumInstance]
   );

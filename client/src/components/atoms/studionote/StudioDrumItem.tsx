@@ -3,11 +3,13 @@ import './StudioDrumItem.scss';
 
 interface StudioDrumItemProps {
   power?: 'strong' | 'weak';
-  playDrum?: (beatPower: 'weak' | 'strong') => void;
+  type?: 'kick' | 'snare';
+  playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
 }
 
 const StudioDrumItem = ({
   power = 'weak',
+  type = 'kick',
   playDrum = () => {
     console.log();
   },
@@ -15,7 +17,7 @@ const StudioDrumItem = ({
   const circleSize = power === 'strong' ? 'large' : 'small';
 
   const selectDrum = () => {
-    playDrum(power);
+    playDrum(power, type);
   };
   return (
     <button
