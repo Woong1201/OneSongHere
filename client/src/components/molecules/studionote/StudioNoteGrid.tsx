@@ -6,6 +6,7 @@ import StudioNoteColumn from './StudioNoteColumn';
 interface StudioNoteColumnProps {
   notes: Note[];
   updateNote?: (name: string, timing: number) => void;
+  updateDrum?: (name: string, timing: number | undefined) => void;
   playNote?: (noteName: string | string[]) => void;
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
@@ -15,6 +16,7 @@ const Row = 160;
 const StudioNoteGrid = ({
   notes,
   updateNote,
+  updateDrum,
   playNote,
   playDrum,
   noteColumnStyle,
@@ -29,6 +31,7 @@ const StudioNoteGrid = ({
           <StudioNoteColumn
             columnNotes={columnNotes}
             updateNote={updateNote}
+            updateDrum={updateDrum}
             playNote={playNote}
             playDrum={playDrum}
             key={rowIndex}

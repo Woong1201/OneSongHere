@@ -8,6 +8,7 @@ interface StudioNoteScrollProps {
   scrollPosition: number;
   updateScrollPosition: (position: number) => void;
   updateNote: (name: string, timing: number) => void;
+  updateDrum: (name: string, timing: number | undefined) => void;
   playNote: (noteName: string | string[]) => void;
   playDrum: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
@@ -18,6 +19,7 @@ const StudioNoteContainer = ({
   scrollPosition,
   updateScrollPosition,
   updateNote,
+  updateDrum,
   playNote,
   playDrum,
   noteColumnStyle,
@@ -109,6 +111,7 @@ const StudioNoteContainer = ({
       <StudioNoteGrid
         notes={notes}
         updateNote={updateNote}
+        updateDrum={updateDrum}
         playNote={playNote}
         playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}

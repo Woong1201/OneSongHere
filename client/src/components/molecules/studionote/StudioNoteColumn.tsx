@@ -8,6 +8,7 @@ interface StudioNoteColumnProps {
   columnNotes: Note[] | undefined;
   rowIndex: number;
   updateNote?: (name: string, timing: number) => void;
+  updateDrum?: (name: string, timing: number | undefined) => void;
   playNote?: (noteName: string | string[]) => void;
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteStyle: boolean;
@@ -46,6 +47,7 @@ const StudioNoteColumn = ({
   columnNotes,
   rowIndex,
   updateNote,
+  updateDrum,
   playNote,
   playDrum,
   noteStyle,
@@ -90,14 +92,18 @@ const StudioNoteColumn = ({
         );
       })}
       <StudioDrumItem
+        timing={timing}
         power={drumPower}
         playDrum={playDrum}
+        updateDrum={updateDrum}
         type="snare"
         selected={snareNoteSelected}
       />
       <StudioDrumItem
+        timing={timing}
         power={drumPower}
         playDrum={playDrum}
+        updateDrum={updateDrum}
         type="kick"
         selected={kickNoteSelected}
       />

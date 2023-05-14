@@ -162,6 +162,32 @@ const RelayStudioTemplate = () => {
     [noteScrollPosition]
   );
 
+  const updateDrum = useCallback(
+    (name: string, timing: number | undefined) => {
+      if (timing !== undefined) {
+        setNotes((prevNotes) => {
+          // 만약 이전의 노트에 해당 이름과 타이밍의 노트가 있다면
+          if (
+            prevNotes.some(
+              (note) => note.names === name && note.timing === timing
+            )
+          ) {
+            // 제거
+            return prevNotes.filter(
+              (note) => note.names !== name || note.timing !== timing
+            );
+          }
+          // 없다면 추가
+          return [
+            ...prevNotes,
+            { names: name, duration: '8n', timing, instrumentType: 'beat' },
+          ];
+        });
+      }
+    },
+    [noteScrollPosition]
+  );
+
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
     const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
@@ -252,6 +278,7 @@ const RelayStudioTemplate = () => {
             updateScrollPosition={updateNoteScrollPosition}
             notes={notes}
             updateNote={updateNote}
+            updateDrum={updateDrum}
             playNote={playNote}
             playDrum={playDrum}
             noteColumnStyle={noteColumnStyle}
