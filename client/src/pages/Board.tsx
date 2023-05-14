@@ -35,9 +35,11 @@ const Board = () => {
   // 카테고리 버튼을 누르면 getCategorized api로 뽑아온 데이터를
   // getArticleBoard에 넣어 Article 형식에 맞게 바꾼 articles로 반환한다
   const [articles, getArticleBoard] = useState<Article[]>([]);
+  const [categoryClick, setCategoryClick] = useState('전체');
   const categorization = useCallback(
     (search: string) => () => {
       setIsLoading(true);
+      setCategoryClick(search);
       if (search === '전체') {
         getBoards(
           ({ data }) => {
@@ -118,12 +120,21 @@ const Board = () => {
   return (
     <div>
       <div className="category__container">
-        {/* onclick으로 카테고리에 맞게 아티클들 필터링할 수 있게 해줘야 함 */}
-        <TextButton label="전체" onClick={categorization('전체')} />
-        <TextButton label="구인" onClick={categorization('구인')} />
-        <TextButton label="질문" onClick={categorization('질문')} />
-        <TextButton label="홍보" onClick={categorization('홍보')} />
-        <TextButton label="잡담" onClick={categorization('잡담')} />
+        <div className={categoryClick === '전체' ? 'category__active' : ''}>
+          <TextButton label="전체" onClick={categorization('전체')} />
+        </div>
+        <div className={categoryClick === '구인' ? 'category__active' : ''}>
+          <TextButton label="구인" onClick={categorization('구인')} />
+        </div>
+        <div className={categoryClick === '질문' ? 'category__active' : ''}>
+          <TextButton label="질문" onClick={categorization('질문')} />
+        </div>
+        <div className={categoryClick === '홍보' ? 'category__active' : ''}>
+          <TextButton label="홍보" onClick={categorization('홍보')} />
+        </div>
+        <div className={categoryClick === '잡담' ? 'category__active' : ''}>
+          <TextButton label="잡담" onClick={categorization('잡담')} />
+        </div>
       </div>
       <div className="board__page">
         <div className="board__banner">

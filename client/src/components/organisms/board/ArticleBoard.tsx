@@ -50,7 +50,7 @@ const ArticleBoard = ({
   // 해당 값이 바뀔 때 함수가 호출되도록 함
 
   return (
-    <div>
+    <div className="aBoard">
       {isLoading ? (
         <div>로딩 중입니다...</div>
       ) : (
