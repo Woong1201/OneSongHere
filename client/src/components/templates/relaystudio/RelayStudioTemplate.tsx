@@ -17,11 +17,11 @@ const RelayStudioTemplate = () => {
   const [instrumentInstances, setInstrumentInstances] = useState<{
     piano: Tone.Sampler | null;
     casio: Tone.Sampler | null;
-    bongo: { [key: string]: Tone.Player } | null; // 수정된 부분
+    drum: { [key: string]: Tone.Player } | null; // 수정된 부분
   }>({
     piano: null,
     casio: null,
-    bongo: null,
+    drum: null,
   });
 
   const [currentInstrument, setCurrentInstrument] = useState<string>('piano');
@@ -87,6 +87,7 @@ const RelayStudioTemplate = () => {
 
     const kickPlayer = new Tone.Player({
       url: 'https://tonejs.github.io/audio/drum-samples/CR78/kick.mp3',
+      volume: +3,
       autostart: false,
     }).toDestination();
 
@@ -100,7 +101,7 @@ const RelayStudioTemplate = () => {
         setInstrumentInstances({
           piano: pianoSampler,
           casio: casioSampler,
-          bongo: {
+          drum: {
             kick: kickPlayer,
             snare: snarePlayer,
           },
@@ -234,9 +235,9 @@ const RelayStudioTemplate = () => {
   const playDrum = useCallback(
     (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
       console.log(beatPower, drumType);
-      if (instrumentInstances.bongo) {
+      if (instrumentInstances.drum) {
         const drumInstance = (
-          instrumentInstances.bongo as {
+          instrumentInstances.drum as {
             [key: string]: Tone.Player;
           }
         )[drumType];

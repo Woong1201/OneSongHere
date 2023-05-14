@@ -44,7 +44,7 @@ export const Primary: Story = {
     instrumentInstances: {
       piano: null,
       casio: null,
-      bongo: null,
+      drum: null,
     },
     currentInstrument: 'piano',
   },

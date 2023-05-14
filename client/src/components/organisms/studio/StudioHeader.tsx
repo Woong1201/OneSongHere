@@ -16,7 +16,7 @@ interface StudioHeaderProps {
   instrumentInstances: {
     piano: Tone.Sampler | null;
     casio: Tone.Sampler | null;
-    bongo: {
+    drum: {
       [key: string]: Tone.Player;
     } | null;
   };
