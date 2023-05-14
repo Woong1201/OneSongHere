@@ -9,7 +9,16 @@
       border-bottom: 0px;
     }
     &:nth-child(12) {
-      border-bottom: 3px rgba($main-theme-color, 0.5) solid;
+      border-bottom: 1.5px rgba($main-theme-color, 0.5) solid;
+    }
+    &:nth-child(13) {
+      border-top: 1.5px rgba($main-theme-color, 0.5) solid;
+    }
+    &:nth-child(24) {
+      border-bottom: 1.5px rgba(black, 0.5) solid;
+    }
+    &:nth-child(25) {
+      border-top: 1.5px rgba(black, 0.5) solid;
     }
   }
 }

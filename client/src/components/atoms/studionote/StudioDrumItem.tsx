@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './StudioDrumItem.scss';
 
 interface StudioDrumItemProps {
   power?: 'strong' | 'weak';
   type?: 'kick' | 'snare';
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
+  selected: boolean;
 }
 
 const StudioDrumItem = ({
   power = 'weak',
   type = 'kick',
+  selected,
   playDrum = () => {
     console.log();
   },
-}: StudioDrumItemProps) => {
+}: // selected,
+StudioDrumItemProps) => {
   const circleSize = power === 'strong' ? 'large' : 'small';
+  const [isSelected, setIsSelected] = useState(selected);
 
   const selectDrum = () => {
     playDrum(power, type);
   };
+
   return (
     <button
       type="button"

@@ -18,10 +18,15 @@ export const Primary: Story = {
   args: {
     scrollPosition: 0,
     notes: [
-      { names: ['C4'], duration: '8n', timing: 0 },
-      { names: ['D#4', 'E4'], duration: '8n', timing: 0 },
-      { names: ['C4'], duration: '8n', timing: 0 },
-      { names: ['음계'], duration: '8n', timing: 0 },
+      { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+      {
+        names: ['D#4', 'E4'],
+        duration: '8n',
+        timing: 0,
+        instrumentType: 'melody',
+      },
+      { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+      { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     noteColumnStyle: Array(160).fill(false),
   },

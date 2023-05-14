@@ -17,11 +17,15 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     notes: [
-      { names: ['D#5'], duration: '8n', timing: 0.25 },
-      { names: ['B4'], duration: '8n', timing: 1.25 },
-      { names: ['E5'], duration: '8n', timing: 0.5 },
-      { names: ['D#5'], duration: '8n', timing: 0.75 },
-      { names: ['Eb4', 'G4', 'Bb4'], duration: '8n', timing: 1 },
+      { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+      {
+        names: ['D#4', 'E4'],
+        duration: '8n',
+        timing: 0,
+        instrumentType: 'melody',
+      },
+      { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+      { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     instrumentInstances: {
       piano: null,

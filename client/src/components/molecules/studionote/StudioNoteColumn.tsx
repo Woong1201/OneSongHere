@@ -5,7 +5,7 @@ import { Note } from 'types/Note';
 import StudioDrumItem from 'components/atoms/studionote/StudioDrumItem';
 
 interface StudioNoteColumnProps {
-  columnNote: Note | undefined;
+  columnNotes: Note[] | undefined;
   rowIndex: number;
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string | string[]) => void;
@@ -43,7 +43,7 @@ const noteList = [
 ].reverse();
 
 const StudioNoteColumn = ({
-  columnNote,
+  columnNotes,
   rowIndex,
   updateNote,
   playNote,
@@ -56,12 +56,28 @@ const StudioNoteColumn = ({
 
   const timing = rowIndex * 0.25;
   const drumPower = rowIndex % 2 === 0 ? 'strong' : 'weak';
+  const melodyNote = columnNotes?.find((columnNote) => {
+    return columnNote.instrumentType === 'melody';
+  });
+  const snareNoteSelected =
+    columnNotes?.some((columnNote) => {
+      return (
+        columnNote.instrumentType === 'melody' && columnNote.names === 'kick'
+      );
+    }) || false;
+  const kickNoteSelected =
+    columnNotes?.some((columnNote) => {
+      return (
+        columnNote.instrumentType === 'melody' && columnNote.names === 'kick'
+      );
+    }) || false;
 
   return (
     <div className={columnClassNames} id={timing.toString()}>
       {noteList.map((note) => {
         const key = `${timing}-${note}`;
-        const isSelected = columnNote?.names.includes(note) || false;
+
+        const isSelected = melodyNote?.names.includes(note) || false;
         return (
           <StudioNoteItem
             updateNote={updateNote}
@@ -73,8 +89,18 @@ const StudioNoteColumn = ({
           />
         );
       })}
-      <StudioDrumItem power={drumPower} playDrum={playDrum} type="snare" />
-      <StudioDrumItem power={drumPower} playDrum={playDrum} type="kick" />
+      <StudioDrumItem
+        power={drumPower}
+        playDrum={playDrum}
+        type="snare"
+        selected={snareNoteSelected}
+      />
+      <StudioDrumItem
+        power={drumPower}
+        playDrum={playDrum}
+        type="kick"
+        selected={kickNoteSelected}
+      />
     </div>
   );
 };

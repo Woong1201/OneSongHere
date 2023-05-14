@@ -22,12 +22,12 @@ const StudioNoteGrid = ({
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {
-        const columnNote = notes.find((note) => {
+        const columnNotes = notes.filter((note) => {
           return note.timing === rowIndex * 0.25;
         });
         return (
           <StudioNoteColumn
-            columnNote={columnNote}
+            columnNotes={columnNotes}
             updateNote={updateNote}
             playNote={playNote}
             playDrum={playDrum}
