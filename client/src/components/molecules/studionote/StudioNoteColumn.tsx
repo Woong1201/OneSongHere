@@ -2,12 +2,15 @@ import React from 'react';
 import './StudioNoteColumn.scss';
 import StudioNoteItem from 'components/atoms/studionote/StudioNoteItem';
 import { Note } from 'types/Note';
+import StudioDrumItem from 'components/atoms/studionote/StudioDrumItem';
 
 interface StudioNoteColumnProps {
-  columnNote: Note | undefined;
-  timing: number;
+  columnNotes: Note[] | undefined;
+  rowIndex: number;
   updateNote?: (name: string, timing: number) => void;
+  updateDrum?: (name: string, timing: number | undefined) => void;
   playNote?: (noteName: string | string[]) => void;
+  playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteStyle: boolean;
 }
 
@@ -41,21 +44,42 @@ const noteList = [
 ].reverse();
 
 const StudioNoteColumn = ({
-  columnNote,
-  timing,
+  columnNotes,
+  rowIndex,
   updateNote,
+  updateDrum,
   playNote,
+  playDrum,
   noteStyle,
 }: StudioNoteColumnProps) => {
   const columnClassNames = noteStyle
     ? 'studio__note-column playing'
     : 'studio__note-column';
 
+  const timing = rowIndex * 0.25;
+  const drumPower = rowIndex % 2 === 0 ? 'strong' : 'weak';
+  const melodyNote = columnNotes?.find((columnNote) => {
+    return columnNote.instrumentType === 'melody';
+  });
+  const snareNoteSelected =
+    columnNotes?.some((columnNote) => {
+      return (
+        columnNote.instrumentType === 'beat' && columnNote.names === 'snare'
+      );
+    }) || false;
+  const kickNoteSelected =
+    columnNotes?.some((columnNote) => {
+      return (
+        columnNote.instrumentType === 'beat' && columnNote.names === 'kick'
+      );
+    }) || false;
+
   return (
     <div className={columnClassNames} id={timing.toString()}>
       {noteList.map((note) => {
         const key = `${timing}-${note}`;
-        const isSelected = columnNote?.names.includes(note) || false;
+
+        const isSelected = melodyNote?.names.includes(note) || false;
         return (
           <StudioNoteItem
             updateNote={updateNote}
@@ -67,6 +91,22 @@ const StudioNoteColumn = ({
           />
         );
       })}
+      <StudioDrumItem
+        timing={timing}
+        power={drumPower}
+        playDrum={playDrum}
+        updateDrum={updateDrum}
+        type="snare"
+        selected={snareNoteSelected}
+      />
+      <StudioDrumItem
+        timing={timing}
+        power={drumPower}
+        playDrum={playDrum}
+        updateDrum={updateDrum}
+        type="kick"
+        selected={kickNoteSelected}
+      />
     </div>
   );
 };

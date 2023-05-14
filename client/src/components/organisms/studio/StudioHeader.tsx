@@ -13,7 +13,14 @@ import * as Tone from 'tone';
 interface StudioHeaderProps {
   studioInfo: RelayStudioInfo | StudioInfo | undefined;
   notes: Note[];
-  pianoInstance: Tone.Sampler | null;
+  instrumentInstances: {
+    piano: Tone.Sampler | null;
+    casio: Tone.Sampler | null;
+    drum: {
+      [key: string]: Tone.Player;
+    } | null;
+  };
+  currentInstrument: string;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -23,7 +30,8 @@ interface StudioHeaderProps {
 const StudioHeader = ({
   studioInfo,
   notes,
-  pianoInstance,
+  instrumentInstances,
+  currentInstrument,
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
@@ -64,7 +72,8 @@ const StudioHeader = ({
     <div className="studio__header">
       <StudioControll
         notes={notes}
-        pianoInstance={pianoInstance}
+        instrumentInstances={instrumentInstances}
+        currentInstrument={currentInstrument}
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
