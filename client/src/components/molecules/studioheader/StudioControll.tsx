@@ -73,14 +73,20 @@ const StudioControll = ({
     // 칸 다 재생하는건데 아직 느려서 잘 안됨
     for (let i = 0; i < 160; i += 1) {
       setTimeout(() => {
-        const newStyle = [...initialStyle];
-        newStyle[i] = true;
-        setNoteColumnStyle(newStyle);
+        setNoteColumnStyle((prevStyle) => {
+          const newStyle = [...prevStyle];
+          newStyle[i] = true;
+          return newStyle;
+        });
       }, i * 250);
 
       setTimeout(() => {
-        setNoteColumnStyle([...initialStyle]);
-      }, (i + 0.3) * 250);
+        setNoteColumnStyle((prevStyle) => {
+          const newStyle = [...prevStyle];
+          newStyle[i] = false;
+          return newStyle;
+        });
+      }, (i + 0.75) * 250);
     }
   };
   const stopSequence = () => {
