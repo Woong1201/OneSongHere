@@ -1,0 +1,30 @@
+@import 'styles/_variables';
+
+.studio__drum-item {
+  width: 35px;
+  border: 1px solid #ccc;
+  background: none;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  &--selected {
+    background-color: rgba($main-theme-color, 0.4) !important;
+  }
+
+  &-circle {
+    border-radius: 50%;
+    background-color: $header-color;
+    &--small {
+      width: 6px;
+      height: 6px;
+    }
+    &--large {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
