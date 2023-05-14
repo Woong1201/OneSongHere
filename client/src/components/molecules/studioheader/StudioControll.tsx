@@ -9,7 +9,14 @@ import Button from 'components/atoms/buttons/Button';
 
 interface StudioControllProps {
   notes: Note[];
-  pianoInstance: Tone.Sampler | null;
+  instrumentInstances: {
+    piano: Tone.Sampler | null;
+    casio: Tone.Sampler | null;
+    drum: {
+      [key: string]: Tone.Player;
+    } | null;
+  };
+  currentInstrument: string;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -18,49 +25,70 @@ interface StudioControllProps {
 
 const StudioControll = ({
   notes,
-  pianoInstance,
+  instrumentInstances,
+  currentInstrument,
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
 }: StudioControllProps) => {
   // 시퀀스 재생 메소드
-  const playSequence = useCallback(() => {
+  const playSequence = () => {
     const initialStyle = Array(160).fill(false);
 
     notes.forEach((note) => {
       const now = Tone.now();
-      (pianoInstance as Tone.Sampler).triggerAttackRelease(
-        note.names,
-        note.duration,
-        now + note.timing
-      );
+      if (note.instrumentType === 'melody') {
+        const instrumentInstance =
+          instrumentInstances[currentInstrument as 'piano' | 'casio'];
+        if (instrumentInstance != null) {
+          instrumentInstance.triggerAttackRelease(
+            note.names,
+            note.duration,
+            now + note.timing
+          );
+        }
+      } else if (note.instrumentType === 'beat') {
+        const drumInstance = (
+          instrumentInstances.drum as {
+            [key: string]: Tone.Player;
+          }
+        )[note.names as string];
+        if (drumInstance) {
+          drumInstance.start(now + note.timing);
+        }
+      }
 
-      setTimeout(() => {
-        const newStyle = [...initialStyle];
-        newStyle[note.timing * 4] = true;
-        setNoteColumnStyle(newStyle);
-      }, note.timing * 1000);
+      // setTimeout(() => {
+      //   const newStyle = [...initialStyle];
+      //   newStyle[note.timing * 4] = true;
+      //   setNoteColumnStyle(newStyle);
+      // }, note.timing * 1000);
 
-      setTimeout(() => {
-        setNoteColumnStyle([...initialStyle]);
-      }, (note.timing + Tone.Time('8n').toSeconds()) * 1000);
+      // setTimeout(() => {
+      //   setNoteColumnStyle([...initialStyle]);
+      // }, (note.timing + Tone.Time('8n').toSeconds()) * 1000);
     });
 
     // 칸 다 재생하는건데 아직 느려서 잘 안됨
-    // for (let i = 0; i < 160; i += 1) {
-    //   setTimeout(() => {
-    //     const newStyle = [...initialStyle];
-    //     newStyle[i] = true;
-    //     setNoteColumnStyle(newStyle);
-    //   }, i * 250);
+    for (let i = 0; i < 160; i += 1) {
+      setTimeout(() => {
+        setNoteColumnStyle((prevStyle) => {
+          const newStyle = [...prevStyle];
+          newStyle[i] = true;
+          return newStyle;
+        });
+      }, i * 250);
 
-    //   setTimeout(() => {
-    //     setNoteColumnStyle([...initialStyle]);
-    //   }, (i + 0.25) * 250);
-    // }
-  }, [notes, pianoInstance, setNoteColumnStyle]);
-
+      setTimeout(() => {
+        setNoteColumnStyle((prevStyle) => {
+          const newStyle = [...prevStyle];
+          newStyle[i] = false;
+          return newStyle;
+        });
+      }, (i + 0.75) * 250);
+    }
+  };
   const stopSequence = () => {
     Tone.Transport.stop();
   };

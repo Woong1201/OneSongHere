@@ -73,15 +73,17 @@ const getStudioSearchResult = async (
     .catch(fail);
 };
 
-const postNotes = async (
+const postRelayNotes = async (
   data: relayNotes,
   success: (response: AxiosResponse) => void,
   fail: (response: AxiosError) => void
 ): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
   await api({
-    method: 'post',
-    url: '/relayStudio/test',
-    data: { data },
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'patch',
+    url: '/relayStudios',
+    data,
   })
     .then(success)
     .catch(fail);
@@ -92,5 +94,5 @@ export {
   getRelayStudioList,
   getRelayStudioInfo,
   getStudioSearchResult,
-  postNotes,
+  postRelayNotes,
 };

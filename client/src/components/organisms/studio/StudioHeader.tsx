@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './StudioHeader.scss';
 import ProfileImageList from 'components/molecules/studioheader/ProfileImageList';
 import StudioControll from 'components/molecules/studioheader/StudioControll';
@@ -13,22 +13,31 @@ import * as Tone from 'tone';
 interface StudioHeaderProps {
   studioInfo: RelayStudioInfo | StudioInfo | undefined;
   notes: Note[];
-  pianoInstance: Tone.Sampler | null;
+  instrumentInstances: {
+    piano: Tone.Sampler | null;
+    casio: Tone.Sampler | null;
+    drum: {
+      [key: string]: Tone.Player;
+    } | null;
+  };
+  currentInstrument: string;
   changePlayingStyle: (timing: number) => void;
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
+  saveNotes: () => void;
 }
 const StudioHeader = ({
   studioInfo,
   notes,
-  pianoInstance,
+  instrumentInstances,
+  currentInstrument,
   changePlayingStyle,
   revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
+  saveNotes,
 }: StudioHeaderProps) => {
-  console.log(studioInfo);
   let studioTitle = '';
 
   if (studioInfo) {
@@ -38,8 +47,6 @@ const StudioHeader = ({
       studioTitle = studioInfo.studioTitle;
     }
   }
-
-  // useEffect()
 
   const users: User[] = [
     {
@@ -65,7 +72,8 @@ const StudioHeader = ({
     <div className="studio__header">
       <StudioControll
         notes={notes}
-        pianoInstance={pianoInstance}
+        instrumentInstances={instrumentInstances}
+        currentInstrument={currentInstrument}
         changePlayingStyle={changePlayingStyle}
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
@@ -73,7 +81,7 @@ const StudioHeader = ({
       />
       <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />
-      <StudioMenu />
+      <StudioMenu saveNotes={saveNotes} />
     </div>
   );
 };

@@ -5,23 +5,25 @@ import './StudioNote.scss';
 import { Note } from 'types/Note';
 
 interface StudioNoteProps {
+  scrollPosition: number;
+  updateScrollPosition: (position: number) => void;
   notes: Note[];
   updateNote: (name: string, timing: number) => void;
+  updateDrum: (name: string, timing: number | undefined) => void;
   playNote: (noteName: string | string[]) => void;
+  playDrum: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
 }
 const StudioNote = ({
+  scrollPosition,
+  updateScrollPosition,
   updateNote,
+  updateDrum,
   playNote,
+  playDrum,
   notes,
   noteColumnStyle,
 }: StudioNoteProps) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const updateScrollPosition = (position: number) => {
-    setScrollPosition(position);
-  };
-
   return (
     <div className="studio__note">
       <StudioNoteScroll
@@ -35,7 +37,9 @@ const StudioNote = ({
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
         updateNote={updateNote}
+        updateDrum={updateDrum}
         playNote={playNote}
+        playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}
       />
     </div>
