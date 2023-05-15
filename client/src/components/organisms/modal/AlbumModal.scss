@@ -12,7 +12,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 30%;
   max-width: 600px;
-  height: 80%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,7 +27,7 @@
     z-index: 999;
   }
   &__title {
-    height: 6%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -37,7 +37,7 @@
     width: 70%;
   }
   &__album-title {
-    height: 15%;
+    height: 25%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -45,11 +45,11 @@
     align-items: flex-start;
     &__input {
       margin-top: 5px;
-      width: 94%;
+      width: 100%;
     }
   }
   &__album-content {
-    height: 25%;
+    height: 35%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -67,7 +67,7 @@
     }
   }
   &__album-tag {
-    height: 15%;
+    height: 25%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -75,19 +75,7 @@
     align-items: flex-start;
     &__input {
       margin-top: 5px;
-      width: 94%;
-    }
-  }
-  &__album-img {
-    height: 35%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    &__input {
-      margin-top: 5px;
-      height: 80%;
+      width: 100%;
     }
   }
   &__button {
@@ -96,7 +84,7 @@
     justify-content: space-between;
     align-items: flex-end;
     &__container {
-      height: 10%;
+      height: 15%;
       width: 120%;
       display: flex;
       justify-content: flex-end;

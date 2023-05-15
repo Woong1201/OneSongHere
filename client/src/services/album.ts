@@ -1,7 +1,9 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { apiInstance } from './index';
+import { Note } from 'types/Note';
+import { aiApiInstance, apiInstance } from './index';
 
 const api = apiInstance();
+const aiApi = aiApiInstance();
 
 const getAlbums = async (
   success: (response: AxiosResponse) => void,
@@ -18,7 +20,7 @@ const getAlbums = async (
 const postAlbum = async (
   title: string,
   content: string,
-  albumSheet: Array<string>,
+  albumSheet: string,
   genre: Array<string>,
   imgUrl: string,
   success: (response: AxiosResponse) => void,
@@ -30,15 +32,35 @@ const postAlbum = async (
     method: 'post',
     url: '/albums',
     data: {
-      AlbumTitle: title,
-      AlbumContent: content,
+      albumTitle: title,
+      albumContent: content,
       albumSheet,
       tags: genre,
-      AlbumUrl: imgUrl,
+      albumUrl: imgUrl,
     },
   })
     .then(success)
     .catch(fail);
 };
 
-export { getAlbums, postAlbum };
+const createAlbumCover = async (
+  text: string,
+  studioId: number,
+  userId: number,
+  success: (response: AxiosResponse) => void,
+  fail: (response: AxiosError) => void
+): Promise<void> => {
+  await aiApi({
+    method: 'post',
+    url: '/createCover',
+    data: {
+      studio_id: studioId,
+      user_id: userId,
+      text,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { getAlbums, postAlbum, createAlbumCover };

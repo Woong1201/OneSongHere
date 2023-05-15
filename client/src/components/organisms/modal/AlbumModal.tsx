@@ -4,24 +4,46 @@ import Button from 'components/atoms/buttons/Button';
 import './AlbumModal.scss';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 import CardTitle from 'components/atoms/common/CardTitle';
-// import { useNavigate } from 'react-router-dom';
-import { postAlbum } from 'services/album';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createAlbumCover, postAlbum } from 'services/album';
+import User from 'types/User';
+import { Note } from 'types/Note';
 
 interface ModalProps {
-  albumSheet?: Array<string>;
+  notes?: Array<Note>;
   onClickModal: () => void;
 }
 
-const Modal = ({ albumSheet = [], onClickModal }: ModalProps) => {
+const AlbumModal = ({
+  notes = [
+    { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+    {
+      names: ['D#4', 'E4'],
+      duration: '8n',
+      timing: 0,
+      instrumentType: 'melody',
+    },
+    { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
+    { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
+  ],
+  onClickModal,
+}: ModalProps) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [genre, setGenre] = useState<Array<string>>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  // const navigate = useNavigate();
-  const imgUrl =
-    'https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_org.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90';
-
+  const navigate = useNavigate();
+  const [imgUrl, setImgUrl] = useState<string>('');
+  const { relayStudioId } = useParams();
+  const studioId = Number(relayStudioId);
+  const [userId, setUserId] = useState<number>(0);
+  let albumSheet = JSON.stringify(notes);
+  albumSheet = albumSheet.replace(/"/g, "'");
   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUserId((JSON.parse(storedUser) as User).userId);
+    }
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'auto';
@@ -49,8 +71,31 @@ const Modal = ({ albumSheet = [], onClickModal }: ModalProps) => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const text = [title, content, genre.join(', ')].join(', ');
 
+    const createCover = () => {
+      createAlbumCover(
+        text,
+        studioId,
+        userId,
+        ({ data }) => {
+          setImgUrl(data);
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+    };
+
+    createCover();
+  };
+  useEffect(() => {
     const postAlbumData = () => {
+      console.log('title', title);
+      console.log('content', content);
+      console.log('albumSheet', albumSheet);
+      console.log('genre', genre);
+      console.log('imgUrl', imgUrl);
       postAlbum(
         title,
         content,
@@ -59,15 +104,17 @@ const Modal = ({ albumSheet = [], onClickModal }: ModalProps) => {
         imgUrl,
         ({ data }) => {
           console.log(data);
+          navigate('/albums');
         },
         (error) => {
           console.log('error', error);
         }
       );
     };
-
-    postAlbumData();
-  };
+    if (imgUrl !== '') {
+      postAlbumData();
+    }
+  }, [imgUrl]);
 
   return (
     <div className="modal--overlay">
@@ -108,10 +155,6 @@ const Modal = ({ albumSheet = [], onClickModal }: ModalProps) => {
               />
             </div>
           </div>
-          <div className="modal__album-img">
-            <CardTitle title="앨범 커버 제작" />
-            <img src={imgUrl} alt="cover" className="modal__album-img__input" />
-          </div>
           <div className="modal__button__container">
             <div className="modal__button">
               <Button
@@ -134,4 +177,4 @@ const Modal = ({ albumSheet = [], onClickModal }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default AlbumModal;
