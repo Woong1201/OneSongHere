@@ -1,0 +1,26 @@
+@import 'styles/_variables';
+
+.studio__chord {
+  // background-color: #EFEFEF;
+  width: 100%;
+  height: 60%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $main-theme-color;
+  }
+
+  &-title-area {
+    margin: 20px;
+  }
+  > .section-title {
+    color: $header-color;
+  }
+}
