@@ -51,6 +51,10 @@ const Modal = ({ onClickModal }: ModalProps) => {
     setNumberOfBars(value);
   };
 
+  const handleRemoveGenre = (genreToRemove: string) => {
+    setGenre((newGenre) => newGenre.filter((g) => g !== genreToRemove));
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(title);
@@ -101,6 +105,19 @@ const Modal = ({ onClickModal }: ModalProps) => {
           <div className="modal__studio-tag">
             <CardTitle title="장르" />
             <div className="modal__studio-tag__input">
+              {genre.length > 0 &&
+                genre.map((item) => {
+                  return (
+                    <div key={item}>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveGenre(item)}
+                      >
+                        {item}
+                      </button>
+                    </div>
+                  );
+                })}
               <TextInput
                 stroke
                 label="장르를 선택해주세요"

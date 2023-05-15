@@ -32,27 +32,29 @@ const UpDownInput = ({ aboutUser = false, onSelect }: UpDownInputProps) => {
   };
   return (
     <div className="up-down">
-      <input
-        className="up-down__input"
-        type="number"
-        value={count}
-        onChange={handleInputChange}
-      />
-      <div className="up-down__button">
-        <button
-          className="up-down__button__plus"
-          type="button"
-          onClick={() => handleCount('plus')}
-        >
-          <PlusIcon />
-        </button>
-        <button
-          className="up-down__button__minus"
-          type="button"
-          onClick={() => handleCount('minus')}
-        >
-          <MinusIcon />
-        </button>
+      <div className="up-down__container">
+        <input
+          className="up-down__input"
+          type="number"
+          value={count}
+          onChange={handleInputChange}
+        />
+        <div className="up-down__button">
+          <button
+            className="up-down__button__plus"
+            type="button"
+            onClick={() => handleCount('plus')}
+          >
+            <PlusIcon />
+          </button>
+          <button
+            className="up-down__button__minus"
+            type="button"
+            onClick={() => handleCount('minus')}
+          >
+            <MinusIcon />
+          </button>
+        </div>
       </div>
     </div>
   );
