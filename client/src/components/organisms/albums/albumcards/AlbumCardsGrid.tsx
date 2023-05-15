@@ -57,18 +57,18 @@ const AlbumCardsGrid = () => {
           }}
         >
           {albumlist.map((album) => (
-            <Col sm={12} md={12} lg={6}>
-              <div key={album.albumId}>
-                <AlbumCard
-                  imgPath={album.albumUrl}
-                  albumTitle={album.albumTitle}
-                  albumStudio={album.nickName}
-                  mp3Url={album.mp3Url}
-                  like={album.userLike}
-                  tags={album.tags}
-                  albumInfo={album.albumContent}
-                />
-              </div>
+            <Col sm={12} md={12} lg={6} key={album.albumId}>
+              {/* <div key={album.albumId}> */}
+              <AlbumCard
+                imgPath={album.albumUrl}
+                albumTitle={album.albumTitle}
+                albumStudio={album.nickName}
+                mp3Url={album.mp3Url}
+                like={album.userLike}
+                tags={album.tags}
+                albumInfo={album.albumContent}
+              />
+              {/* </div> */}
             </Col>
           ))}
         </Row>
