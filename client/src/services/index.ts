@@ -14,16 +14,17 @@ const apiInstance = (): AxiosInstance => {
   return AxiosInst;
 };
 
-// const loginApiInstance = (): AxiosInstance => {
-//   const AxiosInst = axios.create({
-//     baseURL: '',
-//     headers: {
-//       'Content-Type': 'application/json;charset=utf-8',
-//     },
-//   });
+// application/json 타입
+const aiApiInstance = (): AxiosInstance => {
+  const AxiosInst = axios.create({
+    baseURL: 'https://onesonghere.r-e.kr/ai-api/v1',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  });
 
-//   return AxiosInst;
-// };
+  return AxiosInst;
+};
 
 // multipart/form-data 형식
 const apiFormInstance = (): AxiosInstance => {
@@ -37,4 +38,4 @@ const apiFormInstance = (): AxiosInstance => {
   return AxiosInst;
 };
 
-export { apiInstance, apiFormInstance };
+export { apiInstance, aiApiInstance, apiFormInstance };
