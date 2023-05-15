@@ -16,6 +16,7 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   // 로딩 여부 관리
   // const [isLoading, setIsLoading] = useState(false);
 
+  // const [data, setData] = useState<Album[]>([]);
   const [visibleData, setVisibleData] = useState<Album[]>([]);
   const [page, setPage] = useState(1);
 
@@ -25,7 +26,8 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
     setWidth(window.innerWidth);
   };
   useEffect(() => {
-    setPage(1);
+    // setData(AlbumCards);
+    // setPage(1);
 
     window.addEventListener('resize', handleResize);
     return () => {
@@ -34,18 +36,21 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   }, []);
 
   useEffect(() => {
-    const startIndex = (page - 1) * 10;
-    const endIndex = startIndex + 10;
-    const visibleItems = AlbumCards.slice(startIndex, endIndex);
-    setVisibleData((prevData) => [...prevData, ...visibleItems]);
-  }, [AlbumCards, page]);
+    setVisibleData(AlbumCards.slice(0, 4));
+  }, [AlbumCards]);
 
   const handleScroll = () => {
+    console.log(visibleData.length, AlbumCards.length);
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
-      page * 10 < AlbumCards.length
+      visibleData.length < AlbumCards.length
     ) {
-      setPage((prevPage) => prevPage + 1);
+      const nextPage = page + 1;
+      const startIndex = (nextPage - 1) * 4;
+      const endIndex = startIndex + 4;
+      const newVisibleItems = AlbumCards.slice(startIndex, endIndex);
+      setPage(nextPage);
+      setVisibleData((prevData) => [...prevData, ...newVisibleItems]);
     }
   };
 
@@ -54,7 +59,7 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [visibleData, page, AlbumCards]);
 
   // ========================================================================
   // ===============================(  렌 더 링  )============================
