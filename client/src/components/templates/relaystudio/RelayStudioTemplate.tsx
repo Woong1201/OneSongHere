@@ -42,85 +42,85 @@ const RelayStudioTemplate = () => {
     // C Major
     C: {
       names: ['C4', 'E4', 'G4'],
-      duration: '4n',
+      duration: '8n',
       timing: 0,
       instrumentType: 'melody',
     },
     // G Major
     G: {
       names: ['G4', 'B4', 'D5'],
-      duration: '4n',
-      timing: 1,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // D Major
     D: {
       names: ['D4', 'F#4', 'A4'],
-      duration: '4n',
-      timing: 2,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // A Major
     A: {
       names: ['A4', 'C#5', 'E5'],
-      duration: '4n',
-      timing: 3,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // E Major
     E: {
       names: ['E4', 'G#4', 'B4'],
-      duration: '4n',
-      timing: 4,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // B Major
     B: {
       names: ['B4', 'D#5', 'F#5'],
-      duration: '4n',
-      timing: 5,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // A minor
     Am: {
       names: ['A4', 'C5', 'E5'],
-      duration: '4n',
-      timing: 6,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // E minor
     Em: {
       names: ['E4', 'G4', 'B4'],
-      duration: '4n',
-      timing: 7,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // B minor
     Bm: {
       names: ['B4', 'D5', 'F#5'],
-      duration: '4n',
-      timing: 8,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // F# minor
     'F#m': {
       names: ['F#4', 'A4', 'C#5'],
-      duration: '4n',
-      timing: 9,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // C# minor
     'C#m': {
       names: ['C#4', 'E4', 'G#4'],
-      duration: '4n',
-      timing: 10,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
     // G# minor
     'G#m': {
       names: ['G#4', 'B4', 'D#5'],
-      duration: '4n',
-      timing: 11,
+      duration: '8n',
+      timing: 0,
       instrumentType: 'melody',
     },
   };
@@ -300,11 +300,11 @@ const RelayStudioTemplate = () => {
     return possibleNoteTiming.find((num) => !timings.includes(num));
   };
 
-  const findChordInputTiming = () => {
-    const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
-    const timings = notes.map((note) => note.timing);
-    return possibleNoteTiming.find((num) => !timings.includes(num));
-  };
+  // const findChordInputTiming = () => {
+  //   const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+  //   const timings = notes.map((note) => note.timing);
+  //   return possibleNoteTiming.find((num) => !timings.includes(num));
+  // };
 
   const changePlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
@@ -346,21 +346,20 @@ const RelayStudioTemplate = () => {
     setNotes([]);
   }, [setNotes]);
 
-  const addChord = (chord: Chord) => {
-    const timing = findChordInputTiming();
+  const updateChord = (chord: Chord) => {
+    const timing = findInputTiming();
     if (timing) {
       const note = chordNotes[chord];
       setNotes((prevNote) => {
         return [
           ...prevNote,
           {
-            names: note.names,
-            duration: '8n',
+            ...note,
             timing,
-            instrumentType: 'melody',
           },
         ];
       });
+      playNote(note.names);
     }
   };
 
@@ -418,9 +417,7 @@ const RelayStudioTemplate = () => {
         </div>
         <div className="relay-studio__side">
           <StudioCam />
-          <div>
-            <StudioChord />
-          </div>
+          <StudioChord chordNotes={chordNotes} updateChord={updateChord} />
         </div>
       </div>
     </>
