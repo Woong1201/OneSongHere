@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Button from 'components/atoms/buttons/Button';
 import TextInput from 'components/atoms/inputs/TextInput';
-import { postArticle } from 'services/board';
+import { postArticle, updateArticle } from 'services/board';
 import './WriteFrame.scss';
 
 // 카테고리 인터페이스
@@ -12,20 +12,30 @@ interface Category {
 
 // 수정 인터페이스
 interface Update {
+  isUpdate: boolean;
+  uId?: number;
   uTitle?: string;
   uCategory?: string;
   uContent?: string;
 }
 
-const WriteFrame = ({ uTitle, uCategory, uContent }: Update) => {
+const WriteFrame = ({
+  isUpdate = false,
+  uId,
+  uTitle,
+  uCategory,
+  uContent,
+}: Update) => {
   // 제목, 헤더(카테고리), 내용 - useState 정의 및 초기화
   const [title, setTitle] = useState<string>('');
   const [header, setHeader] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
+  // 받아온 제목, 카테고리, 내용이 ?이므로 undefined로 받아오면 아래 비교단에서 에러가 나므로 형변환
   const strTitle = String(uTitle);
   const strCategory = String(uCategory);
   const strContent = String(uContent);
+  const numId = Number(uId);
   useEffect(() => {
     setHeader(strCategory);
   }, []);
@@ -78,6 +88,24 @@ const WriteFrame = ({ uTitle, uCategory, uContent }: Update) => {
     );
   };
 
+  const updateArticleData = () => {
+    console.log(numId, title, header, content);
+    updateArticle(
+      numId,
+      title,
+      header,
+      content,
+      ({ data }) => {
+        console.log(data);
+        // 커뮤니티 board 페이지로 이동
+        navigate('/board');
+      },
+      (error) => {
+        console.log('update error : ', error);
+      }
+    );
+  };
+
   // 렌더링
   return (
     <div className="write">
@@ -121,7 +149,7 @@ const WriteFrame = ({ uTitle, uCategory, uContent }: Update) => {
             label="등록"
             type="submit"
             color="primary"
-            onClick={postArticleData}
+            onClick={isUpdate ? updateArticleData : postArticleData}
           />
 
           <Button label="취소" type="button" onClick={goBack} />
