@@ -30,7 +30,7 @@ public class Album {
     @Column(name = "ALBUM_TITLE", length = 30)
     private String albumTitle;
 
-    @Column(name = "ALBUM_CONTENT", length = 30)
+    @Column(name = "ALBUM_CONTENT", columnDefinition = "TEXT")
     private String albumContent;
 
     @Column(name = "NUMBER_OF_LIKES", columnDefinition = "INT UNSIGNED")
