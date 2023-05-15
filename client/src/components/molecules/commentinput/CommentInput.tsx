@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 // atoms import
 import Button from 'components/atoms/buttons/Button';
 import TextInput from 'components/atoms/inputs/TextInput';
@@ -8,42 +8,32 @@ import { postComment } from 'services/board';
 // SCSS import
 import './CommentInput.scss';
 
-interface CommentResponse {
-  commentId: number;
-  userId: number;
-  nickName: string;
-  commentContent: string;
-  commentDate: string;
-}
-
 interface CommentProps {
   boardid: number;
-  onAddComment: (comment: CommentResponse) => void;
 }
 
-const CommentInput = ({ boardid, onAddComment }: CommentProps) => {
+const CommentInput = ({ boardid }: CommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const [addComment, setAddComment] = useState<CommentResponse>();
   const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
   };
+
+  const navigate = useNavigate();
 
   const postCommentData = () => {
     postComment(
       boardid,
       comment,
       ({ data }) => {
-        console.log(data);
-        setAddComment(data.commentResponses);
-        console.log('addComment : ', addComment);
+        console.log('data :', data);
+        // 댓글 생성 후 동일 페이지로 재이동
+        navigate(0);
       },
       (error) => {
         console.log('error :', error);
       }
     );
-    // onAddComment(addComment);
     setComment('');
-    console.log('addComment2 : ', addComment);
   };
 
   return (

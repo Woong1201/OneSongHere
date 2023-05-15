@@ -15,4 +15,20 @@ const getAlbums = async (
     .catch(fail);
 };
 
-export { getAlbums };
+const searchAlbums = async (
+  type: string,
+  search: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  // const token = localStorage.getItem('accessToken');
+  await api({
+    // headers: { Authorization: `Bearer ${token}` },
+    method: 'get',
+    url: `/albums/search/${type}/${search}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export { getAlbums, searchAlbums };
