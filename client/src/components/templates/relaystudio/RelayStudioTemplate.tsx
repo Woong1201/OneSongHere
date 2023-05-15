@@ -4,13 +4,13 @@ import './RelayStudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
-import StudioChat from 'components/organisms/studio/StudioChat';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
 import { Chord } from 'types/Chord';
 import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
+import StudioChord from 'components/organisms/studio/StudioChord';
 
 const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -356,7 +356,7 @@ const RelayStudioTemplate = () => {
           {
             names: note.names,
             duration: '8n',
-            timing: timing,
+            timing,
             instrumentType: 'melody',
           },
         ];
@@ -418,7 +418,9 @@ const RelayStudioTemplate = () => {
         </div>
         <div className="relay-studio__side">
           <StudioCam />
-          <StudioChat />
+          <div>
+            <StudioChord />
+          </div>
         </div>
       </div>
     </>
