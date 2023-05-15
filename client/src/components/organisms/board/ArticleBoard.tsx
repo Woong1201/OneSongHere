@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 // 컴포넌트 import
 import ArticleLine from 'components/molecules/articleline/ArticleLine';
-// api 모듈 import
-import { getBoards } from 'services/board';
 
 interface Article {
   boardId: number;
@@ -31,18 +29,6 @@ const ArticleBoard = ({
       getArticleBoard([...filteredArticles].reverse());
     } else {
       getArticleBoard([]);
-      // 아니면 그냥 api로 back에서 데이터 가져옴
-      // getBoards(
-      //   ({ data }) => {
-      //     console.log(data, 'and ', typeof data);
-      //     // 최신순으로 출력되도록 역순으로 담는다.
-      //     getArticleBoard(data.reverse());
-      //     console.log('articles :', articles);
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
     }
     setIsLoading(false);
   }, [filteredArticles]);
@@ -56,8 +42,9 @@ const ArticleBoard = ({
   const offset = (page - 1) * pageLimit;
   const pageNumButtons = new Array(entirePage).fill(0).map((_, index) => index);
 
-  // ============================================================================
-  // ============================================================================
+  // ========================================================================
+  // ===============================(  렌 더 링  )============================
+  // ========================================================================
   return (
     <div className="aBoard">
       {isLoading ? (
@@ -89,6 +76,7 @@ const ArticleBoard = ({
           </tbody>
         </table>
       )}
+      {/* ======================{페이지네이션 버튼}======================== */}
       <div>
         <button
           type="button"
