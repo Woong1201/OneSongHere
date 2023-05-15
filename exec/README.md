@@ -254,6 +254,18 @@ docekr run --rm -d -p 3000:80 --name fe-latest 이미지ID
 
 ### OAuth
 
+1. [https://console.cloud.google.com/apis](https://console.cloud.google.com/apis/dashboard) 이동후 google 로그인
+2. 서비스 동의 후 프로젝트 만들기
+    1. OAuth 동의 화면 (앱 정보, 앱 로고, 앱 도메인, 승인된 도메인, 개발자 연락처)
+    2. 범위 설정
+    3. 테스트 사용자 설정
+3. 사용자 인증 정보 만들기
+    1. OAuth 클라이언트 ID 만들기 (웹 어플리케이션)
+    2. 이름 설정
+    3. 승인된 자바스크립트 원본 (80 외의 포트를 사용하는 HTTP 원본)
+    4. 승인된 리디렉션 URI
+4. 이후 얻은 클라이언트 ID, password 를 통해 front OAuth 로그인 주소 구성
+
 ### KAKAO Karol
 
 1. https://developers.kakao.com/product/karlo 이동후 kakao 로그인
