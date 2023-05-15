@@ -10,9 +10,13 @@ import { Container, Row, Col } from 'react-grid-system';
 // SCSS import
 import './AlbumCardsGrid.scss';
 
-const AlbumCardsGrid = () => {
+interface AlbumCardsGridProps {
+  AlbumCards: Album[];
+}
+
+const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   // 로딩 여부 관리
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -25,25 +29,26 @@ const AlbumCardsGrid = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
   // 작품들 데이터 가져오는 api용 list 초기화
-  const [albumlist, getAlbumList] = useState<Album[]>([]);
-  const getAlbumData = () => {
-    setIsLoading(true);
-    getAlbums(
-      ({ data }) => {
-        console.log(data);
-        getAlbumList(data);
-        setIsLoading(false);
-      },
-      (error) => {
-        console.log(error);
-        setIsLoading(false);
-      }
-    );
-  };
-  useEffect(() => {
-    getAlbumData();
-  }, []);
+  // const [albumlist, getAlbumList] = useState<Album[]>([]);
+  // const getAlbumData = () => {
+  //   setIsLoading(true);
+  //   getAlbums(
+  //     ({ data }) => {
+  //       console.log(data);
+  //       getAlbumList(data);
+  //       setIsLoading(false);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       setIsLoading(false);
+  //     }
+  //   );
+  // };
+  // useEffect(() => {
+  //   getAlbumData();
+  // }, []);
 
   return (
     <div
@@ -56,9 +61,8 @@ const AlbumCardsGrid = () => {
             width: `${width >= 992 ? '100%' : '500px'}`,
           }}
         >
-          {albumlist.map((album) => (
+          {AlbumCards.map((album) => (
             <Col sm={12} md={12} lg={6} key={album.albumId}>
-              {/* <div key={album.albumId}> */}
               <AlbumCard
                 imgPath={album.albumUrl}
                 albumTitle={album.albumTitle}
@@ -68,7 +72,6 @@ const AlbumCardsGrid = () => {
                 tags={album.tags}
                 albumInfo={album.albumContent}
               />
-              {/* </div> */}
             </Col>
           ))}
         </Row>

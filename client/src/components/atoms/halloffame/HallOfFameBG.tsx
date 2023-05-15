@@ -35,11 +35,7 @@ const HallOfFameBG = ({
     setIsLoading(true);
     getAlbums(
       ({ data }) => {
-        console.log('Hall of Fame BG에서 data :', data);
-        // 받아온 데이터를 likes를 기준으로 내림차순으로 정렬한 뒤 상위 3개 추출
-        console.log('상위 3개', fameList);
         getItemList(data);
-        console.log('LOTZ TOTK', itemList);
         setIsLoading(false);
       },
       (error) => {
@@ -51,8 +47,8 @@ const HallOfFameBG = ({
 
   useEffect(() => {
     getAlbumData();
-    console.log('왜', itemList, fameList);
   }, []);
+  // 받아온 데이터를 likes를 기준으로 내림차순으로 정렬한 뒤 상위 3개 추출
   useEffect(() => {
     if (itemList.length > 0) {
       const sortedList = [...itemList]

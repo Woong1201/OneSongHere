@@ -6,8 +6,10 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import AlbumCardsGrid from 'components/organisms/albums/albumcards/AlbumCardsGrid';
 // SCSS import
 import './Albums.scss';
+// axios return 값 타입 정의 import
+import Album from 'types/Album';
 // api import
-import { searchAlbums } from 'services/album';
+import { getAlbums, searchAlbums } from 'services/album';
 
 const Albums = () => {
   // 반응형용 useState : useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -29,20 +31,37 @@ const Albums = () => {
     setKeyword(word);
   };
 
+  // 작품들 데이터 가져오는 api용 list 초기화
+  const [albumlist, getAlbumList] = useState<Album[]>([]);
   useEffect(() => {
     setIsLoading(true);
-    searchAlbums(
-      'title',
-      keyword,
-      ({ data }) => {
-        console.log(data);
-        setIsLoading(false);
-      },
-      (error) => {
-        console.log(error);
-        setIsLoading(false);
-      }
-    );
+    if (keyword === '') {
+      getAlbums(
+        ({ data }) => {
+          console.log(data);
+          getAlbumList(data);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log(error);
+          setIsLoading(false);
+        }
+      );
+    } else {
+      searchAlbums(
+        'title',
+        keyword,
+        ({ data }) => {
+          console.log('검색 데이터 :', data);
+          getAlbumList(data);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log(error);
+          setIsLoading(false);
+        }
+      );
+    }
 
     window.addEventListener('resize', handleResize);
     return () => {
@@ -68,7 +87,11 @@ const Albums = () => {
         onChangeSearchType={() => handleSearchType('TITLE')}
         onChangeKeyword={handleKeyword}
       />
-      {isLoading ? <div>로딩 중입니다...</div> : <AlbumCardsGrid />}
+      {isLoading ? (
+        <div>로딩 중입니다...</div>
+      ) : (
+        <AlbumCardsGrid AlbumCards={albumlist} />
+      )}
     </div>
   );
 };
