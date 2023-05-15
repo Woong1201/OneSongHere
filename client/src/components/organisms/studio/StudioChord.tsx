@@ -3,6 +3,7 @@ import './StudioChord.scss';
 import { Chord, ChordValue } from 'types/Chord';
 import StudioChordCardList from 'components/molecules/studiochord/StudioChordCardList';
 import SectionTitle from 'components/atoms/common/SectionTitle';
+import StudioChordTab from 'components/molecules/studiochord/StudioChordTab';
 
 interface StudioChordProps {
   chordNotes: Record<Chord, ChordValue>;
@@ -13,7 +14,8 @@ const StudioChord = ({ chordNotes, updateChord }: StudioChordProps) => {
   return (
     <div className="studio__chord">
       <div className="studio__chord-title-area">
-        <SectionTitle title="코드 입력" />
+        <StudioChordTab />
+        {/* <SectionTitle title="코드 입력" /> */}
       </div>
       <div className="studio__chord-content-area">
         <StudioChordCardList

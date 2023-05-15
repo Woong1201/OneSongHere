@@ -19,15 +19,16 @@
 
   &-title-area {
     width: 100%;
-    padding: 20px 0px;
-    background-color: #fafafa;
+    height: 50px;
+    // padding: 20px 0px;
+    background-color: #efefef;
     > .section-title {
       // color: $header-color;
       font-size: 18px;
     }
   }
   &-content-area {
-    padding-top: 5%;
+    padding-top: 6%;
     display: flex;
     justify-content: center;
     align-items: center;

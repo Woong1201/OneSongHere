@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import StudioChoreTabIcon from './StudioChoreTabIcon';
+import StudioChordTabIcon from './StudioChordTabIcon';
 
 const meta = {
-  title: 'atom/StudioChord/StudioChoreTabIcon',
-  component: StudioChoreTabIcon,
+  title: 'atom/StudioChord/StudioChordTabIcon',
+  component: StudioChordTabIcon,
   tags: ['autodocs'],
   argTypes: {
     //
   },
-} satisfies Meta<typeof StudioChoreTabIcon>;
+} satisfies Meta<typeof StudioChordTabIcon>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
