@@ -1,18 +1,36 @@
-import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioChordText from 'components/atoms/studiochord/StudioChordText';
 import React from 'react';
 import './StudioChordCard.scss';
+import StudioChordTitle from 'components/atoms/studiochord/StudioChordTitle';
+import { Chord } from 'types/Chord';
 
-interface StudioChordCard {
+interface StudioChordCardProps {
   chordName?: string;
   noteNames?: [string, string, string];
+  onClick?: (chord: Chord) => void;
 }
 
-const StudioChordCard = ({ chordName = '', noteNames = ['', '', ''] }) => {
+const StudioChordCard: React.FC<StudioChordCardProps> = ({
+  chordName = '',
+  noteNames = ['', '', ''],
+  onClick,
+}) => {
+  const handleOnClick = () => {
+    if (onClick) {
+      onClick(chordName as Chord); // 캐스팅: string -> Chord
+    }
+  };
+
   return (
-    <div className="studio__chord-card">
-      <SectionTitle title={chordName} />
-      <StudioChordText noteNames={noteNames as [string, string, string]} />
+    <div
+      role="presentation"
+      className="studio__chord-card"
+      onClick={handleOnClick}
+    >
+      <div className="studio__chord-card-content">
+        <StudioChordTitle chord={chordName} />
+        <StudioChordText noteNames={noteNames as [string, string, string]} />
+      </div>
     </div>
   );
 };
