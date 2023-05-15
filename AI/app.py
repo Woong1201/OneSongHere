@@ -32,10 +32,12 @@ def startup_event():
 
 
 @app.post("/ai-api/v1/createCover")
-def creatCover(text, request: CoverImage):
+def creatCover(request: CoverImage):
     
-    text = create_text(text)
-
+    text = create_text(request.text)
+    
+    if(len(text) > 255):
+        text = "Moonlit angel, nostalgic notes, childhood memories, delicate vocals, retro reimagining, dreamlike atmosphere."
     try:
         text.split(", ")
     except:
