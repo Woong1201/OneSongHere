@@ -28,7 +28,9 @@ const StudioChordCard: React.FC<StudioChordCardProps> = ({
       onClick={handleOnClick}
     >
       <div className="studio__chord-card-content">
-        <StudioChordTitle chord={chordName} />
+        <div className="studio__chord-card-title-area">
+          <StudioChordTitle chord={chordName} />
+        </div>
         <StudioChordText noteNames={noteNames as [string, string, string]} />
       </div>
     </div>

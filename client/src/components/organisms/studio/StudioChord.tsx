@@ -15,7 +15,12 @@ const StudioChord = ({ chordNotes, updateChord }: StudioChordProps) => {
       <div className="studio__chord-title-area">
         <SectionTitle title="코드 입력" />
       </div>
-      <StudioChordCardList chordNotes={chordNotes} updateChord={updateChord} />
+      <div className="studio__chord-content-area">
+        <StudioChordCardList
+          chordNotes={chordNotes}
+          updateChord={updateChord}
+        />
+      </div>
     </div>
   );
 };
