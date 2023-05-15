@@ -144,20 +144,22 @@ const StudioControll = ({
   return (
     <div className="studio__header-controll">
       <LogoIcon goHome size="small" whiteMode />
-      <button
-        type="button"
-        onClick={playSequence}
-        className="studio__header-controll-icon"
-      >
-        <PlayIcon size={30} />
-      </button>
-      <button
-        type="button"
-        onClick={stopSequence}
-        className="studio__header-controll-icon"
-      >
-        <StopIcon size={30} />
-      </button>
+      <div className="studio__header-buttons">
+        <button
+          type="button"
+          onClick={playSequence}
+          className="studio__header-controll-icon"
+        >
+          <PlayIcon size={30} />
+        </button>
+        <button
+          type="button"
+          onClick={stopSequence}
+          className="studio__header-controll-icon"
+        >
+          <StopIcon size={30} />
+        </button>
+      </div>
       <div className="studio__header-clear-button">
         <Button
           size="small"

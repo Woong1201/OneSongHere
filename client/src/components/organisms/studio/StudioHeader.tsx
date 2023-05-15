@@ -7,6 +7,8 @@ import StudioMenu from 'components/molecules/studioheader/StudioMenu';
 import User from 'types/User';
 import { Note } from 'types/Note';
 import { RelayStudioInfo } from 'types/RelayStudio';
+import { useRecoilValue } from 'recoil';
+import { UserState } from 'store/UserState';
 import { StudioInfo } from 'types/Studio';
 import * as Tone from 'tone';
 
@@ -51,26 +53,29 @@ const StudioHeader = ({
       studioTitle = studioInfo.studioTitle;
     }
   }
+  const user = useRecoilValue(UserState);
+  console.log(user);
+  const users = user ? [user] : [];
 
-  const users: User[] = [
-    {
-      userId: 1,
-      nickname: '신선호',
-      picture:
-        'https://file.mk.co.kr/mkde/N0/2016/03/201603080305561821779.jpg',
-    },
-    {
-      userId: 2,
-      nickname: '김태연',
-      picture:
-        'https://file.mk.co.kr/meet/neds/2023/03/image_readtop_2023_195678_16786077015385435.jpg',
-    },
-    {
-      userId: 3,
-      nickname: '김영웅',
-      picture: 'https://slamdunk-movie.jp/files/images/p_main_akagi.jpg',
-    },
-  ];
+  // const users: User[] = [
+  //   {
+  //     userId: 1,
+  //     nickname: '신선호',
+  //     picture:
+  //       'https://file.mk.co.kr/mkde/N0/2016/03/201603080305561821779.jpg',
+  //   },
+  //   {
+  //     userId: 2,
+  //     nickname: '김태연',
+  //     picture:
+  //       'https://file.mk.co.kr/meet/neds/2023/03/image_readtop_2023_195678_16786077015385435.jpg',
+  //   },
+  //   {
+  //     userId: 3,
+  //     nickname: '김영웅',
+  //     picture: 'https://slamdunk-movie.jp/files/images/p_main_akagi.jpg',
+  //   },
+  // ];
 
   return (
     <div className="studio__header">
