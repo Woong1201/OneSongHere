@@ -280,6 +280,14 @@ const RelayStudioTemplate = () => {
   //   return possibleNoteTiming.find((num) => !timings.includes(num));
   // };
 
+  const findLastTiming = () => {
+    return notes.length > 0
+      ? notes.reduce((lastNote, currentNote) => {
+          return currentNote.timing > lastNote.timing ? currentNote : lastNote;
+        }).timing
+      : 0;
+  };
+
   const changePlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
     if (element) {
@@ -373,6 +381,7 @@ const RelayStudioTemplate = () => {
         clearNotes={clearNotes}
         saveNotes={saveRelayNotes}
         inputScroll={inputScroll}
+        findLastTiming={findLastTiming}
       />
       <div className="relay-studio__body">
         <div className="relay-studio__content">

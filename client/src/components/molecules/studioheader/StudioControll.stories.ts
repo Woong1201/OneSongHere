@@ -33,5 +33,6 @@ export const Primary: Story = {
       drum: null,
     },
     currentInstrument: 'piano',
+    findLastTiming: () => 0,
   },
 };

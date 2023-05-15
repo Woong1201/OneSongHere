@@ -22,6 +22,7 @@ interface StudioControllProps {
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
   inputScroll: (inputTiming: number) => void;
+  findLastTiming: () => number;
 }
 
 const StudioControll = ({
@@ -33,6 +34,7 @@ const StudioControll = ({
   setNoteColumnStyle,
   clearNotes,
   inputScroll,
+  findLastTiming,
 }: StudioControllProps) => {
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
@@ -106,7 +108,7 @@ const StudioControll = ({
 
     sequenceRef.current = new Tone.Part(
       playNote,
-      notes.map((note) => [note.timing * 1, note])
+      notes.map((note) => [note.timing, note])
     );
 
     Tone.loaded().then(() => {
@@ -114,11 +116,11 @@ const StudioControll = ({
       Tone.Transport.start();
     });
 
-    Array.from({ length: 160 }, (_, i) => {
+    const playLength = findLastTiming() * 4;
+    Array.from({ length: playLength }, (_, i) => {
       const playBar = setTimeout(() => {
         setNoteColumnStyle((prevStyle) => {
           const newStyle = [...prevStyle];
-          console.log(i * 0.25);
           newStyle[i] = true;
           inputScroll(i * 0.25);
           return newStyle;
