@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse, AxiosError, responseEncoding } from 'axios';
 import { apiInstance } from './index';
 
 const api = apiInstance();
@@ -46,25 +46,30 @@ const postArticle = async (
   title: string,
   head: string,
   content: string,
-  // csrfToken: string,
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
-  // console.log('token :', token);
-  // elseif로 alert
-  await api({
-    headers: { Authorization: `Bearer ${token}` },
-    method: 'post',
-    url: '/board',
-    data: {
-      boardTitle: title,
-      header: head,
-      boardContent: content,
-    },
-  })
-    .then(success)
-    .catch(fail);
+  if (title === '') {
+    alert('게시글 제목을 입력해주세요!');
+  } else if (head === '') {
+    alert('카테고리를 선택해주세요!');
+  } else if (content === '') {
+    alert('게시글 내용을 입력해주세요!');
+  } else {
+    await api({
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'post',
+      url: '/board',
+      data: {
+        boardTitle: title,
+        header: head,
+        boardContent: content,
+      },
+    })
+      .then(success)
+      .catch(fail);
+  }
 };
 
 const postComment = async (
@@ -91,4 +96,85 @@ const postComment = async (
   }
 };
 
-export { getBoards, getArticle, getCategorized, postArticle, postComment };
+const deleteArticle = async (
+  boardId: number,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'delete',
+    url: `/board/${boardId}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
+const deleteComment = async (
+  id: number,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'delete',
+    url: `/board/comments/${id}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
+const updateArticle = async (
+  boardId: number,
+  boardTitle: string,
+  header: string,
+  boardContent: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'put',
+    url: '/board',
+    data: {
+      boardid: boardId,
+      boardTitle,
+      header,
+      boardContent,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+const updateComment = async (
+  commentId: number,
+  commentContent: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'put',
+    url: '/board/comments',
+    data: { commentId, commentContent },
+  })
+    .then(success)
+    .catch(fail);
+};
+
+export {
+  getBoards,
+  getArticle,
+  getCategorized,
+  postArticle,
+  postComment,
+  deleteArticle,
+  deleteComment,
+  updateArticle,
+  updateComment,
+};

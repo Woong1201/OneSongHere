@@ -11,6 +11,9 @@ import { Container, Row, Col } from 'react-grid-system';
 import './AlbumCardsGrid.scss';
 
 const AlbumCardsGrid = () => {
+  // 로딩 여부 관리
+  const [isLoading, setIsLoading] = useState(false);
+
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
   const [width, setWidth] = useState<number>(window.innerWidth);
   const handleResize = () => {
@@ -23,27 +26,18 @@ const AlbumCardsGrid = () => {
     };
   }, []);
   // 작품들 데이터 가져오는 api용 list 초기화
-  const [albumlist, getAlbumList] = useState<Album[]>([
-    {
-      albumTitle: '',
-      albumContent: '',
-      likes: 0,
-      albumUrl: '',
-      userId: 0,
-      nickName: '',
-      userLike: false,
-      genre: '',
-      albumId: 0,
-    },
-  ]);
+  const [albumlist, getAlbumList] = useState<Album[]>([]);
   const getAlbumData = () => {
+    setIsLoading(true);
     getAlbums(
       ({ data }) => {
         console.log(data);
         getAlbumList(data);
+        setIsLoading(false);
       },
       (error) => {
         console.log(error);
+        setIsLoading(false);
       }
     );
   };
@@ -69,6 +63,7 @@ const AlbumCardsGrid = () => {
                   imgPath={album.albumUrl}
                   albumTitle={album.albumTitle}
                   albumStudio={album.nickName}
+                  mp3Url={album.mp3Url}
                   like={album.userLike}
                   tag={album.genre}
                   albumInfo={album.albumContent}

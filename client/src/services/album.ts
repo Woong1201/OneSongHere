@@ -1,5 +1,4 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { Note } from 'types/Note';
 import { aiApiInstance, apiInstance } from './index';
 
 const api = apiInstance();
@@ -43,6 +42,22 @@ const postAlbum = async (
     .catch(fail);
 };
 
+const searchAlbums = async (
+  type: string,
+  search: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  // const token = localStorage.getItem('accessToken');
+  await api({
+    // headers: { Authorization: `Bearer ${token}` },
+    method: 'get',
+    url: `/albums/search/${type}/${search}`,
+  })
+    .then(success)
+    .catch(fail);
+};
+
 const createAlbumCover = async (
   text: string,
   studioId: number,
@@ -63,4 +78,4 @@ const createAlbumCover = async (
     .catch(fail);
 };
 
-export { getAlbums, postAlbum, createAlbumCover };
+export { getAlbums, postAlbum, createAlbumCover, searchAlbums };
