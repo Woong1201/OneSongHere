@@ -19,7 +19,7 @@ interface AlbumCardProps {
   //   좋아요 클릭 여부
   like: boolean;
   //   태그 장르명
-  tag: string;
+  tags: string[];
   //   작품 앨범 정보
   albumInfo: string;
 }
@@ -30,7 +30,7 @@ const AlbumCard = ({
   albumStudio,
   mp3Url,
   like,
-  tag,
+  tags,
   albumInfo,
 }: AlbumCardProps) => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -44,6 +44,13 @@ const AlbumCard = ({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const renderTags = () => {
+    if (Array.isArray(tags)) {
+      return tags.map((item) => <Chip key={item} label={item} size="small" />);
+    }
+    return <Chip label={tags} size="small" />;
+  };
 
   return (
     <div
@@ -65,9 +72,7 @@ const AlbumCard = ({
           <div className="album-card__info-studio">{albumStudio}</div>
           <LikeHeart isPushed={like} />
         </div>
-        <div>
-          <Chip label={tag} size="small" />
-        </div>
+        <div>{renderTags()}</div>
         <div className="album-card__info-album-info">{albumInfo}</div>
       </div>
     </div>

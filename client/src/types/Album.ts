@@ -7,7 +7,7 @@ interface Album {
   userId: number;
   nickName: string;
   userLike: boolean;
-  genre: string;
+  tags: string[];
   albumId: number;
 }
 

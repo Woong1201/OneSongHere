@@ -101,6 +101,8 @@ const Article = () => {
       {isUpdate ? (
         <div>
           <WriteFrame
+            isUpdate
+            uId={Number(boardId.articleId)}
             uTitle={strTitle}
             uCategory={strHeader}
             uContent={strContent}
