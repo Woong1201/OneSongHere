@@ -7,6 +7,7 @@ import StudioCam from 'components/organisms/studio/StudioCam';
 import StudioChat from 'components/organisms/studio/StudioChat';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
+import { Chord } from 'types/Chord';
 import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
@@ -37,6 +38,92 @@ const RelayStudioTemplate = () => {
     setNoteScrollPosition(position);
   };
 
+  const chordNotes: Record<Chord, Note> = {
+    // C Major
+    C: {
+      names: ['C4', 'E4', 'G4'],
+      duration: '4n',
+      timing: 0,
+      instrumentType: 'melody',
+    },
+    // G Major
+    G: {
+      names: ['G4', 'B4', 'D5'],
+      duration: '4n',
+      timing: 1,
+      instrumentType: 'melody',
+    },
+    // D Major
+    D: {
+      names: ['D4', 'F#4', 'A4'],
+      duration: '4n',
+      timing: 2,
+      instrumentType: 'melody',
+    },
+    // A Major
+    A: {
+      names: ['A4', 'C#5', 'E5'],
+      duration: '4n',
+      timing: 3,
+      instrumentType: 'melody',
+    },
+    // E Major
+    E: {
+      names: ['E4', 'G#4', 'B4'],
+      duration: '4n',
+      timing: 4,
+      instrumentType: 'melody',
+    },
+    // B Major
+    B: {
+      names: ['B4', 'D#5', 'F#5'],
+      duration: '4n',
+      timing: 5,
+      instrumentType: 'melody',
+    },
+    // A minor
+    Am: {
+      names: ['A4', 'C5', 'E5'],
+      duration: '4n',
+      timing: 6,
+      instrumentType: 'melody',
+    },
+    // E minor
+    Em: {
+      names: ['E4', 'G4', 'B4'],
+      duration: '4n',
+      timing: 7,
+      instrumentType: 'melody',
+    },
+    // B minor
+    Bm: {
+      names: ['B4', 'D5', 'F#5'],
+      duration: '4n',
+      timing: 8,
+      instrumentType: 'melody',
+    },
+    // F# minor
+    'F#m': {
+      names: ['F#4', 'A4', 'C#5'],
+      duration: '4n',
+      timing: 9,
+      instrumentType: 'melody',
+    },
+    // C# minor
+    'C#m': {
+      names: ['C#4', 'E4', 'G#4'],
+      duration: '4n',
+      timing: 10,
+      instrumentType: 'melody',
+    },
+    // G# minor
+    'G#m': {
+      names: ['G#4', 'B4', 'D#5'],
+      duration: '4n',
+      timing: 11,
+      instrumentType: 'melody',
+    },
+  };
   const { relayStudioId } = useParams();
   const numRelayStudioId = Number(relayStudioId as string);
 
@@ -213,6 +300,12 @@ const RelayStudioTemplate = () => {
     return possibleNoteTiming.find((num) => !timings.includes(num));
   };
 
+  const findChordInputTiming = () => {
+    const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+    const timings = notes.map((note) => note.timing);
+    return possibleNoteTiming.find((num) => !timings.includes(num));
+  };
+
   const changePlayingStyle = (timing: number) => {
     const element = document.getElementById(timing.toString());
     if (element) {
@@ -252,6 +345,24 @@ const RelayStudioTemplate = () => {
   const clearNotes = useCallback(() => {
     setNotes([]);
   }, [setNotes]);
+
+  const addChord = (chord: Chord) => {
+    const timing = findChordInputTiming();
+    if (timing) {
+      const note = chordNotes[chord];
+      setNotes((prevNote) => {
+        return [
+          ...prevNote,
+          {
+            names: note.names,
+            duration: '8n',
+            timing: timing,
+            instrumentType: 'melody',
+          },
+        ];
+      });
+    }
+  };
 
   const saveRelayNotes = () => {
     const relayStudioID = numRelayStudioId;
