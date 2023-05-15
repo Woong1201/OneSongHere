@@ -126,6 +126,30 @@ const deleteComment = async (
     .catch(fail);
 };
 
+const updateArticle = async (
+  boardId: number,
+  boardTitle: string,
+  header: string,
+  boardContent: string,
+  success: (response: AxiosResponse) => void,
+  fail: (error: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'put',
+    url: '/board',
+    data: {
+      boardid: boardId,
+      boardTitle,
+      header,
+      boardContent,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
 const updateComment = async (
   commentId: number,
   commentContent: string,
@@ -151,5 +175,6 @@ export {
   postComment,
   deleteArticle,
   deleteComment,
+  updateArticle,
   updateComment,
 };

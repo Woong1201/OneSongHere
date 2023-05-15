@@ -5,12 +5,14 @@ import { getArticle, deleteArticle } from 'services/board';
 import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
 import CommentInput from 'components/molecules/commentinput/CommentInput';
 import CommentLine from 'components/molecules/commentline/CommentLine';
+import WriteFrame from 'components/organisms/writeframe/WriteFrame';
 // SCSS import
 import './Article.scss';
 // recoil 관련 import
 import User from 'types/User';
 import { UserState } from 'store/UserState';
 import { useRecoilState } from 'recoil';
+import { WriteStream } from 'fs';
 
 interface CommentResponse {
   commentId: number;
@@ -47,6 +49,7 @@ const Article = () => {
   const strPicture = String(articleInfo?.picture);
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
+  const strContent = String(articleInfo?.boardContent);
 
   // 로그인 여부에 따라 댓글 입력창 닫아놓기 위해
   const [user, setUser] = useRecoilState(UserState);
@@ -76,6 +79,10 @@ const Article = () => {
 
   const navigate = useNavigate();
 
+  const [isUpdate, setIsUpdate] = useState(false);
+  const goToUpdate = () => {
+    setIsUpdate(true);
+  };
   const deleteArticleData = () => {
     deleteArticle(
       Number(boardId.articleId),
@@ -91,59 +98,81 @@ const Article = () => {
 
   return (
     <div className="article__entire">
-      <div className="article__container">
-        {user ? (
-          <button type="button" onClick={deleteArticleData}>
-            삭제
-          </button>
-        ) : (
-          <div />
-        )}
-        <ArticleHeader
-          header={strHeader}
-          title={strTitle}
-          picture={strPicture}
-          nickname={strNickname}
-          date={strDate}
-        />
-        <div>본문</div>
-        <div className="article__content">{articleInfo?.boardContent}</div>
+      {isUpdate ? (
+        <div>
+          <WriteFrame
+            uTitle={strTitle}
+            uCategory={strHeader}
+            uContent={strContent}
+          />
+        </div>
+      ) : (
+        <div className="article__container">
+          {user ? (
+            <div>
+              <button type="button" onClick={goToUpdate}>
+                수정
+              </button>
+              <button type="button" onClick={deleteArticleData}>
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div />
+          )}
+          <ArticleHeader
+            header={strHeader}
+            title={strTitle}
+            picture={strPicture}
+            nickname={strNickname}
+            date={strDate}
+          />
+          <div>본문</div>
+          <div className="article__content">{articleInfo?.boardContent}</div>
 
-        <div className="comments__container--header">
-          <div style={{ display: 'flex', marginBottom: '10px' }}>
-            댓글
-            <div
-              style={{
-                marginLeft: '15px',
-                color: '#4642FF',
-                fontWeight: 'bold',
-              }}
-            >
-              {articleInfo?.commentResponses.length}
+          <div className="comments__container--header">
+            <div style={{ display: 'flex', marginBottom: '10px' }}>
+              댓글
+              <div
+                style={{
+                  marginLeft: '15px',
+                  color: '#4642FF',
+                  fontWeight: 'bold',
+                }}
+              >
+                {articleInfo?.commentResponses.length}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* 댓글 목록 */}
-        <div className="comments__container--lines">
-          {comments?.map((comment) => (
-            <div key={comment.commentId}>
-              <CommentLine
-                commentId={comment.commentId}
-                nickname={comment.nickName}
-                picture={comment.picture}
-                content={comment.commentContent}
-                date={comment.commentDate}
-                userId={comment.userId}
-                loginId={user?.userId}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+          {/* 댓글 목록 */}
+          <div className="comments__container--lines">
+            {comments?.map((comment) => (
+              <div key={comment.commentId}>
+                <CommentLine
+                  commentId={comment.commentId}
+                  nickname={comment.nickName}
+                  picture={comment.picture}
+                  content={comment.commentContent}
+                  date={comment.commentDate}
+                  userId={comment.userId}
+                  loginId={user?.userId}
+                />
+              </div>
+            ))}
+          </div>
 
-      {/* 로그인 여부에 따라 댓글 입력창 출력 */}
-      {user ? <CommentInput boardid={Number(boardId.articleId)} /> : <div />}
+          <div>
+            {/* 로그인 여부에 따라 댓글 입력창 출력 */}
+
+            {user ? (
+              <CommentInput boardid={Number(boardId.articleId)} />
+            ) : (
+              <div />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

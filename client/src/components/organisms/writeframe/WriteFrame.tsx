@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'components/atoms/buttons/Button';
 import TextInput from 'components/atoms/inputs/TextInput';
 import { postArticle } from 'services/board';
@@ -10,11 +10,25 @@ interface Category {
   name: string;
 }
 
-const WriteFrame = () => {
+// 수정 인터페이스
+interface Update {
+  uTitle?: string;
+  uCategory?: string;
+  uContent?: string;
+}
+
+const WriteFrame = ({ uTitle, uCategory, uContent }: Update) => {
   // 제목, 헤더(카테고리), 내용 - useState 정의 및 초기화
   const [title, setTitle] = useState<string>('');
   const [header, setHeader] = useState<string>('');
   const [content, setContent] = useState<string>('');
+
+  const strTitle = String(uTitle);
+  const strCategory = String(uCategory);
+  const strContent = String(uContent);
+  useEffect(() => {
+    setHeader(strCategory);
+  }, []);
 
   // 카테고리(헤더) 관련
   const categories: Category[] = [
@@ -71,7 +85,7 @@ const WriteFrame = () => {
         <div>
           <div className="write__label">제목</div>
           <TextInput
-            label="제목을 입력해주세요"
+            label={strTitle === 'undefined' ? '제목을 입력해주세요' : strTitle}
             value={title}
             stroke
             onChange={onChangeTitle}
@@ -92,7 +106,9 @@ const WriteFrame = () => {
         <div>
           <div className="write__label">본문</div>
           <textarea
-            placeholder="내용을 입력해주세요"
+            placeholder={
+              strContent === 'undefined' ? '내용을 입력해주세요' : strContent
+            }
             value={content}
             onChange={onChangeContent}
             cols={60}
