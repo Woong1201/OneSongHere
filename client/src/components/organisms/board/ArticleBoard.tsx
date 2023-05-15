@@ -36,7 +36,7 @@ const ArticleBoard = ({
   // 해당 값이 바뀔 때 함수가 호출되도록 함
 
   // pagination
-  const pageLimit = 10;
+  const pageLimit = 20;
   const entirePage = Math.ceil(articles.length / pageLimit);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * pageLimit;
