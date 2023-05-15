@@ -19,87 +19,63 @@ export const Primary: Story = {
     chordNotes: {
       // C Major
       C: {
-        names: ['C4', 'E4', 'G4'],
-        duration: '4n',
-        timing: 0,
-        instrumentType: 'melody',
+        notes: ['C4', 'E4', 'G4'],
+        name: 'C Major',
       },
       // G Major
       G: {
-        names: ['G4', 'B4', 'D5'],
-        duration: '4n',
-        timing: 1,
-        instrumentType: 'melody',
+        notes: ['G4', 'B4', 'D5'],
+        name: 'G Major',
       },
       // D Major
       D: {
-        names: ['D4', 'F#4', 'A4'],
-        duration: '4n',
-        timing: 2,
-        instrumentType: 'melody',
+        notes: ['D4', 'F#4', 'A4'],
+        name: 'D Major',
       },
       // A Major
       A: {
-        names: ['A4', 'C#5', 'E5'],
-        duration: '4n',
-        timing: 3,
-        instrumentType: 'melody',
+        notes: ['A4', 'C#5', 'E5'],
+        name: 'A Major',
       },
       // E Major
       E: {
-        names: ['E4', 'G#4', 'B4'],
-        duration: '4n',
-        timing: 4,
-        instrumentType: 'melody',
+        notes: ['E4', 'G#4', 'B4'],
+        name: 'E Major',
       },
       // B Major
       B: {
-        names: ['B4', 'D#5', 'F#5'],
-        duration: '4n',
-        timing: 5,
-        instrumentType: 'melody',
+        notes: ['B4', 'D#5', 'F#5'],
+        name: 'B Major',
       },
       // A minor
       Am: {
-        names: ['A4', 'C5', 'E5'],
-        duration: '4n',
-        timing: 6,
-        instrumentType: 'melody',
+        notes: ['A4', 'C5', 'E5'],
+        name: 'A minor',
       },
       // E minor
       Em: {
-        names: ['E4', 'G4', 'B4'],
-        duration: '4n',
-        timing: 7,
-        instrumentType: 'melody',
+        notes: ['E4', 'G4', 'B4'],
+        name: 'E minor',
       },
       // B minor
       Bm: {
-        names: ['B4', 'D5', 'F#5'],
-        duration: '4n',
-        timing: 8,
-        instrumentType: 'melody',
+        notes: ['B4', 'D5', 'F#5'],
+        name: 'B minor',
       },
       // F# minor
       'F#m': {
-        names: ['F#4', 'A4', 'C#5'],
-        duration: '4n',
-        timing: 9,
-        instrumentType: 'melody',
+        notes: ['F#4', 'A4', 'C#5'],
+        name: 'F# minor',
       },
       // C# minor
       'C#m': {
-        names: ['C#4', 'E4', 'G#4'],
-        duration: '4n',
-        timing: 10,
-        instrumentType: 'melody',
+        notes: ['C#4', 'E4', 'G#4'],
+        name: 'C# minor',
       },
       // G# minor
       'G#m': {
-        names: ['G#4', 'B4', 'D#5'],
-        duration: '4n',
-        timing: 11,
-        instrumentType: 'melody',
+        notes: ['G#4', 'B4', 'D#5'],
+        name: 'G# minor',
       },
     },
   },

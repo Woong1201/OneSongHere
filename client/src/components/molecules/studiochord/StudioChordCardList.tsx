@@ -1,28 +1,12 @@
 import React from 'react';
 import './StudioChordCardList.scss';
-import { Note } from 'types/Note';
-import { Chord } from 'types/Chord';
+import { Chord, ChordValue } from 'types/Chord';
 import StudioChordCard from './StudioChordCard';
 
 interface StudioChordCardListProps {
-  chordNotes: Record<Chord, Note>;
+  chordNotes: Record<Chord, ChordValue>;
   updateChord: (chord: Chord) => void;
 }
-
-const convertedCardList: Record<Chord, string> = {
-  C: 'C major',
-  G: 'G major',
-  D: 'D major',
-  A: 'A major',
-  E: 'E major',
-  B: 'B major',
-  Am: 'A minor',
-  Em: 'E minor',
-  Bm: 'B minor',
-  'F#m': 'F# minor',
-  'C#m': 'C# minor',
-  'G#m': 'G# minor',
-};
 
 const StudioChordCardList = ({
   chordNotes,
@@ -35,8 +19,8 @@ const StudioChordCardList = ({
           <StudioChordCard
             onClick={updateChord}
             key={chord}
-            chordName={convertedCardList[chord as Chord]}
-            noteNames={note.names as [string, string, string]}
+            chordName={chord as Chord}
+            noteNames={note.notes as [string, string, string]}
           />
         );
       })}

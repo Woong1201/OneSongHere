@@ -6,7 +6,7 @@ import StudioInstrument from 'components/organisms/studio/StudioInstrument';
 import StudioCam from 'components/organisms/studio/StudioCam';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
-import { Chord } from 'types/Chord';
+import { Chord, ChordValue } from 'types/Chord';
 import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
@@ -38,90 +38,66 @@ const RelayStudioTemplate = () => {
     setNoteScrollPosition(position);
   };
 
-  const chordNotes: Record<Chord, Note> = {
+  const chordNotes: Record<Chord, ChordValue> = {
     // C Major
     C: {
-      names: ['C4', 'E4', 'G4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['C4', 'E4', 'G4'],
+      name: 'C Major',
     },
     // G Major
     G: {
-      names: ['G4', 'B4', 'D5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['G4', 'B4', 'D5'],
+      name: 'G Major',
     },
     // D Major
     D: {
-      names: ['D4', 'F#4', 'A4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['D4', 'F#4', 'A4'],
+      name: 'D Major',
     },
     // A Major
     A: {
-      names: ['A4', 'C#5', 'E5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['A4', 'C#5', 'E5'],
+      name: 'A Major',
     },
     // E Major
     E: {
-      names: ['E4', 'G#4', 'B4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['E4', 'G#4', 'B4'],
+      name: 'E Major',
     },
     // B Major
     B: {
-      names: ['B4', 'D#5', 'F#5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['B4', 'D#5', 'F#5'],
+      name: 'B Major',
     },
     // A minor
     Am: {
-      names: ['A4', 'C5', 'E5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['A4', 'C5', 'E5'],
+      name: 'A minor',
     },
     // E minor
     Em: {
-      names: ['E4', 'G4', 'B4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['E4', 'G4', 'B4'],
+      name: 'E minor',
     },
     // B minor
     Bm: {
-      names: ['B4', 'D5', 'F#5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['B4', 'D5', 'F#5'],
+      name: 'B minor',
     },
     // F# minor
     'F#m': {
-      names: ['F#4', 'A4', 'C#5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['F#4', 'A4', 'C#5'],
+      name: 'F# minor',
     },
     // C# minor
     'C#m': {
-      names: ['C#4', 'E4', 'G#4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['C#4', 'E4', 'G#4'],
+      name: 'C# minor',
     },
     // G# minor
     'G#m': {
-      names: ['G#4', 'B4', 'D#5'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
+      notes: ['G#4', 'B4', 'D#5'],
+      name: 'G# minor',
     },
   };
   const { relayStudioId } = useParams();
@@ -329,7 +305,6 @@ const RelayStudioTemplate = () => {
 
   const playDrum = useCallback(
     (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => {
-      console.log(beatPower, drumType);
       if (instrumentInstances.drum) {
         const drumInstance = (
           instrumentInstances.drum as {
@@ -348,18 +323,21 @@ const RelayStudioTemplate = () => {
 
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
-    if (timing) {
+    console.log(timing, chord);
+    if (timing !== undefined) {
       const note = chordNotes[chord];
       setNotes((prevNote) => {
         return [
           ...prevNote,
           {
-            ...note,
+            names: note.notes,
             timing,
+            duration: '8n',
+            instrumentType: 'melody',
           },
         ];
       });
-      playNote(note.names);
+      playNote(note.notes);
     }
   };
 

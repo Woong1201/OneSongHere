@@ -1,3 +1,8 @@
+type ChordValue = {
+  notes: string[];
+  name: string;
+};
+
 type Chord =
   | 'C'
   | 'G'
@@ -12,4 +17,4 @@ type Chord =
   | 'C#m'
   | 'G#m';
 
-export type { Chord };
+export type { Chord, ChordValue };

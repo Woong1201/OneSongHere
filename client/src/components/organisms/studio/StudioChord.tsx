@@ -1,13 +1,11 @@
 import React from 'react';
 import './StudioChord.scss';
-import { Note } from 'types/Note';
-import { Chord } from 'types/Chord';
-import StudioChordCard from 'components/molecules/studiochord/StudioChordCard';
+import { Chord, ChordValue } from 'types/Chord';
 import StudioChordCardList from 'components/molecules/studiochord/StudioChordCardList';
 import SectionTitle from 'components/atoms/common/SectionTitle';
 
 interface StudioChordProps {
-  chordNotes: Record<Chord, Note>;
+  chordNotes: Record<Chord, ChordValue>;
   updateChord: (chord: Chord) => void;
 }
 
