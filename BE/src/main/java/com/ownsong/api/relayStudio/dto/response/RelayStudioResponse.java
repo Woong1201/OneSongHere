@@ -40,6 +40,12 @@ public class RelayStudioResponse {
     @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중, 4:완료)", example = "4")
     private int status;
 
+    @Schema(description = "릴레이 스튜디오 찬성 수", example = "4")
+    private int agree;
+
+    @Schema(description = "릴레이 스튜디오 투표자 수", example = "4")
+    private int numberOfVotes;
+
     @Schema(description = "현재 작곡중인 userId", example = "1")
     @NotNull
     private long userId;
@@ -63,6 +69,8 @@ public class RelayStudioResponse {
         this.numberOfBars = relayStudio.getNumberOfBars();
         this.status = relayStudio.getStatus();
         this.userId = relayStudio.getUser().getUserID();
+        this.agree = relayStudio.getAgree();
+        this.numberOfVotes = relayStudio.getNumberOfVotes();
         this.participate = participate;
         this.vote = vote;
         for (RelayStudioTag relayStudioTag : relayStudio.getRelayStudioTags()) {
