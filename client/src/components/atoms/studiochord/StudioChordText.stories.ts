@@ -16,6 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Page: Story = {
   args: {
-    noteName: 'C4',
+    noteNames: ['C4', 'E4', 'G4'],
   },
 };
