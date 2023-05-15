@@ -177,6 +177,19 @@ const RelayStudioTemplate = () => {
     };
   }, []);
 
+  const inputScroll = (inputTiming: number) => {
+    const updatedNotePosition = inputTiming * 4 * 35;
+    setNoteScrollPosition((prevPosition) => {
+      if (
+        updatedNotePosition < prevPosition ||
+        updatedNotePosition > 1195 + prevPosition
+      ) {
+        return Math.max(updatedNotePosition - 50, 0);
+      }
+      return prevPosition;
+    });
+  };
+
   const updateNote = useCallback(
     (name: string, timing: number | undefined) => {
       if (timing !== undefined) {
@@ -217,16 +230,7 @@ const RelayStudioTemplate = () => {
           );
           return cleanedNotes;
         });
-        // 현재 스크롤에 보이는 35 * 34 = 1190 + scrollposition
-        // 만약에 timing * 4 -> n번째 칸이 업데이트되는데 이 범위 밖에 있다면
-        // 35 * n을 스크롤 포지션으로 설정
-        const updatedNotePosition = timing * 4 * 35;
-        if (
-          updatedNotePosition < noteScrollPosition ||
-          updatedNotePosition > 1195 + noteScrollPosition
-        ) {
-          setNoteScrollPosition(Math.max(updatedNotePosition - 50, 0));
-        }
+        inputScroll(timing);
       }
     },
     [noteScrollPosition]
@@ -253,13 +257,7 @@ const RelayStudioTemplate = () => {
             { names: name, duration: '8n', timing, instrumentType: 'beat' },
           ];
         });
-        const updatedNotePosition = timing * 4 * 35;
-        if (
-          updatedNotePosition < noteScrollPosition ||
-          updatedNotePosition > 1195 + noteScrollPosition
-        ) {
-          setNoteScrollPosition(Math.max(updatedNotePosition - 50, 0));
-        }
+        inputScroll(timing);
       }
     },
     [noteScrollPosition]
@@ -323,7 +321,6 @@ const RelayStudioTemplate = () => {
 
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
-    console.log(timing, chord);
     if (timing !== undefined) {
       const note = chordNotes[chord];
       setNotes((prevNote) => {
@@ -338,6 +335,7 @@ const RelayStudioTemplate = () => {
         ];
       });
       playNote(note.notes);
+      inputScroll(timing);
     }
   };
 
@@ -374,6 +372,7 @@ const RelayStudioTemplate = () => {
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
         saveNotes={saveRelayNotes}
+        inputScroll={inputScroll}
       />
       <div className="relay-studio__body">
         <div className="relay-studio__content">

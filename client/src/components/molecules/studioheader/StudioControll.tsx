@@ -21,6 +21,7 @@ interface StudioControllProps {
   revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
+  inputScroll: (inputTiming: number) => void;
 }
 
 const StudioControll = ({
@@ -31,6 +32,7 @@ const StudioControll = ({
   revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
+  inputScroll,
 }: StudioControllProps) => {
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
@@ -38,7 +40,6 @@ const StudioControll = ({
   const playNote = useCallback(
     (time: number, note: number | Note) => {
       const currentNote = note as Note;
-
       if (
         currentNote.instrumentType === 'melody' &&
         instrumentInstances.piano != null
@@ -117,7 +118,9 @@ const StudioControll = ({
       const playBar = setTimeout(() => {
         setNoteColumnStyle((prevStyle) => {
           const newStyle = [...prevStyle];
+          console.log(i * 0.25);
           newStyle[i] = true;
+          inputScroll(i * 0.25);
           return newStyle;
         });
       }, i * 250);

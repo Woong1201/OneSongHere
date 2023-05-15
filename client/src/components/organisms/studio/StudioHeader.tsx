@@ -26,6 +26,7 @@ interface StudioHeaderProps {
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
   saveNotes: () => void;
+  inputScroll: (inputTiming: number) => void;
 }
 const StudioHeader = ({
   studioInfo,
@@ -37,6 +38,7 @@ const StudioHeader = ({
   setNoteColumnStyle,
   clearNotes,
   saveNotes,
+  inputScroll,
 }: StudioHeaderProps) => {
   let studioTitle = '';
 
@@ -78,6 +80,7 @@ const StudioHeader = ({
         revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
+        inputScroll={inputScroll}
       />
       <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />
