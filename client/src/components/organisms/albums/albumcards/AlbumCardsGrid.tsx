@@ -65,7 +65,7 @@ const AlbumCardsGrid = () => {
                   albumStudio={album.nickName}
                   mp3Url={album.mp3Url}
                   like={album.userLike}
-                  tag={album.genre}
+                  tags={album.tags}
                   albumInfo={album.albumContent}
                 />
               </div>
