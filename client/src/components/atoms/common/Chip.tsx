@@ -28,11 +28,14 @@ const Chip = ({
 }: ChipProps) => {
   const mode = primary ? 'chip--primary' : 'chip--secondary';
   return (
-    <div
-      className={['chip', `chip--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
-    >
-      {label}
+    <div style={{ display: 'inline-block' }}>
+      <div
+        className={['chip', `chip--${size}`, mode].join(' ')}
+        style={{ backgroundColor }}
+      >
+        {label}
+      </div>
+      &nbsp;
     </div>
   );
 };
