@@ -80,7 +80,12 @@ const ArticleLine = ({
       </td>
     </>
   ) : (
-    <div />
+    <div className="smallcontainer">
+      <div>
+        {header}
+        {nickName}dfdffffffffffff
+      </div>
+    </div>
   );
 };
 
