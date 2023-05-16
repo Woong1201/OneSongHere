@@ -5,6 +5,7 @@ import RecordImage from 'components/atoms/studiocard/RecordImage';
 import CardTitle from 'components/atoms/common/CardTitle';
 import CardDate from 'components/atoms/studiocard/StudioCardDate';
 import Chip from 'components/atoms/common/Chip';
+import { useNavigate } from 'react-router-dom';
 
 interface StudioCardProps {
   /**
@@ -15,6 +16,10 @@ interface StudioCardProps {
    * 스튜디오 제목
    */
   studioTitle: string;
+  /**
+   * 스튜디오 아이디
+   */
+  studioId: number;
   /**
    * 시작 날짜
    */
@@ -33,6 +38,7 @@ interface StudioCardProps {
 const StudioCard = ({
   recordColor = Color.Purple,
   studioTitle,
+  studioId,
   startDate,
   endDate,
   tags = '태그',
@@ -44,8 +50,14 @@ const StudioCard = ({
     }
     return <Chip label={tags} size="small" />;
   };
+
+  const navigate = useNavigate();
+
+  const goToStudio = () => {
+    navigate(`/relay/${studioId}`);
+  };
   return (
-    <div className="studio-card">
+    <div className="studio-card" onClick={goToStudio} role="presentation">
       <div className="studio-card__record-image">
         <RecordImage color={recordColor} />
       </div>
