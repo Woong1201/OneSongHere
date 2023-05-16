@@ -6,9 +6,25 @@
   }
   &__container{
     width: 800px;
+    
   }
   &__content{
+    margin-top: 10px;
+    display: flex;
+    width: 780px;
     min-height: 400px;
+  }
+  &__button{
+    color: white;
+    display: flex;
+    align-items: center;
+    border-color: transparent;
+    background-color: #C1B8F5;
+    padding: 8px 12px;
+    border-radius: 15px;
+    &:hover{  
+      background-color: #4642FF;
+    }
   }
 }
 

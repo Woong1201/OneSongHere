@@ -24,5 +24,6 @@ export const Page: Story = {
     boardTitle: '마지막 소절 하실 분?????',
     header: '구인',
     boardDate: '2023.04.14',
+    isEmptyOutput: false,
   },
 };

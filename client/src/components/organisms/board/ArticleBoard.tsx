@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 // 컴포넌트 import
 import ArticleLine from 'components/molecules/articleline/ArticleLine';
-// api 모듈 import
-import { getBoards } from 'services/board';
+// SCSS import
+import './ArticleBoard.scss';
 
 interface Article {
   boardId: number;
@@ -21,7 +21,7 @@ const ArticleBoard = ({
 }) => {
   // 로딩 여부 관리
   const [isLoading, setIsLoading] = useState(false);
-
+  const [emptyArticles, getEmptyArticles] = useState<Article[]>([]);
   const [articles, getArticleBoard] = useState<Article[]>([]);
   useEffect(() => {
     setIsLoading(true);
@@ -29,20 +29,32 @@ const ArticleBoard = ({
     if (filteredArticles.length > 0) {
       // 필터된 데이터로 useState 실행하여 articles의 값 갱신(최신순 정렬을 위해 역순으로)
       getArticleBoard([...filteredArticles].reverse());
+      const initialEmptyArticles: Article[] = Array.from(
+        { length: 10 - [...filteredArticles].length },
+        (_, index) => ({
+          boardId: index + 1,
+          userId: 0,
+          nickName: '',
+          boardTitle: '',
+          header: '',
+          boardDate: '',
+        })
+      );
+      getEmptyArticles(initialEmptyArticles);
     } else {
       getArticleBoard([]);
-      // 아니면 그냥 api로 back에서 데이터 가져옴
-      // getBoards(
-      //   ({ data }) => {
-      //     console.log(data, 'and ', typeof data);
-      //     // 최신순으로 출력되도록 역순으로 담는다.
-      //     getArticleBoard(data.reverse());
-      //     console.log('articles :', articles);
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
+      const initialEmptyArticles: Article[] = Array.from(
+        { length: 10 - [...filteredArticles].length },
+        (_, index) => ({
+          boardId: index + 1,
+          userId: 0,
+          nickName: '',
+          boardTitle: '',
+          header: '',
+          boardDate: '',
+        })
+      );
+      getEmptyArticles(initialEmptyArticles);
     }
     setIsLoading(false);
   }, [filteredArticles]);
@@ -56,15 +68,16 @@ const ArticleBoard = ({
   const offset = (page - 1) * pageLimit;
   const pageNumButtons = new Array(entirePage).fill(0).map((_, index) => index);
 
-  // ============================================================================
-  // ============================================================================
+  // ========================================================================
+  // ===============================(  렌 더 링  )============================
+  // ========================================================================
   return (
     <div className="aBoard">
       {isLoading ? (
         <div>로딩 중입니다...</div>
       ) : (
-        <table>
-          <thead>
+        <table className="aBoard__table">
+          <thead className="aBoard__head">
             <tr>
               <th>번호</th>
               <th>카테고리</th>
@@ -73,9 +86,9 @@ const ArticleBoard = ({
               <th>날짜</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="aBoard__body">
             {articles.slice(offset, offset + pageLimit).map((article) => (
-              <tr key={article.boardId} className="test">
+              <tr key={article.boardId} className="aBoard__tr">
                 <ArticleLine
                   boardId={article.boardId}
                   boardTitle={article.boardTitle}
@@ -83,14 +96,31 @@ const ArticleBoard = ({
                   userId={article.userId}
                   nickName={article.nickName}
                   boardDate={article.boardDate}
+                  isEmptyOutput={false}
+                />
+              </tr>
+            ))}
+            <div style={{ color: 'transparent' }}>{emptyArticles.length}</div>
+            {emptyArticles.slice(offset, offset + pageLimit).map((article) => (
+              <tr key={article.boardId} className="aBoard__tr">
+                <ArticleLine
+                  boardId={article.boardId}
+                  boardTitle={article.boardTitle}
+                  header={article.header}
+                  userId={article.userId}
+                  nickName={article.nickName}
+                  boardDate={article.boardDate}
+                  isEmptyOutput
                 />
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      <div>
+      {/* ======================{페이지네이션 버튼}======================== */}
+      <div className="pagination">
         <button
+          className="pagination__Arrow"
           type="button"
           onClick={() => setPage(page - 1)}
           disabled={page === 1}
@@ -102,12 +132,17 @@ const ArticleBoard = ({
             type="button"
             key={item}
             onClick={() => setPage(index + 1)}
-            className={index + 1 === page ? '' : ''}
+            className={
+              index + 1 === page
+                ? 'pagination__number--active'
+                : 'pagination__number'
+            }
           >
             {index + 1}
           </button>
         ))}
         <button
+          className="pagination__Arrow"
           type="button"
           onClick={() => setPage(page + 1)}
           disabled={page === entirePage}

@@ -154,7 +154,7 @@ const WriteFrame = ({
             color="primary"
             onClick={isUpdate ? updateArticleData : postArticleData}
           />
-
+          &nbsp;&nbsp;
           <Button label="취소" type="button" onClick={goBack} />
         </div>
       </form>

@@ -12,7 +12,8 @@ import './Article.scss';
 import User from 'types/User';
 import { UserState } from 'store/UserState';
 import { useRecoilState } from 'recoil';
-import { WriteStream } from 'fs';
+import Icon from '@mdi/react';
+import { mdiTrashCanOutline, mdiLeadPencil } from '@mdi/js';
 
 interface CommentResponse {
   commentId: number;
@@ -110,18 +111,6 @@ const Article = () => {
         </div>
       ) : (
         <div className="article__container">
-          {user ? (
-            <div>
-              <button type="button" onClick={goToUpdate}>
-                수정
-              </button>
-              <button type="button" onClick={deleteArticleData}>
-                삭제
-              </button>
-            </div>
-          ) : (
-            <div />
-          )}
           <ArticleHeader
             header={strHeader}
             title={strTitle}
@@ -129,8 +118,33 @@ const Article = () => {
             nickname={strNickname}
             date={strDate}
           />
-          <div>본문</div>
-          <div className="article__content">{articleInfo?.boardContent}</div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="article__content">{articleInfo?.boardContent}</div>
+          </div>
+
+          {user ? (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={goToUpdate}
+                className="article__button"
+              >
+                <Icon path={mdiLeadPencil} size={0.7} />
+                &nbsp;수정
+              </button>
+              &nbsp;&nbsp;
+              <button
+                type="button"
+                onClick={deleteArticleData}
+                className="article__button"
+              >
+                <Icon path={mdiTrashCanOutline} size={0.7} />
+                &nbsp;삭제
+              </button>
+            </div>
+          ) : (
+            <div />
+          )}
 
           <div className="comments__container--header">
             <div style={{ display: 'flex', marginBottom: '10px' }}>
@@ -164,7 +178,14 @@ const Article = () => {
             ))}
           </div>
 
-          <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '18px',
+              marginBottom: '20px',
+            }}
+          >
             {/* 로그인 여부에 따라 댓글 입력창 출력 */}
 
             {user ? (

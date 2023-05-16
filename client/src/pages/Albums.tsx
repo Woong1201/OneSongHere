@@ -10,6 +10,8 @@ import './Albums.scss';
 import Album from 'types/Album';
 // api import
 import { getAlbums, searchAlbums } from 'services/album';
+// spinner import
+import { Audio } from 'react-loader-spinner';
 
 const Albums = () => {
   // 반응형용 useState : useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -38,12 +40,12 @@ const Albums = () => {
     if (keyword === '') {
       getAlbums(
         ({ data }) => {
-          console.log(data);
+          // console.log(data);
           getAlbumList(data);
           setIsLoading(false);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
           setIsLoading(false);
         }
       );
@@ -52,12 +54,12 @@ const Albums = () => {
         'title',
         keyword,
         ({ data }) => {
-          console.log('검색 데이터 :', data);
+          // console.log('검색 데이터 :', data);
           getAlbumList(data);
           setIsLoading(false);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
           setIsLoading(false);
         }
       );
@@ -68,6 +70,20 @@ const Albums = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [keyword]);
+
+  const [scrollNumber, setScrollNumber] = useState(0);
+  const handleScroll = () => {
+    setScrollNumber(window.innerHeight + window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="album__container">
@@ -87,8 +103,30 @@ const Albums = () => {
         onChangeSearchType={() => handleSearchType('TITLE')}
         onChangeKeyword={handleKeyword}
       />
+      {scrollNumber > 1077 ? (
+        <button
+          type="button"
+          className="launch__button"
+          onClick={goToTop}
+          style={{ cursor: 'pointer' }}
+        >
+          ▲
+        </button>
+      ) : null}
       {isLoading ? (
-        <div>로딩 중입니다...</div>
+        <div>
+          <Audio
+            height="120"
+            width="120"
+            color="#4642FF"
+            ariaLabel="audio-loading"
+            wrapperStyle={{}}
+            wrapperClass="wrapper-class"
+            visible
+          />
+          <br />
+          로딩 중입니다...
+        </div>
       ) : (
         <AlbumCardsGrid AlbumCards={albumlist} />
       )}

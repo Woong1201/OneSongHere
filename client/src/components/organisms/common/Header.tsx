@@ -47,7 +47,7 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
   ];
 
   const profileDropdownList = [
-    { label: '내 프로필', icon: <ProfileIcon />, route: '/mypage' },
+    { label: '내 프로필', icon: <ProfileIcon />, route: '' },
     { label: '로그아웃', icon: <LogoutIcon />, onClick: logoutHandler },
   ];
 
