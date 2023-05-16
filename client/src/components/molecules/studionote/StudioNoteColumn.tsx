@@ -11,7 +11,8 @@ interface StudioNoteColumnProps {
   updateDrum?: (name: string, timing: number | undefined) => void;
   playNote?: (noteName: string | string[]) => void;
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
-  noteStyle: boolean;
+  playing?: boolean;
+  disabled?: boolean;
 }
 
 const Column = 24;
@@ -50,11 +51,11 @@ const StudioNoteColumn = ({
   updateDrum,
   playNote,
   playDrum,
-  noteStyle,
+  playing = false,
+  disabled = false,
 }: StudioNoteColumnProps) => {
-  const columnClassNames = noteStyle
-    ? 'studio__note-column playing'
-    : 'studio__note-column';
+  const playingStyle = playing ? 'studio__note-column--playing' : '';
+  const disabledStyle = disabled ? 'studio__note-column--disabled' : null;
 
   const timing = rowIndex * 0.25;
   const drumPower = rowIndex % 2 === 0 ? 'strong' : 'weak';
@@ -75,7 +76,10 @@ const StudioNoteColumn = ({
     }) || false;
 
   return (
-    <div className={columnClassNames} id={timing.toString()}>
+    <div
+      className={['studio__note-column', playingStyle, disabledStyle].join(' ')}
+      id={timing.toString()}
+    >
       {noteList.map((note) => {
         const key = `${timing}-${note}`;
 
@@ -88,6 +92,7 @@ const StudioNoteColumn = ({
             note={note}
             selected={isSelected}
             playNote={playNote}
+            disabled={disabled}
           />
         );
       })}
@@ -98,6 +103,7 @@ const StudioNoteColumn = ({
         updateDrum={updateDrum}
         type="snare"
         selected={snareNoteSelected}
+        disabled={disabled}
       />
       <StudioDrumItem
         timing={timing}
@@ -106,6 +112,7 @@ const StudioNoteColumn = ({
         updateDrum={updateDrum}
         type="kick"
         selected={kickNoteSelected}
+        disabled={disabled}
       />
     </div>
   );

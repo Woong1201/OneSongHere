@@ -12,6 +12,12 @@ interface StudioNoteScrollProps {
   playNote: (noteName: string | string[]) => void;
   playDrum: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
+  columnNum: number;
+  containerWidth: number;
+  setContainerWidth: React.Dispatch<React.SetStateAction<number>>;
+  gridWidth: number;
+  userOrder: number;
+  barNum: number;
 }
 
 const StudioNoteContainer = ({
@@ -23,14 +29,26 @@ const StudioNoteContainer = ({
   playNote,
   playDrum,
   noteColumnStyle,
+  columnNum,
+  containerWidth,
+  setContainerWidth,
+  gridWidth,
+  userOrder,
+  barNum,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(scrollPosition);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  console.log(1, containerRef.current?.offsetWidth);
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
+  }, []);
 
   const onMouseDown = (event: React.MouseEvent) => {
-    const el = ref.current;
+    const el = containerRef.current;
     if (!el) return;
 
     setIsDragging(true);
@@ -47,23 +65,26 @@ const StudioNoteContainer = ({
   };
 
   const onMouseMove = (event: React.MouseEvent) => {
-    if (!isDragging || !ref.current) return;
+    if (!isDragging || !containerRef.current) return;
 
     event.preventDefault();
-    const x = event.pageX - ref.current.offsetLeft;
+    const x = event.pageX - containerRef.current.offsetLeft;
     const move = x - startX;
 
     requestAnimationFrame(() => {
-      if (ref.current) {
-        const newScrollLeft = Math.max(0, Math.min(4414, scrollLeft - move)); // Make sure it's not less than 0 or greater than 4414
-        ref.current.scrollLeft = newScrollLeft;
+      if (containerRef.current) {
+        const newScrollLeft = Math.max(
+          0,
+          Math.min(gridWidth, scrollLeft - move)
+        );
+        containerRef.current.scrollLeft = newScrollLeft;
         updateScrollPosition(newScrollLeft);
       }
     });
   };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
-    const el = ref.current;
+    const el = containerRef.current;
     if (!el) return;
 
     switch (event.key) {
@@ -80,19 +101,19 @@ const StudioNoteContainer = ({
     }
   };
   const onWheel = (event: React.WheelEvent) => {
-    const el = ref.current;
+    const el = containerRef.current;
     if (!el) return;
 
     const newScrollLeft = el.scrollLeft + event.deltaX;
 
-    const limitedScrollLeft = Math.max(0, Math.min(4414, newScrollLeft));
+    const limitedScrollLeft = Math.max(0, Math.min(gridWidth, newScrollLeft));
 
     el.scrollLeft = limitedScrollLeft;
     updateScrollPosition(limitedScrollLeft);
   };
   useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollLeft = scrollPosition;
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = scrollPosition;
     }
   }, [scrollPosition]);
 
@@ -106,7 +127,7 @@ const StudioNoteContainer = ({
       onMouseMove={onMouseMove}
       onKeyDown={onKeyDown}
       onWheel={onWheel}
-      ref={ref}
+      ref={containerRef}
     >
       <StudioNoteGrid
         notes={notes}
@@ -115,6 +136,9 @@ const StudioNoteContainer = ({
         playNote={playNote}
         playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}
+        columnNum={columnNum}
+        userOrder={userOrder}
+        barNum={barNum}
       />
     </div>
   );

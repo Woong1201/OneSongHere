@@ -28,5 +28,8 @@ export const Primary: Story = {
       { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     noteColumnStyle: Array(160).fill(false),
+    columnNum: 160,
+    userOrder: 0,
+    barNum: 0,
   },
 };

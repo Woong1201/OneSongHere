@@ -8,6 +8,7 @@ interface StudioDrumItemProps {
   updateDrum?: (name: string, timing: number | undefined) => void;
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   selected: boolean;
+  disabled?: boolean;
 }
 
 const StudioDrumItem = ({
@@ -17,12 +18,15 @@ const StudioDrumItem = ({
   selected,
   updateDrum,
   playDrum,
+  disabled = false,
 }: // selected,
 StudioDrumItemProps) => {
   const circleSize = power === 'strong' ? 'large' : 'small';
   const [isSelected, setIsSelected] = useState(selected);
-
+  const disabledDrumStyle = disabled ? 'studio__drum-item--disabled' : '';
+  const seletedCircle = isSelected ? 'studio__drum-item-circle--selected' : '';
   const selectDrum = () => {
+    if (disabled) return;
     setIsSelected(!isSelected);
     if (updateDrum !== undefined && playDrum !== undefined) {
       playDrum(power, type);
@@ -37,7 +41,7 @@ StudioDrumItemProps) => {
   return (
     <button
       type="button"
-      className={['studio__drum-item'].join(' ')}
+      className={['studio__drum-item', disabledDrumStyle].join(' ')}
       onClick={selectDrum}
       aria-label="a"
     >
@@ -45,7 +49,7 @@ StudioDrumItemProps) => {
         className={[
           'studio__drum-item-circle',
           `studio__drum-item-circle--${circleSize}`,
-          isSelected ? 'studio__drum-item-circle--selected' : '',
+          seletedCircle,
         ].join(' ')}
       />
     </button>

@@ -10,6 +10,12 @@
   }
 }
 .studio__header-clear-button {
-  margin-left: 20px;
+  margin-left: 30px;
   // height: 60%;
+  > button {
+    padding: 8px 10px;
+  }
+}
+.studio__header-buttons {
+  margin-left: 36px;
 }

@@ -12,4 +12,11 @@
   &--selected {
     background-color: rgba($header-color, 1) !important;
   }
+  &--disabled {
+    pointer-events: none;
+    &:hover {
+      cursor: default;
+      background-color: inherit;
+    }
+  }
 }

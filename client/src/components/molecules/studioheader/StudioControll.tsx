@@ -16,21 +16,27 @@ interface StudioControllProps {
       [key: string]: Tone.Player;
     } | null;
   };
-  currentInstrument: string;
-  changePlayingStyle: (timing: number) => void;
-  revertPlayingStyle: (timing: number) => void;
+  // currentInstrument: string;
+  // changePlayingStyle: (timing: number) => void;
+  // revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
+  inputScroll: (inputTiming: number) => void;
+  findLastTiming: () => number;
+  columnNum: number;
 }
 
 const StudioControll = ({
   notes,
   instrumentInstances,
-  currentInstrument,
-  changePlayingStyle,
-  revertPlayingStyle,
+  // currentInstrument,
+  // changePlayingStyle,
+  // revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
+  inputScroll,
+  findLastTiming,
+  columnNum,
 }: StudioControllProps) => {
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
@@ -38,7 +44,6 @@ const StudioControll = ({
   const playNote = useCallback(
     (time: number, note: number | Note) => {
       const currentNote = note as Note;
-
       if (
         currentNote.instrumentType === 'melody' &&
         instrumentInstances.piano != null
@@ -54,7 +59,7 @@ const StudioControll = ({
       ) {
         if (currentNote.names) {
           const drumInstance =
-            instrumentInstances.drum![currentNote.names as string];
+            instrumentInstances.drum?.[currentNote.names as string];
           if (drumInstance) {
             drumInstance.start(time);
           }
@@ -95,7 +100,7 @@ const StudioControll = ({
     Tone.Transport.stop();
     playingBarTasksRef.current.forEach(clearTimeout);
     playingBarTasksRef.current = [];
-    setNoteColumnStyle(Array(160).fill(false));
+    setNoteColumnStyle(Array(columnNum).fill(false));
   }, []);
 
   const playSequence = useCallback(() => {
@@ -105,19 +110,19 @@ const StudioControll = ({
 
     sequenceRef.current = new Tone.Part(
       playNote,
-      notes.map((note) => [note.timing * 1, note])
+      notes.map((note) => [note.timing, note])
     );
 
-    Tone.loaded().then(() => {
-      sequenceRef.current?.start();
-      Tone.Transport.start();
-    });
+    sequenceRef.current?.start();
+    Tone.Transport.start();
 
-    Array.from({ length: 160 }, (_, i) => {
+    const playLength = findLastTiming() * 4;
+    Array.from({ length: playLength }, (_, i) => {
       const playBar = setTimeout(() => {
         setNoteColumnStyle((prevStyle) => {
           const newStyle = [...prevStyle];
           newStyle[i] = true;
+          inputScroll(i * 0.25);
           return newStyle;
         });
       }, i * 250);
@@ -128,7 +133,7 @@ const StudioControll = ({
           newStyle[i] = false;
           return newStyle;
         });
-      }, (i + 0.25) * 250);
+      }, (i + 0.75) * 250);
 
       playingBarTasksRef.current.push(playBar);
       playingBarTasksRef.current.push(stopBar);
@@ -139,20 +144,22 @@ const StudioControll = ({
   return (
     <div className="studio__header-controll">
       <LogoIcon goHome size="small" whiteMode />
-      <button
-        type="button"
-        onClick={playSequence}
-        className="studio__header-controll-icon"
-      >
-        <PlayIcon size={30} />
-      </button>
-      <button
-        type="button"
-        onClick={stopSequence}
-        className="studio__header-controll-icon"
-      >
-        <StopIcon size={30} />
-      </button>
+      <div className="studio__header-buttons">
+        <button
+          type="button"
+          onClick={playSequence}
+          className="studio__header-controll-icon"
+        >
+          <PlayIcon size={30} />
+        </button>
+        <button
+          type="button"
+          onClick={stopSequence}
+          className="studio__header-controll-icon"
+        >
+          <StopIcon size={30} />
+        </button>
+      </div>
       <div className="studio__header-clear-button">
         <Button
           size="small"
