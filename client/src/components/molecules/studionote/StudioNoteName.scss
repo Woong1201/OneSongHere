@@ -1,7 +1,10 @@
 .studio__note_name {
   margin-top: 10px;
-  width: 3%;
+  width: 40px;
+  min-width: 40px;
+  margin-right: 3px;
   height: 498px;
   display: grid;
   justify-content: first baseline;
+  overflow: hidden;
 }
