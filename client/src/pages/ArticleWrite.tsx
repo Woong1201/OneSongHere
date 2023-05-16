@@ -5,7 +5,7 @@ const ArticleWrite = () => {
   // 렌더링
   return (
     <div>
-      <WriteFrame />
+      <WriteFrame isUpdate={false} />
     </div>
   );
 };

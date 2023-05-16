@@ -25,6 +25,8 @@ export const Primary: Story = {
       numberOfUsers: 4,
       endDate: new Date(2012, 10, 2),
       status: 4,
+      agree: 4,
+      numberOfVotes: 4,
       userId: 1,
       participate: true,
       vote: true,

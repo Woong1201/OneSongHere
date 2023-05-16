@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getArticle } from 'services/board';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getArticle, deleteArticle } from 'services/board';
 // 컴포넌트 import
 import ArticleHeader from 'components/molecules/articleheader/ArticleHeader';
 import CommentInput from 'components/molecules/commentinput/CommentInput';
 import CommentLine from 'components/molecules/commentline/CommentLine';
+import WriteFrame from 'components/organisms/writeframe/WriteFrame';
 // SCSS import
 import './Article.scss';
 // recoil 관련 import
 import User from 'types/User';
 import { UserState } from 'store/UserState';
 import { useRecoilState } from 'recoil';
+import { WriteStream } from 'fs';
 
 interface CommentResponse {
   commentId: number;
   userId: number;
+  picture: string;
   nickName: string;
   commentContent: string;
   commentDate: string;
@@ -23,6 +26,7 @@ interface CommentResponse {
 interface BoardResponse {
   boardId: number;
   userId: number;
+  picture: string;
   nickName: string;
   boardTitle: string;
   header: string;
@@ -42,17 +46,14 @@ const Article = () => {
   // articleInfo가 undefined가 될 수 있어 ArticleHeader로 보낼때 에러가 뜨므로 처음부터 문자열로 변환
   const strHeader = String(articleInfo?.header);
   const strTitle = String(articleInfo?.boardTitle);
+  const strPicture = String(articleInfo?.picture);
   const strNickname = String(articleInfo?.nickName);
   const strDate = String(articleInfo?.boardDate);
+  const strContent = String(articleInfo?.boardContent);
 
   // 로그인 여부에 따라 댓글 입력창 닫아놓기 위해
   const [user, setUser] = useRecoilState(UserState);
 
-  const handleAddComment = (comment: CommentResponse) => {
-    getComments([...comments, comment]);
-  };
-
-  console.log(comments, typeof comments);
   useEffect(() => {
     // 게시글 내용 get
     getArticle(
@@ -60,6 +61,7 @@ const Article = () => {
       ({ data }) => {
         console.log('data :', data);
         getArticleInfo(data);
+        console.log('댓글 :', data.commentResponses);
         getComments(data.commentResponses);
       },
       (error) => {
@@ -75,57 +77,103 @@ const Article = () => {
     }
   }, []);
 
+  const navigate = useNavigate();
+
+  const [isUpdate, setIsUpdate] = useState(false);
+  const goToUpdate = () => {
+    setIsUpdate(true);
+  };
+  const deleteArticleData = () => {
+    deleteArticle(
+      Number(boardId.articleId),
+      ({ data }) => {
+        console.log(data);
+        navigate('/board');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return (
     <div className="article__entire">
-      <div className="article__container">
-        <ArticleHeader
-          header={strHeader}
-          title={strTitle}
-          nickname={strNickname}
-          date={strDate}
-        />
-        <div>본문</div>
-        {articleInfo?.boardContent}
+      {isUpdate ? (
+        <div>
+          <WriteFrame
+            isUpdate
+            uId={Number(boardId.articleId)}
+            uTitle={strTitle}
+            uCategory={strHeader}
+            uContent={strContent}
+          />
+        </div>
+      ) : (
+        <div className="article__container">
+          {user ? (
+            <div>
+              <button type="button" onClick={goToUpdate}>
+                수정
+              </button>
+              <button type="button" onClick={deleteArticleData}>
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div />
+          )}
+          <ArticleHeader
+            header={strHeader}
+            title={strTitle}
+            picture={strPicture}
+            nickname={strNickname}
+            date={strDate}
+          />
+          <div>본문</div>
+          <div className="article__content">{articleInfo?.boardContent}</div>
 
-        <div className="comments__container--header">
-          <div style={{ display: 'flex', marginBottom: '10px' }}>
-            댓글 수
-            <div
-              style={{
-                marginLeft: '15px',
-                color: '#4642FF',
-                fontWeight: 'bold',
-              }}
-            >
-              {articleInfo?.commentResponses.length}
+          <div className="comments__container--header">
+            <div style={{ display: 'flex', marginBottom: '10px' }}>
+              댓글
+              <div
+                style={{
+                  marginLeft: '15px',
+                  color: '#4642FF',
+                  fontWeight: 'bold',
+                }}
+              >
+                {articleInfo?.commentResponses.length}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* 댓글 목록 */}
-        <div className="comments__container--lines">
-          {comments?.map((comment) => (
-            <div key={comment.commentId}>
-              <CommentLine
-                nickname={comment.nickName}
-                content={comment.commentContent}
-                date={comment.commentDate}
-                userId={comment.userId}
-                loginId={user?.userId}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+          {/* 댓글 목록 */}
+          <div className="comments__container--lines">
+            {comments?.map((comment) => (
+              <div key={comment.commentId}>
+                <CommentLine
+                  commentId={comment.commentId}
+                  nickname={comment.nickName}
+                  picture={comment.picture}
+                  content={comment.commentContent}
+                  date={comment.commentDate}
+                  userId={comment.userId}
+                  loginId={user?.userId}
+                />
+              </div>
+            ))}
+          </div>
 
-      {/* 로그인 여부에 따라 댓글 입력창 출력 */}
-      {user ? (
-        <CommentInput
-          boardid={Number(boardId.articleId)}
-          onAddComment={handleAddComment}
-        />
-      ) : (
-        <div />
+          <div>
+            {/* 로그인 여부에 따라 댓글 입력창 출력 */}
+
+            {user ? (
+              <CommentInput boardid={Number(boardId.articleId)} />
+            ) : (
+              <div />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

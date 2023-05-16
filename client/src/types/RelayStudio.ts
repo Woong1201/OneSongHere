@@ -23,6 +23,8 @@ interface RelayStudioInfo {
    * 4 : 완료 - 1,2,3 반복하다가 모든 사람 다 완료하고 그러면 userId는 방장이고 이사람만 저장 가능 나머지는 듣기만 가능(참여했던 사람들)
    */
   status: number;
+  agree: number;
+  numberOfVotes: number;
   userId: number;
   participate: boolean;
   vote: boolean;

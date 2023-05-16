@@ -14,43 +14,51 @@
   align-items: center;
   justify-content: flex-start;
   width: 70%;
-  &__input {
-    padding: 10px;
-    width: 30%;
+  &__container {
+    display: flex;
+    justify-content: space-between;
     border: 2px solid $main-theme-color;
     border-radius: 10px;
+    width: 40%;
+  }
+  &__input {
+    border: none;
+    background-color: transparent;
+    padding: 5px 5px 5px 10px;
+    width: 50%;
     font-family: "Pretendard";
     font-weight: 500;
   }
   &__button {
-    height: 38.67px;
+    background-color: transparent;
+    height: 35px;
     display: flex;
     flex-direction: column;
     :active {
       background-color: $light-main-theme-color;
     }
     &__plus {
+      background-color: transparent;
       display: flex;
       align-items: center;
       height: 50%;
       width: 100%;
     //   border: 2px solid $main-theme-color;
-    border: none;
-      border-radius: 3px;
-      background-color: white;
+      border: none;
+      border-radius: 0px 5px 0px 0                                                                    px;
       :active {
         background-color: transparent;
       }
     }
     &__minus {
+      background-color: transparent;
       display: flex;
       align-items: center;
       height: 50%;
       width: 100%;
     //   border: 2px solid $main-theme-color;
-    border: none;
-      border-radius: 3px;
-      background-color: white;
+      border: none;
+      border-radius: 0px 0px 5px 0px;
       :active {
         background-color: transparent;
       }
