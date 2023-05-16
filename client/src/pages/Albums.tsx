@@ -10,6 +10,8 @@ import './Albums.scss';
 import Album from 'types/Album';
 // api import
 import { getAlbums, searchAlbums } from 'services/album';
+// spinner import
+import { Audio } from 'react-loader-spinner';
 
 const Albums = () => {
   // 반응형용 useState : useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
@@ -88,7 +90,19 @@ const Albums = () => {
         onChangeKeyword={handleKeyword}
       />
       {isLoading ? (
-        <div>로딩 중입니다...</div>
+        <div>
+          <Audio
+            height="120"
+            width="120"
+            color="#4642FF"
+            ariaLabel="audio-loading"
+            wrapperStyle={{}}
+            wrapperClass="wrapper-class"
+            visible
+          />
+          <br />
+          로딩 중입니다...
+        </div>
       ) : (
         <AlbumCardsGrid AlbumCards={albumlist} />
       )}

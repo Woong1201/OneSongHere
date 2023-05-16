@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 // api import
 import { getBoards, getCategorized } from 'services/board';
 import './Board.scss';
+// spinner import
+import { Oval } from 'react-loader-spinner';
 
 // 카테고리 인터페이스
 interface Category {
@@ -174,7 +176,22 @@ const Board = () => {
             <div style={{ height: '38px' }} />
           )}
           {isLoading ? (
-            <div>로딩 중입니다...</div>
+            <div>
+              <Oval
+                height={80}
+                width={80}
+                color="#4642FF"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible
+                ariaLabel="oval-loading"
+                secondaryColor="#C1B8F5"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+              <br />
+              로딩 중입니다...
+            </div>
           ) : (
             <ArticleBoard filteredArticles={articles} />
           )}
