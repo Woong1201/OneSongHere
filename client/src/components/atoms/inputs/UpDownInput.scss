@@ -24,14 +24,14 @@
   &__input {
     border: none;
     background-color: transparent;
-    padding: 10px;
+    padding: 5px 5px 5px 10px;
     width: 50%;
     font-family: "Pretendard";
     font-weight: 500;
   }
   &__button {
     background-color: transparent;
-    height: 38.67px;
+    height: 35px;
     display: flex;
     flex-direction: column;
     :active {
