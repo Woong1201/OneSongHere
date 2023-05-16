@@ -16,7 +16,7 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   // 로딩 여부 관리
   // const [isLoading, setIsLoading] = useState(false);
 
-  // const [data, setData] = useState<Album[]>([]);
+  // 무한 스크롤用 변수들 관리
   const [visibleData, setVisibleData] = useState<Album[]>([]);
   const [page, setPage] = useState(1);
 
@@ -25,22 +25,23 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
+  // 반응형 useEffect
   useEffect(() => {
-    // setData(AlbumCards);
-    // setPage(1);
-
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
+  // AlbumCards가 값이 변했을 때, 즉 값이 들어왔을 때 카드 리스트 4개까지 받기
   useEffect(() => {
     setVisibleData(AlbumCards.slice(0, 4));
   }, [AlbumCards]);
 
+  // 스크롤이 아래로 갔고 && 보여줄 데이터의 길이가 전체 데이터 길이보다 짧다면
+  // 보여줄 데이터의 길이를 추가
   const handleScroll = () => {
-    console.log(visibleData.length, AlbumCards.length);
+    // console.log(visibleData.length, AlbumCards.length);
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
       visibleData.length < AlbumCards.length

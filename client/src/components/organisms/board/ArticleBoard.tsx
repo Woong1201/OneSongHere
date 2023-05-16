@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 // 컴포넌트 import
 import ArticleLine from 'components/molecules/articleline/ArticleLine';
+// SCSS import
+import './ArticleBoard.scss';
 
 interface Article {
   boardId: number;
@@ -19,7 +21,7 @@ const ArticleBoard = ({
 }) => {
   // 로딩 여부 관리
   const [isLoading, setIsLoading] = useState(false);
-
+  const [emptyArticles, getEmptyArticles] = useState<Article[]>([]);
   const [articles, getArticleBoard] = useState<Article[]>([]);
   useEffect(() => {
     setIsLoading(true);
@@ -27,8 +29,32 @@ const ArticleBoard = ({
     if (filteredArticles.length > 0) {
       // 필터된 데이터로 useState 실행하여 articles의 값 갱신(최신순 정렬을 위해 역순으로)
       getArticleBoard([...filteredArticles].reverse());
+      const initialEmptyArticles: Article[] = Array.from(
+        { length: 20 - [...filteredArticles].length },
+        (_, index) => ({
+          boardId: index + 1,
+          userId: 0,
+          nickName: '',
+          boardTitle: '',
+          header: '',
+          boardDate: '',
+        })
+      );
+      getEmptyArticles(initialEmptyArticles);
     } else {
       getArticleBoard([]);
+      const initialEmptyArticles: Article[] = Array.from(
+        { length: 20 - [...filteredArticles].length },
+        (_, index) => ({
+          boardId: index + 1,
+          userId: 0,
+          nickName: '',
+          boardTitle: '',
+          header: '',
+          boardDate: '',
+        })
+      );
+      getEmptyArticles(initialEmptyArticles);
     }
     setIsLoading(false);
   }, [filteredArticles]);
@@ -50,7 +76,7 @@ const ArticleBoard = ({
       {isLoading ? (
         <div>로딩 중입니다...</div>
       ) : (
-        <table>
+        <table className="aBoard__table">
           <thead>
             <tr>
               <th>번호</th>
@@ -70,6 +96,20 @@ const ArticleBoard = ({
                   userId={article.userId}
                   nickName={article.nickName}
                   boardDate={article.boardDate}
+                  isEmptyOutput={false}
+                />
+              </tr>
+            ))}
+            {emptyArticles.slice(offset, offset + pageLimit).map((article) => (
+              <tr key={article.boardId} className="test">
+                <ArticleLine
+                  boardId={article.boardId}
+                  boardTitle={article.boardTitle}
+                  header={article.header}
+                  userId={article.userId}
+                  nickName={article.nickName}
+                  boardDate={article.boardDate}
+                  isEmptyOutput
                 />
               </tr>
             ))}
@@ -79,6 +119,7 @@ const ArticleBoard = ({
       {/* ======================{페이지네이션 버튼}======================== */}
       <div>
         <button
+          className="pagination__Arrow"
           type="button"
           onClick={() => setPage(page - 1)}
           disabled={page === 1}
@@ -90,12 +131,17 @@ const ArticleBoard = ({
             type="button"
             key={item}
             onClick={() => setPage(index + 1)}
-            className={index + 1 === page ? '' : ''}
+            className={
+              index + 1 === page
+                ? 'pagination__number--active'
+                : 'pagination__number'
+            }
           >
             {index + 1}
           </button>
         ))}
         <button
+          className="pagination__Arrow"
           type="button"
           onClick={() => setPage(page + 1)}
           disabled={page === entirePage}

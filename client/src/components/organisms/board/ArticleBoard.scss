@@ -1,3 +1,27 @@
 .aBoard{
     min-width: 800px;
+    &__table{
+        // height: 436px;
+    }
+}
+.test{
+    // height: 19px;
+}
+
+
+.pagination{
+    &__number{
+        border-color: transparent;
+        background-color: transparent;
+        &--active{
+            border-color: transparent;
+            background-color: #4642FF;
+            color: white;
+            border-radius: 50%;
+        }
+    }
+    &__Arrow{
+        border-color: transparent;
+        background-color: transparent;
+    }
 }
