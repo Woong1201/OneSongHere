@@ -1,5 +1,5 @@
 import StudioHeader from 'components/organisms/studio/StudioHeader';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './RelayStudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
@@ -30,6 +30,11 @@ const RelayStudioTemplate = () => {
   const [userNum, setUserNum] = useState<number>(0);
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
+
+  const startDisableTiming = useMemo(() => 8 * (userOrder - 1), [userOrder]);
+  const timingDisabled = (timing: number) => {
+    return startDisableTiming > timing || startDisableTiming + 8 <= timing;
+  };
 
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
@@ -208,7 +213,7 @@ const RelayStudioTemplate = () => {
 
   const updateNote = useCallback(
     (name: string, timing: number | undefined) => {
-      if (timing !== undefined) {
+      if (timing !== undefined && !timingDisabled(timing)) {
         setNotes((prevNotes) => {
           let isExistingNote = false;
           let updatedNotes = prevNotes.map((note) => {
@@ -348,8 +353,8 @@ const RelayStudioTemplate = () => {
 
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
-    if (timing !== undefined) {
-      const note = chordNotes[chord];
+    const note = chordNotes[chord];
+    if (timing !== undefined && !timingDisabled(timing)) {
       setNotes((prevNote) => {
         return [
           ...prevNote,
@@ -361,9 +366,9 @@ const RelayStudioTemplate = () => {
           },
         ];
       });
-      playNote(note.notes);
       inputScroll(timing);
     }
+    playNote(note.notes);
   };
 
   const saveRelayNotes = () => {

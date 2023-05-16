@@ -28,7 +28,6 @@ export const Primary: Story = {
       { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     scrollPosition: 1,
-    // updateScrollPosition: (position) => console.log(position),
     noteColumnStyle: Array(160).fill(false),
     columnNum: 160,
     setContainerWidth: undefined,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './StudioNoteGrid.scss';
 import { Note } from 'types/Note';
 import StudioNoteColumn from './StudioNoteColumn';
@@ -25,7 +25,7 @@ const StudioNoteGrid = ({
   userOrder,
 }: StudioNoteColumnProps) => {
   const Row = columnNum;
-  const startDisablePoint = 32 * (userOrder - 1);
+  const startDisablePoint = useMemo(() => 32 * (userOrder - 1), [userOrder]);
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {
