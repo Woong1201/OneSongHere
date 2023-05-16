@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './StudioHeader.scss';
 import ProfileImageList from 'components/molecules/studioheader/ProfileImageList';
 import StudioControll from 'components/molecules/studioheader/StudioControll';
@@ -28,6 +28,7 @@ interface StudioHeaderProps {
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
   saveNotes: () => void;
+  submitNotes: () => void;
   inputScroll: (inputTiming: number) => void;
   findLastTiming: () => number;
   columnNum: number;
@@ -42,10 +43,20 @@ const StudioHeader = ({
   setNoteColumnStyle,
   clearNotes,
   saveNotes,
+  submitNotes,
   inputScroll,
   findLastTiming,
   columnNum,
 }: StudioHeaderProps) => {
+  const [userId, setUserId] = useState<number>(0);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUserId((JSON.parse(storedUser) as User).userId);
+    }
+  }, []);
+
   let studioTitle = '';
 
   if (studioInfo) {
@@ -94,7 +105,14 @@ const StudioHeader = ({
       />
       <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />
-      <StudioMenu saveNotes={saveNotes} />
+      {studioInfo &&
+        ((studioInfo as RelayStudioInfo).userId === userId ? (
+          <StudioMenu
+            status={(studioInfo as RelayStudioInfo).status}
+            saveNotes={saveNotes}
+            submitNotes={submitNotes}
+          />
+        ) : null)}
     </div>
   );
 };
