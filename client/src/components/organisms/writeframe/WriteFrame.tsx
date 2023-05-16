@@ -123,14 +123,18 @@ const WriteFrame = ({
           <div className="write__label">카테고리</div>
           <div className="write__categories">
             {categories.map((category) => (
-              <Button
-                key={category.name}
-                onClick={() => clickCategory(category.name)}
-                type="button"
-                tag
-                label={category.name}
-                color={header === category.name ? 'primary' : 'other'}
-              />
+              <div>
+                <Button
+                  key={category.name}
+                  onClick={() => clickCategory(category.name)}
+                  type="button"
+                  tag
+                  label={category.name}
+                  color={header === category.name ? 'primary' : 'other'}
+                  size="small"
+                />
+                &nbsp;
+              </div>
             ))}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ArticleLine.scss';
 
 import TextButton from 'components/atoms/buttons/TextButton';
@@ -37,7 +37,18 @@ const ArticleLine = ({
   todayDate.setHours(0, 0, 0, 0);
   const diffMSec = todayDate.getTime() - postedDate.getTime();
 
-  return (
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return width >= 500 ? (
     <>
       <td>{isEmptyOutput ? '' : boardId}</td>
       <td>{header}</td>
@@ -68,6 +79,8 @@ const ArticleLine = ({
         )}
       </td>
     </>
+  ) : (
+    <div />
   );
 };
 
