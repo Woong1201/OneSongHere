@@ -76,6 +76,7 @@ const StudioList = ({
                 <div className="studio-list__studio" key={studio.relayStudioID}>
                   <StudioCard
                     key={studio.relayStudioID}
+                    studioId={studio.relayStudioID}
                     studioTitle={studio.relayStudioTitle}
                     startDate={getStartDate(studio.endDate)}
                     endDate={endDateStringtoDate(studio.endDate)}
