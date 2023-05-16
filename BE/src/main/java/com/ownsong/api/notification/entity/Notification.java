@@ -21,7 +21,7 @@ public class Notification {
     @Column(name = "NOTI_ID", columnDefinition = "INT UNSIGNED")
     private long notiId;
 
-    @Column(name = "TYPE", length = 10)
+    @Column(name = "TYPE", length = 20)
     private String type;
 
     @ManyToOne(fetch = FetchType.LAZY)
