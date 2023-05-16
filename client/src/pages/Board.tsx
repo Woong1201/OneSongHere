@@ -36,7 +36,7 @@ const Board = () => {
   // 글쓰기 페이지로 이동
   const navigate = useNavigate();
   const navigateWritePage = () => {
-    console.log(LoginState);
+    // console.log(LoginState);
     navigate('/board/write');
   };
 
@@ -61,13 +61,13 @@ const Board = () => {
       if (search === '전체') {
         getBoards(
           ({ data }) => {
-            console.log(data, 'and ', typeof data);
+            // console.log(data, 'and ', typeof data);
             getArticleBoard(data);
-            console.log('articles :', articles);
+            // console.log('articles :', articles);
             setIsLoading(false);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
             setIsLoading(false);
           }
         );
@@ -76,12 +76,12 @@ const Board = () => {
           'header',
           search,
           ({ data }) => {
-            console.log(search, '로 찾은 데이터', data);
+            // console.log(search, '로 찾은 데이터', data);
             getArticleBoard(data);
             setIsLoading(false);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
             setIsLoading(false);
           }
         );
@@ -108,13 +108,13 @@ const Board = () => {
     if (keyword === '') {
       getBoards(
         ({ data }) => {
-          console.log(data, 'and ', typeof data);
+          // console.log(data, 'and ', typeof data);
           getArticleBoard(data);
-          console.log('articles :', articles);
+          // console.log('articles :', articles);
           setIsLoading(false);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
           setIsLoading(false);
         }
       );
@@ -123,12 +123,12 @@ const Board = () => {
         'title',
         keyword,
         ({ data }) => {
-          console.log('검색결과 :', data);
+          // console.log('검색결과 :', data);
           getArticleBoard(data);
           setIsLoading(false);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
           setIsLoading(false);
         }
       );

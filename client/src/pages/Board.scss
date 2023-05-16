@@ -8,7 +8,7 @@
 .board{
     &__banner{
         width: 100%;
-        height: 100px;
+        height: 84px;
         background-color: #4642FF;
         position: relative;
         &--title{
@@ -16,7 +16,7 @@
             font-weight: 500;
             color: white;
             position: absolute;   
-            top: 38px;
+            top: 30px;
             left: 300px;
         }
     }

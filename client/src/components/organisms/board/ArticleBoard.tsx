@@ -100,6 +100,7 @@ const ArticleBoard = ({
                 />
               </tr>
             ))}
+            <div style={{ color: 'transparent' }}>{emptyArticles.length}</div>
             {emptyArticles.slice(offset, offset + pageLimit).map((article) => (
               <tr key={article.boardId} className="aBoard__tr">
                 <ArticleLine
