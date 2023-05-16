@@ -1,5 +1,5 @@
 import React from 'react';
-import BannerImage from 'assets/images/main_page_banner_smallest.png';
+import BannerImage from 'assets/images/main_page_banner_resize.webp';
 import './MainBannerImage.scss';
 
 const MainBannerImage = () => {
