@@ -71,6 +71,20 @@ const Albums = () => {
     };
   }, [keyword]);
 
+  const [scrollNumber, setScrollNumber] = useState(0);
+  const handleScroll = () => {
+    setScrollNumber(window.innerHeight + window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="album__container">
       <div
@@ -89,6 +103,16 @@ const Albums = () => {
         onChangeSearchType={() => handleSearchType('TITLE')}
         onChangeKeyword={handleKeyword}
       />
+      {scrollNumber > 1077 ? (
+        <button
+          type="button"
+          className="launch__button"
+          onClick={goToTop}
+          style={{ cursor: 'pointer' }}
+        >
+          ▲
+        </button>
+      ) : null}
       {isLoading ? (
         <div>
           <Audio
