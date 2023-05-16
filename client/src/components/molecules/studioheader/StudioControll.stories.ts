@@ -34,5 +34,6 @@ export const Primary: Story = {
     },
     currentInstrument: 'piano',
     findLastTiming: () => 0,
+    columnNum: 160,
   },
 };

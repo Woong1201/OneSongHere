@@ -27,10 +27,31 @@ const RelayStudioTemplate = () => {
 
   const [currentInstrument, setCurrentInstrument] = useState<string>('piano');
   const [currentDrum, setCurrentDrum] = useState<string>('drum');
+  const [userNum, setUserNum] = useState<number>(0);
+  const [userOrder, setUserOrder] = useState<number>(0);
+  const [columnNum, setColumnNum] = useState<number>(160);
 
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
+
+  useEffect(() => {
+    if (studioInfo) {
+      setUserNum(studioInfo.limitOfUsers as number);
+      setUserOrder((studioInfo.numberOfUsers as number) + 1);
+    }
+  }, [studioInfo]);
+
+  useEffect(() => {
+    setColumnNum(userNum * 32);
+    setNoteColumnStyle(Array(userNum * 32).fill(false));
+  }, [userNum]);
+
+  console.log(studioInfo);
+  console.log(userNum);
+  console.log(userOrder);
+  console.log(columnNum);
+  console.log(noteColumnStyle);
 
   const [noteScrollPosition, setNoteScrollPosition] = useState(0);
 
@@ -265,7 +286,10 @@ const RelayStudioTemplate = () => {
 
   const findInputTiming = () => {
     // 0부터 0.25 * 150까지 배열
-    const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+    const possibleNoteTiming = Array.from(
+      { length: columnNum },
+      (_, i) => i * 0.25
+    );
     // 현재 타이밍들
     const timings = notes
       .filter((note) => note.instrumentType === 'melody')
@@ -275,7 +299,7 @@ const RelayStudioTemplate = () => {
   };
 
   // const findChordInputTiming = () => {
-  //   const possibleNoteTiming = Array.from({ length: 160 }, (_, i) => i * 0.25);
+  //   const possibleNoteTiming = Array.from({ length: columnNum }, (_, i) => i * 0.25);
   //   const timings = notes.map((note) => note.timing);
   //   return possibleNoteTiming.find((num) => !timings.includes(num));
   // };
@@ -367,7 +391,8 @@ const RelayStudioTemplate = () => {
       }
     );
   };
-
+  // const re
+  console.log(studioInfo?.numberOfUsers);
   return (
     <>
       <StudioHeader
@@ -382,6 +407,7 @@ const RelayStudioTemplate = () => {
         saveNotes={saveRelayNotes}
         inputScroll={inputScroll}
         findLastTiming={findLastTiming}
+        columnNum={columnNum}
       />
       <div className="relay-studio__body">
         <div className="relay-studio__content">
@@ -394,7 +420,9 @@ const RelayStudioTemplate = () => {
             playNote={playNote}
             playDrum={playDrum}
             noteColumnStyle={noteColumnStyle}
+            columnNum={columnNum}
           />
+          {noteScrollPosition}
           <StudioInstrument
             updateNote={updateNote}
             findInputTiming={findInputTiming}

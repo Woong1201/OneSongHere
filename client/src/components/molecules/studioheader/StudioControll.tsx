@@ -23,6 +23,7 @@ interface StudioControllProps {
   clearNotes: () => void;
   inputScroll: (inputTiming: number) => void;
   findLastTiming: () => number;
+  columnNum: number;
 }
 
 const StudioControll = ({
@@ -35,6 +36,7 @@ const StudioControll = ({
   clearNotes,
   inputScroll,
   findLastTiming,
+  columnNum,
 }: StudioControllProps) => {
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
@@ -98,7 +100,7 @@ const StudioControll = ({
     Tone.Transport.stop();
     playingBarTasksRef.current.forEach(clearTimeout);
     playingBarTasksRef.current = [];
-    setNoteColumnStyle(Array(160).fill(false));
+    setNoteColumnStyle(Array(columnNum).fill(false));
   }, []);
 
   const playSequence = useCallback(() => {

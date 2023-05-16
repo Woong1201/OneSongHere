@@ -10,8 +10,8 @@ interface StudioNoteColumnProps {
   playNote?: (noteName: string | string[]) => void;
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
+  columnNum: number;
 }
-const Row = 160;
 
 const StudioNoteGrid = ({
   notes,
@@ -20,7 +20,9 @@ const StudioNoteGrid = ({
   playNote,
   playDrum,
   noteColumnStyle,
+  columnNum,
 }: StudioNoteColumnProps) => {
+  const Row = columnNum;
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {

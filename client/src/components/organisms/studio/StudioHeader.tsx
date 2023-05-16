@@ -30,6 +30,7 @@ interface StudioHeaderProps {
   saveNotes: () => void;
   inputScroll: (inputTiming: number) => void;
   findLastTiming: () => number;
+  columnNum: number;
 }
 const StudioHeader = ({
   studioInfo,
@@ -43,6 +44,7 @@ const StudioHeader = ({
   saveNotes,
   inputScroll,
   findLastTiming,
+  columnNum,
 }: StudioHeaderProps) => {
   let studioTitle = '';
 
@@ -89,6 +91,7 @@ const StudioHeader = ({
         clearNotes={clearNotes}
         inputScroll={inputScroll}
         findLastTiming={findLastTiming}
+        columnNum={columnNum}
       />
       <StudioTitle studioTitle={studioTitle} />
       <ProfileImageList users={users} />

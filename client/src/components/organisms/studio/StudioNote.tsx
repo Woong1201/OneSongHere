@@ -13,6 +13,7 @@ interface StudioNoteProps {
   playNote: (noteName: string | string[]) => void;
   playDrum: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
+  columnNum: number;
 }
 const StudioNote = ({
   scrollPosition,
@@ -23,6 +24,7 @@ const StudioNote = ({
   playDrum,
   notes,
   noteColumnStyle,
+  columnNum,
 }: StudioNoteProps) => {
   return (
     <div className="studio__note">
@@ -31,6 +33,7 @@ const StudioNote = ({
         scrollPosition={scrollPosition}
         updateScrollPosition={updateScrollPosition}
         noteColumnStyle={noteColumnStyle}
+        columnNum={columnNum}
       />
       <StudioNoteContainer
         notes={notes}
@@ -41,6 +44,7 @@ const StudioNote = ({
         playNote={playNote}
         playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}
+        columnNum={columnNum}
       />
     </div>
   );

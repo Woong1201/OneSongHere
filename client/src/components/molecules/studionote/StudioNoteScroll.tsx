@@ -8,6 +8,7 @@ interface StudioNoteScrollProps {
   updateScrollPosition: (position: number) => void;
   notes: Note[];
   noteColumnStyle: boolean[];
+  columnNum: number;
 }
 
 const StudioNoteScroll = ({
@@ -15,6 +16,7 @@ const StudioNoteScroll = ({
   updateScrollPosition,
   notes,
   noteColumnStyle,
+  columnNum,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -73,7 +75,11 @@ const StudioNoteScroll = ({
       ref={scrollRef}
       onClick={onClick}
     >
-      <StudioNoteGrid noteColumnStyle={noteColumnStyle} notes={notes} />
+      <StudioNoteGrid
+        noteColumnStyle={noteColumnStyle}
+        notes={notes}
+        columnNum={columnNum}
+      />
       <div
         role="presentation"
         className="studio_note__scroll-body"
