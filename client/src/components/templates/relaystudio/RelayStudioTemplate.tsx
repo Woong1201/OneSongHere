@@ -33,11 +33,17 @@ const RelayStudioTemplate = () => {
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
 
-  const startDisableTiming = useMemo(() => 8 * (userOrder - 1), [userOrder]);
+  const startDisableTiming = useMemo(
+    () => barNum * 0.25 * (userOrder - 1),
+    [userOrder]
+  );
   const timingDisabled = (timing: number) => {
-    return startDisableTiming > timing || startDisableTiming + 8 <= timing;
+    return (
+      startDisableTiming > timing ||
+      startDisableTiming + barNum * 0.25 <= timing
+    );
   };
-
+  console.log(startDisableTiming);
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
