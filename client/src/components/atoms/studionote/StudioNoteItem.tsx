@@ -7,6 +7,7 @@ interface StudioNoteItemProps {
   updateNote?: (name: string, timing: number) => void;
   playNote?: (noteName: string | string[]) => void;
   selected: boolean;
+  disabled?: boolean;
 }
 
 const StudioNoteItem = ({
@@ -15,10 +16,13 @@ const StudioNoteItem = ({
   updateNote,
   playNote,
   selected,
+  disabled = false,
 }: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(selected);
-
+  const disabledNoteStyle = disabled ? 'studio__note-item--disabled' : '';
+  const selectedStyle = isSelected ? 'studio__note-item--selected' : '';
   const selectNote = () => {
+    if (disabled) return;
     setIsSelected(!isSelected);
     if (updateNote !== undefined && playNote !== undefined) {
       playNote(note);
@@ -33,10 +37,9 @@ const StudioNoteItem = ({
   return (
     <button
       type="button"
-      className={[
-        'studio__note-item',
-        isSelected ? 'studio__note-item--selected' : '',
-      ].join(' ')}
+      className={['studio__note-item', disabledNoteStyle, selectedStyle].join(
+        ' '
+      )}
       onClick={selectNote}
       aria-label={`${timing}-${note}`}
     />

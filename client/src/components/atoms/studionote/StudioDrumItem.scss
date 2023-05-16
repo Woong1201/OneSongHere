@@ -30,4 +30,11 @@
       transition: 0.5s;
     }
   }
+  &--disabled {
+    pointer-events: none;
+    &:hover {
+      cursor: default;
+      background-color: inherit;
+    }
+  }
 }

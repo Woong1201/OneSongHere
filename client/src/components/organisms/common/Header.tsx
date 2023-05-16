@@ -13,6 +13,8 @@ import LogoutIcon from 'components/atoms/profiledropdown/LogoutIcon';
 import { useRecoilState } from 'recoil';
 import { LoginState } from 'store/LoginState';
 import { UserState } from 'store/UserState';
+import LogoText from 'components/atoms/common/LogoText';
+import Logo from 'components/molecules/common/Logo';
 
 interface HeaderProps {
   user?: User;
@@ -51,7 +53,7 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
 
   return (
     <div className="header">
-      <LogoIcon goHome />
+      <Logo goHome whiteMode={whiteMode} />
       <nav className="header__nav-list">
         <div className="header__nav-item">
           <TextButton label="작곡" white={whiteMode} to="/relay" />
