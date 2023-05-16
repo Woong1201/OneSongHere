@@ -30,7 +30,6 @@ const AlbumModal = ({
 }: ModalProps) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [genre, setGenre] = useState<Array<string>>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const navigate = useNavigate();
   const [imgUrl, setImgUrl] = useState<string>('');
@@ -59,18 +58,12 @@ const AlbumModal = ({
   };
 
   const onChangeGenre = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    setInputValue(input);
-
-    if (input.endsWith(' ')) {
-      const inputGenres = input.trim().split(' ');
-      setGenre([...genre, ...inputGenres]);
-      setInputValue('');
-    }
+    setInputValue(event.target.value);
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const genre = inputValue.split(',').map((item) => item.trim());
     const text = [title, content, genre.join(', ')].join(', ');
 
     const createCover = () => {
@@ -91,11 +84,7 @@ const AlbumModal = ({
   };
   useEffect(() => {
     const postAlbumData = () => {
-      console.log('title', title);
-      console.log('content', content);
-      console.log('albumSheet', albumSheet);
-      console.log('genre', genre);
-      console.log('imgUrl', imgUrl);
+      const genre = inputValue.split(',').map((item) => item.trim());
       postAlbum(
         title,
         content,

@@ -14,9 +14,8 @@ interface ModalProps {
 
 const Modal = ({ onClickModal }: ModalProps) => {
   const [title, setTitle] = useState<string>('');
-  const [genre, setGenre] = useState<Array<string>>([]);
-  const [limitOfUsers, setLimitOfUsers] = useState<number>(0);
-  const [numberOfBars, setNumberOfBars] = useState<number>(0);
+  const [limitOfUsers, setLimitOfUsers] = useState<number>(4);
+  const [numberOfBars, setNumberOfBars] = useState<number>(16);
   const [inputValue, setInputValue] = useState<string>('');
   const navigate = useNavigate();
 
@@ -32,14 +31,7 @@ const Modal = ({ onClickModal }: ModalProps) => {
   };
 
   const onChangeGenre = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    setInputValue(input);
-
-    if (input.endsWith(' ')) {
-      const inputGenres = input.trim().split(' ');
-      setGenre([...genre, ...inputGenres]);
-      setInputValue('');
-    }
+    setInputValue(event.target.value);
   };
 
   const onChangeLimitOfUsers = (value: number) => {
@@ -51,34 +43,30 @@ const Modal = ({ onClickModal }: ModalProps) => {
     setNumberOfBars(value);
   };
 
-  const handleRemoveGenre = (genreToRemove: string) => {
-    setGenre((newGenre) => newGenre.filter((g) => g !== genreToRemove));
-  };
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(title);
-    console.log(limitOfUsers);
-    console.log(numberOfBars);
-
-    const postRelayStudioData = () => {
-      postRelayStudio(
-        title,
-        limitOfUsers,
-        numberOfBars,
-        genre,
-        ({ data }) => {
-          console.log(data);
-          const { relayStudioID } = data;
-          navigate(`/relay/${relayStudioID}`);
-        },
-        (error) => {
-          console.log('error', error);
-        }
-      );
-    };
-
-    postRelayStudioData();
+    const genre = inputValue.split(',').map((item) => item.trim());
+    if (genre.length > 0) {
+      const postRelayStudioData = () => {
+        console.log(inputValue);
+        console.log(genre);
+        postRelayStudio(
+          title,
+          limitOfUsers,
+          numberOfBars,
+          genre,
+          ({ data }) => {
+            console.log(data);
+            const { relayStudioID } = data;
+            navigate(`/relay/${relayStudioID}`);
+          },
+          (error) => {
+            console.log('error', error);
+          }
+        );
+      };
+      postRelayStudioData();
+    }
 
     // axios 성공하면 스튜디오 페이지로
   };
@@ -105,19 +93,6 @@ const Modal = ({ onClickModal }: ModalProps) => {
           <div className="modal__studio-tag">
             <CardTitle title="장르" />
             <div className="modal__studio-tag__input">
-              {genre.length > 0 &&
-                genre.map((item) => {
-                  return (
-                    <div key={item}>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveGenre(item)}
-                      >
-                        {item}
-                      </button>
-                    </div>
-                  );
-                })}
               <TextInput
                 stroke
                 label="장르를 선택해주세요"
