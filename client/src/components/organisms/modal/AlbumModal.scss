@@ -64,6 +64,10 @@
       border: 2px solid $main-theme-color;
       resize: none;
       border-radius: 10px;
+      font-family: 'Pretendard';
+      &:focus {
+        outline: none;
+      }
     }
   }
   &__album-tag {
