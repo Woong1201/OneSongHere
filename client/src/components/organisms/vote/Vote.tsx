@@ -2,10 +2,11 @@ import SectionTitle from 'components/atoms/common/SectionTitle';
 import { useEffect, useState } from 'react';
 import './Vote.scss';
 import { postRelayVote } from 'services/relayStudio';
-import { UserState } from 'store/UserState';
 import User from 'types/User';
+import { RelayStudioInfo } from 'types/RelayStudio';
 
 interface VoteProps {
+  updateStudioInfo: (arg0: RelayStudioInfo) => void;
   currentId: number;
   status: number;
   vote: boolean;
@@ -14,6 +15,7 @@ interface VoteProps {
   relayStudioId: number;
 }
 const Vote = ({
+  updateStudioInfo,
   currentId,
   status,
   vote,
@@ -50,15 +52,14 @@ const Vote = ({
 
   const submitVote = () => {
     if (voteResult !== null) {
-      console.log(1);
       postRelayVote(
         relayStudioId,
         voteResult,
         ({ data }) => {
           console.log(data);
+          updateStudioInfo(data);
           setVoteAgree(data.agree);
           setTotalVotes(data.numberOfVotes);
-          console.log('agreePercentage', agreePercentage);
         },
         (error) => {
           console.log('error', error);
