@@ -54,6 +54,7 @@ const RelayStudioTemplate = () => {
   console.log(noteColumnStyle);
 
   const [noteScrollPosition, setNoteScrollPosition] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   const updateNoteScrollPosition = (position: number) => {
     setNoteScrollPosition(position);
@@ -197,7 +198,7 @@ const RelayStudioTemplate = () => {
       isCancelled = true;
     };
   }, []);
-
+  // console.log(1195);
   const inputScroll = (inputTiming: number) => {
     const updatedNotePosition = inputTiming * 4 * 35;
     setNoteScrollPosition((prevPosition) => {
@@ -391,7 +392,6 @@ const RelayStudioTemplate = () => {
       }
     );
   };
-  // const re
   console.log(studioInfo?.numberOfUsers);
   return (
     <>
@@ -421,8 +421,9 @@ const RelayStudioTemplate = () => {
             playDrum={playDrum}
             noteColumnStyle={noteColumnStyle}
             columnNum={columnNum}
+            containerWidth={containerWidth}
+            setContainerWidth={setContainerWidth}
           />
-          {noteScrollPosition}
           <StudioInstrument
             updateNote={updateNote}
             findInputTiming={findInputTiming}

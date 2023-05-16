@@ -23,6 +23,7 @@ const StudioNoteGrid = ({
   columnNum,
 }: StudioNoteColumnProps) => {
   const Row = columnNum;
+
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {

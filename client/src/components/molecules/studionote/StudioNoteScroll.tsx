@@ -9,6 +9,8 @@ interface StudioNoteScrollProps {
   notes: Note[];
   noteColumnStyle: boolean[];
   columnNum: number;
+  containerWidth: number;
+  gridWidth: number;
 }
 
 const StudioNoteScroll = ({
@@ -17,6 +19,8 @@ const StudioNoteScroll = ({
   notes,
   noteColumnStyle,
   columnNum,
+  containerWidth,
+  gridWidth,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -33,7 +37,7 @@ const StudioNoteScroll = ({
       // 새로운 스크롤 포지션
       // 클릭한 지점에서 하프 포지션을 뺀것에서 스크롤바디 너비에서 바디 뺀 비율
       const newScrollPosition =
-        ((x - halfScrollBodyWidth) * 4414) /
+        ((x - halfScrollBodyWidth) * gridWidth) /
         (maxScrollLeft - scrollBodyRef.current.offsetWidth);
 
       if (scrollBodyRef.current) {
@@ -60,13 +64,16 @@ const StudioNoteScroll = ({
       const newLeft = Math.max(
         0,
         Math.min(
-          (scrollPosition / 4414) * (parent.offsetWidth - bodyWidth),
+          (scrollPosition / gridWidth) * (parent.offsetWidth - bodyWidth),
           maxScrollLeft
         )
       );
       setBodyLeftPosition(newLeft);
     }
   }, [scrollPosition]);
+  console.log(1, gridWidth);
+  console.log(2, containerWidth);
+  const bodyWidthPercentage = (containerWidth / gridWidth) * 100;
 
   return (
     <div
@@ -84,7 +91,10 @@ const StudioNoteScroll = ({
         role="presentation"
         className="studio_note__scroll-body"
         ref={scrollBodyRef}
-        style={{ left: `${bodyLeftPosition}px` }}
+        style={{
+          left: `${bodyLeftPosition}px`,
+          width: `${bodyWidthPercentage}%`,
+        }}
       />
     </div>
   );

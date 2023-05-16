@@ -1,6 +1,6 @@
 import StudioNoteContainer from 'components/molecules/studionote/StudioNoteContainer';
 import StudioNoteScroll from 'components/molecules/studionote/StudioNoteScroll';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './StudioNote.scss';
 import { Note } from 'types/Note';
 
@@ -14,6 +14,8 @@ interface StudioNoteProps {
   playDrum: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   noteColumnStyle: boolean[];
   columnNum: number;
+  containerWidth: number;
+  setContainerWidth: React.Dispatch<React.SetStateAction<number>>;
 }
 const StudioNote = ({
   scrollPosition,
@@ -25,7 +27,17 @@ const StudioNote = ({
   notes,
   noteColumnStyle,
   columnNum,
+  containerWidth,
+  setContainerWidth,
 }: StudioNoteProps) => {
+  const [gridWidth, setGridWidth] = useState(0);
+  useEffect(() => {
+    setGridWidth(columnNum * 35 - containerWidth);
+  }, [containerWidth, columnNum]);
+  console.log('columnNum', columnNum);
+  console.log('gridWidth', gridWidth);
+  console.log('containerWidth', containerWidth);
+
   return (
     <div className="studio__note">
       <StudioNoteScroll
@@ -34,18 +46,26 @@ const StudioNote = ({
         updateScrollPosition={updateScrollPosition}
         noteColumnStyle={noteColumnStyle}
         columnNum={columnNum}
+        containerWidth={containerWidth}
+        gridWidth={gridWidth}
       />
-      <StudioNoteContainer
-        notes={notes}
-        scrollPosition={scrollPosition}
-        updateScrollPosition={updateScrollPosition}
-        updateNote={updateNote}
-        updateDrum={updateDrum}
-        playNote={playNote}
-        playDrum={playDrum}
-        noteColumnStyle={noteColumnStyle}
-        columnNum={columnNum}
-      />
+      <div className="studio__content">
+        <div className="studio__note_name">스크롤</div>
+        <StudioNoteContainer
+          notes={notes}
+          scrollPosition={scrollPosition}
+          updateScrollPosition={updateScrollPosition}
+          updateNote={updateNote}
+          updateDrum={updateDrum}
+          playNote={playNote}
+          playDrum={playDrum}
+          noteColumnStyle={noteColumnStyle}
+          columnNum={columnNum}
+          containerWidth={containerWidth}
+          setContainerWidth={setContainerWidth}
+          gridWidth={gridWidth}
+        />
+      </div>
     </div>
   );
 };

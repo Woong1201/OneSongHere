@@ -31,5 +31,8 @@ export const Primary: Story = {
     updateScrollPosition: (position) => console.log(position),
     noteColumnStyle: Array(160).fill(false),
     columnNum: 160,
+    setContainerWidth: undefined,
+    containerWidth: 0,
+    gridWidth: 1000,
   },
 };
