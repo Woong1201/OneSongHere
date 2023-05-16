@@ -7,4 +7,9 @@
         display: flex;
         justify-content: end;
     }
+    &--inputTextarea{
+        resize: none;
+        border: transparent;
+        outline: 0;
+    }
 }

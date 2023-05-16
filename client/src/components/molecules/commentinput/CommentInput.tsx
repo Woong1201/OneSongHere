@@ -14,7 +14,7 @@ interface CommentProps {
 
 const CommentInput = ({ boardid }: CommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
@@ -39,11 +39,13 @@ const CommentInput = ({ boardid }: CommentProps) => {
   return (
     <div className="comment__input">
       <div>
-        <TextInput
-          label="댓글을 입력해주세요"
+        <textarea
+          placeholder="댓글을 입력해주세요"
           value={comment}
           onChange={onChangeComment}
-          width={740}
+          cols={104}
+          rows={2}
+          className="comment__input--inputTextarea"
         />
       </div>
       <div className="comment__input--button">
