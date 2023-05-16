@@ -145,6 +145,9 @@ public class RelayStudio {
         }
         this.getNotifications().clear();
         for (RelayTeam relayTeam : this.relayTeams) {
+            if (relayTeam.getRelayOrder() == 0) {
+                this.user = relayTeam.getUser();
+            }
             relayTeam.initializeVoteFlag();
             this.notifications.add(
                     Notification.builder()
@@ -154,6 +157,5 @@ public class RelayStudio {
                             .build()
             );
         }
-        this.user = relayTeams.get(0).getUser();
     }
 }
