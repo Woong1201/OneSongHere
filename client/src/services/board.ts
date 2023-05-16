@@ -140,7 +140,7 @@ const updateArticle = async (
     method: 'put',
     url: '/board',
     data: {
-      boardid: boardId,
+      boardId,
       boardTitle,
       header,
       boardContent,

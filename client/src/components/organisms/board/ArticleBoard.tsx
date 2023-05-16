@@ -49,6 +49,15 @@ const ArticleBoard = ({
   // useEffect의 deps 배열에 [filteredArticles]를 넣어 컴포넌트가 마운트 되거나,
   // 해당 값이 바뀔 때 함수가 호출되도록 함
 
+  // pagination
+  const pageLimit = 10;
+  const entirePage = Math.ceil(articles.length / pageLimit);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * pageLimit;
+  const pageNumButtons = new Array(entirePage).fill(0).map((_, index) => index);
+
+  // ============================================================================
+  // ============================================================================
   return (
     <div className="aBoard">
       {isLoading ? (
@@ -65,7 +74,7 @@ const ArticleBoard = ({
             </tr>
           </thead>
           <tbody>
-            {articles.map((article) => (
+            {articles.slice(offset, offset + pageLimit).map((article) => (
               <tr key={article.boardId} className="test">
                 <ArticleLine
                   boardId={article.boardId}
@@ -80,6 +89,32 @@ const ArticleBoard = ({
           </tbody>
         </table>
       )}
+      <div>
+        <button
+          type="button"
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+        >
+          &lt;
+        </button>
+        {pageNumButtons.map((item, index) => (
+          <button
+            type="button"
+            key={item}
+            onClick={() => setPage(index + 1)}
+            className={index + 1 === page ? '' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setPage(page + 1)}
+          disabled={page === entirePage}
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   );
 };
