@@ -10,6 +10,7 @@ import { Note } from 'types/Note';
 import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
+import Vote from 'components/organisms/vote/Vote';
 
 const RelayStudioTemplate = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -306,7 +307,16 @@ const RelayStudioTemplate = () => {
           />
         </div>
         <div className="relay-studio__side">
-          <StudioCam />
+          {studioInfo && (
+            <Vote
+              currentId={studioInfo.userId}
+              vote={studioInfo.vote}
+              status={studioInfo.status}
+              agree={studioInfo.agree}
+              numberOfVotes={studioInfo.numberOfVotes}
+              relayStudioId={studioInfo.relayStudioID}
+            />
+          )}
           <StudioChat />
         </div>
       </div>

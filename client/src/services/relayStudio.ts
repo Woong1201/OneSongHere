@@ -89,10 +89,31 @@ const postRelayNotes = async (
     .catch(fail);
 };
 
+const postRelayVote = async (
+  relayStudioId: number,
+  voteResult: boolean,
+  success: (response: AxiosResponse) => void,
+  fail: (response: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'patch',
+    url: '/relayStudios/vote',
+    data: {
+      relayStudioId,
+      vote: voteResult,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
 export {
   postRelayStudio,
   getRelayStudioList,
   getRelayStudioInfo,
   getStudioSearchResult,
   postRelayNotes,
+  postRelayVote,
 };
