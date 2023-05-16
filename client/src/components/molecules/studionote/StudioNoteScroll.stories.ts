@@ -34,5 +34,6 @@ export const Primary: Story = {
     containerWidth: 100,
     userOrder: 0,
     gridWidth: 100,
+    barNum: 1,
   },
 };

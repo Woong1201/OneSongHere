@@ -28,6 +28,7 @@ const RelayStudioTemplate = () => {
   const [currentInstrument, setCurrentInstrument] = useState<string>('piano');
   const [currentDrum, setCurrentDrum] = useState<string>('drum');
   const [userNum, setUserNum] = useState<number>(0);
+  const [barNum, setBarNum] = useState<number>(0);
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
 
@@ -39,17 +40,19 @@ const RelayStudioTemplate = () => {
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
-
   useEffect(() => {
     if (studioInfo) {
       setUserNum(studioInfo.limitOfUsers as number);
+      setBarNum(studioInfo.numberOfBars as number);
       setUserOrder((studioInfo.numberOfUsers as number) + 1);
     }
   }, [studioInfo]);
 
   useEffect(() => {
-    setColumnNum(userNum * 32);
-    setNoteColumnStyle(Array(userNum * 32).fill(false));
+    if (studioInfo) {
+      setColumnNum((userNum + 1) * barNum);
+      setNoteColumnStyle(Array((userNum + 1) * barNum).fill(false));
+    }
   }, [userNum]);
 
   const [noteScrollPosition, setNoteScrollPosition] = useState(0);
@@ -131,7 +134,11 @@ const RelayStudioTemplate = () => {
         setStudioInfo(data);
         const { relayStudioSheet } = data;
         if (notes.length === 0) {
-          setNotes(JSON.parse(relayStudioSheet));
+          if (relayStudioSheet === '') {
+            setNotes([]);
+          } else {
+            setNotes(JSON.parse(relayStudioSheet));
+          }
         }
       },
       (error) => {
@@ -139,7 +146,7 @@ const RelayStudioTemplate = () => {
       }
     );
   }, []);
-
+  console.log('notes:', notes);
   useEffect(() => {
     let isCancelled = false;
 
@@ -211,51 +218,48 @@ const RelayStudioTemplate = () => {
     });
   };
 
-  const updateNote = useCallback(
-    (name: string, timing: number | undefined) => {
-      if (timing !== undefined && !timingDisabled(timing)) {
-        setNotes((prevNotes) => {
-          let isExistingNote = false;
-          let updatedNotes = prevNotes.map((note) => {
-            // 같은 타이밍의 노트 명단이 있다면
-            if (note.timing === timing && note.instrumentType === 'melody') {
-              isExistingNote = true;
-              // 노트 명단에 입력하는 노트가 있다면
-              if (note.names.includes(name)) {
-                return {
-                  // 빼주고
-                  ...note,
-                  names: (note.names as string[]).filter((n) => n !== name),
-                };
-              }
-              // 아니면 더해준다
-              return { ...note, names: [...(note.names as string[]), name] };
+  const updateNote = (name: string, timing: number | undefined) => {
+    if (timing !== undefined && !timingDisabled(timing)) {
+      setNotes((prevNotes) => {
+        let isExistingNote = false;
+        let updatedNotes = prevNotes.map((note) => {
+          // 같은 타이밍의 노트 명단이 있다면
+          if (note.timing === timing && note.instrumentType === 'melody') {
+            isExistingNote = true;
+            // 노트 명단에 입력하는 노트가 있다면
+            if (note.names.includes(name)) {
+              return {
+                // 빼주고
+                ...note,
+                names: (note.names as string[]).filter((n) => n !== name),
+              };
             }
-            return note;
-          });
-          // 같은 타이밍의 노트 명단이 없는데 입력하는 노트가 없다면
-          if (!isExistingNote) {
-            // 해당 타이밍의 새로운 노트 명단을 만들어준다
-            updatedNotes = [
-              ...updatedNotes,
-              {
-                names: [name],
-                duration: '8n',
-                timing,
-                instrumentType: 'melody',
-              },
-            ];
+            // 아니면 더해준다
+            return { ...note, names: [...(note.names as string[]), name] };
           }
-          const cleanedNotes = updatedNotes.filter(
-            (note) => note.names.length > 0
-          );
-          return cleanedNotes;
+          return note;
         });
-        inputScroll(timing);
-      }
-    },
-    [noteScrollPosition]
-  );
+        // 같은 타이밍의 노트 명단이 없는데 입력하는 노트가 없다면
+        if (!isExistingNote) {
+          // 해당 타이밍의 새로운 노트 명단을 만들어준다
+          updatedNotes = [
+            ...updatedNotes,
+            {
+              names: [name],
+              duration: '8n',
+              timing,
+              instrumentType: 'melody',
+            },
+          ];
+        }
+        const cleanedNotes = updatedNotes.filter(
+          (note) => note.names.length > 0
+        );
+        return cleanedNotes;
+      });
+      inputScroll(timing);
+    }
+  };
 
   const updateDrum = useCallback(
     (name: string, timing: number | undefined) => {
@@ -423,6 +427,7 @@ const RelayStudioTemplate = () => {
             containerWidth={containerWidth}
             setContainerWidth={setContainerWidth}
             userOrder={userOrder}
+            barNum={barNum}
           />
           <StudioInstrument
             updateNote={updateNote}
