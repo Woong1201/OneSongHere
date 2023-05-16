@@ -1,19 +1,44 @@
 .aBoard{
+    text-align: center;
     &__table{
+        // border: 1px solid black;
         width: 800px;
         height: 400px;
         // box-shadow: 0px 0px 2px rgba($color: #000000, $alpha: 0.4);
     }
-    &__tr{
-        
-        // border-bottom: 1px solid #E0D5F6;
+    &__head{
+        border-bottom: 1px solid #E0D5F6;
+        height: 30px;
+        // border-spacing: 11px;
+    }
+    &__body{
     }
 }
 
-
+th{
+    // border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    &:nth-child(1){
+        width: 32px;
+    }
+    &:nth-child(2){
+        width: 64px;
+    }
+    &:nth-child(3){
+        width: 396px;
+    }
+    &:nth-child(4){
+        width: 220px;
+    }
+    &:nth-child(5){
+        width: 86px;
+    }
+}
 
 .pagination{
-    
+    margin-top: 10px;
+    margin-bottom: 20px;
     &__number{
         border-color: transparent;
         background-color: transparent;

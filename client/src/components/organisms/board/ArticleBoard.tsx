@@ -77,7 +77,7 @@ const ArticleBoard = ({
         <div>로딩 중입니다...</div>
       ) : (
         <table className="aBoard__table">
-          <thead>
+          <thead className="aBoard__head">
             <tr>
               <th>번호</th>
               <th>카테고리</th>
@@ -86,7 +86,7 @@ const ArticleBoard = ({
               <th>날짜</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="aBoard__body">
             {articles.slice(offset, offset + pageLimit).map((article) => (
               <tr key={article.boardId} className="aBoard__tr">
                 <ArticleLine
@@ -117,7 +117,7 @@ const ArticleBoard = ({
         </table>
       )}
       {/* ======================{페이지네이션 버튼}======================== */}
-      <div>
+      <div className="pagination">
         <button
           className="pagination__Arrow"
           type="button"
