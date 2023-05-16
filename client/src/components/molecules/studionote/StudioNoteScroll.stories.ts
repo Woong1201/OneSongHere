@@ -32,6 +32,7 @@ export const Primary: Story = {
     noteColumnStyle: Array(160).fill(false),
     columnNum: 160,
     containerWidth: 100,
+    userOrder: 0,
     gridWidth: 100,
   },
 };

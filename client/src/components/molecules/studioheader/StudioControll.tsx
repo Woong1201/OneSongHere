@@ -16,9 +16,9 @@ interface StudioControllProps {
       [key: string]: Tone.Player;
     } | null;
   };
-  currentInstrument: string;
-  changePlayingStyle: (timing: number) => void;
-  revertPlayingStyle: (timing: number) => void;
+  // currentInstrument: string;
+  // changePlayingStyle: (timing: number) => void;
+  // revertPlayingStyle: (timing: number) => void;
   setNoteColumnStyle: React.Dispatch<React.SetStateAction<boolean[]>>;
   clearNotes: () => void;
   inputScroll: (inputTiming: number) => void;
@@ -29,9 +29,9 @@ interface StudioControllProps {
 const StudioControll = ({
   notes,
   instrumentInstances,
-  currentInstrument,
-  changePlayingStyle,
-  revertPlayingStyle,
+  // currentInstrument,
+  // changePlayingStyle,
+  // revertPlayingStyle,
   setNoteColumnStyle,
   clearNotes,
   inputScroll,
@@ -59,7 +59,7 @@ const StudioControll = ({
       ) {
         if (currentNote.names) {
           const drumInstance =
-            instrumentInstances.drum![currentNote.names as string];
+            instrumentInstances.drum?.[currentNote.names as string];
           if (drumInstance) {
             drumInstance.start(time);
           }
@@ -113,10 +113,8 @@ const StudioControll = ({
       notes.map((note) => [note.timing, note])
     );
 
-    Tone.loaded().then(() => {
-      sequenceRef.current?.start();
-      Tone.Transport.start();
-    });
+    sequenceRef.current?.start();
+    Tone.Transport.start();
 
     const playLength = findLastTiming() * 4;
     Array.from({ length: playLength }, (_, i) => {

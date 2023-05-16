@@ -16,6 +16,7 @@ interface StudioNoteScrollProps {
   containerWidth: number;
   setContainerWidth: React.Dispatch<React.SetStateAction<number>>;
   gridWidth: number;
+  userOrder: number;
 }
 
 const StudioNoteContainer = ({
@@ -31,6 +32,7 @@ const StudioNoteContainer = ({
   containerWidth,
   setContainerWidth,
   gridWidth,
+  userOrder,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -133,6 +135,7 @@ const StudioNoteContainer = ({
         playDrum={playDrum}
         noteColumnStyle={noteColumnStyle}
         columnNum={columnNum}
+        userOrder={userOrder}
       />
     </div>
   );

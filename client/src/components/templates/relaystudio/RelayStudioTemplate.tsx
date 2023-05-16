@@ -47,12 +47,6 @@ const RelayStudioTemplate = () => {
     setNoteColumnStyle(Array(userNum * 32).fill(false));
   }, [userNum]);
 
-  console.log(studioInfo);
-  console.log(userNum);
-  console.log(userOrder);
-  console.log(columnNum);
-  console.log(noteColumnStyle);
-
   const [noteScrollPosition, setNoteScrollPosition] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -423,6 +417,7 @@ const RelayStudioTemplate = () => {
             columnNum={columnNum}
             containerWidth={containerWidth}
             setContainerWidth={setContainerWidth}
+            userOrder={userOrder}
           />
           <StudioInstrument
             updateNote={updateNote}

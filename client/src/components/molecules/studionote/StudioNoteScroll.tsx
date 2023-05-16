@@ -11,6 +11,7 @@ interface StudioNoteScrollProps {
   columnNum: number;
   containerWidth: number;
   gridWidth: number;
+  userOrder: number;
 }
 
 const StudioNoteScroll = ({
@@ -21,6 +22,7 @@ const StudioNoteScroll = ({
   columnNum,
   containerWidth,
   gridWidth,
+  userOrder,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -71,8 +73,6 @@ const StudioNoteScroll = ({
       setBodyLeftPosition(newLeft);
     }
   }, [scrollPosition]);
-  console.log(1, gridWidth);
-  console.log(2, containerWidth);
   const bodyWidthPercentage = (containerWidth / gridWidth) * 100;
 
   return (
@@ -86,6 +86,7 @@ const StudioNoteScroll = ({
         noteColumnStyle={noteColumnStyle}
         notes={notes}
         columnNum={columnNum}
+        userOrder={userOrder}
       />
       <div
         role="presentation"

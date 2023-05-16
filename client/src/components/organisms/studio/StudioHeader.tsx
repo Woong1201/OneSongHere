@@ -56,7 +56,6 @@ const StudioHeader = ({
     }
   }
   const user = useRecoilValue(UserState);
-  console.log(user);
   const users = user ? [user] : [];
 
   // const users: User[] = [
@@ -84,9 +83,9 @@ const StudioHeader = ({
       <StudioControll
         notes={notes}
         instrumentInstances={instrumentInstances}
-        currentInstrument={currentInstrument}
-        changePlayingStyle={changePlayingStyle}
-        revertPlayingStyle={revertPlayingStyle}
+        // currentInstrument={currentInstrument}
+        // changePlayingStyle={changePlayingStyle}
+        // revertPlayingStyle={revertPlayingStyle}
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
         inputScroll={inputScroll}

@@ -16,6 +16,7 @@ interface StudioNoteProps {
   columnNum: number;
   containerWidth: number;
   setContainerWidth: React.Dispatch<React.SetStateAction<number>>;
+  userOrder: number;
 }
 const StudioNote = ({
   scrollPosition,
@@ -29,14 +30,12 @@ const StudioNote = ({
   columnNum,
   containerWidth,
   setContainerWidth,
+  userOrder,
 }: StudioNoteProps) => {
   const [gridWidth, setGridWidth] = useState(0);
   useEffect(() => {
     setGridWidth(columnNum * 35 - containerWidth);
   }, [containerWidth, columnNum]);
-  console.log('columnNum', columnNum);
-  console.log('gridWidth', gridWidth);
-  console.log('containerWidth', containerWidth);
 
   return (
     <div className="studio__note">
@@ -48,9 +47,10 @@ const StudioNote = ({
         columnNum={columnNum}
         containerWidth={containerWidth}
         gridWidth={gridWidth}
+        userOrder={userOrder}
       />
       <div className="studio__content">
-        <div className="studio__note_name">스크롤</div>
+        <div className="studio__note_name">노트이름</div>
         <StudioNoteContainer
           notes={notes}
           scrollPosition={scrollPosition}
@@ -64,6 +64,7 @@ const StudioNote = ({
           containerWidth={containerWidth}
           setContainerWidth={setContainerWidth}
           gridWidth={gridWidth}
+          userOrder={userOrder}
         />
       </div>
     </div>
