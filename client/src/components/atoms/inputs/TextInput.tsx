@@ -8,6 +8,7 @@ interface TextInputProps {
   stroke?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   doSearch?: () => void;
+  width?: number;
 }
 const TextInput = ({
   label,
@@ -15,6 +16,7 @@ const TextInput = ({
   short = false,
   stroke = false,
   doSearch,
+  width = 400,
   ...props
 }: TextInputProps) => {
   const border = stroke ? 'text-input--border' : null;
@@ -35,6 +37,7 @@ const TextInput = ({
       type="text"
       placeholder={label}
       className={['text-input', border, size].join(' ')}
+      style={{ width: `${width}px` }}
       value={value}
       onChange={handleInputChange}
       onKeyDown={handleEnter}

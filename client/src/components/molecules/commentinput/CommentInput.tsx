@@ -38,18 +38,23 @@ const CommentInput = ({ boardid }: CommentProps) => {
 
   return (
     <div className="comment__input">
-      <TextInput
-        label="댓글을 입력해주세요"
-        value={comment}
-        onChange={onChangeComment}
-      />
-      <Button
-        label="등록"
-        type="submit"
-        color="primary"
-        onClick={postCommentData}
-        size="small"
-      />
+      <div>
+        <TextInput
+          label="댓글을 입력해주세요"
+          value={comment}
+          onChange={onChangeComment}
+          width={740}
+        />
+      </div>
+      <div className="comment__input--button">
+        <Button
+          label="등록"
+          type="submit"
+          color="primary"
+          onClick={postCommentData}
+          size="small"
+        />
+      </div>
     </div>
   );
 };

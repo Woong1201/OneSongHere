@@ -30,7 +30,7 @@ const ArticleBoard = ({
       // 필터된 데이터로 useState 실행하여 articles의 값 갱신(최신순 정렬을 위해 역순으로)
       getArticleBoard([...filteredArticles].reverse());
       const initialEmptyArticles: Article[] = Array.from(
-        { length: 20 - [...filteredArticles].length },
+        { length: 10 - [...filteredArticles].length },
         (_, index) => ({
           boardId: index + 1,
           userId: 0,
@@ -44,7 +44,7 @@ const ArticleBoard = ({
     } else {
       getArticleBoard([]);
       const initialEmptyArticles: Article[] = Array.from(
-        { length: 20 - [...filteredArticles].length },
+        { length: 10 - [...filteredArticles].length },
         (_, index) => ({
           boardId: index + 1,
           userId: 0,
@@ -62,7 +62,7 @@ const ArticleBoard = ({
   // 해당 값이 바뀔 때 함수가 호출되도록 함
 
   // pagination
-  const pageLimit = 20;
+  const pageLimit = 10;
   const entirePage = Math.ceil(articles.length / pageLimit);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * pageLimit;
@@ -88,7 +88,7 @@ const ArticleBoard = ({
           </thead>
           <tbody>
             {articles.slice(offset, offset + pageLimit).map((article) => (
-              <tr key={article.boardId} className="test">
+              <tr key={article.boardId} className="aBoard__tr">
                 <ArticleLine
                   boardId={article.boardId}
                   boardTitle={article.boardTitle}
@@ -101,7 +101,7 @@ const ArticleBoard = ({
               </tr>
             ))}
             {emptyArticles.slice(offset, offset + pageLimit).map((article) => (
-              <tr key={article.boardId} className="test">
+              <tr key={article.boardId} className="aBoard__tr">
                 <ArticleLine
                   boardId={article.boardId}
                   boardTitle={article.boardTitle}

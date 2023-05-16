@@ -1,6 +1,10 @@
 .comment__input{
-    width: 600px;
+    width: 760px;
     border: 1px solid blue;
     padding: 10px;
     border-radius: 15px;
+    &--button{
+        display: flex;
+        justify-content: end;
+    }
 }

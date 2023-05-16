@@ -21,24 +21,26 @@ const ArticleHeader = ({
 
   return (
     <div>
-      <div>
+      <div className="article__header--title">
         [{header}]&nbsp;&nbsp;{title}
       </div>
-      <div className="header__profile-img">
-        <ProfileImage
-          imageUrl={picture}
-          size="small"
-          arrangement="horizontal"
-        />
-        {nickname}
-      </div>
-      <div>
-        {String(newDate.getUTCFullYear())}.
-        {`0${String(newDate.getMonth() + 1)}`.slice(-2)}.
-        {`0${String(newDate.getDate())}`.slice(-2)}
-        &nbsp;&nbsp;
-        {`0${String(newDate.getHours())}`.slice(-2)}:
-        {`0${String(newDate.getMinutes())}`.slice(-2)}
+      <div className="article__header">
+        <div className="article__header--profile">
+          <ProfileImage
+            imageUrl={picture}
+            size="small"
+            arrangement="horizontal"
+          />
+          &nbsp;&nbsp;{nickname}
+        </div>
+        <div>
+          {String(newDate.getUTCFullYear())}.
+          {`0${String(newDate.getMonth() + 1)}`.slice(-2)}.
+          {`0${String(newDate.getDate())}`.slice(-2)}
+          &nbsp;&nbsp;
+          {`0${String(newDate.getHours())}`.slice(-2)}:
+          {`0${String(newDate.getMinutes())}`.slice(-2)}
+        </div>
       </div>
     </div>
   );
