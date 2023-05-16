@@ -164,11 +164,10 @@ spring:
   OAuth2:
     google:
       url : https://accounts.google.com/o/oauth2/v2/auth
-      client-id : 발급받은 client key
+      client-id : 발급받은 client id
+      client-secret : 발급받은 client secret
       response-type : code
-      client-secret : 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
       callback-url : https://{도메인}/login/google
-      redirect-uri : http://localhost:8080/api/v1/user/login
       scope : https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
 # aws-s3
 cloud:
@@ -196,7 +195,7 @@ OPENAI_API_KEY=발급받은OPENAI_API_KEY
 -------Front-End------------
 #.env
 
-REACT_APP_GOOGLE_CLIENT_ID=발급받은 GOOGLE_CLINET_ID
+REACT_APP_GOOGLE_CLIENT_ID=발급받은 client id
 REACT_APP_URI=https://{도메인}
 ```
 
@@ -264,7 +263,28 @@ docekr run --rm -d -p 3000:80 --name fe-latest 이미지ID
     2. 이름 설정
     3. 승인된 자바스크립트 원본 (80 외의 포트를 사용하는 HTTP 원본)
     4. 승인된 리디렉션 URI
-4. 이후 얻은 클라이언트 ID, password 를 통해 front OAuth 로그인 주소 구성
+4. 이후 얻은 클라이언트 ID, password 를 통해 환경설정
+    1. 백엔드 환경설정
+        
+        ```
+        OAuth2:
+            google:
+              url : https://accounts.google.com/o/oauth2/v2/auth
+              client-id : 발급받은 client id
+              client-secret : 발급받은 client secret
+              response-type : code
+              callback-url : https://{도메인}/login/google
+              scope : https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+        ```
+        
+    2. 프론트엔드 환경설정
+        
+        ```
+        REACT_APP_GOOGLE_CLIENT_ID=발급받은 client id
+        REACT_APP_URI=https://{도메인}
+        ```
+        
+
 
 ### KAKAO Karol
 
