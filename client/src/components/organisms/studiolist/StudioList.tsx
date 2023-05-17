@@ -43,6 +43,10 @@ const StudioList = ({
     return new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000);
   };
 
+  const ment = isParticipating
+    ? '현재 작업중인 곡이 없습니다.'
+    : '참여 가능한 곡이 없습니다.';
+
   return (
     <div className="studio-list">
       <div className="studio-list__title">
@@ -88,7 +92,7 @@ const StudioList = ({
             </div>
           ))
         ) : (
-          <p className="studio-list__empty">현재 작업중인 곡이 없습니다...</p>
+          <p className="studio-list__empty">{ment}</p>
         )}
       </div>
     </div>

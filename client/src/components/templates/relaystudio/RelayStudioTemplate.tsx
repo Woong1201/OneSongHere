@@ -438,6 +438,7 @@ const RelayStudioTemplate = () => {
       ({ data }) => {
         const { relayStudioSheet } = data;
         setNotes(JSON.parse(relayStudioSheet));
+        setStudioInfo(data);
       },
       (error) => {
         console.log('릴레이 노트 등록에러', error);

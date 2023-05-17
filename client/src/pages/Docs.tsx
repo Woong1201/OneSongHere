@@ -7,82 +7,76 @@ import StudioPage from 'components/atoms/guide/StudioPage';
 import AlbumPage from 'components/atoms/guide/AlbumPage';
 import CommunityPage from 'components/atoms/guide/CommunityPage';
 
+interface Section {
+  ref: React.RefObject<HTMLDivElement>;
+  offsetTop: number;
+}
+
 const Docs = () => {
-  const [menu, setMenu] = useState<number>(0);
-  const introRef = useRef<HTMLDivElement | null>(null);
-  const composePageRef = useRef<HTMLDivElement | null>(null);
-  const studioPageRef = useRef<HTMLDivElement | null>(null);
-  const albumPageRef = useRef<HTMLDivElement | null>(null);
-  const communityPageRef = useRef<HTMLDivElement | null>(null);
+  const [activeMenu, setActiveMenu] = useState<number>(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  const handleMenu = (value: number) => {
-    setMenu(value);
-  };
-  const [scrollPos, setScrollPos] = useState<number>(0);
+  const sections: Section[] = [
+    { ref: useRef<HTMLDivElement>(null), offsetTop: 0 },
+    { ref: useRef<HTMLDivElement>(null), offsetTop: 0 },
+    { ref: useRef<HTMLDivElement>(null), offsetTop: 0 },
+    { ref: useRef<HTMLDivElement>(null), offsetTop: 0 },
+    { ref: useRef<HTMLDivElement>(null), offsetTop: 0 },
+  ];
 
-  const checkScrollTop = () => {
-    setScrollPos(window.pageYOffset);
-    if (window.pageYOffset > 1100) {
-      setMenu(1);
-    } else {
-      setMenu(0);
-    }
+  const handleMenuClick = (index: number) => {
+    setIsScrolling(true);
+    sections[index].ref.current?.scrollIntoView({ behavior: 'smooth' });
+    setActiveMenu(index);
+    setTimeout(() => setIsScrolling(false), 1000);
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', checkScrollTop);
-    return () => window.removeEventListener('scroll', checkScrollTop);
-  }, []);
+    const updatedSections = sections.map((section) => {
+      const newSection = { ...section };
+      if (newSection.ref.current) {
+        newSection.offsetTop = newSection.ref.current.offsetTop;
+        // newSection.offsetHeight = newSection.ref.current.offsetHeight;
+      }
+      return newSection;
+    });
 
-  useEffect(() => {
-    switch (menu) {
-      case 0:
-        (introRef.current as HTMLDivElement).scrollIntoView({
-          behavior: 'smooth',
-        });
-        break;
-      case 1:
-        (composePageRef.current as HTMLDivElement).scrollIntoView({
-          behavior: 'smooth',
-        });
-        break;
-      case 2:
-        (studioPageRef.current as HTMLDivElement).scrollIntoView({
-          behavior: 'smooth',
-        });
-        break;
-      case 3:
-        (albumPageRef.current as HTMLDivElement).scrollIntoView({
-          behavior: 'smooth',
-        });
-        break;
-      case 4:
-        (communityPageRef.current as HTMLDivElement).scrollIntoView({
-          behavior: 'smooth',
-        });
-        break;
-      default:
-        break;
-    }
-  }, [menu]);
+    const onScroll = () => {
+      if (isScrolling) return;
+
+      let currentMenu = activeMenu;
+      for (let i = 0; i < updatedSections.length; i += 1) {
+        const { offsetTop } = updatedSections[i];
+        if (window.pageYOffset >= offsetTop) {
+          currentMenu = i;
+        }
+      }
+      if (currentMenu !== activeMenu) {
+        setActiveMenu(currentMenu);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [activeMenu, sections, isScrolling]);
 
   return (
     <div className="docs">
       <div className="docs__container">
-        <MenuBar onMenuClick={handleMenu} menu={menu} />
-        <div className="docs__content" ref={introRef}>
+        <MenuBar menu={activeMenu} onMenuClick={handleMenuClick} />
+        <div className="docs__content" ref={sections[0].ref}>
           <Intro />
         </div>
-        <div className="docs__content" ref={composePageRef}>
+        <div className="docs__content" ref={sections[1].ref}>
           <ComposePage />
         </div>
-        <div className="docs__content" ref={studioPageRef}>
+        <div className="docs__content" ref={sections[2].ref}>
           <StudioPage />
         </div>
-        <div className="docs__content" ref={albumPageRef}>
+        <div className="docs__content" ref={sections[3].ref}>
           <AlbumPage />
         </div>
-        <div className="docs__content" ref={communityPageRef}>
+        <div className="docs__content" ref={sections[4].ref}>
           <CommunityPage />
         </div>
       </div>
