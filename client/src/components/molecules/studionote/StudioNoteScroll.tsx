@@ -13,6 +13,7 @@ interface StudioNoteScrollProps {
   gridWidth: number;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 
 const StudioNoteScroll = ({
@@ -25,10 +26,17 @@ const StudioNoteScroll = ({
   gridWidth,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [bodyLeftPosition, setBodyLeftPosition] = useState(0);
+  const [bodyWidthPercentage, setBodyWidthPercentage] = useState(0);
+
+  useEffect(() => {
+    setBodyWidthPercentage((containerWidth / gridWidth) * 100);
+  }, [containerWidth, gridWidth]);
+
   const onClick = (event: React.MouseEvent) => {
     const parent = scrollRef.current;
 
@@ -40,16 +48,17 @@ const StudioNoteScroll = ({
       const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
       // 새로운 스크롤 포지션
       // 클릭한 지점에서 하프 포지션을 뺀것에서 스크롤바디 너비에서 바디 뺀 비율
+      // 클릭한 지점 - 하프바디 =  스크롤 포지션 * (parrent,offsetwidth/gridwidth)
+      // 스크롤 = (x-하프바디)*grd / (prrrant.off/)
       const newScrollPosition =
-        ((x - halfScrollBodyWidth) * gridWidth) /
-        (maxScrollLeft - scrollBodyRef.current.offsetWidth);
+        ((x - halfScrollBodyWidth) * gridWidth) / parent.offsetWidth;
 
       if (scrollBodyRef.current) {
         const newLeft = Math.max(
           0,
           Math.min(
             x - halfScrollBodyWidth,
-            parent.offsetWidth - scrollBodyRef.current.offsetWidth
+            parent.offsetWidth - halfScrollBodyWidth
           )
         );
 
@@ -63,19 +72,19 @@ const StudioNoteScroll = ({
     if (scrollBodyRef.current && scrollRef.current) {
       const parent = scrollRef.current;
       const bodyWidth = scrollBodyRef.current.offsetWidth;
-      const halfScrollBodyWidth = bodyWidth / 2;
       const maxScrollLeft = parent.offsetWidth - bodyWidth;
+      // 레프트는 본판 width : 스크롤 포지션은 = x : parent.offsetwidth
+      // 본판 width * pa어저구 / 스크롤 포지숀
       const newLeft = Math.max(
         0,
         Math.min(
-          (scrollPosition / gridWidth) * (parent.offsetWidth - bodyWidth),
+          (scrollPosition / gridWidth) * parent.offsetWidth,
           maxScrollLeft
         )
       );
       setBodyLeftPosition(newLeft);
     }
-  }, [scrollPosition]);
-  const bodyWidthPercentage = (containerWidth / gridWidth) * 100;
+  }, [scrollPosition, scrollRef.current, scrollBodyRef.current]);
 
   return (
     <div
@@ -90,6 +99,7 @@ const StudioNoteScroll = ({
         columnNum={columnNum}
         userOrder={userOrder}
         barNum={barNum}
+        studioStatus={studioStatus}
       />
       <div
         role="presentation"

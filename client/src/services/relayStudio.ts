@@ -1,5 +1,5 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { relayNotes } from 'types/Note';
+import { RelayNotes } from 'types/Note';
 import { apiInstance } from './index';
 
 const api = apiInstance();
@@ -74,7 +74,7 @@ const getStudioSearchResult = async (
 };
 
 const postRelayNotes = async (
-  data: relayNotes,
+  data: RelayNotes,
   success: (response: AxiosResponse) => void,
   fail: (response: AxiosError) => void
 ): Promise<void> => {
