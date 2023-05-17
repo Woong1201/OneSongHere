@@ -136,8 +136,13 @@ const Board = () => {
   }, [keyword]);
 
   const [width, setWidth] = useState<number>(window.innerWidth);
+  const [writeButtonX, setWriteButtonX] = useState('0px');
   const handleResize = () => {
     setWidth(window.innerWidth);
+    const pageWidth = window.innerWidth;
+    const newWrtiteButtonX = pageWidth > 850 ? '0px' : `${-pageWidth / 3}px`;
+    console.log(newWrtiteButtonX);
+    setWriteButtonX(newWrtiteButtonX);
   };
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -174,13 +179,20 @@ const Board = () => {
         <div className="board__banner">
           <div className="board__banner--title">커뮤니티</div>
         </div>
-        <div className="board__container">
+        <div
+          className={
+            width > 1130 ? 'board__container' : 'board__container-small'
+          }
+        >
           <SearchBar
             onChangeSearchType={() => handleSearchType('TITLE')}
             onChangeKeyword={handleKeyword}
           />
           {isLoginQ ? (
-            <div className="board__write--button">
+            <div
+              className="board__write--button"
+              style={{ transform: `translateX(${writeButtonX})` }}
+            >
               <Button
                 label="글쓰기"
                 type="submit"
