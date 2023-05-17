@@ -136,19 +136,19 @@ const Board = () => {
   }, [keyword]);
 
   const [width, setWidth] = useState<number>(window.innerWidth);
-  const [writeButtonX, setWriteButtonX] = useState('0px');
+  const [writeButtonLeft, setWriteButtonLeft] = useState(360);
   const handleResize = () => {
     // 페이지 너비 조절 시 writeButtonX 갱신
     setWidth(window.innerWidth);
     const pageWidth = window.innerWidth;
-    const newWrtiteButtonX = pageWidth > 850 ? '0px' : `${-pageWidth / 3}px`;
-    setWriteButtonX(newWrtiteButtonX);
+    const newWriteButtonLeft = pageWidth > 850 ? 360 : 180;
+    setWriteButtonLeft(newWriteButtonLeft);
   };
   useEffect(() => {
     // 처음 마운트 되었을 때 writeButtonX 갱신
     const pageWidth = window.innerWidth;
-    const newWrtiteButtonX = pageWidth > 850 ? '0px' : `${-pageWidth / 3}px`;
-    setWriteButtonX(newWrtiteButtonX);
+    const newWriteButtonLeft = pageWidth > 850 ? 360 : 180;
+    setWriteButtonLeft(newWriteButtonLeft);
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -196,7 +196,7 @@ const Board = () => {
           {isLoginQ ? (
             <div
               className="board__write--button"
-              style={{ transform: `translateX(${writeButtonX})` }}
+              style={{ left: `${writeButtonLeft}px` }}
             >
               <Button
                 label="글쓰기"
