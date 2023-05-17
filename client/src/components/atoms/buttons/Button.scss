@@ -4,6 +4,8 @@
   cursor: pointer;
   min-width: 75px;
   max-width: 200px;
+  white-space: nowrap;
+  max-height: 40px;
 
   &--flat {
     border-radius: 5px;
@@ -41,8 +43,8 @@
   }
 
   &--medium {
-    font-size: 14px;
-    padding: 11px 20px;
+    font-size: 12px;
+    padding: 8px 16px;
   }
 
   &--large {
