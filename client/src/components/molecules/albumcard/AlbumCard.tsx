@@ -7,7 +7,6 @@ import Chip from 'components/atoms/common/Chip';
 import LikeHeart from 'components/atoms/likeheart/LikeHeart';
 import AlbumImage from 'components/atoms/albumimage/AlbumImage';
 import AlbumPlayButton from 'components/atoms/albumimage/AlbumPlayButton';
-import * as Tone from 'tone';
 import { Note } from 'types/Note';
 
 interface AlbumCardProps {
@@ -25,6 +24,7 @@ interface AlbumCardProps {
   tags: string[];
   //   작품 앨범 정보
   albumInfo: string;
+  playAlbumMusic?: () => Promise<void>;
 }
 
 const AlbumCard = ({
@@ -35,140 +35,13 @@ const AlbumCard = ({
   like,
   tags,
   albumInfo,
+  playAlbumMusic,
 }: AlbumCardProps) => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
   const [width, setWidth] = useState<number>(window.innerWidth);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
-
-  const [instrumentInstances, setInstrumentInstances] = useState<{
-    piano: Tone.Sampler | null;
-    casio: Tone.Sampler | null;
-    drum: { [key: string]: Tone.Player } | null; // 수정된 부분
-  }>({
-    piano: null,
-    casio: null,
-    drum: null,
-  });
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    const pianoSampler = new Tone.Sampler({
-      urls: {
-        C4: 'C4.mp3',
-        C5: 'C5.mp3',
-        'D#4': 'Ds4.mp3',
-        'D#5': 'Ds5.mp3',
-        'F#4': 'Fs4.mp3',
-        'F#5': 'Fs5.mp3',
-        A4: 'A4.mp3',
-        A5: 'A5.mp3',
-      },
-      release: 1,
-      baseUrl: 'https://tonejs.github.io/audio/salamander/',
-    }).toDestination();
-
-    // const synth = new Tone.MembraneSynth().toDestination();
-
-    const casioSampler = new Tone.Sampler({
-      urls: {
-        A1: 'A1.mp3',
-        A2: 'A2.mp3',
-        'A#2': 'As1.mp3',
-      },
-      baseUrl: 'https://tonejs.github.io/audio/casio/',
-    }).toDestination();
-
-    const kickPlayer = new Tone.Player({
-      url: 'https://tonejs.github.io/audio/drum-samples/CR78/kick.mp3',
-      volume: +3,
-      autostart: false,
-    }).toDestination();
-
-    const snarePlayer = new Tone.Player({
-      url: 'https://tonejs.github.io/audio/drum-samples/CR78/snare.mp3',
-      autostart: false,
-    }).toDestination();
-
-    Tone.loaded().then(() => {
-      if (!isCancelled) {
-        setInstrumentInstances({
-          piano: pianoSampler,
-          casio: casioSampler,
-          drum: {
-            kick: kickPlayer,
-            snare: snarePlayer,
-          },
-        });
-      }
-    });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-  // if (mp3Url === '') {
-  //   console.log([]);
-  // } else {
-  //   console.log(JSON.parse(mp3Url));
-  // }
-  console.log(mp3Url);
-  console.log(JSON.parse(mp3Url));
-  const notes: Note[] = JSON.parse(mp3Url);
-  const playAlbumNote = useCallback(
-    (time: number, note: number | Note) => {
-      const currentNote = note as Note;
-      if (
-        currentNote.instrumentType === 'melody' &&
-        instrumentInstances.piano != null
-      ) {
-        instrumentInstances.piano.triggerAttackRelease(
-          currentNote.names,
-          currentNote.duration,
-          time
-        );
-      } else if (
-        currentNote.instrumentType === 'beat' &&
-        instrumentInstances.drum != null
-      ) {
-        if (currentNote.names) {
-          const drumInstance =
-            instrumentInstances.drum?.[currentNote.names as string];
-          if (drumInstance) {
-            drumInstance.start(time);
-          }
-        }
-      }
-    },
-    [instrumentInstances]
-  );
-  const sequenceRef = useRef<Tone.Part | null>(null);
-  const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
-
-  const stopAlbumMusic = useCallback(() => {
-    sequenceRef.current?.stop();
-    Tone.Transport.stop();
-    playingBarTasksRef.current.forEach(clearTimeout);
-    playingBarTasksRef.current = [];
-  }, []);
-  const playAlbumMusic = useCallback(async () => {
-    if (sequenceRef.current) {
-      sequenceRef.current.stop();
-      sequenceRef.current.dispose();
-    }
-
-    sequenceRef.current = new Tone.Part(
-      playAlbumNote,
-      notes.map((note) => [note.timing, note])
-    ).start(0);
-
-    if (Tone.Transport.state !== 'started') {
-      await Tone.start();
-      Tone.Transport.start();
-    }
-  }, [notes]);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -184,7 +57,6 @@ const AlbumCard = ({
     return <Chip label={tags} size="small" />;
   };
 
-  // const playMusic = () => {};
   return (
     <div
       className="album-card"

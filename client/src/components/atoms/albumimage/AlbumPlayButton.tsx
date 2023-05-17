@@ -2,10 +2,14 @@ import React from 'react';
 import './AlbumPlayButton.scss';
 
 interface AlbumPlayButtonProps {
-  onClick?: () => void;
+  onClick?: (() => Promise<void>) | undefined;
+  isPlaying?: boolean;
 }
 
-const AlbumPlayButton = ({ onClick }: AlbumPlayButtonProps) => {
+const AlbumPlayButton = ({
+  onClick,
+  isPlaying = false,
+}: AlbumPlayButtonProps) => {
   return (
     <div role="presentation" className="album__play-button" onClick={onClick}>
       <svg
