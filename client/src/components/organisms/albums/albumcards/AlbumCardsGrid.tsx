@@ -41,7 +41,6 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
   // 스크롤이 아래로 갔고 && 보여줄 데이터의 길이가 전체 데이터 길이보다 짧다면
   // 보여줄 데이터의 길이를 추가
   const handleScroll = () => {
-    // console.log(visibleData.length, AlbumCards.length);
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
       visibleData.length < AlbumCards.length

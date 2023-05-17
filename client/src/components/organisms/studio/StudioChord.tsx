@@ -2,7 +2,6 @@ import React from 'react';
 import './StudioChord.scss';
 import { Chord, ChordValue } from 'types/Chord';
 import StudioChordCardList from 'components/molecules/studiochord/StudioChordCardList';
-import SectionTitle from 'components/atoms/common/SectionTitle';
 import StudioChordTab from 'components/molecules/studiochord/StudioChordTab';
 
 interface StudioChordProps {

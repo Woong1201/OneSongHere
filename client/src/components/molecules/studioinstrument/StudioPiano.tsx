@@ -52,12 +52,12 @@ const StudioPiano = ({
     'A#5',
     'B5',
   ];
-  interface pressedNote {
+  interface PressedNote {
     note: string;
     pressedDate: Date;
   }
 
-  const [pressedNotes, setPressedNotes] = useState<pressedNote[]>([]);
+  const [pressedNotes, setPressedNotes] = useState<PressedNote[]>([]);
   const pressedNotesRef = useRef(pressedNotes);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const StudioPiano = ({
         Date.now() - pressedNotes[0].pressedDate.getTime() < 50
       ) {
         // 기존 배열에 시간을 추가한다
-        setPressedNotes((prevNotes: pressedNote[]) => [
+        setPressedNotes((prevNotes: PressedNote[]) => [
           ...prevNotes,
           { note, pressedDate: new Date() },
         ]);
@@ -102,7 +102,7 @@ const StudioPiano = ({
   };
 
   const pianoStopNote = (midiNumber: string) => {
-    // console.log(2, midiNumber);
+    console.log(midiNumber);
   };
 
   const noteRange = { first: firstNote, last: lastNote };

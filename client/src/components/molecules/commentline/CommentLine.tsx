@@ -43,12 +43,11 @@ const CommentLine = ({
   const deleteCommentData = () => {
     deleteComment(
       commentId,
-      ({ data }) => {
-        console.log('data:', data);
+      () => {
         navigate(0);
       },
       (error) => {
-        console.log(error);
+        console.log('댓글 삭제 에러:', error);
       }
     );
   };
@@ -58,12 +57,11 @@ const CommentLine = ({
     updateComment(
       commentId,
       comment,
-      ({ data }) => {
-        console.log('data: ', data);
+      () => {
         navigate(0);
       },
       (error) => {
-        console.log(error);
+        console.log('댓글 수정 에러:', error);
       }
     );
   };

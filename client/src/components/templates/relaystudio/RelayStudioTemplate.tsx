@@ -32,12 +32,24 @@ const RelayStudioTemplate = () => {
   const [barNum, setBarNum] = useState<number>(0);
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
+  const [studioStatus, setStudioStatus] = useState<number>(0);
 
-  const startDisableTiming = useMemo(() => 8 * (userOrder - 1), [userOrder]);
-  const timingDisabled = (timing: number) => {
-    return startDisableTiming > timing || startDisableTiming + 8 <= timing;
+  const startInputTiming = useMemo(
+    () => barNum * 0.25 * (userOrder - 1),
+    [userOrder]
+  );
+
+  const isPossibleTiming = (timing: number) => {
+    return (
+      startInputTiming <= timing && startInputTiming + 0.25 * barNum > timing
+    );
   };
 
+  const timingDisabled = (timing: number) => {
+    return (
+      startInputTiming > timing || startInputTiming + barNum * 0.25 <= timing
+    );
+  };
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
@@ -46,6 +58,7 @@ const RelayStudioTemplate = () => {
       setUserNum(studioInfo.limitOfUsers as number);
       setBarNum(studioInfo.numberOfBars as number);
       setUserOrder((studioInfo.numberOfUsers as number) + 1);
+      setStudioStatus(studioInfo.status as number);
     }
   }, [studioInfo]);
 
@@ -147,7 +160,6 @@ const RelayStudioTemplate = () => {
       }
     );
   }, []);
-  console.log('notes:', notes);
   useEffect(() => {
     let isCancelled = false;
 
@@ -205,7 +217,6 @@ const RelayStudioTemplate = () => {
       isCancelled = true;
     };
   }, []);
-  // console.log(1195);
   const inputScroll = (inputTiming: number) => {
     const updatedNotePosition = inputTiming * 4 * 35;
     setNoteScrollPosition((prevPosition) => {
@@ -218,6 +229,11 @@ const RelayStudioTemplate = () => {
       return prevPosition;
     });
   };
+
+  // 페이지 시작할때 입력할 수 있는 부분으로 스크롤 이동
+  useEffect(() => {
+    inputScroll(startInputTiming);
+  }, [startInputTiming]);
 
   const updateNote = (name: string, timing: number | undefined) => {
     if (timing !== undefined && !timingDisabled(timing)) {
@@ -300,7 +316,9 @@ const RelayStudioTemplate = () => {
       .filter((note) => note.instrumentType === 'melody')
       .map((note) => note.timing);
     // 그 배열중에 현재 배열에 notes에 없는 첫번째 타이밍값 리턴
-    return possibleNoteTiming.find((num) => !timings.includes(num));
+    return possibleNoteTiming.find(
+      (time) => !timings.includes(time) && isPossibleTiming(time)
+    );
   };
 
   // const findChordInputTiming = () => {
@@ -353,8 +371,13 @@ const RelayStudioTemplate = () => {
   );
 
   const clearNotes = useCallback(() => {
-    setNotes([]);
-  }, [setNotes]);
+    if (notes) {
+      const deletedNotes = notes.filter((note) => {
+        return !isPossibleTiming(note.timing);
+      });
+      setNotes(deletedNotes);
+    }
+  }, [setNotes, studioInfo]);
 
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
@@ -392,11 +415,10 @@ const RelayStudioTemplate = () => {
         setNotes(JSON.parse(relayStudioSheet));
       },
       (error) => {
-        console.log('에러', error);
+        console.log('릴레이 노트 등록 에러:', error);
       }
     );
   };
-  console.log(studioInfo?.numberOfUsers);
 
   const updateStudioInfo = (newStudioInfo: RelayStudioInfo) => {
     setStudioInfo(newStudioInfo);
@@ -418,7 +440,7 @@ const RelayStudioTemplate = () => {
         setNotes(JSON.parse(relayStudioSheet));
       },
       (error) => {
-        console.log('에러', error);
+        console.log('릴레이 노트 등록에러', error);
       }
     );
   };
@@ -456,6 +478,7 @@ const RelayStudioTemplate = () => {
             setContainerWidth={setContainerWidth}
             userOrder={userOrder}
             barNum={barNum}
+            studioStatus={studioStatus}
           />
           <StudioInstrument
             updateNote={updateNote}
