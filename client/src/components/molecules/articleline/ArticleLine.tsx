@@ -80,12 +80,32 @@ const ArticleLine = ({
       </td>
     </>
   ) : (
-    <div className="smallcontainer">
-      <div>
-        {header}
-        {nickName}dfdffffffffffff
+    <td>
+      &#91;
+      {header}
+      &#93;
+      <TextButton label={boardTitle} to={`/board/${String(boardId)}`} />
+      <div className="smallcontainer">
+        <div>
+          <div>
+            {String(postedDate)}
+            {diffMSec < 0 ? (
+              <>
+                {`0${String(postedDate.getHours())}`.slice(-2)}:
+                {`0${String(postedDate.getMinutes())}`.slice(-2)}
+              </>
+            ) : (
+              <>
+                {String(postedDate.getUTCFullYear())}.
+                {`0${String(postedDate.getMonth() + 1)}`.slice(-2)}.
+                {`0${String(postedDate.getDate())}`.slice(-2)}
+              </>
+            )}
+          </div>
+          {nickName}
+        </div>
       </div>
-    </div>
+    </td>
   );
 };
 

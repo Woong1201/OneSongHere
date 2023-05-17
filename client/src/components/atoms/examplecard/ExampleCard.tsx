@@ -23,7 +23,7 @@ const ExampleCard = ({ imgPath, header, content }: ExampleCardProps) => {
         <div className="example-card__text-container">
           <div className="example-card__header">
             {header.map((text) => (
-              <div>{text}</div>
+              <div key={text}>{text}</div>
             ))}
           </div>
           <div className="example-card__text">{content}</div>
