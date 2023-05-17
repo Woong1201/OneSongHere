@@ -4,16 +4,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: $max-width;
+  width: 1280px;
   box-sizing: border-box;
   padding: 30px;
+  position: relative;
 
   &__nav-list {
     flex-grow: 1;
     display: flex;
+    margin-left: 30px;
     > * {
       // 원래는 50px
-      margin-left: 4.17vw;
+      margin-left: 2vw;
     }
   }
   &__nav-item {
@@ -25,6 +27,9 @@
   &__nav-item:hover .header__dropdown-list,
   &__profile-item:hover .profile__dropdown-list {
     display: flex;
+  }
+  .header__profile-item {
+    cursor: pointer;
   }
 }
 

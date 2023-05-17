@@ -7,6 +7,7 @@ import {
   getRelayStudioList,
   getStudioSearchResult,
 } from 'services/relayStudio';
+import StudioListBanner from 'components/molecules/studiolist/StudioListBanner';
 
 const Relay = () => {
   const [studioAll, setStudioAll] = useState<RelayStudio[]>([]);
@@ -50,6 +51,9 @@ const Relay = () => {
 
   return (
     <div className="relay-page">
+      <div className="relay__banner-container">
+        <StudioListBanner />
+      </div>
       <div className="relay-page__search-section">
         <SearchSection
           onChangeSearchType={handleSearchType}
