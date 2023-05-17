@@ -26,12 +26,11 @@ const Relay = () => {
     if (keyword === '') {
       getRelayStudioList(
         ({ data }) => {
-          console.log(data);
           setStudioAll(data.all);
           setStudioParticipate(data.participate);
         },
         (error) => {
-          console.log('error', error);
+          console.log('릴레이 스튜디오 리스트 가져오기 에러', error);
         }
       );
     } else {
@@ -43,7 +42,7 @@ const Relay = () => {
           setStudioParticipate(data.participate);
         },
         (error) => {
-          console.log('error', error);
+          console.log('스튜디오 검색 에러:', error);
         }
       );
     }

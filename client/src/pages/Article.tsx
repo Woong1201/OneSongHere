@@ -60,13 +60,11 @@ const Article = () => {
     getArticle(
       Number(boardId.articleId),
       ({ data }) => {
-        console.log('data :', data);
         getArticleInfo(data);
-        console.log('댓글 :', data.commentResponses);
         getComments(data.commentResponses);
       },
       (error) => {
-        console.log(error);
+        console.log('게시글 가져오기 에러:', error);
       }
     );
     // 로그인 여부 판별 및 로그인 유저 아이디 등 정보 받아옴
@@ -87,12 +85,11 @@ const Article = () => {
   const deleteArticleData = () => {
     deleteArticle(
       Number(boardId.articleId),
-      ({ data }) => {
-        console.log(data);
+      () => {
         navigate('/board');
       },
       (error) => {
-        console.log(error);
+        console.log('게시글 삭제 에러:', error);
       }
     );
   };

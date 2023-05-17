@@ -40,12 +40,11 @@ const Albums = () => {
     if (keyword === '') {
       getAlbums(
         ({ data }) => {
-          // console.log(data);
           getAlbumList(data);
           setIsLoading(false);
         },
         (error) => {
-          // console.log(error);
+          console.log('엘범 가져오기 에러:', error);
           setIsLoading(false);
         }
       );
@@ -54,12 +53,11 @@ const Albums = () => {
         'title',
         keyword,
         ({ data }) => {
-          // console.log('검색 데이터 :', data);
           getAlbumList(data);
           setIsLoading(false);
         },
         (error) => {
-          // console.log(error);
+          console.log('앨범 검색 에러', error);
           setIsLoading(false);
         }
       );

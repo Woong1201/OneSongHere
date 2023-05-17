@@ -75,7 +75,7 @@ const AlbumModal = ({
           setImgUrl(data);
         },
         (error) => {
-          console.log('error', error);
+          console.log('앨범 커버 생성 에러:', error);
         }
       );
     };
@@ -91,12 +91,11 @@ const AlbumModal = ({
         albumSheet,
         genre,
         imgUrl,
-        ({ data }) => {
-          console.log(data);
+        () => {
           navigate('/albums');
         },
         (error) => {
-          console.log('error', error);
+          console.log('앨범 데이터 등록 에러:', error);
         }
       );
     };
