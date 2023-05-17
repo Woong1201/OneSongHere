@@ -5,10 +5,10 @@ interface Note {
   instrumentType: 'melody' | 'beat';
 }
 
-interface relayNotes {
+interface RelayNotes {
   relayStudioID: number;
   relayStudioSheet: string;
   complete: boolean;
 }
 
-export type { Note, relayNotes };
+export type { Note, RelayNotes };
