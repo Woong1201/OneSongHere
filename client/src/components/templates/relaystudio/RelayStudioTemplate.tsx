@@ -34,14 +34,14 @@ const RelayStudioTemplate = () => {
   const [columnNum, setColumnNum] = useState<number>(160);
   const [studioStatus, setStudioStatus] = useState<number>(0);
 
-  const startDisableTiming = useMemo(
+  const startInputTiming = useMemo(
     () => barNum * 0.25 * (userOrder - 1),
     [userOrder]
   );
+
   const timingDisabled = (timing: number) => {
     return (
-      startDisableTiming > timing ||
-      startDisableTiming + barNum * 0.25 <= timing
+      startInputTiming > timing || startInputTiming + barNum * 0.25 <= timing
     );
   };
   const [noteColumnStyle, setNoteColumnStyle] = useState(
@@ -223,6 +223,11 @@ const RelayStudioTemplate = () => {
       return prevPosition;
     });
   };
+
+  // 페이지 시작할때 입력할 수 있는 부분으로 스크롤 이동
+  useEffect(() => {
+    inputScroll(startInputTiming);
+  }, [startInputTiming]);
 
   const updateNote = (name: string, timing: number | undefined) => {
     if (timing !== undefined && !timingDisabled(timing)) {
