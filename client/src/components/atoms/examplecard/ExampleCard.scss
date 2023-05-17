@@ -12,10 +12,20 @@
         height: 100%;
         // overflow: hidden;
     }
+    &__text-container{
+        padding: 5.208vw;
+
+    }
     &__header{
-        font-size: 3.5vw;
+        text-align: start;
+        font-size: 2.1875vw;
         font-weight: 500;
         color: white;
+    }
+    &__text{
+        text-align: start;
+        font-size: 1.4583vw;
+        margin-top: 20px;
     }
     
 }

@@ -49,7 +49,13 @@ const Main = () => {
         header={exampleText}
         content="다른 사람이 만든 음악에 참여하여 멜로디를 이어가보세요"
       />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: '50px',
+        }}
+      >
         <div className="main-page__gif-container">
           {gifList.map((info) => (
             <div key={info.idx}>
