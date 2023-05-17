@@ -28,6 +28,9 @@
   &__profile-item:hover .profile__dropdown-list {
     display: flex;
   }
+  .header__profile-item {
+    cursor: pointer;
+  }
 }
 
 .header__dropdown {
