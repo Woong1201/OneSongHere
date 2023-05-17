@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import './StudioControll.scss';
 import LogoIcon from 'components/atoms/common/LogoIcon';
-import PlayIcon from 'components/atoms/stuidioHeader/PlayIcon';
-import StopIcon from 'components/atoms/stuidioHeader/StopIcon';
+import PlayIcon from 'components/atoms/studioheader/PlayIcon';
+import StopIcon from 'components/atoms/studioheader/StopIcon';
 import * as Tone from 'tone';
 import { Note } from 'types/Note';
 import Button from 'components/atoms/buttons/Button';
