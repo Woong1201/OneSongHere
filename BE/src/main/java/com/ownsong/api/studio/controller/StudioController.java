@@ -4,6 +4,7 @@ package com.ownsong.api.studio.controller;
 import com.ownsong.api.album.dto.request.AlbumArticleCreateRequest;
 import com.ownsong.api.relayStudio.dto.response.RelayStudioResponse;
 import com.ownsong.api.studio.dto.request.StudioCreateRequest;
+import com.ownsong.api.studio.dto.request.StudioInviteRequest;
 import com.ownsong.api.studio.dto.request.StudioSheetRequest;
 import com.ownsong.api.studio.dto.responese.StudioEntranceResponse;
 import com.ownsong.api.studio.dto.responese.StudioResponse;
@@ -130,6 +131,24 @@ public class StudioController {
         }
         if(!studioService.saveSheet(studioSheetRequest, user)){
             return ResponseEntity.status(400).body("해당 스튜디오에 참여하고있지 않습니다.");
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "일반 스튜디오 팀원 초대", description = "일반 스튜디오 팀원 초대")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success"),
+            @ApiResponse(responseCode = "400", description = "bad request operation")
+    })
+    @PostMapping(value = "/invite")
+    public ResponseEntity<?> inviteStudio(@RequestBody StudioInviteRequest studioInviteRequest){
+        User user = userService.getLoginUser();
+        if(user == null){
+            return ResponseEntity.status(400).body("로그인이 되지 않았어요~!");
+        }
+        // studio 초대 권한과 초대 유저 확인 후 db 처리
+        if(!studioService.invite(user, studioInviteRequest)){
+            return ResponseEntity.status(400).body("잘못된 접근");
         }
         return ResponseEntity.ok().build();
     }

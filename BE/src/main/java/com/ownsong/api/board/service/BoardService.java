@@ -167,7 +167,7 @@ public class BoardService {
         // comment 삭제 후 board 리턴
         Board board = comment.getBoard();
         board.getComments().remove(comment);
-        boardRepository.save(board);
-        return new BoardResponse(board);
+        commentRepository.deleteById(commentId);
+        return new BoardResponse(boardRepository.save(board));
     }
 }

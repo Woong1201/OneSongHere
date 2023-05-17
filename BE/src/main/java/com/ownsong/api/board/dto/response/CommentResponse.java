@@ -24,6 +24,10 @@ public class CommentResponse {
     @NotNull
     private String nickName;
 
+    @Schema(description = "picture", example = "profile.jpg")
+    @NotNull
+    private String picture;
+
     @Schema(description = "내용", example = "내용입니다.")
     @NotNull
     private String commentContent;
@@ -38,5 +42,6 @@ public class CommentResponse {
         this.commentDate = comment.getCommentDate();
         this.userId = comment.getUser().getUserID();
         this.nickName = comment.getUser().getNickname();
+        this.picture = comment.getUser().getProfileUrl();
     }
 }

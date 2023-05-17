@@ -63,8 +63,11 @@ public class RelayStudio {
     @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
     private List<RelayTeam> relayTeams = new ArrayList<>();
 
+    @OneToMany(mappedBy = "relayStudio", cascade = CascadeType.ALL)
+    private List<RelayStudioTag> relayStudioTags = new ArrayList<>();
+
     @Builder
-    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, int numberOfVotes, int numberOfUsers, int agree, int limitOfUsers, int numberOfBars, int status, User user) {
+    public RelayStudio(long relayStudioID, String relayStudioTitle, LocalDateTime endDate, String relayStudioSheet, int numberOfVotes, int numberOfUsers, int agree, int limitOfUsers, int numberOfBars, int status, User user, List<RelayStudioTag> relayStudioTags) {
         this.relayStudioID = relayStudioID;
         this.relayStudioTitle = relayStudioTitle;
         this.endDate = endDate;
@@ -76,6 +79,7 @@ public class RelayStudio {
         this.numberOfBars = numberOfBars;
         this.status = status;
         this.user = user;
+        this.relayStudioTags = relayStudioTags;
     }
 
     public RelayStudio(RelayStudioCreateRequest relayStudioCreateRequest, User user) {
@@ -85,29 +89,73 @@ public class RelayStudio {
         this.numberOfBars = relayStudioCreateRequest.getNumberOfBars();
         this.numberOfUsers = 0;
         this.status = 2;
+        this.endDate = LocalDateTime.now().plusWeeks(1);
         this.user = user;
     }
 
     public void participate(User user) {
         this.status = 2;
         this.user = user;
-        this.endDate = LocalDateTime.now().plusWeeks(1);
     }
 
     public void update(RelayStudioComposeRequest relayStudioComposeRequest) {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
-        // 해당 유저의 relay 완료시 status 업데이트 및 투표 초기화
+        // 해당 유저의 relay 완료시 status 업데이트, 투표 초기화, noti 생성
         if (relayStudioComposeRequest.isComplete()) {
             this.status = 3;
+            this.agree = 0;
+            this.numberOfVotes = 0;
+            this.getNotifications().clear();
             for (RelayTeam relayTeam : this.relayTeams) {
                 relayTeam.initializeVoteFlag();
+                this.notifications.add(
+                        Notification.builder()
+                                .user(relayTeam.getUser())
+                                .type("voteStart")
+                                .relayStudio(this)
+                                .build()
+                );
             }
         }
     }
 
     public void leader(RelayStudioComposeRequest relayStudioComposeRequest) {
         this.relayStudioSheet = relayStudioComposeRequest.getRelayStudioSheet();
+        if (relayStudioComposeRequest.isComplete()) {
+            this.status = 1;
+            this.numberOfUsers = 1;
+        }
+    }
+
+    public void vote(boolean vote) {
+        this.numberOfVotes += 1;
+        if (vote == true)
+            this.agree += 1;
+    }
+
+    public void completeVote() {
         this.status = 1;
-        this.numberOfUsers = 1;
+        if (agree >= this.numberOfUsers/2) {
+            this.numberOfUsers += 1;
+        }
+        String notiType = "voteEnd";
+        if (this.numberOfUsers == this.limitOfUsers) {
+            this.status = 4;
+            notiType = "compositionComplete";
+        }
+        this.getNotifications().clear();
+        for (RelayTeam relayTeam : this.relayTeams) {
+            if (relayTeam.getRelayOrder() == 0) {
+                this.user = relayTeam.getUser();
+            }
+            relayTeam.initializeVoteFlag();
+            this.notifications.add(
+                    Notification.builder()
+                            .user(relayTeam.getUser())
+                            .type(notiType)
+                            .relayStudio(this)
+                            .build()
+            );
+        }
     }
 }

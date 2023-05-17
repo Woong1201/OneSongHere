@@ -2,12 +2,15 @@ package com.ownsong.api.relayStudio.dto.response;
 
 
 import com.ownsong.api.relayStudio.entity.RelayStudio;
+import com.ownsong.api.relayStudio.entity.RelayStudioTag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,14 +37,14 @@ public class RelayStudioResponse {
     @Schema(description = "종료일", example = "2023-04-28T16:41:33.6369331")
     private LocalDateTime endDate;
 
-    @Schema(description = "투표 완료 인원 수", example = "4")
-    private int numberOfVotes;
+    @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중, 4:완료)", example = "4")
+    private int status;
 
-    @Schema(description = "동의 수", example = "4")
+    @Schema(description = "릴레이 스튜디오 찬성 수", example = "4")
     private int agree;
 
-    @Schema(description = "릴레이 스튜디오 상태(1:대기중, 2:작곡중, 3:투표중)", example = "4")
-    private int status;
+    @Schema(description = "릴레이 스튜디오 투표자 수", example = "4")
+    private int numberOfVotes;
 
     @Schema(description = "현재 작곡중인 userId", example = "1")
     @NotNull
@@ -53,20 +56,25 @@ public class RelayStudioResponse {
     @Schema(description = "투표 완료 여부", example = "true")
     private boolean vote;
 
+    @Schema(description = "태그", example = "[\"락\", \"발라드\", \"십덕\"]")
+    private List<String> tags = new ArrayList<>();
+
     public RelayStudioResponse(RelayStudio relayStudio, boolean participate, boolean vote) {
         this.relayStudioID = relayStudio.getRelayStudioID();
         this.relayStudioTitle = relayStudio.getRelayStudioTitle();
         this.endDate = relayStudio.getEndDate();
         this.relayStudioSheet = relayStudio.getRelayStudioSheet();
-        this.numberOfVotes = relayStudio.getNumberOfVotes();
         this.numberOfUsers = relayStudio.getNumberOfUsers();
-        this.agree = relayStudio.getAgree();
         this.limitOfUsers = relayStudio.getLimitOfUsers();
         this.numberOfBars = relayStudio.getNumberOfBars();
         this.status = relayStudio.getStatus();
         this.userId = relayStudio.getUser().getUserID();
+        this.agree = relayStudio.getAgree();
+        this.numberOfVotes = relayStudio.getNumberOfVotes();
         this.participate = participate;
-        this.vote =vote;
+        this.vote = vote;
+        for (RelayStudioTag relayStudioTag : relayStudio.getRelayStudioTags()) {
+            this.tags.add(relayStudioTag.getRelayStudioTagContent());
+        }
     }
-
 }
