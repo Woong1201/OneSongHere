@@ -6,6 +6,11 @@
   height: 173px;
   cursor: pointer;
 
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.35s;
+  }
+
   &__record-image {
     flex-shrink: 0;
     width: 86px;
