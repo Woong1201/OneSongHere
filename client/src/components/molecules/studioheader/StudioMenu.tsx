@@ -3,13 +3,20 @@ import './StudioMenu.scss';
 import HamburgerIcon from 'components/atoms/common/HamburgerIcon';
 import Dropdown from 'components/molecules/header/Dropdown';
 import AlbumModal from 'components/organisms/modal/AlbumModal';
+import { Note } from 'types/Note';
 
 interface StudioMenuProps {
   status: number;
   saveNotes: () => void;
   submitNotes: () => void;
+  notes: Note[];
 }
-const StudioMenu = ({ status, saveNotes, submitNotes }: StudioMenuProps) => {
+const StudioMenu = ({
+  status,
+  saveNotes,
+  submitNotes,
+  notes,
+}: StudioMenuProps) => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
 
   const onClickModal = useCallback(() => {
@@ -18,12 +25,12 @@ const StudioMenu = ({ status, saveNotes, submitNotes }: StudioMenuProps) => {
 
   const StudioheaderDropdownList = [
     { label: '임시저장', onClick: saveNotes },
-    { label: '내보내기', onClick: undefined },
+    // { label: '내보내기', onClick: undefined },
     { label: '제출하기', onClick: submitNotes },
   ];
   const CompleteStudioheaderDropdownList = [
     { label: '임시저장', onClick: saveNotes },
-    { label: '내보내기', onClick: undefined },
+    // { label: '내보내기', onClick: undefined },
     { label: '완성하기', onClick: onClickModal },
   ];
 
@@ -39,7 +46,7 @@ const StudioMenu = ({ status, saveNotes, submitNotes }: StudioMenuProps) => {
       </div>
       {isOpenModal && (
         <div>
-          <AlbumModal onClickModal={onClickModal} />
+          <AlbumModal notes={notes} onClickModal={onClickModal} />
         </div>
       )}
     </div>
