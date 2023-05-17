@@ -12,7 +12,8 @@
     flex-grow: 1;
     display: flex;
     > * {
-      margin-left: 50px;
+      // 원래는 50px
+      margin-left: 4.17vw;
     }
   }
   &__nav-item {

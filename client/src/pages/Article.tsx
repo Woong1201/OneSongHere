@@ -119,7 +119,7 @@ const Article = () => {
             <div className="article__content">{articleInfo?.boardContent}</div>
           </div>
 
-          {user ? (
+          {user?.nickname === strNickname ? (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button
                 type="button"
