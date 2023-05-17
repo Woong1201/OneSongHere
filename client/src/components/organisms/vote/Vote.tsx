@@ -75,6 +75,36 @@ const Vote = ({
     if (status === 3 && userId === currentId) {
       return <p className="vote__comment">투표가 진행중입니다.</p>;
     }
+    if (status === 1 || status === 4) {
+      return (
+        <>
+          <div className="vote__title">
+            <SectionTitle title="투표" />
+          </div>
+          <div className="vote__result">
+            <div
+              className="vote__result__agree"
+              style={{
+                background: `linear-gradient(90deg, #949494 ${agreePercentage}, #D9D9D9 ${agreePercentage})`,
+              }}
+            >
+              <p>찬성</p>
+              <p>({voteAgree})</p>
+            </div>
+
+            <div
+              className="vote__result__disagree"
+              style={{
+                background: `linear-gradient(90deg, #949494 ${disagreePercentage}, #D9D9D9 ${disagreePercentage})`,
+              }}
+            >
+              <p>반대</p>
+              <p>({totalVotes - voteAgree})</p>
+            </div>
+          </div>
+        </>
+      );
+    }
     if (status === 3 && userId !== currentId) {
       return (
         <>
