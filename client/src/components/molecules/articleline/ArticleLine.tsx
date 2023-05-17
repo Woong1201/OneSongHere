@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ArticleLine.scss';
-
+import { Link } from 'react-router-dom';
 import TextButton from 'components/atoms/buttons/TextButton';
 
 interface ArticleLineProps {
@@ -81,30 +81,42 @@ const ArticleLine = ({
     </>
   ) : (
     <td>
-      &#91;
-      {header}
-      &#93;
-      <TextButton label={boardTitle} to={`/board/${String(boardId)}`} />
-      <div className="smallcontainer">
-        <div>
-          <div>
-            {String(postedDate)}
-            {diffMSec < 0 ? (
-              <>
-                {`0${String(postedDate.getHours())}`.slice(-2)}:
-                {`0${String(postedDate.getMinutes())}`.slice(-2)}
-              </>
-            ) : (
-              <>
-                {String(postedDate.getUTCFullYear())}.
-                {`0${String(postedDate.getMonth() + 1)}`.slice(-2)}.
-                {`0${String(postedDate.getDate())}`.slice(-2)}
-              </>
-            )}
+      {header && (
+        <Link to={`/board/${String(boardId)}`} className="small-container">
+          <div className="small-container__card">
+            <div className="small-container__card--header">
+              <div>
+                &#91;
+                {header}
+                &#93; &nbsp;
+                <TextButton
+                  label={boardTitle}
+                  to={`/board/${String(boardId)}`}
+                />
+              </div>
+            </div>
+
+            <br />
+            <br />
+            <div className="small-container__card--footer">
+              <p>{nickName}</p>
+
+              {diffMSec < 0 ? (
+                <>
+                  {`0${String(postedDate.getHours())}`.slice(-2)}:
+                  {`0${String(postedDate.getMinutes())}`.slice(-2)}
+                </>
+              ) : (
+                <>
+                  {String(postedDate.getUTCFullYear())}.
+                  {`0${String(postedDate.getMonth() + 1)}`.slice(-2)}.
+                  {`0${String(postedDate.getDate())}`.slice(-2)}
+                </>
+              )}
+            </div>
           </div>
-          {nickName}
-        </div>
-      </div>
+        </Link>
+      )}
     </td>
   );
 };
