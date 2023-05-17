@@ -6,6 +6,7 @@ import CardTitle from 'components/atoms/common/CardTitle';
 import Chip from 'components/atoms/common/Chip';
 import LikeHeart from 'components/atoms/likeheart/LikeHeart';
 import AlbumImage from 'components/atoms/albumimage/AlbumImage';
+import AlbumPlayButton from 'components/atoms/albumimage/AlbumPlayButton';
 
 interface AlbumCardProps {
   //   작품 앨범 커버
@@ -44,7 +45,7 @@ const AlbumCard = ({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
+  console.log(mp3Url);
   const renderTags = () => {
     if (Array.isArray(tags)) {
       return tags.map((item) => <Chip key={item} label={item} size="small" />);
@@ -62,6 +63,7 @@ const AlbumCard = ({
         {/* <div className="album-card__cover-frame"> */}
         <AlbumImage imageUrl={imgPath} size="large" />
         {/* </div> */}
+        <AlbumPlayButton />
       </div>
       {/* 정보 영역 */}
       <div className="album-card__info-box">
