@@ -131,62 +131,74 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
     };
   }, []);
 
-  const playAlbumNote = useCallback(
-    (time: number, note: number | Note) => {
-      const currentNote = note as Note;
-      if (
-        currentNote.instrumentType === 'melody' &&
-        instrumentInstances.piano != null
-      ) {
-        instrumentInstances.piano.triggerAttackRelease(
-          currentNote.names,
-          currentNote.duration,
-          time
-        );
-      } else if (
-        currentNote.instrumentType === 'beat' &&
-        instrumentInstances.drum != null
-      ) {
-        if (currentNote.names) {
-          const drumInstance =
-            instrumentInstances.drum?.[currentNote.names as string];
-          if (drumInstance) {
-            drumInstance.start(time);
-          }
+  const playAlbumNote = (time: number, note: number | Note) => {
+    const currentNote = note as Note;
+    if (
+      currentNote.instrumentType === 'melody' &&
+      instrumentInstances.piano != null
+    ) {
+      instrumentInstances.piano.triggerAttackRelease(
+        currentNote.names,
+        currentNote.duration,
+        time
+      );
+    } else if (
+      currentNote.instrumentType === 'beat' &&
+      instrumentInstances.drum != null
+    ) {
+      if (currentNote.names) {
+        const drumInstance =
+          instrumentInstances.drum?.[currentNote.names as string];
+        if (drumInstance) {
+          drumInstance.start(time);
         }
       }
-    },
-    [instrumentInstances]
-  );
+    }
+  };
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
-
+  const [playingAlbumId, setPlayinAlbumId] = useState<number | null>(null);
+  const timerIdRef = useRef<NodeJS.Timeout | null>(null);
   const stopAlbumMusic = useCallback(() => {
     sequenceRef.current?.stop();
     Tone.Transport.stop();
     playingBarTasksRef.current.forEach(clearTimeout);
     playingBarTasksRef.current = [];
+    if (timerIdRef.current) {
+      clearTimeout(timerIdRef.current);
+      timerIdRef.current = null;
+    }
+    setPlayinAlbumId(null);
   }, []);
 
-  const playAlbumMusic = useCallback(
-    async (notes: Note[]) => {
-      stopAlbumMusic();
-      if (sequenceRef.current) {
-        sequenceRef.current.stop();
-        sequenceRef.current.dispose();
-      }
-      sequenceRef.current = new Tone.Part(
-        playAlbumNote,
-        notes.map((note) => [note.timing, note])
-      ).start(0);
+  const playAlbumMusic = async (albumId: number, notes: Note[]) => {
+    stopAlbumMusic();
+    if (sequenceRef.current) {
+      sequenceRef.current.stop();
+      sequenceRef.current.dispose();
+    }
 
-      if (Tone.Transport.state !== 'started') {
-        await Tone.start();
-        Tone.Transport.start();
-      }
-    },
-    [visibleData]
-  );
+    const lastNote = notes.reduce((last, note) => {
+      return note.timing > last.timing ? note : last;
+    }, notes[0]);
+    const loopEndTime = lastNote.timing + 0.25;
+
+    sequenceRef.current = new Tone.Part(
+      playAlbumNote,
+      notes.map((note) => [note.timing, note])
+    ).start(0);
+
+    if (Tone.Transport.state !== 'started') {
+      await Tone.start();
+      Tone.Transport.start();
+    }
+
+    timerIdRef.current = setTimeout(() => {
+      stopAlbumMusic();
+    }, loopEndTime * 1000);
+    setPlayinAlbumId(albumId);
+  };
+
   // ========================================================================
   // ===============================(  렌 더 링  )============================
   // ========================================================================
@@ -213,7 +225,11 @@ const AlbumCardsGrid = ({ AlbumCards }: AlbumCardsGridProps) => {
                   like={album.userLike}
                   tags={album.tags}
                   albumInfo={album.albumContent}
-                  playAlbumMusic={() => playAlbumMusic(notes)}
+                  isPlaying={playingAlbumId === album.albumId}
+                  playAlbumMusic={() =>
+                    playAlbumMusic(album.albumId as number, notes)
+                  }
+                  stopAlbumMusic={stopAlbumMusic}
                 />
               </Col>
             );

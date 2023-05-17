@@ -7,7 +7,6 @@ import Chip from 'components/atoms/common/Chip';
 import LikeHeart from 'components/atoms/likeheart/LikeHeart';
 import AlbumImage from 'components/atoms/albumimage/AlbumImage';
 import AlbumPlayButton from 'components/atoms/albumimage/AlbumPlayButton';
-import { Note } from 'types/Note';
 
 interface AlbumCardProps {
   //   작품 앨범 커버
@@ -25,6 +24,8 @@ interface AlbumCardProps {
   //   작품 앨범 정보
   albumInfo: string;
   playAlbumMusic?: () => Promise<void>;
+  stopAlbumMusic?: () => void;
+  isPlaying?: boolean;
 }
 
 const AlbumCard = ({
@@ -36,6 +37,8 @@ const AlbumCard = ({
   tags,
   albumInfo,
   playAlbumMusic,
+  stopAlbumMusic,
+  isPlaying = false,
 }: AlbumCardProps) => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -57,6 +60,13 @@ const AlbumCard = ({
     return <Chip label={tags} size="small" />;
   };
 
+  const onClick = () => {
+    if (playAlbumMusic && !isPlaying) {
+      playAlbumMusic();
+    } else if (stopAlbumMusic) {
+      stopAlbumMusic();
+    }
+  };
   return (
     <div
       className="album-card"
@@ -67,7 +77,7 @@ const AlbumCard = ({
         {/* <div className="album-card__cover-frame"> */}
         <AlbumImage imageUrl={imgPath} size="large" />
         {/* </div> */}
-        <AlbumPlayButton onClick={playAlbumMusic} />
+        <AlbumPlayButton isPlaying={isPlaying} onClick={onClick} />
       </div>
       {/* 정보 영역 */}
       <div className="album-card__info-box">
