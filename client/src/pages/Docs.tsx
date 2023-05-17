@@ -18,6 +18,21 @@ const Docs = () => {
   const handleMenu = (value: number) => {
     setMenu(value);
   };
+  const [scrollPos, setScrollPos] = useState<number>(0);
+
+  const checkScrollTop = () => {
+    setScrollPos(window.pageYOffset);
+    if (window.pageYOffset > 1100) {
+      setMenu(1);
+    } else {
+      setMenu(0);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, []);
 
   useEffect(() => {
     switch (menu) {
