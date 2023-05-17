@@ -79,8 +79,8 @@ public class RelayStudioService {
 
         // 릴레이 작곡 시작 유저인 경우
         if (relayStudio.getNumberOfUsers() == 0) {
-            relayStudio.leader(relayStudioComposeRequest);
             RelayTeam relayTeam = new RelayTeam(relayStudio);
+            relayStudio.leader(relayStudioComposeRequest);
             relayStudio.getRelayTeams().add(relayTeam);
             relayStudioRepository.save(relayStudio);
             return new RelayStudioResponse(relayStudio, true, false);
