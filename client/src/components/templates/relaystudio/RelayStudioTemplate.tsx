@@ -39,6 +39,12 @@ const RelayStudioTemplate = () => {
     [userOrder]
   );
 
+  const isPossibleTiming = (timing: number) => {
+    return (
+      startInputTiming <= timing && startInputTiming + 0.25 * barNum > timing
+    );
+  };
+
   const timingDisabled = (timing: number) => {
     return (
       startInputTiming > timing || startInputTiming + barNum * 0.25 <= timing
@@ -363,8 +369,13 @@ const RelayStudioTemplate = () => {
   );
 
   const clearNotes = useCallback(() => {
-    setNotes([]);
-  }, [setNotes]);
+    if (notes) {
+      const deletedNotes = notes.filter((note) => {
+        return !isPossibleTiming(note.timing);
+      });
+      setNotes(deletedNotes);
+    }
+  }, [setNotes, studioInfo]);
 
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
