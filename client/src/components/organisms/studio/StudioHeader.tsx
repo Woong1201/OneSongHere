@@ -111,6 +111,7 @@ const StudioHeader = ({
             status={(studioInfo as RelayStudioInfo).status}
             saveNotes={saveNotes}
             submitNotes={submitNotes}
+            notes={notes}
           />
         ) : null)}
     </div>
