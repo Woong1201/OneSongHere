@@ -25,7 +25,7 @@ const HallOfFameBG = ({
   albumStudio,
 }: HallOfFameBGProps) => {
   // 로딩 여부 관리
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // 좋아요 상위 3개 lst 초기화
   const [itemList, getItemList] = useState<Album[]>([]);

@@ -10,16 +10,15 @@ interface ProfileImageListProps {
   users: User[];
 }
 const ProfileImageList = ({ users }: ProfileImageListProps) => {
-  console.log(users);
   return (
     <div className="studio__header-profile">
       {users.length > 0
         ? users.map((user) => (
             <ProfileImage
-              key={(user as User).userId}
+              key={user.userId}
               size="medium"
               arrangement="horizontal"
-              imageUrl={(user as User).picture}
+              imageUrl={user.picture}
             />
           ))
         : null}

@@ -13,6 +13,7 @@ interface StudioNoteColumnProps {
   columnNum: number;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 
 const StudioNoteGrid = ({
@@ -25,12 +26,10 @@ const StudioNoteGrid = ({
   columnNum,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteColumnProps) => {
   const Row = columnNum;
-  const startDisablePoint = useMemo(
-    () => barNum * (userOrder - 1),
-    [userOrder]
-  );
+  const startInputPoint = useMemo(() => barNum * (userOrder - 1), [userOrder]);
   return (
     <div className="studio__note-grid">
       {Array.from({ length: Row }, (_, rowIndex) => {
@@ -38,8 +37,9 @@ const StudioNoteGrid = ({
           return note.timing === rowIndex * 0.25;
         });
         const disabled =
-          startDisablePoint > rowIndex ||
-          startDisablePoint + barNum <= rowIndex;
+          startInputPoint > rowIndex ||
+          startInputPoint + barNum <= rowIndex ||
+          studioStatus !== 2;
         return (
           <StudioNoteColumn
             columnNotes={columnNotes}

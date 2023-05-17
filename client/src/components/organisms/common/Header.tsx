@@ -2,18 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'components/organisms/common/Header.scss';
 import User from 'types/User';
-import LogoIcon from 'components/atoms/common/LogoIcon';
 import TextButton from 'components/atoms/buttons/TextButton';
 import Button from 'components/atoms/buttons/Button';
 import ProfileImage from 'components/atoms/profile/ProfileImage';
-import Dropdown from 'components/molecules/header/Dropdown';
+// import Dropdown from 'components/molecules/header/Dropdown';
 import ProfileDropdown from 'components/molecules/header/ProfileDropdown';
 import ProfileIcon from 'components/atoms/profiledropdown/ProfileIcon';
 import LogoutIcon from 'components/atoms/profiledropdown/LogoutIcon';
 import { useRecoilState } from 'recoil';
 import { LoginState } from 'store/LoginState';
 import { UserState } from 'store/UserState';
-import LogoText from 'components/atoms/common/LogoText';
 import Logo from 'components/molecules/common/Logo';
 
 interface HeaderProps {
@@ -41,10 +39,10 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
     navigate('/');
   };
 
-  const headerDropdownList = [
-    { label: '일반', route: '/compose' },
-    { label: '릴레이', route: '/relay' },
-  ];
+  // const headerDropdownList = [
+  //   { label: '일반', route: '/compose' },
+  //   { label: '릴레이', route: '/relay' },
+  // ];
 
   const profileDropdownList = [
     { label: '내 프로필', icon: <ProfileIcon />, route: '' },
