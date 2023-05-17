@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from service.s3_service import *
 from service.cover_service import *
-from service.chatgpt import *
+import service.chatgpt
 from schema import *
 import uvicorn
 import datetime
@@ -31,10 +31,19 @@ def startup_event():
     bucket = os.getenv("bucket_name")
 
 
+@app.post("/ai-api/v1/createHarmony")
+def create_harmory(code : str):
+    code = service.chatgpt.create_harmony(code)
+    if(code[0] != "["):
+        start = code.index("[")
+        code = code[start:]
+
+    return code
+
 @app.post("/ai-api/v1/createCover")
 def creat_cover(request: CoverImage):
     
-    text = create_text(request.text)
+    text = service.chatgpt.create_text(request.text)
 
     if(len(text) > 255):
         text = "Moonlit angel, nostalgic notes, childhood memories, delicate vocals, retro reimagining, dreamlike atmosphere."
