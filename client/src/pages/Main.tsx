@@ -2,11 +2,15 @@ import { Link } from 'react-router-dom';
 import 'pages/Main.scss';
 import MainBanner from 'components/organisms/main/MainBanner';
 import GifBox from 'components/atoms/gifbox/GifBox';
+import ExampleCard from 'components/atoms/examplecard/ExampleCard';
 // gif import
 import gifFirst from 'assets/images/gif_1.gif';
 import gifSecond from 'assets/images/gif_2.gif';
 import gifThird from 'assets/images/gif_3.gif';
+import exampleImage from 'assets/images/compose_example1.png';
 import TransparencyText from '../components/atoms/transparencytext/TransparencyText';
+
+const exampleText = ['간단한 조작으로', '멋진 음악을 만들 수 있습니다.'];
 
 const gifList = [
   {
@@ -40,7 +44,11 @@ const Main = () => {
         transparencyText="시간과 공간 상관없이 
           이어지는 작곡의 열기"
       />
-      <div>간단한 조작으로 멋진 음악을 만들 수 있습니다.</div>
+      <ExampleCard
+        imgPath={exampleImage}
+        header={exampleText}
+        content="다른 사람이 만든 음악에 참여하여 멜로디를 이어가보세요"
+      />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div className="main-page__gif-container">
           {gifList.map((info) => (
