@@ -8,8 +8,33 @@ td{
     height: 40px;
 }
 
-.smallcontainer{
-    width: 400px;
+.small-container{
+    width: 486px;
     display: flex;
     justify-content: center;
+    text-decoration: none;
+    color: #453F52;
+    &__card{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 460px;
+        height: 80px;
+        border-bottom: 1px solid #E0D5F6;
+        padding-top: 10px;
+        &--header{
+            width: 420px;
+            font-weight: 500;
+            display: flex;
+        }
+        &--footer{
+            width: 420px;
+            display: flex;
+            font-size: 14px;
+            justify-content: space-between;
+        }
+    }
+    &__card:hover{
+        background-color: #E0D5F6;
+    }
 }

@@ -6,4 +6,9 @@
   &__transparent-text {
     padding: 100px;
   }
+  &__gif-container{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+  }
 }

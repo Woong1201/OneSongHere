@@ -129,10 +129,19 @@ const Board = () => {
   }, [keyword]);
 
   const [width, setWidth] = useState<number>(window.innerWidth);
+  const [writeButtonLeft, setWriteButtonLeft] = useState(360);
   const handleResize = () => {
+    // 페이지 너비 조절 시 writeButtonX 갱신
     setWidth(window.innerWidth);
+    const pageWidth = window.innerWidth;
+    const newWriteButtonLeft = pageWidth > 850 ? 360 : 180;
+    setWriteButtonLeft(newWriteButtonLeft);
   };
   useEffect(() => {
+    // 처음 마운트 되었을 때 writeButtonX 갱신
+    const pageWidth = window.innerWidth;
+    const newWriteButtonLeft = pageWidth > 850 ? 360 : 180;
+    setWriteButtonLeft(newWriteButtonLeft);
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -151,6 +160,7 @@ const Board = () => {
       >
         {categories.map((category) => (
           <div
+            key={category.name}
             className={
               categoryClick === category.name ? 'category__active' : ''
             }
@@ -167,13 +177,20 @@ const Board = () => {
         <div className="board__banner">
           <div className="board__banner--title">커뮤니티</div>
         </div>
-        <div className="board__container">
+        <div
+          className={
+            width > 1130 ? 'board__container' : 'board__container-small'
+          }
+        >
           <SearchBar
             onChangeSearchType={() => handleSearchType('TITLE')}
             onChangeKeyword={handleKeyword}
           />
           {isLoginQ ? (
-            <div className="board__write--button">
+            <div
+              className="board__write--button"
+              style={{ left: `${writeButtonLeft}px` }}
+            >
               <Button
                 label="글쓰기"
                 type="submit"

@@ -88,9 +88,11 @@ const ArticleBoard = ({
       {isLoading ? (
         <div>로딩 중입니다...</div>
       ) : (
-        <table className="aBoard__table">
-          {/* 850 */}
-          {width >= 500 ? (
+        <table
+          className={width >= 850 ? 'aBoard__table' : 'aBoard__table-small'}
+        >
+          {/* 850 <-> 500 */}
+          {width >= 850 ? (
             <thead className="aBoard__head">
               <tr>
                 <th>번호</th>
