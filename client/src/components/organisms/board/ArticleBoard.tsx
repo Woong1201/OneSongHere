@@ -61,6 +61,18 @@ const ArticleBoard = ({
   // useEffect의 deps 배열에 [filteredArticles]를 넣어 컴포넌트가 마운트 되거나,
   // 해당 값이 바뀔 때 함수가 호출되도록 함
 
+  // 너비 반응
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // pagination
   const pageLimit = 10;
   const entirePage = Math.ceil(articles.length / pageLimit);
@@ -77,15 +89,20 @@ const ArticleBoard = ({
         <div>로딩 중입니다...</div>
       ) : (
         <table className="aBoard__table">
-          <thead className="aBoard__head">
-            <tr>
-              <th>번호</th>
-              <th>카테고리</th>
-              <th>제목</th>
-              <th>글쓴이</th>
-              <th>날짜</th>
-            </tr>
-          </thead>
+          {/* 850 */}
+          {width >= 500 ? (
+            <thead className="aBoard__head">
+              <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>날짜</th>
+              </tr>
+            </thead>
+          ) : (
+            <div />
+          )}
           <tbody className="aBoard__body">
             {articles.slice(offset, offset + pageLimit).map((article) => (
               <tr key={article.boardId} className="aBoard__tr">

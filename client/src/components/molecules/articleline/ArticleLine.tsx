@@ -47,7 +47,7 @@ const ArticleLine = ({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
+  // 850
   return width >= 500 ? (
     <>
       <td>{isEmptyOutput ? '' : boardId}</td>
