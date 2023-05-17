@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import './StudioControll.scss';
 import LogoIcon from 'components/atoms/common/LogoIcon';
 import PlayIcon from 'components/atoms/studioheader/PlayIcon';
@@ -38,6 +38,7 @@ const StudioControll = ({
   findLastTiming,
   columnNum,
 }: StudioControllProps) => {
+  const [isAudioContextStarted, setIsAudioContextStarted] = useState(false);
   const sequenceRef = useRef<Tone.Part | null>(null);
   const playingBarTasksRef = useRef<NodeJS.Timeout[]>([]);
 
@@ -101,11 +102,14 @@ const StudioControll = ({
     playingBarTasksRef.current.forEach(clearTimeout);
     playingBarTasksRef.current = [];
     setNoteColumnStyle(Array(columnNum).fill(false));
-  }, []);
+  }, [setNoteColumnStyle, columnNum]);
 
-  const playSequence = useCallback(() => {
-    if (Tone.Transport.state === 'started') {
-      stopSequence();
+  const playSequence = useCallback(async () => {
+    stopSequence();
+
+    if (!isAudioContextStarted) {
+      await Tone.start();
+      setIsAudioContextStarted(true);
     }
 
     sequenceRef.current = new Tone.Part(
@@ -139,7 +143,14 @@ const StudioControll = ({
       playingBarTasksRef.current.push(stopBar);
       return null;
     });
-  }, [notes, setNoteColumnStyle]);
+  }, [
+    notes,
+    setNoteColumnStyle,
+    findLastTiming,
+    inputScroll,
+    stopSequence,
+    isAudioContextStarted,
+  ]);
 
   return (
     <div className="studio__header-controll">
