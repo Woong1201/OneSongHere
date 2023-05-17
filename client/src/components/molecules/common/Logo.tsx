@@ -13,7 +13,7 @@ const Logo = ({ goHome = false, whiteMode = false }: LogoProps) => {
   return (
     <div className="logo">
       <LogoIcon goHome whiteMode={whiteMode} size="small" />
-      <LogoText goHome color={logoTextColor} width={140} />
+      <LogoText goHome color={logoTextColor} width={120} />
     </div>
   );
 };

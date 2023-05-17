@@ -15,7 +15,7 @@ const LogoIcon = ({
   const setWidth = (sizeLevel: string) => {
     switch (sizeLevel) {
       case Size.Small:
-        return 30;
+        return 23;
       case Size.Medium:
         return 60;
       case Size.Large:
