@@ -57,7 +57,7 @@ const Modal = ({ onClickModal }: ModalProps) => {
             navigate(`/relay/${relayStudioID}`);
           },
           (error) => {
-            console.log('스튜디오 제출 에러:', error);
+            console.log('스튜디오 생성 에러:', error);
           }
         );
       };
