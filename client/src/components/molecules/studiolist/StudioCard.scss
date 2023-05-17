@@ -1,8 +1,15 @@
+@import 'styles/_variables';
+
 .studio-card {
   display: flex;
   overflow: hidden;
   height: 173px;
   cursor: pointer;
+
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.35s;
+  }
 
   &__record-image {
     flex-shrink: 0;
@@ -16,7 +23,7 @@
     background-color: white;
     border-width: 1px 1px 1px 0px;
     border-style: solid;
-    border-color: #efefef;
+    border-color: rgba($header-color, 0.3);
     border-radius: 0px 20px 20px 0px;
     display: flex;
     padding-left: 30px;
@@ -27,20 +34,20 @@
   &__title {
     display: flex;
     justify-content: flex-start;
-    padding-left: 20px;
+    padding-left: 11px;
     margin-bottom: 10px;
   }
 
   &__date {
     display: flex;
     justify-content: flex-start;
-    padding-left: 20px;
+    padding-left: 11px;
     margin-bottom: 8px;
   }
-  
+
   &__tag {
     display: flex;
     justify-content: flex-start;
-    padding-left: 20px;
+    padding-left: 11px;
   }
 }

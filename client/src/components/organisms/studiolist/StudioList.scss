@@ -18,18 +18,20 @@
     justify-content: flex-end;
     padding-right: 30px;
     margin-bottom: 30px;
+    margin-top: 20px;
   }
   &__container {
-    width: 90%;
+    width: 84%;
   }
   &__studio-row {
     display: flex;
-    align-items: flex-start;
+    flex-wrap: wrap;
     justify-content: flex-start;
     margin-bottom: 30px;
   }
   &__studio {
-    width: 33.3%;
+    flex-basis: calc(33.3% - 20px);
+    margin: 14px 10px;
     display: flex;
     justify-content: center;
   }

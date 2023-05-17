@@ -1,33 +1,38 @@
 @import 'styles/_variables';
 .relay-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+
+  &__search-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  
-    &__search-section {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 1440px;
-      height: 30vh;
-    }
-    &__studio-list {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 1440px;
-      margin-bottom: 30px;
-    }
-    &__studio-list-all {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 1440px;
-    }
-    &__line {
-        width: 1380px;
-        border: 1px solid #efefef;
-        margin-bottom: 20px;
-    }
+    justify-content: center;
+    width: 1280px;
+    height: 30vh;
   }
-  
+  &__studio-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 1280px;
+    margin-bottom: 30px;
+  }
+  &__studio-list-all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 1280px;
+  }
+  &__line {
+    width: 1380px;
+    border: 1px solid #efefef;
+    margin-bottom: 20px;
+  }
+}
+.relay__banner-container {
+  // width: 100%;
+  // position: relative;
+  // overflow-x: hidden;
+}

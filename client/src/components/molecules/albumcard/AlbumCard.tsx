@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 // scss import
 import './AlbumCard.scss';
 // atom import
@@ -23,6 +23,9 @@ interface AlbumCardProps {
   tags: string[];
   //   작품 앨범 정보
   albumInfo: string;
+  playAlbumMusic?: () => Promise<void>;
+  stopAlbumMusic?: () => void;
+  isPlaying?: boolean;
 }
 
 const AlbumCard = ({
@@ -33,19 +36,23 @@ const AlbumCard = ({
   like,
   tags,
   albumInfo,
+  playAlbumMusic,
+  stopAlbumMusic,
+  isPlaying = false,
 }: AlbumCardProps) => {
   // useState에 제네릭으로 number만 넣을 수 있도록 타입을 제한함
   const [width, setWidth] = useState<number>(window.innerWidth);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  console.log(mp3Url);
+
   const renderTags = () => {
     if (Array.isArray(tags)) {
       return tags.map((item) => <Chip key={item} label={item} size="small" />);
@@ -53,6 +60,13 @@ const AlbumCard = ({
     return <Chip label={tags} size="small" />;
   };
 
+  const onClick = () => {
+    if (playAlbumMusic && !isPlaying) {
+      playAlbumMusic();
+    } else if (stopAlbumMusic) {
+      stopAlbumMusic();
+    }
+  };
   return (
     <div
       className="album-card"
@@ -63,7 +77,7 @@ const AlbumCard = ({
         {/* <div className="album-card__cover-frame"> */}
         <AlbumImage imageUrl={imgPath} size="large" />
         {/* </div> */}
-        <AlbumPlayButton />
+        <AlbumPlayButton isPlaying={isPlaying} onClick={onClick} />
       </div>
       {/* 정보 영역 */}
       <div className="album-card__info-box">
