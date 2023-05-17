@@ -13,7 +13,7 @@
     align-items: center;
   }
   &__title {
-    width: 70%;
+    width: 80%;
     height: 30%;
     display: flex;
     justify-content: flex-start;
@@ -27,6 +27,7 @@
     justify-content: space-around;
     // align-items: center;
     &__choice {
+      cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -40,6 +41,7 @@
       }
     }
     &__submit {
+      cursor: pointer;
       width: 20%;
       height: 15%;
       background-color: $main-theme-color;

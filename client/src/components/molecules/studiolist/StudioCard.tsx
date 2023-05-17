@@ -6,8 +6,13 @@ import CardTitle from 'components/atoms/common/CardTitle';
 import CardDate from 'components/atoms/studiocard/StudioCardDate';
 import Chip from 'components/atoms/common/Chip';
 import { useNavigate } from 'react-router-dom';
+import { patchParticipate } from 'services/relayStudio';
 
 interface StudioCardProps {
+  /**
+   * 참여 여부
+   */
+  participate: boolean;
   /**
    * 레코드판 색깔
    */
@@ -36,6 +41,7 @@ interface StudioCardProps {
 }
 
 const StudioCard = ({
+  participate,
   recordColor = Color.Purple,
   studioTitle,
   studioId,
@@ -54,7 +60,20 @@ const StudioCard = ({
   const navigate = useNavigate();
 
   const goToStudio = () => {
-    navigate(`/relay/${studioId}`);
+    if (participate === true) {
+      navigate(`/relay/${studioId}`);
+    } else {
+      patchParticipate(
+        studioId,
+        ({ data }) => {
+          console.log(data);
+          navigate(`/relay/${studioId}`);
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+    }
   };
   return (
     <div className="studio-card" onClick={goToStudio} role="presentation">

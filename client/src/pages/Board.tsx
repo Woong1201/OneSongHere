@@ -135,12 +135,27 @@ const Board = () => {
     }
   }, [keyword]);
 
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // ========================================================================
   // ===============================(  렌 더 링  )============================
   // ========================================================================
   return (
     <div>
-      <div className="category__container">
+      <div
+        className={
+          width > 1130 ? 'category__container' : 'category__container--small'
+        }
+      >
         {categories.map((category) => (
           <div
             className={
@@ -151,6 +166,7 @@ const Board = () => {
               label={category.name}
               onClick={categorization(category.name)}
             />
+            &nbsp;
           </div>
         ))}
       </div>

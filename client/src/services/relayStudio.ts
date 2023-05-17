@@ -109,6 +109,24 @@ const postRelayVote = async (
     .catch(fail);
 };
 
+const patchParticipate = async (
+  studioId: number,
+  success: (response: AxiosResponse) => void,
+  fail: (response: AxiosError) => void
+): Promise<void> => {
+  const token = localStorage.getItem('accessToken');
+  await api({
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'patch',
+    url: `/relayStudios/participate/${studioId}`,
+    data: {
+      studioId,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
 export {
   postRelayStudio,
   getRelayStudioList,
@@ -116,4 +134,5 @@ export {
   getStudioSearchResult,
   postRelayNotes,
   postRelayVote,
+  patchParticipate,
 };
