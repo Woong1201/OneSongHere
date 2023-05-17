@@ -397,6 +397,32 @@ const RelayStudioTemplate = () => {
     );
   };
   console.log(studioInfo?.numberOfUsers);
+
+  const updateStudioInfo = (newStudioInfo: RelayStudioInfo) => {
+    setStudioInfo(newStudioInfo);
+  };
+
+  const submitRelayNotes = () => {
+    const relayStudioID = numRelayStudioId;
+    const stringNote = JSON.stringify(notes);
+    const complete = true;
+    const noteData = {
+      relayStudioID,
+      relayStudioSheet: stringNote,
+      complete,
+    };
+    postRelayNotes(
+      noteData,
+      ({ data }) => {
+        const { relayStudioSheet } = data;
+        setNotes(JSON.parse(relayStudioSheet));
+      },
+      (error) => {
+        console.log('에러', error);
+      }
+    );
+  };
+
   return (
     <>
       <StudioHeader
@@ -409,6 +435,7 @@ const RelayStudioTemplate = () => {
         setNoteColumnStyle={setNoteColumnStyle}
         clearNotes={clearNotes}
         saveNotes={saveRelayNotes}
+        submitNotes={submitRelayNotes}
         inputScroll={inputScroll}
         findLastTiming={findLastTiming}
         columnNum={columnNum}
@@ -439,6 +466,7 @@ const RelayStudioTemplate = () => {
         <div className="relay-studio__side">
           {studioInfo && (
             <Vote
+              updateStudioInfo={updateStudioInfo}
               currentId={studioInfo.userId}
               vote={studioInfo.vote}
               status={studioInfo.status}
