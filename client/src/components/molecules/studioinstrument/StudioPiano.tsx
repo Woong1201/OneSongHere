@@ -101,9 +101,7 @@ const StudioPiano = ({
     }
   };
 
-  const pianoStopNote = (midiNumber: string) => {
-    // console.log(2, midiNumber);
-  };
+  const pianoStopNote = (midiNumber: string) => {};
 
   const noteRange = { first: firstNote, last: lastNote };
 

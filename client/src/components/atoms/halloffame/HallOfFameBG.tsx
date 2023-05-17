@@ -39,7 +39,7 @@ const HallOfFameBG = ({
         setIsLoading(false);
       },
       (error) => {
-        console.log(error);
+        console.log('앨범 가져오기 에러:', error);
         setIsLoading(false);
       }
     );

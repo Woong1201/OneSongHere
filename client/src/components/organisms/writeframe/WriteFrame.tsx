@@ -77,31 +77,28 @@ const WriteFrame = ({
       title,
       header,
       content,
-      ({ data }) => {
-        console.log(data);
+      () => {
         // 커뮤니티 board 페이지로 이동
         navigate('/board');
       },
       (error) => {
-        console.log('error', error);
+        console.log('게시글 등록 에러:', error);
       }
     );
   };
 
   const updateArticleData = () => {
-    console.log(numId, title, header, content);
     updateArticle(
       numId,
       title,
       header,
       content,
-      ({ data }) => {
-        console.log(data);
+      () => {
         // 커뮤니티 board 페이지로 이동
         navigate('/board');
       },
       (error) => {
-        console.log('update error : ', error);
+        console.log('게시글 업데이트 에러 : ', error);
       }
     );
   };

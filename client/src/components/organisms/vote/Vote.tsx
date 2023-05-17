@@ -56,7 +56,6 @@ const Vote = ({
         relayStudioId,
         voteResult,
         ({ data }) => {
-          console.log(data);
           updateStudioInfo(data);
           setVoteAgree(data.agree);
           setTotalVotes(data.numberOfVotes);

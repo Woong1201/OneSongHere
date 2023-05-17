@@ -35,7 +35,6 @@ const Modal = ({ onClickModal }: ModalProps) => {
   };
 
   const onChangeLimitOfUsers = (value: number) => {
-    // console.log(value);
     setLimitOfUsers(value);
   };
 
@@ -48,20 +47,17 @@ const Modal = ({ onClickModal }: ModalProps) => {
     const genre = inputValue.split(',').map((item) => item.trim());
     if (genre.length > 0) {
       const postRelayStudioData = () => {
-        console.log(inputValue);
-        console.log(genre);
         postRelayStudio(
           title,
           limitOfUsers,
           numberOfBars,
           genre,
           ({ data }) => {
-            console.log(data);
             const { relayStudioID } = data;
             navigate(`/relay/${relayStudioID}`);
           },
           (error) => {
-            console.log('error', error);
+            console.log('스튜디오 제출 에러:', error);
           }
         );
       };

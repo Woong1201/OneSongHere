@@ -43,7 +43,6 @@ const RelayStudioTemplate = () => {
       startDisableTiming + barNum * 0.25 <= timing
     );
   };
-  console.log(startDisableTiming);
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(160).fill(false)
   );
@@ -153,7 +152,6 @@ const RelayStudioTemplate = () => {
       }
     );
   }, []);
-  console.log('notes:', notes);
   useEffect(() => {
     let isCancelled = false;
 
@@ -211,7 +209,6 @@ const RelayStudioTemplate = () => {
       isCancelled = true;
     };
   }, []);
-  // console.log(1195);
   const inputScroll = (inputTiming: number) => {
     const updatedNotePosition = inputTiming * 4 * 35;
     setNoteScrollPosition((prevPosition) => {
@@ -398,11 +395,10 @@ const RelayStudioTemplate = () => {
         setNotes(JSON.parse(relayStudioSheet));
       },
       (error) => {
-        console.log('에러', error);
+        console.log('릴레이 노트 등록 에러:', error);
       }
     );
   };
-  console.log(studioInfo?.numberOfUsers);
 
   const updateStudioInfo = (newStudioInfo: RelayStudioInfo) => {
     setStudioInfo(newStudioInfo);
@@ -424,7 +420,7 @@ const RelayStudioTemplate = () => {
         setNotes(JSON.parse(relayStudioSheet));
       },
       (error) => {
-        console.log('에러', error);
+        console.log('릴레이 노트 등록에러', error);
       }
     );
   };

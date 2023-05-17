@@ -40,7 +40,6 @@ const StudioNoteContainer = ({
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(scrollPosition);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  console.log(1, containerRef.current?.offsetWidth);
   useEffect(() => {
     if (containerRef.current) {
       setContainerWidth(containerRef.current.offsetWidth);
