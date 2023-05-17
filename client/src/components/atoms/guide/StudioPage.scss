@@ -1,0 +1,35 @@
+.studio-page {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    word-break:break-all;
+    &__title {
+        margin: 10px 0px;
+        font-size: 2rem;
+        font-weight: 700;
+        width: 70%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    &__content {
+        font-size: 1rem;
+        margin: 10px 0px;
+        width: 70%;
+        text-align: start;
+        line-height: 2;
+    }
+    &__list {
+        font-size: 1rem;
+        margin: 10px 0px;
+        width: 70%;
+        text-align: start;
+        line-height: 2;
+    }
+    &--hr {
+        height: 50px;
+        visibility: hidden;
+    }
+}
