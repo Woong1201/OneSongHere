@@ -13,6 +13,7 @@ interface StudioNoteScrollProps {
   gridWidth: number;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 
 const StudioNoteScroll = ({
@@ -25,6 +26,7 @@ const StudioNoteScroll = ({
   gridWidth,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteScrollProps) => {
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -97,6 +99,7 @@ const StudioNoteScroll = ({
         columnNum={columnNum}
         userOrder={userOrder}
         barNum={barNum}
+        studioStatus={studioStatus}
       />
       <div
         role="presentation"

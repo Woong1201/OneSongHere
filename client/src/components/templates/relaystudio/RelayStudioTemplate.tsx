@@ -32,6 +32,7 @@ const RelayStudioTemplate = () => {
   const [barNum, setBarNum] = useState<number>(0);
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
+  const [studioStatus, setStudioStatus] = useState<number>(0);
 
   const startDisableTiming = useMemo(
     () => barNum * 0.25 * (userOrder - 1),
@@ -51,6 +52,7 @@ const RelayStudioTemplate = () => {
       setUserNum(studioInfo.limitOfUsers as number);
       setBarNum(studioInfo.numberOfBars as number);
       setUserOrder((studioInfo.numberOfUsers as number) + 1);
+      setStudioStatus(studioInfo.status as number);
     }
   }, [studioInfo]);
 
@@ -458,6 +460,7 @@ const RelayStudioTemplate = () => {
             setContainerWidth={setContainerWidth}
             userOrder={userOrder}
             barNum={barNum}
+            studioStatus={studioStatus}
           />
           <StudioInstrument
             updateNote={updateNote}

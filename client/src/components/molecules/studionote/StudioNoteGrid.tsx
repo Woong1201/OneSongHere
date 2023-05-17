@@ -13,6 +13,7 @@ interface StudioNoteColumnProps {
   columnNum: number;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 
 const StudioNoteGrid = ({
@@ -25,6 +26,7 @@ const StudioNoteGrid = ({
   columnNum,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteColumnProps) => {
   const Row = columnNum;
   const startDisablePoint = useMemo(
@@ -39,7 +41,8 @@ const StudioNoteGrid = ({
         });
         const disabled =
           startDisablePoint > rowIndex ||
-          startDisablePoint + barNum <= rowIndex;
+          startDisablePoint + barNum <= rowIndex ||
+          studioStatus !== 2;
         return (
           <StudioNoteColumn
             columnNotes={columnNotes}

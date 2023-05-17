@@ -18,6 +18,7 @@ interface StudioNoteScrollProps {
   gridWidth: number;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 
 const StudioNoteContainer = ({
@@ -35,6 +36,7 @@ const StudioNoteContainer = ({
   gridWidth,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteScrollProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -138,6 +140,7 @@ const StudioNoteContainer = ({
         columnNum={columnNum}
         userOrder={userOrder}
         barNum={barNum}
+        studioStatus={studioStatus}
       />
     </div>
   );

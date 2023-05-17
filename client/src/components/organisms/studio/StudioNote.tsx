@@ -19,6 +19,7 @@ interface StudioNoteProps {
   setContainerWidth: React.Dispatch<React.SetStateAction<number>>;
   userOrder: number;
   barNum: number;
+  studioStatus: number;
 }
 const StudioNote = ({
   scrollPosition,
@@ -34,6 +35,7 @@ const StudioNote = ({
   setContainerWidth,
   userOrder,
   barNum,
+  studioStatus,
 }: StudioNoteProps) => {
   const [gridWidth, setGridWidth] = useState(0);
   useEffect(() => {
@@ -52,6 +54,7 @@ const StudioNote = ({
         gridWidth={gridWidth}
         userOrder={userOrder}
         barNum={barNum}
+        studioStatus={studioStatus}
       />
       <div className="studio__content">
         <StudioNoteName />
@@ -70,6 +73,7 @@ const StudioNote = ({
           gridWidth={gridWidth}
           userOrder={userOrder}
           barNum={barNum}
+          studioStatus={studioStatus}
         />
       </div>
     </div>
