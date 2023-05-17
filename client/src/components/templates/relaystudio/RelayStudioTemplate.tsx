@@ -316,7 +316,9 @@ const RelayStudioTemplate = () => {
       .filter((note) => note.instrumentType === 'melody')
       .map((note) => note.timing);
     // 그 배열중에 현재 배열에 notes에 없는 첫번째 타이밍값 리턴
-    return possibleNoteTiming.find((num) => !timings.includes(num));
+    return possibleNoteTiming.find(
+      (time) => !timings.includes(time) && isPossibleTiming(time)
+    );
   };
 
   // const findChordInputTiming = () => {
