@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createAlbumCover, postAlbum } from 'services/album';
 import User from 'types/User';
 import { Note } from 'types/Note';
+import { Audio } from 'react-loader-spinner';
 
 interface ModalProps {
   notes?: Array<Note>;
@@ -61,12 +62,15 @@ const AlbumModal = ({
     setInputValue(event.target.value);
   };
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const genre = inputValue.split(',').map((item) => item.trim());
     const text = [title, content, genre.join(', ')].join(', ');
 
     const createCover = () => {
+      setIsLoading(true);
       createAlbumCover(
         text,
         studioId,
@@ -92,6 +96,7 @@ const AlbumModal = ({
         genre,
         imgUrl,
         () => {
+          setIsLoading(false);
           navigate('/albums');
         },
         (error) => {
@@ -160,6 +165,21 @@ const AlbumModal = ({
             </div>
           </div>
         </form>
+        {isLoading && (
+          <div>
+            <Audio
+              height="120"
+              width="120"
+              color="#4642FF"
+              ariaLabel="audio-loading"
+              wrapperStyle={{}}
+              wrapperClass="wrapper-class"
+              visible
+            />
+            <br />
+            로딩 중입니다...
+          </div>
+        )}
       </div>
     </div>
   );
