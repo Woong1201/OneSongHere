@@ -101,7 +101,7 @@ const StudioPiano = ({
     }
   };
 
-  const pianoStopNote = (midiNumber: string) => {};
+  // const pianoStopNote = (midiNumber: string) => {};
 
   const noteRange = { first: firstNote, last: lastNote };
 
@@ -109,7 +109,7 @@ const StudioPiano = ({
     <Piano
       noteRange={noteRange}
       playNote={pianoPlayNote}
-      stopNote={pianoStopNote}
+      // stopNote={pianoStopNote}
       width={1000}
       keyboardShortcuts={keyboardShortcuts}
     />
