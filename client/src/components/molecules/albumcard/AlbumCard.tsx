@@ -153,19 +153,21 @@ const AlbumCard = ({
     playingBarTasksRef.current.forEach(clearTimeout);
     playingBarTasksRef.current = [];
   }, []);
-
-  const playAlbumMusic = useCallback(() => {
-    if (Tone.Transport.state === 'started') {
-      stopAlbumMusic();
+  const playAlbumMusic = useCallback(async () => {
+    if (sequenceRef.current) {
+      sequenceRef.current.stop();
+      sequenceRef.current.dispose();
     }
 
     sequenceRef.current = new Tone.Part(
       playAlbumNote,
       notes.map((note) => [note.timing, note])
-    );
+    ).start(0);
 
-    sequenceRef.current?.start();
-    Tone.Transport.start();
+    if (Tone.Transport.state !== 'started') {
+      await Tone.start();
+      Tone.Transport.start();
+    }
   }, [notes]);
 
   useEffect(() => {
@@ -193,7 +195,7 @@ const AlbumCard = ({
         {/* <div className="album-card__cover-frame"> */}
         <AlbumImage imageUrl={imgPath} size="large" />
         {/* </div> */}
-        <AlbumPlayButton />
+        <AlbumPlayButton onClick={playAlbumMusic} />
       </div>
       {/* 정보 영역 */}
       <div className="album-card__info-box">
