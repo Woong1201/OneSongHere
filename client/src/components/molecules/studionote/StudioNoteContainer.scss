@@ -1,5 +1,5 @@
 .studio__note-container {
-  width: 97%;
+  width: calc(100%- 40px);
   overflow-x: auto;
   margin-top: 10px;
   scroll-behavior: smooth;
