@@ -37,7 +37,7 @@ const StudioNote = ({
 }: StudioNoteProps) => {
   const [gridWidth, setGridWidth] = useState(0);
   useEffect(() => {
-    setGridWidth(columnNum * 35 - containerWidth);
+    setGridWidth(columnNum * 35);
   }, [containerWidth, columnNum]);
 
   return (

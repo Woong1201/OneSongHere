@@ -44,7 +44,7 @@ const StudioNoteContainer = ({
     if (containerRef.current) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
-  }, []);
+  }, [containerRef.current]);
 
   const onMouseDown = (event: React.MouseEvent) => {
     const el = containerRef.current;

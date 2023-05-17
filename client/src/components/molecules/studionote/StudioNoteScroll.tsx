@@ -29,6 +29,12 @@ const StudioNoteScroll = ({
   const scrollBodyRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [bodyLeftPosition, setBodyLeftPosition] = useState(0);
+  const [bodyWidthPercentage, setBodyWidthPercentage] = useState(0);
+
+  useEffect(() => {
+    setBodyWidthPercentage((containerWidth / gridWidth) * 100);
+  }, [containerWidth, gridWidth]);
+
   const onClick = (event: React.MouseEvent) => {
     const parent = scrollRef.current;
 
@@ -49,7 +55,7 @@ const StudioNoteScroll = ({
           0,
           Math.min(
             x - halfScrollBodyWidth,
-            parent.offsetWidth - scrollBodyRef.current.offsetWidth
+            parent.offsetWidth - halfScrollBodyWidth
           )
         );
 
@@ -63,19 +69,19 @@ const StudioNoteScroll = ({
     if (scrollBodyRef.current && scrollRef.current) {
       const parent = scrollRef.current;
       const bodyWidth = scrollBodyRef.current.offsetWidth;
-      const halfScrollBodyWidth = bodyWidth / 2;
       const maxScrollLeft = parent.offsetWidth - bodyWidth;
+      // 레프트는 본판 width : 스크롤 포지션은 = x : parent.offsetwidth
+      // 본판 width * pa어저구 / 스크롤 포지숀
       const newLeft = Math.max(
         0,
         Math.min(
-          (scrollPosition / gridWidth) * (parent.offsetWidth - bodyWidth),
+          (scrollPosition / gridWidth) * parent.offsetWidth,
           maxScrollLeft
         )
       );
       setBodyLeftPosition(newLeft);
     }
-  }, [scrollPosition]);
-  const bodyWidthPercentage = (containerWidth / gridWidth) * 100;
+  }, [scrollPosition, scrollRef.current, scrollBodyRef.current]);
 
   return (
     <div
