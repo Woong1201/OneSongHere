@@ -1,0 +1,30 @@
+@import "../../../styles/_variables.scss";
+@import "../../../styles/_fonts.scss";
+.login-button {
+  cursor: pointer;
+  margin: 0.5rem;;
+  width: 400px;
+  height: 40px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px;
+  border-radius: 3rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  
+  &__img {
+    width: 50%;
+  }
+
+  &--google {
+    background-color: #ffffff;
+  }
+
+  &--kakao {
+    background-color: #FEE500;
+  }
+
+  &--naver {
+    background-color: #1DC800;
+    color: #ffffff;
+  }
+}

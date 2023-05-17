@@ -1,0 +1,57 @@
+.album-card {
+    display: flex;
+    position: relative;
+    // width: 500px;
+    height: 200px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 5px rgba(0,0,0,0.2);
+
+    &__cover-box{
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;   
+    }
+    &__cover-frame {
+        margin: 10px;
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+    }
+    &__info-box{
+        margin: 20px;
+        width: 100%;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    &__info-studio-like{
+        margin-top: 2px;
+        margin-bottom: 2px;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+    &__info-studio{
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &__info-album-info{
+        margin-top: 4px;
+        width: 100%;
+        text-align: start;
+        text-overflow: ellipsis;
+        max-width: 240px;
+    }
+
+}

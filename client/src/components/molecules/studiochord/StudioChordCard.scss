@@ -1,0 +1,38 @@
+@import 'styles/_variables';
+
+.studio__chord-card {
+  width: 45%;
+  height: 50px;
+  // min-width: 50px;
+  background: #ffffff;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
+  cursor: pointer;
+  overflow: hidden;
+  &-title-area {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    margin-left: 25px;
+    // background-color: rgba($main-theme-color, 0.1);
+    // border-radius: 15%;
+  }
+  &-content {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    align-items: center;
+  }
+  &:hover {
+    // background-color: #efefef;
+    border: 2px solid $main-theme-color;
+  }
+  &:active {
+    background-color: rgba($main-theme-color, 0.1);
+  }
+}

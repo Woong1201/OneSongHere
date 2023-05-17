@@ -1,0 +1,13 @@
+.studio__body {
+  width: 100%;
+  height: calc(100% - 47px);
+  display: flex;
+  flex-direction: row;
+}
+.studio__content {
+  width: 70%;
+  height: 100%;
+}
+.studio__side {
+  width: 30%;
+}

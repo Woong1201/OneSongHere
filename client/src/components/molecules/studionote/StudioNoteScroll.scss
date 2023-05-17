@@ -1,0 +1,22 @@
+.studio_note__scroll {
+  margin-top: 10px;
+  position: relative;
+  cursor: pointer;
+  > .studio__note-grid {
+    zoom: 0.18;
+    pointer-events: none;
+    opacity: 0.2;
+    overflow-x: auto;
+  }
+  &-body {
+    position: absolute;
+    top: 0;
+    bottom: 100px;
+    left: 0;
+    width: 24%;
+    height: 100%;
+    background-color: black;
+    z-index: 1;
+    opacity: 0.3;
+  }
+}

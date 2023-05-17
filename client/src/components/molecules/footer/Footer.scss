@@ -1,0 +1,19 @@
+@import '/src/styles/_variables.scss';
+@import '/src/styles/fonts';
+.footer {
+  background-color: $header-color;
+  color: $disabled-color;
+  padding: 2rem;
+  text-align: start;
+
+  &--info {
+    margin-top: 1rem;
+  }
+}
+hr {
+  color: $disabled-color;
+}
+p {
+    margin: 0;
+    padding: 0;
+}

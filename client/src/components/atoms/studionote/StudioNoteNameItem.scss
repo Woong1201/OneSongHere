@@ -1,0 +1,11 @@
+@import 'styles/_variables';
+
+.studio__note-name-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  font-size: 12px;
+  font-weight: 300;
+  margin-right: 3px;
+}

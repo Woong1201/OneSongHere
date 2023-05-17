@@ -1,0 +1,15 @@
+.studio__note {
+  box-sizing: border-box;
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.studio__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}

@@ -1,0 +1,15 @@
+.transparency-box {
+  display: flex;
+  justify-content: center;
+  margin: 26vw 0px;
+}
+
+.transparency-text {
+  font-weight: 900;
+  font-size: 4vw;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 100% auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

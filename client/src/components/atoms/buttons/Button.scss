@@ -1,0 +1,52 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_fonts.scss';
+.button {
+  cursor: pointer;
+  min-width: 75px;
+  max-width: 200px;
+
+  &--flat {
+    border-radius: 5px;
+  }
+
+  &--tag {
+    border-radius: 30px;
+  }
+
+  &--primary {
+    border: 0;
+    background-color: $main-theme-color;
+    color: #ffffff;
+  }
+
+  &--other {
+    background-color: transparent;
+    color: $header-color;
+    border: 1px solid $header-color;
+  }
+
+  &--main {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+  }
+
+  &--shadow {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 10px;
+  }
+
+  &--small {
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+
+  &--medium {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  &--large {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+}

@@ -1,0 +1,95 @@
+@import 'styles/variables';
+@import 'styles/_fonts.scss';
+// .up-down__input {
+//     border: 2px solid $main-theme-color;
+//     width: 50%;
+//     border-radius: 10px;
+//     padding: 10px;
+// }
+// input:focus {
+//     outline: none;
+// }
+.up-down {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 70%;
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid $main-theme-color;
+    border-radius: 10px;
+    width: 40%;
+  }
+  &__input {
+    border: none;
+    background-color: transparent;
+    padding: 5px 5px 5px 10px;
+    width: 50%;
+    font-family: "Pretendard";
+    font-weight: 500;
+  }
+  &__button {
+    background-color: transparent;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    :active {
+      background-color: $light-main-theme-color;
+    }
+    &__plus {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      height: 50%;
+      width: 100%;
+    //   border: 2px solid $main-theme-color;
+      border: none;
+      border-radius: 0px 5px 0px 0                                                                    px;
+      :active {
+        background-color: transparent;
+      }
+    }
+    &__minus {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      height: 50%;
+      width: 100%;
+    //   border: 2px solid $main-theme-color;
+      border: none;
+      border-radius: 0px 0px 5px 0px;
+      :active {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+input:focus {
+  outline: none;
+}
+
+/* input 기본 스타일 초기화 */
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
+input::-ms-clear {
+  display: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input {
+  box-sizing: border-box;
+}

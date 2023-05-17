@@ -1,0 +1,34 @@
+@import "../../../styles/_variables.scss";
+@import "../../../styles/_fonts.scss";
+.write{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__label{
+        margin-top: 10px;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: start;
+    }
+    &__categories{
+        display: flex;
+        justify-content: start;
+    }
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+.inputTextarea{
+    font-family: 'Pretendard';
+    resize: none;
+    width: 400px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 2px solid $main-theme-color;
+    margin-bottom: 10px;
+}

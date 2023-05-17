@@ -1,0 +1,46 @@
+.studio-card {
+  display: flex;
+  overflow: hidden;
+  height: 173px;
+  cursor: pointer;
+
+  &__record-image {
+    flex-shrink: 0;
+    width: 86px;
+    height: 173px;
+  }
+
+  &__info {
+    flex-grow: 1;
+    width: 200px;
+    background-color: white;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: #efefef;
+    border-radius: 0px 20px 20px 0px;
+    display: flex;
+    padding-left: 30px;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  &__date {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin-bottom: 8px;
+  }
+  
+  &__tag {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+}

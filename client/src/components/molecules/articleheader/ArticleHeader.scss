@@ -1,0 +1,17 @@
+.article__header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #4642FF;
+    margin-bottom: 10px;
+    &--title{
+        display: flex;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    &--profile{
+        display: flex;
+        align-items: center;
+    }
+
+}

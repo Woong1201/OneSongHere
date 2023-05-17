@@ -1,0 +1,15 @@
+.relay-studio__body {
+  width: 100%;
+  height: calc(100% - 47px);
+  display: flex;
+  flex-direction: row;
+}
+.relay-studio__content {
+  width: 70%;
+  height: 100%;
+  border-right: 3px solid #efefef;
+}
+.relay-studio__side {
+  width: 30%;
+  height: 100%;
+}

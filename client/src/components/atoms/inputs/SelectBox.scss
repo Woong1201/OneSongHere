@@ -1,0 +1,75 @@
+@import 'styles/_variables';
+
+.select-box * { box-sizing: border-box; }
+.select-box {
+  position: relative;
+  width: 150px;
+  height: 32px;
+  border-radius: 10px;
+  border: 2px solid $main-theme-color;
+  background: url('../../../../public/assets/icon/KeyboardArrowDown.svg') calc(100% - 7px) center no-repeat;
+  background-size: 20px;
+  cursor: pointer;
+  &__label {
+    display: flex;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 15px;
+    background: transparent;
+    cursor: pointer;
+  }
+  &__option-list {
+    border: 2px solid $main-theme-color;
+    position: absolute; 
+    // top: 28px;
+    left: 0;
+    width: 100%;
+    background: white;
+    color: black;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 6px;
+    overflow: scroll;
+    max-height: 100px;
+    transition: .3s ease-in;
+  }
+  &__option-item {
+    border-bottom: 1px dashed $main-theme-color;
+    background-color: white;
+    padding: 5px 15px 5px;
+    transition: .1s;
+  }
+  &__option-item:hover {
+    background: $light-main-theme-color;
+  }
+  &__option-item:last-child {
+    border-bottom: 0 none;
+  }
+}
+
+.select-box:after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: $main-theme-color;
+}
+
+
+.select-box.active .select-box__option-list::-webkit-scrollbar {width: 6px; height: 0;}
+.select-box.active .select-box__option-list::-webkit-scrollbar-track {background: transparent; }
+.select-box.active .select-box__option-list::-webkit-scrollbar-thumb {background: $header-color; border-radius: 45px;}
+.select-box.active .select-box__option-list::-webkit-scrollbar-thumb:hover {background: $header-color;}
+
+.select-box.active .select-box__option-list {
+  max-height: 50px;
+}
+
+
+

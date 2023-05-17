@@ -1,0 +1,19 @@
+@import "../../../styles/_variables.scss";
+@import "../../../styles/_fonts.scss";
+
+.text-input {
+    font-family: 'Pretendard';
+    padding: 0.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 400px;
+
+    &--border {
+        border: 2px solid $main-theme-color;
+        border-radius: 10px;
+    }
+    &--short {
+        width: 100%;
+    }
+}

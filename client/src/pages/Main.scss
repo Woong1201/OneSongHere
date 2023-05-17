@@ -1,0 +1,9 @@
+.main-page {
+  &__banner {
+    display: flex;
+    flex-direction: column;
+  }
+  &__transparent-text {
+    padding: 100px;
+  }
+}

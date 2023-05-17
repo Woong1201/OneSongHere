@@ -1,0 +1,18 @@
+@import 'styles/_variables';
+
+.profile-dropdown__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 20px;
+  cursor: pointer;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: black;
+
+  &:hover {
+    background-color: $disabled-color;
+  }
+}

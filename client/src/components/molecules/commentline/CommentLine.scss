@@ -1,0 +1,39 @@
+.comment{
+  position:relative;
+  &__container {
+    display: inline-block;
+    width: 780px;
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 20px 0px;
+    border-bottom: 1px solid #E0D5F6;
+  }
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+}
+
+.commentOption{
+  &__button{
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: 0;
+  }
+  &__popup{
+    position: absolute;
+    display: flex;
+    border: 1px solid #C1B8F5;
+    background-color: #C1B8F5;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin-left: 40px;
+    flex-direction: column;
+    color: white;
+  }
+}
+
+.commentUpdateSpace{
+  display: flex;
+}

@@ -1,0 +1,39 @@
+@import 'styles/_variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: $max-width;
+  box-sizing: border-box;
+  padding: 30px;
+
+  &__nav-list {
+    flex-grow: 1;
+    display: flex;
+    > * {
+      margin-left: 50px;
+    }
+  }
+  &__nav-item {
+    position: relative;
+  }
+  &__profile-item {
+    position: relative;
+  }
+  &__nav-item:hover .header__dropdown-list,
+  &__profile-item:hover .profile__dropdown-list {
+    display: flex;
+  }
+}
+
+.header__dropdown {
+  padding-top: 10px;
+  position: absolute;
+}
+.header__profile-dropdown {
+  position: absolute;
+  left: -90%;
+  top: 100%;
+  transform: translateX(-50%);
+}

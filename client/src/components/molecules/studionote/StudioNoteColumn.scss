@@ -1,0 +1,30 @@
+@import 'styles/_variables';
+
+.studio__note-column {
+  height: 498px;
+  display: grid;
+  grid-auto-rows: 2fr;
+  > button {
+    &:not(:last-child) {
+      border-bottom: 0px;
+    }
+    &:nth-child(12) {
+      border-bottom: 1.5px rgba($main-theme-color, 0.5) solid;
+    }
+    &:nth-child(13) {
+      border-top: 1.5px rgba($main-theme-color, 0.5) solid;
+    }
+    &:nth-child(24) {
+      border-bottom: 1.5px rgba(black, 0.5) solid;
+    }
+    &:nth-child(25) {
+      border-top: 1.5px rgba(black, 0.5) solid;
+    }
+  }
+  &--playing {
+    background-color: rgba(black, 0.1) !important;
+  }
+  &--disabled {
+    background-color: rgba($header-color, 0.3) !important;
+  }
+}
