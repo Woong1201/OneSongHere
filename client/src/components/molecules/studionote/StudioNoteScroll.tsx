@@ -46,9 +46,10 @@ const StudioNoteScroll = ({
       const halfScrollBodyWidth = scrollBodyRef.current.offsetWidth / 2;
       // 새로운 스크롤 포지션
       // 클릭한 지점에서 하프 포지션을 뺀것에서 스크롤바디 너비에서 바디 뺀 비율
+      // 클릭한 지점 - 하프바디 =  스크롤 포지션 * (parrent,offsetwidth/gridwidth)
+      // 스크롤 = (x-하프바디)*grd / (prrrant.off/)
       const newScrollPosition =
-        ((x - halfScrollBodyWidth) * gridWidth) /
-        (maxScrollLeft - scrollBodyRef.current.offsetWidth);
+        ((x - halfScrollBodyWidth) * gridWidth) / parent.offsetWidth;
 
       if (scrollBodyRef.current) {
         const newLeft = Math.max(
