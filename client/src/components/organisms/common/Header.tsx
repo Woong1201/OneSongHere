@@ -61,8 +61,9 @@ const Header = ({ user, whiteMode = false, onLoginClick }: HeaderProps) => {
             <Dropdown items={headerDropdownList} />
           </div> */}
         </div>
-        <TextButton label="커뮤니티" white={whiteMode} to="/board" />
         <TextButton label="작품" white={whiteMode} to="/albums" />
+        <TextButton label="커뮤니티" white={whiteMode} to="/board" />
+        <TextButton label="소개" white={whiteMode} to="/docs" />
       </nav>
       <div>
         {user ? (
