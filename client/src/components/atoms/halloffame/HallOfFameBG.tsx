@@ -104,6 +104,7 @@ const HallOfFameBG = ({
               >
                 <div
                   style={{
+                    width: '200px',
                     fontSize: '24px',
                     fontWeight: '600',
                     marginBottom: '8px',

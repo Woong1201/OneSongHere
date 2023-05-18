@@ -4,7 +4,7 @@ import './ExampleCard.scss';
 interface ExampleCardProps {
   imgPath: string;
   header: string[];
-  content: string;
+  content: string[];
 }
 
 const ExampleCard = ({ imgPath, header, content }: ExampleCardProps) => {
@@ -26,7 +26,13 @@ const ExampleCard = ({ imgPath, header, content }: ExampleCardProps) => {
               <div key={text}>{text}</div>
             ))}
           </div>
-          <div className="example-card__text">{content}</div>
+          <div className="example-card__text">
+            <div>
+              {content.map((line) => (
+                <div key={line}>{line}</div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -135,19 +135,27 @@ const updateArticle = async (
   fail: (error: AxiosError) => void
 ): Promise<void> => {
   const token = localStorage.getItem('accessToken');
-  await api({
-    headers: { Authorization: `Bearer ${token}` },
-    method: 'put',
-    url: '/board',
-    data: {
-      boardId,
-      boardTitle,
-      header,
-      boardContent,
-    },
-  })
-    .then(success)
-    .catch(fail);
+  if (boardTitle === '') {
+    alert('게시글 제목을 입력해주세요!');
+  } else if (header === '') {
+    alert('카테고리를 선택해주세요!');
+  } else if (boardContent === '') {
+    alert('게시글 내용을 입력해주세요!');
+  } else {
+    await api({
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'put',
+      url: '/board',
+      data: {
+        boardId,
+        boardTitle,
+        header,
+        boardContent,
+      },
+    })
+      .then(success)
+      .catch(fail);
+  }
 };
 
 const updateComment = async (
@@ -156,15 +164,19 @@ const updateComment = async (
   success: (response: AxiosResponse) => void,
   fail: (error: AxiosError) => void
 ): Promise<void> => {
-  const token = localStorage.getItem('accessToken');
-  await api({
-    headers: { Authorization: `Bearer ${token}` },
-    method: 'put',
-    url: '/board/comments',
-    data: { commentId, commentContent },
-  })
-    .then(success)
-    .catch(fail);
+  if (commentContent === '') {
+    alert('댓글 내용을 채운 뒤 등록해주세요!');
+  } else {
+    const token = localStorage.getItem('accessToken');
+    await api({
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'put',
+      url: '/board/comments',
+      data: { commentId, commentContent },
+    })
+      .then(success)
+      .catch(fail);
+  }
 };
 
 export {
