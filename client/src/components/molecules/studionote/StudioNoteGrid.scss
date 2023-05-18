@@ -1,6 +1,7 @@
 .studio__note-grid {
   display: flex;
   flex-direction: row;
+  height: 100%;
 
   > div {
     &:not(:last-child) {
