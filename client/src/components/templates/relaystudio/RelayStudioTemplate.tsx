@@ -153,7 +153,6 @@ const RelayStudioTemplate = () => {
       numRelayStudioId,
       ({ data }) => {
         setStudioInfo(data);
-        console.log(data);
         const { relayStudioSheet } = data;
         if (notes.length === 0) {
           if (relayStudioSheet === '') {

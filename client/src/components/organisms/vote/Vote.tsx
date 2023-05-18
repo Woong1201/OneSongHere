@@ -63,7 +63,7 @@ const Vote = ({
           setTotalVotes(data.numberOfVotes);
         },
         (error) => {
-          console.log('error', error);
+          console.log('투표 제출 에러:', error);
         }
       );
       setDoVote(true);
