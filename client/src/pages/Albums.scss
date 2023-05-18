@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  >.search-bar {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
 }
 .halloffame__container {
   // width: 50vh;
@@ -25,7 +29,4 @@
   z-index: 99;
   border: transparent;
 }
-.search-bar {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+

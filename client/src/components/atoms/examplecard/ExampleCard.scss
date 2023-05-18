@@ -20,6 +20,7 @@
     }
     &__header{
         text-align: start;
+        letter-spacing: 0.06rem;
         font-size: 2.1875vw;
         font-weight: 500;
         color: white;
@@ -27,6 +28,7 @@
     &__text{
         text-align: start;
         font-size: 1vw;
+        font-weight: 500;
         // font-size: 1.4583vw;
         margin-top: 20px;
     }
