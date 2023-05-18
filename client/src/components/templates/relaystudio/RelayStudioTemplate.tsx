@@ -13,6 +13,11 @@ import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
 import StudioChord from 'components/organisms/studio/StudioChord';
 import Vote from 'components/organisms/vote/Vote';
+import StudioChordTab from 'components/molecules/studiochord/StudioChordTab';
+import StudioTabList from 'components/organisms/studio/StudioTabList';
+import StudioChat from 'components/organisms/studio/StudioChat';
+import StudioCam from 'components/organisms/studio/StudioCam';
+import StudioWork from 'components/organisms/studio/StudioWork';
 
 const RelayStudioTemplate = () => {
   const navigate = useNavigate();
@@ -509,6 +514,7 @@ const RelayStudioTemplate = () => {
           />
         </div>
         <div className="relay-studio__side">
+          {/* <StudioCam /> */}
           {studioInfo && (
             <Vote
               updateStudioInfo={updateStudioInfo}
@@ -520,7 +526,7 @@ const RelayStudioTemplate = () => {
               relayStudioId={studioInfo.relayStudioID}
             />
           )}
-          <StudioChord chordNotes={chordNotes} updateChord={updateChord} />
+          <StudioWork chordNotes={chordNotes} updateChord={updateChord} />
         </div>
       </div>
     </>
