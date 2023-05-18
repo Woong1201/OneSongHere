@@ -19,6 +19,8 @@ interface TextButtonProps {
    * 글씨 하얀색으로
    */
   white?: boolean;
+
+  blue?: boolean;
 }
 
 const TextButton = ({
@@ -26,9 +28,11 @@ const TextButton = ({
   to,
   onClick,
   white = false,
+  blue = false,
 }: TextButtonProps) => {
   // white가 true로 들어온다면 text-button--white 속성이 추가되도록 colorMode 설정
   const colorMode = white ? 'text-button--white' : null;
+  const BlueMode = blue ? 'text-button--blue' : null;
 
   // to로 파라미터가 들어온다면 라우터 링크 텍스트 버튼으로 if문
   if (to) {
@@ -37,7 +41,7 @@ const TextButton = ({
       <Link
         to={to}
         onClick={onClick}
-        className={['text-button', colorMode].join(' ')}
+        className={['text-button', colorMode, BlueMode].join(' ')}
       >
         {label}
       </Link>
@@ -48,7 +52,7 @@ const TextButton = ({
     <button
       type="button"
       onClick={onClick}
-      className={['text-button', colorMode].join(' ')}
+      className={['text-button', colorMode, BlueMode].join(' ')}
     >
       {label}
     </button>

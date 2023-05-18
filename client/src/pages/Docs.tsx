@@ -60,6 +60,10 @@ const Docs = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [activeMenu, sections, isScrolling]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="docs">
       <div className="docs__container">
