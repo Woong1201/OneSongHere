@@ -1,0 +1,16 @@
+.docs {
+  display: flex;
+  justify-content: center;
+  &__container {
+    width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './RelayStudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
 import { Chord, ChordValue } from 'types/Chord';
 import { useRecoilValue } from 'recoil';
@@ -15,6 +15,7 @@ import StudioChord from 'components/organisms/studio/StudioChord';
 import Vote from 'components/organisms/vote/Vote';
 
 const RelayStudioTemplate = () => {
+  const navigate = useNavigate();
   const [notes, setNotes] = useState<Note[]>([]);
   const [studioInfo, setStudioInfo] = useState<RelayStudioInfo>();
   const [instrumentInstances, setInstrumentInstances] = useState<{
@@ -430,6 +431,7 @@ const RelayStudioTemplate = () => {
       ({ data }) => {
         const { relayStudioSheet } = data;
         setNotes(JSON.parse(relayStudioSheet));
+        alert('저장되었습니다.');
       },
       (error) => {
         console.log('릴레이 노트 등록 에러:', error);
@@ -455,6 +457,8 @@ const RelayStudioTemplate = () => {
       ({ data }) => {
         const { relayStudioSheet } = data;
         setNotes(JSON.parse(relayStudioSheet));
+        setStudioInfo(data);
+        navigate('/relay');
       },
       (error) => {
         console.log('릴레이 노트 등록에러', error);

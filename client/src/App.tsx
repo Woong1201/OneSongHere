@@ -17,6 +17,7 @@ import ArticleWrite from 'pages/ArticleWrite';
 import Studio from 'pages/Studio';
 import RelayStudio from 'pages/RelayStudio';
 import GoogleLogin from 'pages/GoogleLogin';
+import Docs from 'pages/Docs';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/board/:articleId" element={<Article />} />
             <Route path="/board/write" element={<ArticleWrite />} />
+            <Route path="/docs" element={<Docs />} />
             <Route path="/*" element={<Notfound />} />
           </Route>
           <Route path="/studio" element={<Studio />} />
