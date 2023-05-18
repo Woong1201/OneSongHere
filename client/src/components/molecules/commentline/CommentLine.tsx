@@ -29,7 +29,7 @@ const CommentLine = ({
   loginId,
 }: CommentProps) => {
   const [comment, setComment] = useState<string>('');
-  const onChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
@@ -176,10 +176,13 @@ const CommentLine = ({
       </div>
       {letsUpdate ? (
         <div className="commentUpdateSpace">
-          <TextInput
-            label={content}
+          <textarea
+            placeholder={content}
             value={comment}
             onChange={onChangeComment}
+            cols={104}
+            rows={2}
+            className="comment__input--inputTextarea"
           />
           <Button
             label="등록"
@@ -190,7 +193,15 @@ const CommentLine = ({
           />
         </div>
       ) : (
-        <div style={{ display: 'flex', textAlign: 'start' }}>{content}</div>
+        <div
+          style={{
+            display: 'flex',
+            textAlign: 'start',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {content}
+        </div>
       )}
     </div>
   );
