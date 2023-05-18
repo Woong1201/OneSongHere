@@ -47,7 +47,7 @@ const Main = () => {
       <ExampleCard
         imgPath={exampleImage}
         header={exampleText}
-        content="다른 사람이 만든 음악에 참여하여 멜로디를 이어가보세요"
+        content={['다른 사람이 만든 음악에 참여하여 멜로디를 이어가보세요']}
       />
       <div
         style={{
