@@ -94,6 +94,18 @@ const Article = () => {
     );
   };
 
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    // 페이지 너비 조절 시 writeButtonX 갱신
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="article__entire">
       {isUpdate ? (
@@ -107,7 +119,11 @@ const Article = () => {
           />
         </div>
       ) : (
-        <div className="article__container">
+        <div
+          className={
+            width > 964 ? 'article__container' : 'article__container--small'
+          }
+        >
           <ArticleHeader
             header={strHeader}
             title={strTitle}
