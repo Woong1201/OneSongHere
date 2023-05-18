@@ -1,7 +1,7 @@
 @import 'styles/_variables';
 
 .studio__note-column {
-  height: 498px;
+  height: 100%;
   display: grid;
   grid-auto-rows: 2fr;
   > button {
@@ -21,10 +21,10 @@
       border-top: 1.5px rgba(black, 0.5) solid;
     }
   }
-  &--playing {
-    background-color: rgba(black, 0.1) !important;
-  }
   &--disabled {
     background-color: rgba($header-color, 0.3) !important;
+  }
+  &--playing {
+    background-color: rgba($header-color, 0.5) !important;
   }
 }

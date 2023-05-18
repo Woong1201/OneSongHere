@@ -32,5 +32,7 @@ export const Primary: Story = {
     userOrder: 0,
     barNum: 0,
     studioStatus: 1,
+    currentUserId: 0,
+    currentComposerId: 0,
   },
 };

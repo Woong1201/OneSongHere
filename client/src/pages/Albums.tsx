@@ -100,6 +100,7 @@ const Albums = () => {
       <SearchBar
         onChangeSearchType={() => handleSearchType('TITLE')}
         onChangeKeyword={handleKeyword}
+        whiteMode
       />
       {scrollNumber > 1077 ? (
         <button

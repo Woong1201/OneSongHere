@@ -20,6 +20,8 @@ interface StudioNoteProps {
   userOrder: number;
   barNum: number;
   studioStatus: number;
+  currentComposerId: number;
+  currentUserId: number;
 }
 const StudioNote = ({
   scrollPosition,
@@ -36,6 +38,8 @@ const StudioNote = ({
   userOrder,
   barNum,
   studioStatus,
+  currentComposerId,
+  currentUserId,
 }: StudioNoteProps) => {
   const [gridWidth, setGridWidth] = useState(0);
   useEffect(() => {
@@ -55,6 +59,8 @@ const StudioNote = ({
         userOrder={userOrder}
         barNum={barNum}
         studioStatus={studioStatus}
+        currentComposerId={currentComposerId}
+        currentUserId={currentUserId}
       />
       <div className="studio__content">
         <StudioNoteName />
@@ -74,6 +80,8 @@ const StudioNote = ({
           userOrder={userOrder}
           barNum={barNum}
           studioStatus={studioStatus}
+          currentComposerId={currentComposerId}
+          currentUserId={currentUserId}
         />
       </div>
     </div>

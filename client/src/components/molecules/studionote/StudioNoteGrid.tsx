@@ -14,6 +14,8 @@ interface StudioNoteColumnProps {
   userOrder: number;
   barNum: number;
   studioStatus: number;
+  currentComposerId: number;
+  currentUserId: number;
 }
 
 const StudioNoteGrid = ({
@@ -27,6 +29,8 @@ const StudioNoteGrid = ({
   userOrder,
   barNum,
   studioStatus,
+  currentComposerId,
+  currentUserId,
 }: StudioNoteColumnProps) => {
   const Row = columnNum;
   const startInputPoint = useMemo(() => barNum * (userOrder - 1), [userOrder]);
@@ -51,6 +55,8 @@ const StudioNoteGrid = ({
             rowIndex={rowIndex}
             playing={noteColumnStyle[rowIndex]}
             disabled={disabled}
+            currentComposerId={currentComposerId}
+            currentUserId={currentUserId}
           />
         );
       })}

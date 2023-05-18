@@ -1,14 +1,24 @@
 @import '../../../styles/variables';
+
 .search-bar {
-  background-color: rgba($color: $main-theme-color, $alpha: 0.4);
   width: 400px;
+  height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
   margin: 0.5rem;
   border-radius: 30px;
-  border: 1px solid $main-theme-color;
+  border: 1px solid $secondary-theme-color;
+  &--default {
+    background-color: rgba($color: $secondary-theme-color, $alpha: 0.4);
+  }
+  &--white {
+    // background-color: white;
+    > input::placeholder {
+      color: $secondary-theme-color;
+    }
+  }
   &__icon {
     background-color: transparent;
     border: none;

@@ -4,6 +4,7 @@ import StudioCard from 'components/molecules/studiolist/StudioCard';
 import './StudioList.scss';
 import { useCallback, useState } from 'react';
 import { RelayStudio } from 'types/RelayStudio';
+import Color from 'types/Color';
 import Modal from '../modal/ModalForm';
 
 interface StudioListProps {
@@ -17,15 +18,15 @@ const StudioList = ({
   isParticipating = false,
   title,
 }: StudioListProps) => {
-  function chunk<T>(array: T[], size: number): T[][] {
-    const chunked: T[][] = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunked.push(array.slice(i, i + size));
-    }
-    return chunked;
-  }
+  // function chunk<T>(array: T[], size: number): T[][] {
+  //   const chunked: T[][] = [];
+  //   for (let i = 0; i < array.length; i += size) {
+  //     chunked.push(array.slice(i, i + size));
+  //   }
+  //   return chunked;
+  // }
 
-  const chunkedStudios: RelayStudio[][] = chunk(studios, 3);
+  // const chunkedStudios: RelayStudio[][] = chunk(studios, 3);
 
   // modal
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -71,12 +72,10 @@ const StudioList = ({
       )}
       <div className="studio-list__container">
         {studios.length > 0 ? (
-          chunkedStudios.map((studioRow) => (
-            <div
-              key={studioRow[0].relayStudioID}
-              className="studio-list__studio-row"
-            >
-              {studioRow.map((studio: RelayStudio) => (
+          <div className="studio-list__studio-row">
+            {[...studios]
+              .reverse()
+              .map((studio: RelayStudio, studioIndex: number) => (
                 <div className="studio-list__studio" key={studio.relayStudioID}>
                   <StudioCard
                     key={studio.relayStudioID}
@@ -86,11 +85,13 @@ const StudioList = ({
                     startDate={getStartDate(studio.endDate)}
                     endDate={endDateStringtoDate(studio.endDate)}
                     tags={studio.tags}
+                    recordColor={
+                      studioIndex % 2 === 0 ? Color.Purple : Color.Black
+                    }
                   />
                 </div>
               ))}
-            </div>
-          ))
+          </div>
         ) : (
           <p className="studio-list__empty">{ment}</p>
         )}

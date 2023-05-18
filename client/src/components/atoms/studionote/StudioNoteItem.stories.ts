@@ -19,5 +19,7 @@ export const Primary: Story = {
     timing: 0,
     note: 'D4',
     selected: true,
+    currentUserId: 0,
+    currentComposerId: 0,
   },
 };

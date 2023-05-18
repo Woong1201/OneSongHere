@@ -37,8 +37,8 @@ const AlbumModal = ({
   const { relayStudioId } = useParams();
   const studioId = Number(relayStudioId);
   const [userId, setUserId] = useState<number>(0);
-  let albumSheet = JSON.stringify(notes);
-  albumSheet = albumSheet.replace(/"/g, "'");
+  const albumSheet = JSON.stringify(notes);
+  // albumSheet = albumSheet.replace(/"/g, "'");
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {

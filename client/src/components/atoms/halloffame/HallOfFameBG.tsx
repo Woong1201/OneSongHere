@@ -94,12 +94,13 @@ const HallOfFameBG = ({
               <AlbumImage imageUrl={fAlbum.albumUrl} size="large" />
               <div
                 style={{
-                  marginLeft: '20px',
+                  marginLeft: '40px',
                   marginTop: '10px',
                   display: 'flex',
                   flexDirection: 'column',
                   textAlign: 'start',
                   color: 'white',
+                  textShadow: '1px 1px 1px #000',
                 }}
               >
                 <div
@@ -111,7 +112,15 @@ const HallOfFameBG = ({
                 >
                   {fAlbum.albumTitle}
                 </div>
-                <div>{fAlbum.nickName}</div>
+                <div
+                  style={{
+                    marginTop: '5px',
+                    fontSize: '18px',
+                    color: '#EFEFEF',
+                  }}
+                >
+                  {fAlbum.nickName}
+                </div>
               </div>
             </div>
           ))}
