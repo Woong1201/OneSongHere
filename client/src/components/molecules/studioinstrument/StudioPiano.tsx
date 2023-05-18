@@ -101,9 +101,8 @@ const StudioPiano = ({
     }
   };
 
-  const pianoStopNote = (midiNumber: string) => {
-    console.log(midiNumber);
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const pianoStopNote = (midiNumber: string) => {};
 
   const noteRange = { first: firstNote, last: lastNote };
 

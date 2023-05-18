@@ -26,8 +26,6 @@ const StudioNoteItem = ({
   const disabledNoteStyle = disabled ? 'studio__note-item--disabled' : '';
   const selectedStyle = isSelected ? 'studio__note-item--selected' : '';
   const selectNote = () => {
-    console.log(currentComposerId);
-    console.log(currentUserId);
     if (disabled || currentComposerId !== currentUserId) return;
     setIsSelected(!isSelected);
     if (updateNote !== undefined && playNote !== undefined) {
