@@ -65,8 +65,7 @@ const StudioCard = ({
     } else {
       patchParticipate(
         studioId,
-        ({ data }) => {
-          console.log(data);
+        () => {
           navigate(`/relay/${studioId}`);
         },
         (error) => {
