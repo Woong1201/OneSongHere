@@ -20,5 +20,7 @@ export const Primary: Story = {
       { names: ['q'], duration: '8n', timing: 0, instrumentType: 'melody' },
     ],
     rowIndex: 0,
+    currentUserId: 0,
+    currentComposerId: 0,
   },
 };

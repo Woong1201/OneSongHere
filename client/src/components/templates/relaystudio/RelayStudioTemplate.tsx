@@ -3,10 +3,11 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './RelayStudioTemplate.scss';
 import StudioNote from 'components/organisms/studio/StudioNote';
 import StudioInstrument from 'components/organisms/studio/StudioInstrument';
-import StudioCam from 'components/organisms/studio/StudioCam';
 import { useParams } from 'react-router-dom';
 import { Note } from 'types/Note';
 import { Chord, ChordValue } from 'types/Chord';
+import { useRecoilValue } from 'recoil';
+import { UserState } from 'store/UserState';
 import { RelayStudioInfo } from 'types/RelayStudio';
 import * as Tone from 'tone';
 import { getRelayStudioInfo, postRelayNotes } from 'services/relayStudio';
@@ -33,6 +34,10 @@ const RelayStudioTemplate = () => {
   const [userOrder, setUserOrder] = useState<number>(0);
   const [columnNum, setColumnNum] = useState<number>(160);
   const [studioStatus, setStudioStatus] = useState<number>(0);
+  const [currentComposerId, setCurrentComposerId] = useState<number | null>(
+    null
+  );
+  const currentUserId = useRecoilValue(UserState)?.userId;
 
   const startInputTiming = useMemo(
     () => barNum * 0.25 * (userOrder - 1),
@@ -59,6 +64,7 @@ const RelayStudioTemplate = () => {
       setBarNum(studioInfo.numberOfBars as number);
       setUserOrder((studioInfo.numberOfUsers as number) + 1);
       setStudioStatus(studioInfo.status as number);
+      setCurrentComposerId(studioInfo.userId as number);
     }
   }, [studioInfo]);
 
@@ -146,6 +152,7 @@ const RelayStudioTemplate = () => {
       numRelayStudioId,
       ({ data }) => {
         setStudioInfo(data);
+        console.log(data);
         const { relayStudioSheet } = data;
         if (notes.length === 0) {
           if (relayStudioSheet === '') {
@@ -236,7 +243,12 @@ const RelayStudioTemplate = () => {
   }, [startInputTiming]);
 
   const updateNote = (name: string, timing: number | undefined) => {
-    if (timing !== undefined && !timingDisabled(timing) && studioStatus === 2) {
+    if (
+      timing !== undefined &&
+      !timingDisabled(timing) &&
+      studioStatus === 2 &&
+      (currentUserId as number) === (currentComposerId as number)
+    ) {
       setNotes((prevNotes) => {
         let isExistingNote = false;
         let updatedNotes = prevNotes.map((note) => {
@@ -382,7 +394,12 @@ const RelayStudioTemplate = () => {
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
     const note = chordNotes[chord];
-    if (timing !== undefined && !timingDisabled(timing) && studioStatus === 2) {
+    if (
+      timing !== undefined &&
+      !timingDisabled(timing) &&
+      studioStatus === 2 &&
+      (currentUserId as number) === (currentComposerId as number)
+    ) {
       setNotes((prevNote) => {
         return [
           ...prevNote,
@@ -479,6 +496,8 @@ const RelayStudioTemplate = () => {
             userOrder={userOrder}
             barNum={barNum}
             studioStatus={studioStatus}
+            currentComposerId={currentComposerId as number}
+            currentUserId={currentUserId as number}
           />
           <StudioInstrument
             updateNote={updateNote}
