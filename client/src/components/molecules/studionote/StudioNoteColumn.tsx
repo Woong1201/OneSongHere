@@ -13,6 +13,8 @@ interface StudioNoteColumnProps {
   playDrum?: (beatPower: 'weak' | 'strong', drumType: 'kick' | 'snare') => void;
   playing?: boolean;
   disabled?: boolean;
+  currentComposerId: number;
+  currentUserId: number;
 }
 
 const Column = 24;
@@ -53,6 +55,8 @@ const StudioNoteColumn = ({
   playDrum,
   playing = false,
   disabled = false,
+  currentComposerId,
+  currentUserId,
 }: StudioNoteColumnProps) => {
   const playingStyle = playing ? 'studio__note-column--playing' : '';
   const disabledStyle = disabled ? 'studio__note-column--disabled' : null;
@@ -93,6 +97,8 @@ const StudioNoteColumn = ({
             selected={isSelected}
             playNote={playNote}
             disabled={disabled}
+            currentComposerId={currentComposerId}
+            currentUserId={currentUserId}
           />
         );
       })}

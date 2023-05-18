@@ -45,10 +45,12 @@ const Vote = ({
     }
   };
 
-  const agreePercentage = `${((voteAgree / totalVotes) * 100).toFixed(2)}%`;
-  const disagreePercentage = `${(100 - (voteAgree / totalVotes) * 100).toFixed(
-    2
-  )}%`;
+  const agreePercentage =
+    totalVotes === 0 ? '0%' : `${((voteAgree / totalVotes) * 100).toFixed(2)}%`;
+  const disagreePercentage =
+    totalVotes === 0
+      ? '0%'
+      : `${(100 - (voteAgree / totalVotes) * 100).toFixed(2)}%`;
 
   const submitVote = () => {
     if (voteResult !== null) {

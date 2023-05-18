@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createAlbumCover, postAlbum } from 'services/album';
 import User from 'types/User';
 import { Note } from 'types/Note';
+import { Oval } from 'react-loader-spinner';
 
 interface ModalProps {
   notes?: Array<Note>;
@@ -61,12 +62,15 @@ const AlbumModal = ({
     setInputValue(event.target.value);
   };
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const genre = inputValue.split(',').map((item) => item.trim());
     const text = [title, content, genre.join(', ')].join(', ');
 
     const createCover = () => {
+      setIsLoading(true);
       createAlbumCover(
         text,
         studioId,
@@ -92,6 +96,7 @@ const AlbumModal = ({
         genre,
         imgUrl,
         () => {
+          setIsLoading(false);
           navigate('/albums');
         },
         (error) => {
@@ -105,8 +110,8 @@ const AlbumModal = ({
   }, [imgUrl]);
 
   return (
-    <div className="modal--overlay">
-      <div className="modal">
+    <div className="overlay">
+      <div className={`modal${isLoading ? '--loading' : ''}`}>
         <div className="modal__title">
           <SectionTitle title="작품 등록" />
         </div>
@@ -160,6 +165,29 @@ const AlbumModal = ({
             </div>
           </div>
         </form>
+        {isLoading && (
+          <div className="modal--loading-content">
+            <Oval
+              height={80}
+              width={80}
+              color="#4642FF"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible
+              ariaLabel="oval-loading"
+              secondaryColor="#ffffff"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+            <br />
+            앨범 생성 중입니다...
+            <br />
+            <div className="blank">{}</div>
+            <div className="tip">
+              Tip! 드럼을 적절히 활용한다면 소리가 더 풍성해진답니다!
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,8 @@ interface StudioNoteItemProps {
   playNote?: (noteName: string | string[]) => void;
   selected: boolean;
   disabled?: boolean;
+  currentComposerId: number;
+  currentUserId: number;
 }
 
 const StudioNoteItem = ({
@@ -17,12 +19,16 @@ const StudioNoteItem = ({
   playNote,
   selected,
   disabled = false,
+  currentComposerId,
+  currentUserId,
 }: StudioNoteItemProps) => {
   const [isSelected, setIsSelected] = useState(selected);
   const disabledNoteStyle = disabled ? 'studio__note-item--disabled' : '';
   const selectedStyle = isSelected ? 'studio__note-item--selected' : '';
   const selectNote = () => {
-    if (disabled) return;
+    console.log(currentComposerId);
+    console.log(currentUserId);
+    if (disabled || currentComposerId !== currentUserId) return;
     setIsSelected(!isSelected);
     if (updateNote !== undefined && playNote !== undefined) {
       playNote(note);
