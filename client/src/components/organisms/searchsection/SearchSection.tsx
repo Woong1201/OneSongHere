@@ -21,6 +21,7 @@ const SearchSection = ({
       </div>
       <div className="search-section__search-bar">
         <SearchBar
+          whiteMode
           onChangeSearchType={() => onChangeSearchType('TITLE')}
           onChangeKeyword={onChangeKeyword}
         />

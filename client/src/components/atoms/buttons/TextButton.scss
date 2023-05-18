@@ -14,4 +14,8 @@
   &--white {
     color: white;
   }
+  &--blue {
+    color: $main-theme-color;
+    font-weight: 600;
+  }
 }
