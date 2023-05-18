@@ -1,0 +1,18 @@
+@import 'styles/_variables';
+
+.studio__recommend {
+  width: 100%;
+  height: calc(100%-50px);
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6%;
+  gap: 10px;
+  &::-webkit-scrollbar {
+    width: 5px;
+    &-thumb {
+      background-color: $main-theme-color;
+    }
+  }
+}
