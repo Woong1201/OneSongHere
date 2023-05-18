@@ -9,14 +9,14 @@ interface UpDownInputProps {
 }
 
 const UpDownInput = ({ aboutUser = false, onSelect }: UpDownInputProps) => {
-  const [count, setCount] = useState(aboutUser ? 4 : 16);
+  const [count, setCount] = useState(aboutUser ? 3 : 16);
 
   const handleCount = (type: string) => {
     let newCount = count;
-    const number = aboutUser ? 1 : 8;
-    if (type === 'plus') {
+    const number = aboutUser ? 1 : 4;
+    if (type === 'plus' && count < (aboutUser ? 6 : 32)) {
       newCount = count + number;
-    } else if (type === 'minus' && count > (aboutUser ? 4 : 16)) {
+    } else if (type === 'minus' && count > (aboutUser ? 3 : 16)) {
       newCount = count - number;
     }
     setCount(newCount);
