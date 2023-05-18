@@ -51,7 +51,7 @@ const RelayStudioTemplate = () => {
     );
   };
   const [noteColumnStyle, setNoteColumnStyle] = useState(
-    Array(160).fill(false)
+    Array(columnNum).fill(false)
   );
   useEffect(() => {
     if (studioInfo) {
@@ -236,7 +236,7 @@ const RelayStudioTemplate = () => {
   }, [startInputTiming]);
 
   const updateNote = (name: string, timing: number | undefined) => {
-    if (timing !== undefined && !timingDisabled(timing)) {
+    if (timing !== undefined && !timingDisabled(timing) && studioStatus === 2) {
       setNotes((prevNotes) => {
         let isExistingNote = false;
         let updatedNotes = prevNotes.map((note) => {
@@ -382,7 +382,7 @@ const RelayStudioTemplate = () => {
   const updateChord = (chord: Chord) => {
     const timing = findInputTiming();
     const note = chordNotes[chord];
-    if (timing !== undefined && !timingDisabled(timing)) {
+    if (timing !== undefined && !timingDisabled(timing) && studioStatus === 2) {
       setNotes((prevNote) => {
         return [
           ...prevNote,
