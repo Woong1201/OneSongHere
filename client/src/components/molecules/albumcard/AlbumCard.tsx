@@ -75,7 +75,7 @@ const AlbumCard = ({
       {/* 사진 영역 */}
       <div className="album-card__cover-box">
         {/* <div className="album-card__cover-frame"> */}
-        <AlbumImage imageUrl={imgPath} size="large" />
+        <AlbumImage imageUrl={imgPath} size="medium" />
         {/* </div> */}
         <AlbumPlayButton isPlaying={isPlaying} onClick={onClick} />
       </div>
