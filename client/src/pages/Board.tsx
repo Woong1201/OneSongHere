@@ -185,6 +185,7 @@ const Board = () => {
           <SearchBar
             onChangeSearchType={() => handleSearchType('TITLE')}
             onChangeKeyword={handleKeyword}
+            whiteMode
           />
           {isLoginQ ? (
             <div
