@@ -1,7 +1,7 @@
 @import 'styles/_variables';
 
 .studio__note-column {
-  height: 498px;
+  height: 100%;
   display: grid;
   grid-auto-rows: 2fr;
   > button {
