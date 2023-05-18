@@ -45,15 +45,15 @@
       height: 300px;
     }
     &--studio {
-        width: 705px;
+      width: 705px;
     }
   }
   &--hr {
     height: 50px;
     visibility: hidden;
   }
-}
 
-img {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+  img {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+  }
 }
