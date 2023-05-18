@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createAlbumCover, postAlbum } from 'services/album';
 import User from 'types/User';
 import { Note } from 'types/Note';
-import { Audio } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 
 interface ModalProps {
   notes?: Array<Note>;
@@ -110,8 +110,8 @@ const AlbumModal = ({
   }, [imgUrl]);
 
   return (
-    <div className="modal--overlay">
-      <div className="modal">
+    <div className="overlay">
+      <div className={`modal${isLoading ? '--loading' : ''}`}>
         <div className="modal__title">
           <SectionTitle title="작품 등록" />
         </div>
@@ -166,18 +166,26 @@ const AlbumModal = ({
           </div>
         </form>
         {isLoading && (
-          <div>
-            <Audio
-              height="120"
-              width="120"
+          <div className="modal--loading-content">
+            <Oval
+              height={80}
+              width={80}
               color="#4642FF"
-              ariaLabel="audio-loading"
               wrapperStyle={{}}
-              wrapperClass="wrapper-class"
+              wrapperClass=""
               visible
+              ariaLabel="oval-loading"
+              secondaryColor="#ffffff"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
             />
             <br />
-            로딩 중입니다...
+            앨범 생성 중입니다...
+            <br />
+            <div className="blank">{}</div>
+            <div className="tip">
+              Tip! 드럼을 적절히 활용한다면 소리가 더 풍성해진답니다!
+            </div>
           </div>
         )}
       </div>

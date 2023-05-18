@@ -44,8 +44,8 @@ const StudioList = ({
   };
 
   const ment = isParticipating
-    ? '현재 작업중인 곡이 없습니다.'
-    : '참여 가능한 곡이 없습니다.';
+    ? '현재 작업중인 곡이 없습니다'
+    : '참여 가능한 곡이 없습니다';
 
   return (
     <div className="studio-list">

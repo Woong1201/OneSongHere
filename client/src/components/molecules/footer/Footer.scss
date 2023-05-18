@@ -5,7 +5,9 @@
   color: $disabled-color;
   padding: 2rem;
   text-align: start;
-
+  &--logo {
+    margin-bottom: 10px;
+  }
   &--info {
     margin-top: 1rem;
   }
@@ -16,4 +18,5 @@ hr {
 p {
     margin: 0;
     padding: 0;
+    margin-bottom: 7px;
 }
