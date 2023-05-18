@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // atoms import
 import Button from 'components/atoms/buttons/Button';
@@ -35,8 +35,24 @@ const CommentInput = ({ boardid }: CommentProps) => {
     setComment('');
   };
 
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    // 페이지 너비 조절 시 writeButtonX 갱신
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="comment__input">
+    <div
+      className={
+        width > 964 ? 'comment__input--medium' : 'comment__input--small'
+      }
+    >
       <div>
         <textarea
           placeholder="댓글을 입력해주세요"
@@ -44,7 +60,11 @@ const CommentInput = ({ boardid }: CommentProps) => {
           onChange={onChangeComment}
           cols={104}
           rows={2}
-          className="comment__input--inputTextarea"
+          className={
+            width > 964
+              ? 'comment__input--inputTextarea'
+              : 'comment__input--inputTextarea-small'
+          }
         />
       </div>
       <div className="comment__input--button">

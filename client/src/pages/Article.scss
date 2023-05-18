@@ -1,3 +1,6 @@
+$article-small-size: 470px;
+$article-medium-size: 800px;
+
 .article{
   &__entire{
     display: flex;
@@ -5,14 +8,17 @@
     flex-direction: column;
   }
   &__container{
-    width: 800px;
-    
+    width: $article-medium-size;
+  }
+  &__container--small{
+    width: $article-small-size;
   }
   &__content{
     margin-top: 10px;
     display: flex;
     width: 780px;
     min-height: 400px;
+    text-align: start;
   }
   &__button{
     color: white;
@@ -29,7 +35,6 @@
 }
 
 .comments__container{
-
   &--header{
     border-bottom: 3px solid #4642FF;
   }

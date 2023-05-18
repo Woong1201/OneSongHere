@@ -162,7 +162,9 @@ const Board = () => {
           <div
             key={category.name}
             className={
-              categoryClick === category.name ? 'category__active' : ''
+              categoryClick === category.name
+                ? 'category__active'
+                : 'category__inactive'
             }
           >
             <TextButton

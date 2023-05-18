@@ -1,13 +1,27 @@
 .comment__input{
-    width: 760px;
-    border: 1px solid blue;
-    padding: 10px;
-    border-radius: 15px;
+    &--small{
+        width: 440px;
+        border: 1px solid blue;
+        padding: 10px;
+        border-radius: 15px;
+    }
+    &--medium{
+        width: 760px;
+        border: 1px solid blue;
+        padding: 10px;
+        border-radius: 15px;
+    }
     &--button{
         display: flex;
         justify-content: end;
     }
     &--inputTextarea{
+        resize: none;
+        border: transparent;
+        outline: 0;
+    }
+    &--inputTextarea-small{
+        width: 420px;
         resize: none;
         border: transparent;
         outline: 0;

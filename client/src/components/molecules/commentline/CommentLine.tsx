@@ -106,8 +106,25 @@ const CommentLine = ({
     setIsOpen(false);
   };
 
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    // 페이지 너비 조절 시 writeButtonX 갱신
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div ref={containerRef} className="comment__container">
+    <div
+      ref={containerRef}
+      className={
+        width > 964 ? 'comment__container--medium' : 'comment__container--small'
+      }
+    >
       <div className="comment__header">
         <div style={{ display: 'flex' }}>
           <ProfileImage
@@ -138,7 +155,14 @@ const CommentLine = ({
                 ⋮
               </button>
               {isOpen && (
-                <div ref={popupRef} className="commentOption__popup">
+                <div
+                  ref={popupRef}
+                  className={
+                    width > 964
+                      ? 'commentOption__popup'
+                      : 'commentOption__popup--small'
+                  }
+                >
                   <TextButton label="수정" onClick={letsGoUpdate} />
                   <div style={{ margin: '4px 0' }} />
                   <TextButton label="삭제" onClick={deleteCommentData} />
