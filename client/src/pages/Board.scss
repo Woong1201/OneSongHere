@@ -67,6 +67,18 @@
     }
     &__active{
         color: #4642FF;
+        margin-bottom: 5px;
+        &:hover {
+            scale: 1.05;
+            transition: 0.3s;
+        }
+    }
+    &__inactive{
+        margin-bottom: 5px;
+        &:hover {
+            scale: 1.05;
+            transition: 0.3s;
+        }
     }
 }
 
