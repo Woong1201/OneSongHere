@@ -20,6 +20,8 @@ const StudioRecommend = ({
   console.log('요청:', stringfiedNotes);
   const onClick = () => {
     if (myNotes.length > 0) {
+      alert('준비중입니다.');
+
       postNotesToCreateHarmony(
         stringfiedNotes,
         ({ data }) => {
