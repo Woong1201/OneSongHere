@@ -43,7 +43,7 @@ const RelayStudioTemplate = () => {
   const [currentComposerId, setCurrentComposerId] = useState<number | null>(
     null
   );
-  const [recommededNotes, setrecommendedNotes] = useState<Note[]>([]);
+  const [recommededNotes, setRecommendedNotes] = useState<Note[]>([]);
   const currentUserId = useRecoilValue(UserState)?.userId;
   const [myNotes, setMyNotes] = useState<Note[]>([]);
 
@@ -538,6 +538,8 @@ const RelayStudioTemplate = () => {
             chordNotes={chordNotes}
             updateChord={updateChord}
             myNotes={myNotes}
+            recommendedNotes={recommededNotes}
+            setRecommendedNotes={setRecommendedNotes}
           />
         </div>
       </div>

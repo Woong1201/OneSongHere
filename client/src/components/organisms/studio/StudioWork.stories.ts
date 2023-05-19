@@ -79,5 +79,6 @@ export const Primary: Story = {
       },
     },
     myNotes: [],
+    recommendedNotes: [],
   },
 };
