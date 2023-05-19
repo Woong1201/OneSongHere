@@ -8,11 +8,11 @@ import { postRelayStudio } from 'services/relayStudio';
 import { useNavigate } from 'react-router-dom';
 import UpDownInput from 'components/atoms/inputs/UpDownInput';
 
-interface ModalProps {
+interface ModalFormProps {
   onClickModal: () => void;
 }
 
-const Modal = ({ onClickModal }: ModalProps) => {
+const ModalForm = ({ onClickModal }: ModalFormProps) => {
   const [title, setTitle] = useState<string>('');
   const [limitOfUsers, setLimitOfUsers] = useState<number>(4);
   const [numberOfBars, setNumberOfBars] = useState<number>(16);
@@ -128,4 +128,4 @@ const Modal = ({ onClickModal }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default ModalForm;

@@ -10,25 +10,12 @@ import User from 'types/User';
 import { Note } from 'types/Note';
 import { Oval } from 'react-loader-spinner';
 
-interface ModalProps {
-  notes?: Array<Note>;
+interface AlbumModalProps {
+  notes: Array<Note>;
   onClickModal: () => void;
 }
 
-const AlbumModal = ({
-  notes = [
-    { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
-    {
-      names: ['D#4', 'E4'],
-      duration: '8n',
-      timing: 0,
-      instrumentType: 'melody',
-    },
-    { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
-    { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
-  ],
-  onClickModal,
-}: ModalProps) => {
+const AlbumModal = ({ notes, onClickModal }: AlbumModalProps) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
@@ -38,7 +25,6 @@ const AlbumModal = ({
   const studioId = Number(relayStudioId);
   const [userId, setUserId] = useState<number>(0);
   const albumSheet = JSON.stringify(notes);
-  // albumSheet = albumSheet.replace(/"/g, "'");
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
