@@ -1,14 +1,14 @@
-import StudioChordTabIcon from 'components/atoms/studiochord/StudioChordTabIcon';
 import React from 'react';
-import './StudioChordTab.scss';
+import './StudioRecommendTab.scss';
+import StudioRecommendTabIcon from 'components/atoms/studiochord/StudioRecommendTabIcon';
 
 interface StudioChordTabProps {
   tabId: number;
   currentTab: number;
-  changeTab?: ((tab: number) => void) | undefined;
+  changeTab: ((tab: number) => void) | undefined;
 }
 
-const StudioChordTab = ({
+const StudioRecommendTab = ({
   tabId,
   currentTab,
   changeTab,
@@ -21,15 +21,16 @@ const StudioChordTab = ({
 
   const isActivate = currentTab === tabId ? 'active' : 'default';
   const iconColor = currentTab === tabId ? '#453F52' : '#929292';
+
   return (
     <div
       role="presentation"
       className={['studio__tab', isActivate].join(' ')}
       onClick={handleClick}
     >
-      <StudioChordTabIcon width={16} color={iconColor} />
+      <StudioRecommendTabIcon width={22} color={iconColor} />
     </div>
   );
 };
 
-export default StudioChordTab;
+export default StudioRecommendTab;

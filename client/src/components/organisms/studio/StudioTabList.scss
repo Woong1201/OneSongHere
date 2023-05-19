@@ -1,0 +1,19 @@
+.studio__tab-list {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  background-color: #efefef;
+  > .studio__tab {
+    height: 100%;
+    width: 65px;
+    background-color: efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  > .active {
+    background-color: white;
+  }
+}

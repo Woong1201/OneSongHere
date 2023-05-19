@@ -1,19 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import StudioChordTab from './StudioChordTab';
+import StudioTabList from './StudioTabList';
 
 const meta = {
-  title: 'molecule/StudioChord/StudioChordTab',
-  component: StudioChordTab,
+  title: 'organism/Studio/StudioTabList',
+  component: StudioTabList,
   tags: ['autodocs'],
   argTypes: {
     //
   },
-} satisfies Meta<typeof StudioChordTab>;
+} satisfies Meta<typeof StudioTabList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { currentTab: 1, tabId: 1 },
+  args: {
+    currentTab: 1,
+  },
 };

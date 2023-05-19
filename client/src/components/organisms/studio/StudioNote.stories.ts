@@ -26,7 +26,7 @@ export const Primary: Story = {
         instrumentType: 'melody',
       },
       { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
-      { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
+      { names: 'kick', duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     noteColumnStyle: Array(160).fill(false),
     columnNum: 160,
