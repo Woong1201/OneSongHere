@@ -137,7 +137,7 @@ const StudioControll = ({
           newStyle[i] = false;
           return newStyle;
         });
-      }, (i + 0.75) * 250);
+      }, (i + 0.3) * 250);
 
       playingBarTasksRef.current.push(playBar);
       playingBarTasksRef.current.push(stopBar);
