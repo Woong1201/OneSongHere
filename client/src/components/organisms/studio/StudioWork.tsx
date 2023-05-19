@@ -8,10 +8,10 @@ import StudioRecommend from './StudioRecommend';
 interface StudioWorkProps {
   chordNotes: Record<Chord, ChordValue>;
   updateChord: (chord: Chord) => void;
-  notes: Note[];
+  myNotes: Note[];
 }
 
-const StudioWork = ({ chordNotes, updateChord, notes }: StudioWorkProps) => {
+const StudioWork = ({ chordNotes, updateChord, myNotes }: StudioWorkProps) => {
   const [currentTab, setCurrentTab] = useState(1);
 
   const changeTab = (tabId: number) => {
@@ -24,7 +24,7 @@ const StudioWork = ({ chordNotes, updateChord, notes }: StudioWorkProps) => {
       {currentTab === 1 && (
         <StudioChord chordNotes={chordNotes} updateChord={updateChord} />
       )}
-      {currentTab === 2 && <StudioRecommend notes={notes} />}
+      {currentTab === 2 && <StudioRecommend myNotes={myNotes} />}
     </>
   );
 };

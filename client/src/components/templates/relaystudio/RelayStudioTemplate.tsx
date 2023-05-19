@@ -45,6 +45,7 @@ const RelayStudioTemplate = () => {
   );
   const [recommededNotes, setrecommendedNotes] = useState<Note[]>([]);
   const currentUserId = useRecoilValue(UserState)?.userId;
+  const [myNotes, setMyNotes] = useState<Note[]>([]);
 
   const startInputTiming = useMemo(
     () => barNum * 0.25 * (userOrder - 1),
@@ -57,11 +58,17 @@ const RelayStudioTemplate = () => {
     );
   };
 
+  useEffect(() => {
+    const possibleNotes = notes.filter((note) => isPossibleTiming(note.timing));
+    setMyNotes(possibleNotes);
+  }, [notes]);
+
   const timingDisabled = (timing: number) => {
     return (
       startInputTiming > timing || startInputTiming + barNum * 0.25 <= timing
     );
   };
+
   const [noteColumnStyle, setNoteColumnStyle] = useState(
     Array(columnNum).fill(false)
   );
@@ -530,7 +537,7 @@ const RelayStudioTemplate = () => {
           <StudioWork
             chordNotes={chordNotes}
             updateChord={updateChord}
-            notes={notes}
+            myNotes={myNotes}
           />
         </div>
       </div>

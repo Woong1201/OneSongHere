@@ -5,36 +5,26 @@ import { postNotesToCreateHarmony } from 'services/relayStudio';
 import { Note } from 'types/Note';
 
 interface StudioRecommendProps {
-  notes: Note[];
+  myNotes: Note[];
 }
 
-const StudioRecommend = ({ notes }: StudioRecommendProps) => {
-  const noteDummy: Note[] = [
-    { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
-    {
-      names: ['D#4', 'E4'],
-      duration: '8n',
-      timing: 0.5,
-      instrumentType: 'melody',
-    },
-    { names: ['C4'], duration: '8n', timing: 0.25, instrumentType: 'melody' },
-    { names: ['D#4'], duration: '8n', timing: 0.75, instrumentType: 'melody' },
-    { names: ['E4'], duration: '8n', timing: 1.5, instrumentType: 'melody' },
-    { names: 'kick', duration: '8n', timing: 0.5, instrumentType: 'beat' },
-  ];
-  const stringNoteDummy = JSON.stringify(noteDummy);
-  const stringfiedNotes = JSON.stringify(notes);
+const StudioRecommend = ({ myNotes }: StudioRecommendProps) => {
+  const stringfiedNotes = JSON.stringify(myNotes);
   console.log('요청:', stringfiedNotes);
   const onClick = () => {
-    postNotesToCreateHarmony(
-      stringfiedNotes,
-      ({ data }) => {
-        console.log('응답:', data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (myNotes.length > 0) {
+      postNotesToCreateHarmony(
+        stringfiedNotes,
+        ({ data }) => {
+          console.log('응답:', data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      alert('비어있습니다');
+    }
   };
   return (
     <div className="studio__recommend">
