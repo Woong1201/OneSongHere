@@ -14,3 +14,17 @@
     width: 100%;
   }
 }
+
+.launch__button {
+  width: 36px;
+  height: 36px;
+  right: 25px;
+  bottom: 25px;
+  position: fixed;
+  color: white;
+  background-color: #4642ff;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 99;
+  border: transparent;
+}
