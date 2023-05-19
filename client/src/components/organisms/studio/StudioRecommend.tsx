@@ -37,11 +37,11 @@ const StudioRecommend = ({
   };
   return (
     <div className="studio__recommend">
-      <p className="studio__recommend-result-list">추천하는 코드</p>
-      {recommendedNotes.length > 0 &&
+      {/* <p className="studio__recommend-result-list">추천하는 코드</p> */}
+      {/* {recommendedNotes.length > 0 &&
         recommendedNotes.map((note: Note) => {
           return <StudioRecommendedNoteCard note={note} />;
-        })}
+        })} */}
       <Button
         label="추천받기"
         type="button"
