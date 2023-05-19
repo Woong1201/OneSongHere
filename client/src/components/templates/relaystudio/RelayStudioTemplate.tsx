@@ -43,6 +43,7 @@ const RelayStudioTemplate = () => {
   const [currentComposerId, setCurrentComposerId] = useState<number | null>(
     null
   );
+  const [recommededNotes, setrecommendedNotes] = useState<Note[]>([]);
   const currentUserId = useRecoilValue(UserState)?.userId;
 
   const startInputTiming = useMemo(
@@ -526,7 +527,11 @@ const RelayStudioTemplate = () => {
               relayStudioId={studioInfo.relayStudioID}
             />
           )}
-          <StudioWork chordNotes={chordNotes} updateChord={updateChord} />
+          <StudioWork
+            chordNotes={chordNotes}
+            updateChord={updateChord}
+            notes={notes}
+          />
         </div>
       </div>
     </>

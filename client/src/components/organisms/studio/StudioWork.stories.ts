@@ -78,5 +78,6 @@ export const Primary: Story = {
         name: 'G# minor',
       },
     },
+    notes: [],
   },
 };

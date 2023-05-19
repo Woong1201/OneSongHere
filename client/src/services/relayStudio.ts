@@ -1,8 +1,9 @@
 import { AxiosResponse, AxiosError } from 'axios';
 import { RelayNotes } from 'types/Note';
-import { apiInstance } from './index';
+import { apiInstance, aiApiInstance } from './index';
 
 const api = apiInstance();
+const aiApi = aiApiInstance();
 
 const postRelayStudio = async (
   title: string,
@@ -127,6 +128,22 @@ const patchParticipate = async (
     .catch(fail);
 };
 
+const postNotesToCreateHarmony = async (
+  notes: string,
+  success: (reponse: AxiosResponse) => void,
+  fail: (response: AxiosError) => void
+): Promise<void> => {
+  await aiApi({
+    method: 'post',
+    url: 'createHarmony/',
+    params: {
+      code: notes,
+    },
+  })
+    .then(success)
+    .catch(fail);
+};
+
 export {
   postRelayStudio,
   getRelayStudioList,
@@ -135,4 +152,5 @@ export {
   postRelayNotes,
   postRelayVote,
   patchParticipate,
+  postNotesToCreateHarmony,
 };

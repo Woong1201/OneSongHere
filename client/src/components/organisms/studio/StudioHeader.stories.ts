@@ -41,7 +41,7 @@ export const Primary: Story = {
         instrumentType: 'melody',
       },
       { names: ['C4'], duration: '8n', timing: 0, instrumentType: 'melody' },
-      { names: ['kick'], duration: '8n', timing: 0, instrumentType: 'beat' },
+      { names: 'kick', duration: '8n', timing: 0, instrumentType: 'beat' },
     ],
     instrumentInstances: {
       piano: null,
